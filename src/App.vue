@@ -12,16 +12,22 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <v-btn v-if="!isAuthenticated" icon>
         <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
+      <v-btn v-if="isAuthenticated" icon @click="logout">
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer
       expand-on-hover
+      fixed
       width="250px"
       v-model="drawer"
-      style="margin-top:64px; z-index:1"
+      style="padding-top:64px; z-index:5"
+      class="elevation-4"
+      v-if="isAuthenticated"
     >
       <v-list nav dense>
         <v-list-item-group v-model="selected" color="primary">
@@ -53,20 +59,63 @@
       </v-list>
     </v-navigation-drawer>
 
-    <main
-      style="height: calc(100vh - 64px); width: 100vw; margin-top:64px; position:absolute;"
-    >
+    <main style="width: 100vw; padding-top:64px;">
+      <v-container v-if="!isAuthenticated" class="fill-height" fluid>
+        <v-row align="center" justify="center">
+          <v-col cols="12" sm="8" md="4">
+            <v-card class="elevation-12">
+              <v-toolbar color="primary" dark flat>
+                <v-toolbar-title>Login</v-toolbar-title>
+                <v-spacer />
+              </v-toolbar>
+              <v-card-text>
+                <v-alert v-if="error" type="error">
+                  Username or password didn't match. Please try again.
+                </v-alert>
+                <v-alert v-if="loggedout" dismissible type="success">
+                  You've been logged out successfully.
+                </v-alert>
+                <v-form>
+                  <v-text-field
+                    label="Login"
+                    name="login"
+                    prepend-icon="mdi-account"
+                    type="text"
+                    v-model="username"
+                  />
+
+                  <v-text-field
+                    id="password"
+                    label="Password"
+                    name="password"
+                    prepend-icon="mdi-lock"
+                    type="password"
+                    v-model="password"
+                    v-on:keyup.enter="login"
+                  />
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn color="primary" @click="login"> Login</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+
       <router-view></router-view>
     </main>
   </v-app>
 </template>
 
 <script>
+import axios from "axios";
+import Vue from "vue";
+
 export default {
   name: "App",
-
   components: {},
-  methods: {},
   filters: {
     upper: function(value) {
       if (!value) return "";
@@ -78,13 +127,13 @@ export default {
     return {
       selected: "",
       drawer: null,
-      isRegistration: true,
-      mitem: 1,
-      mitems: [
-        { text: "Real-Time", icon: "mdi-clock" },
-        { text: "Audience", icon: "mdi-account" },
-        { text: "Conversions", icon: "mdi-flag" }
-      ],
+      token: null,
+      username: null,
+      password: null,
+      error: null,
+      loggedout: null,
+      issues: null,
+      advisors: null,
       items: [
         {
           title: "Registration",
@@ -121,18 +170,75 @@ export default {
           icon: "mdi-folder-settings-variant",
           action: "administration",
           items: [
-            { title: "Member Organizations", icon: "mdi-flag-variant" },
+            {
+              title: "Member Organizations",
+              icon: "mdi-flag-variant",
+              action: "member-organizations"
+            },
             { title: "Forums", icon: "mdi-forum" },
+            {
+              title: "Issues",
+              icon: "mdi-format-list-bulleted-type",
+              action: "issues"
+            },
             { title: "Country Allocation", icon: "mdi-gesture-double-tap" },
-            { title: "Locations", icon: "mdi-map-marker" },
+            { title: "Locations", icon: "mdi-map-marker", action: "locations" },
             { title: "Events", icon: "mdi-calendar" },
-            { title: "Conference Settings", icon: "mdi-web" }
+            { title: "Conference Settings", icon: "mdi-web", action:"/" }
           ]
         },
         { title: "Secretariat", icon: "mdi-printer" }
-      ],
-      text: "Jan"
+      ]
     };
+  },
+  computed: {
+    isAuthenticated: function() {
+      return this.token ? true : false;
+    }
+  },
+  methods: {
+    login: function() {
+      //API Request to obtain auth token
+      //TODO: API base domain
+      var vm = this;
+      const instance = axios.create({
+        baseURL: "https://munoltom.pythonanywhere.com"
+      });
+      Vue.prototype.$http = instance;
+
+      this.$http
+        .post("/api-token-auth/", {
+          username: "Tom", //vm.username,
+          password: "I'mlovingMUNOLinstead" //vm.password
+        })
+        .then(function(response) {
+          vm.token = response.data.token;
+          vm.$http.defaults.headers.common["Authorization"] =
+            "Token " + vm.token;
+          vm.loggedout = false;
+          vm.error = null;
+        })
+        .catch(function(error) {
+          vm.error = error; //show error message
+          vm.token = null;
+          vm.$http.defaults.headers.common["Authorization"] = "";
+          delete vm.$http.defaults.headers.common["Authorization"];
+          vm.password = null;
+        });
+
+      this.password = null; //resets password
+    },
+    logout: function() {
+      this.token = null;
+      this.username = null;
+      this.loggedout = true;
+    }
   }
 };
 </script>
+
+<style>
+header {
+  z-index: 6 !important;
+}
+</style>
