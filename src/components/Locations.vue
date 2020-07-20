@@ -34,9 +34,9 @@
                     icon="mdi-map-marker"
                     :text="
                       'latitude: ' +
-                        location.latitude +
-                        ', longitude: ' +
-                        location.longitude
+                      location.latitude +
+                      ', longitude: ' +
+                      location.longitude
                     "
                     position="right"
                   />
@@ -59,7 +59,7 @@
             <l-map
               :zoom="14"
               :center="center(locations)"
-              style="height: 80vh; width: 100%; z-index:1;"
+              style="height: 80vh; width: 100%; z-index: 1;"
             >
               <l-tile-layer :url="url" :attribution="attribution" />
               <l-marker
@@ -88,9 +88,9 @@
                     icon="mdi-home-account"
                     :text="
                       'latitude: ' +
-                        room.latitude +
-                        ', longitude: ' +
-                        room.longitude
+                      room.latitude +
+                      ', longitude: ' +
+                      room.longitude
                     "
                     position="right"
                   />
@@ -113,13 +113,13 @@
             <l-map
               :zoom="18"
               :center="center(rooms)"
-              style="height: 80vh; width: 100%; z-index:1;"
+              style="height: 80vh; width: 100%; z-index: 1;"
             >
-            <l-control-layers></l-control-layers>
+              <l-control-layers></l-control-layers>
               <l-tile-layer :url="url" :attribution="attribution" />
               <l-layer-group layerType="overlay" name="Ground Floor">
                 <l-marker
-                  v-for="room in rooms.filter(room => room.floor==0)"
+                  v-for="room in rooms.filter((room) => room.floor == 0)"
                   :lat-lng="latLong(room)"
                   :key="room.id"
                 >
@@ -133,9 +133,9 @@
                   </l-popup>
                 </l-marker>
               </l-layer-group>
-              <l-layer-group  layerType="overlay" name="First Floor">
+              <l-layer-group layerType="overlay" name="First Floor">
                 <l-marker
-                  v-for="room in rooms.filter(room => room.floor==1)"
+                  v-for="room in rooms.filter((room) => room.floor == 1)"
                   :lat-lng="latLong(room)"
                   :key="room.id"
                 >
@@ -160,7 +160,14 @@
 <script>
 import TooltippedIcon from "./generic/TooltippedIcon";
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup, LLayerGroup, LControlLayers } from "vue2-leaflet";
+import {
+  LMap,
+  LTileLayer,
+  LMarker,
+  LPopup,
+  LLayerGroup,
+  LControlLayers,
+} from "vue2-leaflet";
 export default {
   name: "Locations",
   components: {
@@ -180,48 +187,48 @@ export default {
       tab: null,
       url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
       attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     };
   },
-  mounted() {
-    var vm = this;
-    vm.$http
-      .get("https://munoltom.pythonanywhere.com/api/locations/")
-      .then(function(response) {
-        vm.locations = response.data;
-      })
-      .catch(function(error) {
-        alert(error);
-      });
-    vm.$http
-      .get("https://munoltom.pythonanywhere.com/api/rooms/")
-      .then(function(response) {
-        vm.rooms = response.data;
-      })
-      .catch(function(error) {
-        alert(error);
-      });
+  async mounted() {
+    try {
+      const { data } = await this.$http.get(
+        "https://munoltom.pythonanywhere.com/api/locations/"
+      );
+      this.locations = data;
+    } catch (error) {
+      alert(error);
+    }
+
+    try {
+      const { data } = await this.$http.get(
+        "https://munoltom.pythonanywhere.com/api/rooms/"
+      );
+      this.rooms = data;
+    } catch (error) {
+      alert(error);
+    }
   },
   methods: {
-    latLong: function(location) {
-      return latLng(location.latitude, location.longitude);
+    latLong({ latitude, longitude }) {
+      return latLng(latitude, longitude);
     },
-    average: function(array) {
+    average(array) {
       return array.reduce((a, b) => a + b, 0) / array.length;
     },
-    center: function(array) {
+    center(array) {
       if (this.locations.length > 0) {
-        var latitudes = array.map(location => Number(location.latitude));
-        let avgLatitude = this.average(latitudes);
-        var longitudes = array.map(location => Number(location.longitude));
-        let avgLongitude = this.average(longitudes);
+        const latitudes = array.map((location) => Number(location.latitude));
+        const avgLatitude = this.average(latitudes);
+        const longitudes = array.map((location) => Number(location.longitude));
+        const avgLongitude = this.average(longitudes);
         return latLng(avgLatitude, avgLongitude);
       } else {
         return latLng(0, 0);
       }
-    }
+    },
   },
-  computed: {}
+  computed: {},
 };
 </script>
 

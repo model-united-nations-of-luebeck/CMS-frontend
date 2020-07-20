@@ -1,16 +1,12 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-btn icon @click="drawer = !drawer">
-          <v-icon>mdi-menu</v-icon>
-        </v-btn>
-        <span>
-          Conference Management System
-        </span>
+      <div class="nav-headline d-flex align-center">
+        <v-icon>mdi-bank</v-icon>
+        <span> Conference Management System </span>
       </div>
 
-      <v-spacer></v-spacer>
+      <v-spacer />
 
       <v-btn v-if="!isAuthenticated" icon>
         <v-icon>mdi-dots-vertical</v-icon>
@@ -21,28 +17,27 @@
     </v-app-bar>
 
     <v-navigation-drawer
+      v-if="isAuthenticated"
       expand-on-hover
       fixed
       width="250px"
-      v-model="drawer"
-      style="padding-top:64px; z-index:5"
+      style="padding-top: 64px; z-index: 5;"
       class="elevation-4"
-      v-if="isAuthenticated"
     >
       <v-list nav dense>
         <v-list-item-group v-model="selected" color="primary">
           <div v-for="item in items" :key="item.title">
             <v-list-item disabled>
-              <v-list-item-action> </v-list-item-action>
+              <v-list-item-action />
               <v-list-item-content>
                 <v-list-item-title>{{ item.title | upper }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
 
             <v-list-item
-              link
               v-for="subItem in item.items"
               :key="subItem.title"
+              link
               :to="subItem.action"
             >
               <v-list-item-action>
@@ -53,13 +48,13 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-divider></v-divider>
+            <v-divider />
           </div>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
 
-    <main style="width: 100vw; padding-top:64px;">
+    <main style="width: 100vw; padding-top: 64px;">
       <v-container v-if="!isAuthenticated" class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
@@ -77,34 +72,38 @@
                 </v-alert>
                 <v-form>
                   <v-text-field
+                    v-model="username"
                     label="Login"
                     name="login"
                     prepend-icon="mdi-account"
                     type="text"
-                    v-model="username"
                   />
 
                   <v-text-field
                     id="password"
+                    v-model="password"
                     label="Password"
                     name="password"
                     prepend-icon="mdi-lock"
                     type="password"
-                    v-model="password"
-                    v-on:keyup.enter="login"
+                    @keyup.enter="login"
                   />
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" @click="login"> Login</v-btn>
+                <v-btn color="primary" @click="login">
+                  Login
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
 
-      <router-view></router-view>
+      <transition name="slide-fade">
+        <router-view v-if="isAuthenticated" />
+      </transition>
     </main>
   </v-app>
 </template>
@@ -117,11 +116,11 @@ export default {
   name: "App",
   components: {},
   filters: {
-    upper: function(value) {
+    upper(value) {
       if (!value) return "";
       value = value.toString();
       return value.toUpperCase();
-    }
+    },
   },
   data() {
     return {
@@ -144,26 +143,26 @@ export default {
             {
               title: "Delegates",
               icon: "mdi-account-tie",
-              action: "delegates"
+              action: "delegates",
             },
             {
               title: "MUN-Directors",
               icon: "mdi-school",
-              action: "mun-directors"
+              action: "mun-directors",
             },
             {
               title: "Executives",
               icon: "mdi-account-settings",
-              action: "executives"
+              action: "executives",
             },
             {
               title: "Student Officers",
               icon: "mdi-account-settings",
-              action: "student-officers"
+              action: "student-officers",
             },
             { title: "Staffs", icon: "mdi-account", action: "staffs" },
-            { title: "Advisors", icon: "mdi-account-star", action: "advisors" }
-          ]
+            { title: "Advisors", icon: "mdi-account-star", action: "advisors" },
+          ],
         },
         {
           title: "Administration",
@@ -173,72 +172,87 @@ export default {
             {
               title: "Member Organizations",
               icon: "mdi-flag-variant",
-              action: "member-organizations"
+              action: "member-organizations",
             },
             { title: "Forums", icon: "mdi-forum" },
             {
               title: "Issues",
               icon: "mdi-format-list-bulleted-type",
-              action: "issues"
+              action: "issues",
             },
             { title: "Country Allocation", icon: "mdi-gesture-double-tap" },
             { title: "Locations", icon: "mdi-map-marker", action: "locations" },
             { title: "Events", icon: "mdi-calendar" },
-            { title: "Conference Settings", icon: "mdi-web", action:"/" }
-          ]
+            { title: "Conference Settings", icon: "mdi-web", action: "/" },
+          ],
         },
-        { title: "Secretariat", icon: "mdi-printer" }
-      ]
+        { title: "Secretariat", icon: "mdi-printer" },
+      ],
     };
   },
   computed: {
-    isAuthenticated: function() {
+    isAuthenticated() {
       return this.token ? true : false;
-    }
+    },
   },
   methods: {
-    login: function() {
-      //API Request to obtain auth token
-      //TODO: API base domain
-      var vm = this;
+    /**
+     * API Request to obtain auth token
+     * TODO: API base domain
+     */
+    async login() {
       const instance = axios.create({
-        baseURL: "https://munoltom.pythonanywhere.com"
+        baseURL: "https://munoltom.pythonanywhere.com",
       });
       Vue.prototype.$http = instance;
 
-      this.$http
-        .post("/api-token-auth/", {
-          username: "Tom", //vm.username,
-          password: "I'mlovingMUNOLinstead" //vm.password
-        })
-        .then(function(response) {
-          vm.token = response.data.token;
-          vm.$http.defaults.headers.common["Authorization"] =
-            "Token " + vm.token;
-          vm.loggedout = false;
-          vm.error = null;
-        })
-        .catch(function(error) {
-          vm.error = error; //show error message
-          vm.token = null;
-          vm.$http.defaults.headers.common["Authorization"] = "";
-          delete vm.$http.defaults.headers.common["Authorization"];
-          vm.password = null;
+      try {
+        const { data } = await this.$http.post("/api-token-auth/", {
+          username: "Tom", //this.username,
+          password: "I'mlovingMUNOLinstead", //this.password
         });
+
+        this.token = data.token;
+        this.$http.defaults.headers.common[
+          "Authorization"
+        ] = `Token ${this.token}`;
+        this.loggedout = false;
+        this.error = null;
+      } catch (error) {
+        this.error = error; //show error message
+        this.token = null;
+        delete this.$http.defaults.headers.common["Authorization"];
+        this.password = null;
+      }
 
       this.password = null; //resets password
     },
-    logout: function() {
+    logout() {
       this.token = null;
       this.username = null;
       this.loggedout = true;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
 header {
   z-index: 6 !important;
+}
+
+.nav-headline > span {
+  margin: 10px;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

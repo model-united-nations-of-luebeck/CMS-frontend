@@ -1,17 +1,15 @@
 <template>
-<div> 
-  <v-container>
-    Delegates
-  </v-container>
-</div>
+  <div>
+    <v-container>
+      Delegates
+    </v-container>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Delegates',
+  name: "Delegates",
 
-  data: () => ({ 
-    
-  }),
+  data: () => ({}),
 };
 </script>

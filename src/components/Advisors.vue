@@ -16,18 +16,17 @@ export default {
   name: "Advisors",
 
   data: () => ({
-    advisors: null
+    advisors: null,
   }),
-  mounted() {
-    var vm = this;
-    vm.$http
-      .get("https://munoltom.pythonanywhere.com/api/advisors/")
-      .then(function(response) {
-        vm.advisors = response.data;
-      })
-      .catch(function(error) {
-        alert(error);
-      });
-  }
+  async mounted() {
+    try {
+      const { data } = await this.$http.get(
+        "https://munoltom.pythonanywhere.com/api/advisors/"
+      );
+      this.advisors = data;
+    } catch (error) {
+      alert(error);
+    }
+  },
 };
 </script>

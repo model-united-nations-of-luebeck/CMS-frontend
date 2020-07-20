@@ -5,7 +5,7 @@
         <v-expansion-panel v-for="(school, i) in schools" :key="i">
           <v-expansion-panel-header class="text-right">
             <v-row no-gutters align="center" justify="end">
-              <v-col sm="5" style="text-align:left;">
+              <v-col sm="5" style="text-align: left;">
                 <span>{{ school.name }}</span>
               </v-col>
               <v-col sm="1">
@@ -51,7 +51,7 @@
               </v-col>
             </v-row>
           </v-expansion-panel-header>
-          <v-expansion-panel-content style="text-align:left;">
+          <v-expansion-panel-content style="text-align: left;">
             <v-row>
               <v-col sm="4">
                 <p>{{ school.street }}</p>
@@ -96,12 +96,12 @@ export default {
   name: "Schools",
   components: { TooltippedIcon },
   filters: {
-    capitalize: function(value) {
+    capitalize(value) {
       if (!value) return "";
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
     },
-    regStatusColor: function(value) {
+    regStatusColor(value) {
       switch (value) {
         case "WAITING_FOR_PRE_REGISTRATION":
           return "red";
@@ -111,7 +111,7 @@ export default {
           return "red";
       }
     },
-    housingIcon: function(value) {
+    housingIcon(value) {
       switch (value) {
         case "guest family":
           return "mdi-home-heart";
@@ -120,22 +120,22 @@ export default {
         default:
           return "mdi-home";
       }
-    }
+    },
   },
   data: () => ({
-    schools: null
+    schools: null,
   }),
-  mounted() {
-    var vm = this;
-    vm.$http
-      .get("https://munoltom.pythonanywhere.com/api/schools/")
-      .then(function(response) {
-        vm.schools = response.data;
-      })
-      .catch(function(error) {
-        alert(error);
-      });
-  }
+  async mounted() {
+    try {
+      const { data } = await this.$http.get(
+        "https://munoltom.pythonanywhere.com/api/schools/"
+      );
+
+      this.schools = data;
+    } catch (error) {
+      alert(error);
+    }
+  },
 };
 </script>
 

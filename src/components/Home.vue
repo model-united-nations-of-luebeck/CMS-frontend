@@ -17,15 +17,15 @@
         <i>{{ conference.theme }}</i>
       </p>
       <p class="font-weight-medium headline text-center">
-        {{
-          conference.annual_session | ordinal({ includeNumber: true })
-        }}
-        annual session of Model United Nations of Lübeck <br />MUNOL
+        {{ conference.annual_session | ordinal({ includeNumber: true }) }}
+        annual session of Model United Nations of Lübeck
+        <br />
+        MUNOL
         {{ conference.year }}
       </p>
     </v-card>
 
-    <v-card> </v-card>
+    <v-card></v-card>
   </v-container>
 </template>
 
@@ -33,24 +33,29 @@
 export default {
   name: "Home",
   props: {
-    msg: String
+    msg: String,
   },
   data: () => ({
-    conference: null
+    conference: {
+      theme: "",
+      annualSession: "",
+      year: "",
+    },
   }),
   filters: {},
   methods: {},
-  mounted() {
-    var vm = this;
-    vm.$http
-      .get("https://munoltom.pythonanywhere.com/api/conferences/")
-      .then(function(response) {
-        vm.conference = response.data[0];
-      })
-      .catch(function(error) {
-        alert(error);
-      });
-  }
+  async mounted() {
+    try {
+      const [conference] = (
+        await this.$http.get(
+          "https://munoltom.pythonanywhere.com/api/conferences/"
+        )
+      ).data;
+      this.conference = conference;
+    } catch (error) {
+      console.trace(`%c ${error}", "#FF0000`);
+    }
+  },
 };
 </script>
 

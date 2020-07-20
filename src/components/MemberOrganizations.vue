@@ -19,7 +19,7 @@
                 organization.official_name
               }}</v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-content style="display:inline;">
+            <v-list-item-content style="display: inline;">
               <v-chip v-if="organization.active">
                 <v-icon left>
                   mdi-tag
@@ -28,7 +28,7 @@
               </v-chip>
             </v-list-item-content>
             <v-spacer />
-            <v-list-item-content style="display:inline;">
+            <v-list-item-content style="display: inline;">
               <v-chip>
                 <v-icon left>
                   mdi-shield-star-outline
@@ -50,10 +50,9 @@
       expand-on-hover
       width="250px"
       v-model="drawer"
-      style="padding-top:64px; z-index:5;"
+      style="padding-top: 64px; z-index: 5;"
       class="elevation-4"
     >
-      
       <v-list>
         <v-list-item>
           <v-list-item-action>
@@ -125,31 +124,30 @@ export default {
   data: () => ({
     memberOrganizations: [],
     search: "",
-    selectedStatus: []
+    selectedStatus: [],
   }),
-  mounted() {
-    var vm = this;
-    vm.$http
-      .get("https://munoltom.pythonanywhere.com/api/member-organizations/")
-      .then(function(response) {
-        vm.memberOrganizations = response.data;
-        vm.selectedStatus = vm.getStatusOptions();
-      })
-      .catch(function(error) {
-        alert(error);
-      });
+  async mounted() {
+    try {
+      const { data } = await this.$http.get(
+        "https://munoltom.pythonanywhere.com/api/member-organizations/"
+      );
+      this.memberOrganizations = data;
+      this.selectedStatus = this.getStatusOptions();
+    } catch (error) {
+      alert(error);
+    }
   },
   methods: {
-    getStatusOptions: function() {
+    getStatusOptions() {
       //returns an unique array of all available status options of the fetched member organizations
       return this.memberOrganizations
-        .map(member => member.status)
+        .map((member) => member.status)
         .filter((v, i, a) => a.indexOf(v) === i);
-    }
+    },
   },
   computed: {
     filteredMemberOrganizations() {
-      return this.memberOrganizations.filter(organization => {
+      return this.memberOrganizations.filter((organization) => {
         return (
           (organization.name
             .toLowerCase()
@@ -163,8 +161,8 @@ export default {
           this.selectedStatus.includes(organization.status)
         );
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -179,8 +177,8 @@ export default {
   margin: 10px 0px;
 }
 
-.v-navigation-drawer__content{
-  display:grid;
+.v-navigation-drawer__content {
+  display: grid;
   align-content: space-between;
 }
 </style>
