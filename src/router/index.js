@@ -11,8 +11,7 @@ import Locations from '@/components/Locations'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'Home',
       component: Home
@@ -47,6 +46,6 @@ export default new Router({
       name: 'Locations',
       component: Locations
     },
-],
+  ],
   mode: 'history'
 })

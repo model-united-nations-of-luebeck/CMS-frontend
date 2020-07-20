@@ -21,8 +21,8 @@ export default {
     color: String,
     position: {
       type: String,
-      default: "bottom"
-    }
-  }
+      default: "bottom",
+    },
+  },
 };
 </script>

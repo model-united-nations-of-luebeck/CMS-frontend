@@ -18,17 +18,15 @@ export default {
   data: () => ({
     issues: null,
   }),
-  mounted(){
-    var vm = this;
-    vm.$http
-            .get("https://munoltom.pythonanywhere.com/api/issues/")
-            .then(function(response) {
-              vm.issues = response.data;
-            })
-            .catch(function(error) {
-              alert(error);
-            });
-
-  }
+  async mounted() {
+    try {
+      const { data } = await this.$http.get(
+        "https://munoltom.pythonanywhere.com/api/issues/"
+      );
+      this.issues = data;
+    } catch (error) {
+      alert(error);
+    }
+  },
 };
 </script>

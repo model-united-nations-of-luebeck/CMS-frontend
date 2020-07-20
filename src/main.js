@@ -3,7 +3,9 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import router from './router'
 import Vue2Filters from 'vue2-filters'
-import { Icon } from 'leaflet'
+import {
+  Icon
+} from 'leaflet'
 
 Vue.config.productionTip = false
 Vue.use(Vue2Filters)
