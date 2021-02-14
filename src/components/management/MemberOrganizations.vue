@@ -125,11 +125,12 @@ export default {
     memberOrganizations: [],
     search: "",
     selectedStatus: [],
+    drawer: "",
   }),
   async mounted() {
     try {
       const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/member-organizations/"
+        "https://munoltom.pythonanywhere.com/api/member-organizations/",
       );
       this.memberOrganizations = data;
       this.selectedStatus = this.getStatusOptions();

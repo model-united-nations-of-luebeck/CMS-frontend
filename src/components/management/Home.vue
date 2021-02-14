@@ -48,7 +48,7 @@ export default {
     try {
       const [conference] = (
         await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
+          "https://munoltom.pythonanywhere.com/api/conferences/",
         )
       ).data;
       this.conference = conference;

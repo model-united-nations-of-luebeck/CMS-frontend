@@ -158,7 +158,7 @@
 </template>
 
 <script>
-import TooltippedIcon from "./generic/TooltippedIcon";
+import TooltippedIcon from "@/components/generic/TooltippedIcon";
 import { latLng } from "leaflet";
 import {
   LMap,
@@ -193,7 +193,7 @@ export default {
   async mounted() {
     try {
       const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/locations/"
+        "https://munoltom.pythonanywhere.com/api/locations/",
       );
       this.locations = data;
     } catch (error) {
@@ -202,7 +202,7 @@ export default {
 
     try {
       const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/rooms/"
+        "https://munoltom.pythonanywhere.com/api/rooms/",
       );
       this.rooms = data;
     } catch (error) {
@@ -222,6 +222,7 @@ export default {
         const avgLatitude = this.average(latitudes);
         const longitudes = array.map((location) => Number(location.longitude));
         const avgLongitude = this.average(longitudes);
+        console.log(avgLatitude, avgLongitude);
         return latLng(avgLatitude, avgLongitude);
       } else {
         return latLng(0, 0);
@@ -233,12 +234,12 @@ export default {
 </script>
 
 <style>
-@import "../../node_modules/leaflet/dist/leaflet.css";
+@import "../../../node_modules/leaflet/dist/leaflet.css";
 
 .leaflet-fake-icon-image-2x {
-  background-image: url(../../node_modules/leaflet/dist/images/marker-icon-2x.png);
+  background-image: url(../../../node_modules/leaflet/dist/images/marker-icon-2x.png);
 }
 .leaflet-fake-icon-shadow {
-  background-image: url(../../node_modules/leaflet/dist/images/marker-shadow.png);
+  background-image: url(../../../node_modules/leaflet/dist/images/marker-shadow.png);
 }
 </style>
