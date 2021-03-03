@@ -4,11 +4,12 @@
     :right="position == 'right'"
     :bottom="position == 'bottom'"
     :top="position == 'top'"
+    :max-width="tooltipWidth"
   >
     <template v-slot:activator="{ on }">
       <v-icon v-on="on" :color="color">{{ icon }}</v-icon>
     </template>
-    <span>{{ text }}</span>
+    <div :style="{ textAlign: textAlign }">{{ text }}</div>
   </v-tooltip>
 </template>
 
@@ -23,6 +24,8 @@ export default {
       type: String,
       default: "bottom",
     },
+    tooltipWidth: String,
+    textAlign: String,
   },
 };
 </script>
