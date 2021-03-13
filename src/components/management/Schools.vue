@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import TooltippedIcon from "./generic/TooltippedIcon";
+import TooltippedIcon from "@/components/generic/TooltippedIcon";
 export default {
   name: "Schools",
   components: { TooltippedIcon },
@@ -128,7 +128,7 @@ export default {
   async mounted() {
     try {
       const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/schools/"
+        "https://munoltom.pythonanywhere.com/api/schools/",
       );
 
       this.schools = data;
