@@ -12,6 +12,7 @@ import Registration from "@/components/Registration";
 import PreRegistration from "@/components/registration/PreRegistration";
 import Processing from "@/components/registration/Processing";
 import FinalRegistration from "@/components/registration/FinalRegistration";
+import RegistrationTimeline from "@/components/registration/RegistrationTimeline";
 
 Vue.use(Router);
 
@@ -88,7 +89,13 @@ export default new Router({
           name: "Final Registration",
           component: FinalRegistration,
         },
+        
       ],
+    },
+    {
+      path: "/registration/timeline",
+      name: "Registration Timeline",
+      component: RegistrationTimeline,
     },
     {
       path: "/",
