@@ -6,9 +6,11 @@ import Vue2Filters from 'vue2-filters'
 import {
   Icon
 } from 'leaflet'
+import DatetimePicker from "vuetify-datetime-picker";
 
 Vue.config.productionTip = false
 Vue.use(Vue2Filters)
+Vue.use(DatetimePicker)
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({

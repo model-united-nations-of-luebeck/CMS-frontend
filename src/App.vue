@@ -183,7 +183,11 @@ export default {
             { title: "Country Allocation", icon: "mdi-gesture-double-tap" },
             { title: "Locations", icon: "mdi-map-marker", action: "locations" },
             { title: "Events", icon: "mdi-calendar" },
-            { title: "Conference Settings", icon: "mdi-web", action: "/" },
+            {
+              title: "Conference Settings",
+              icon: "mdi-web",
+              action: "conference",
+            },
           ],
         },
         { title: "Secretariat", icon: "mdi-printer" },
