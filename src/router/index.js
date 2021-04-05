@@ -4,7 +4,8 @@ import Home from '@/components/Home'
 import Schools from '@/components/Schools'
 import Delegates from '@/components/Delegates'
 import Issues from '@/components/Issues'
-import Advisors from '@/components/Advisors'
+import Advisors from '@/components/advisors/Advisors'
+import AdvisorDetails from '@/components/advisors/AdvisorDetails'
 import MemberOrganizations from '@/components/MemberOrganizations'
 import Locations from '@/components/Locations'
 import Conference from '@/components/Conference'
@@ -36,6 +37,12 @@ export default new Router({
       path: '/advisors',
       name: 'Advisors',
       component: Advisors
+    },
+    {
+      path: '/advisors/:id',
+      name: 'AdvisorDetails',
+      component: AdvisorDetails,
+      props: true,
     },
     {
       path: '/member-organizations',
