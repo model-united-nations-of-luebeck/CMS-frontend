@@ -7,6 +7,7 @@ import Issues from '@/components/Issues'
 import Advisors from '@/components/Advisors'
 import MemberOrganizations from '@/components/MemberOrganizations'
 import Locations from '@/components/Locations'
+import Conference from '@/components/Conference'
 
 Vue.use(Router)
 
@@ -45,6 +46,11 @@ export default new Router({
       path: '/locations',
       name: 'Locations',
       component: Locations
+    },
+    {
+      path: '/conference',
+      name: 'Conference',
+      component: Conference
     },
   ],
   mode: 'history'
