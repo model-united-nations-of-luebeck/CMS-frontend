@@ -92,8 +92,8 @@
           showCurrentPage: true,
         }"
       >
-        <template #footer.page-text="props"
-          >Advisors {{ props.pageStart }}- {{ props.pageStop }} of
+        <template v-slot:[`footer.page-text`]="props"
+          >Advisors {{ props.pageStart }} - {{ props.pageStop }} of
           {{ props.itemsLength }}</template
         >
         <template v-slot:top>
@@ -115,10 +115,10 @@
             </v-card>
           </v-dialog>
         </template>
-        <template v-slot:item.name="{ item }">
+        <template v-slot:[`item.name`]="{ item }">
           {{ `${item.first_name} ${item.last_name}` }}
         </template>
-        <template v-slot:item.gender="{ item }">
+        <template v-slot:[`item.gender`]="{ item }">
           <tooltipped-icon
             v-if="item.gender == 'm'"
             icon="mdi-gender-male"
@@ -142,7 +142,7 @@
           />
         </template>
 
-        <template v-slot:item.email="{ item }">
+        <template v-slot:[`item.email`]="{ item }">
           <tooltipped-icon
             v-if="item.email"
             icon="mdi-email"
@@ -151,7 +151,7 @@
             @clicked="copyToClipboard(item.email)"
           />
         </template>
-        <template v-slot:item.mobile="{ item }">
+        <template v-slot:[`item.mobile`]="{ item }">
           <tooltipped-icon
             v-if="item.mobile"
             icon="mdi-phone"
@@ -160,7 +160,7 @@
             @clicked="copyToClipboard(item.mobile)"
           />
         </template>
-        <template v-slot:item.diet="{ item }">
+        <template v-slot:[`item.diet`]="{ item }">
           <tooltipped-icon
             v-if="item.diet == 'meat'"
             icon="mdi-food-steak"
@@ -183,7 +183,7 @@
             position="bottom"
           />
         </template>
-        <template v-slot:item.birthday="{ item }">
+        <template v-slot:[`item.birthday`]="{ item }">
           <v-chip
             class="ma-2"
             v-if="item.birthday"
@@ -192,7 +192,7 @@
             {{ item.birthday }}
           </v-chip>
         </template>
-        <template v-slot:item.car="{ item }">
+        <template v-slot:[`item.car`]="{ item }">
           <tooltipped-icon
             v-if="item.car"
             icon="mdi-car"
@@ -200,7 +200,7 @@
             position="bottom"
           />
         </template>
-        <template v-slot:item.extras="{ item }">
+        <template v-slot:[`item.extras`]="{ item }">
           <tooltipped-icon
             v-if="item.extras"
             icon="mdi-information-variant"
@@ -208,7 +208,7 @@
             position="bottom"
           />
         </template>
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:[`item.actions`]="{ item }">
           <v-btn
             small
             icon
