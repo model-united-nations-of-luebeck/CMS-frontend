@@ -207,27 +207,25 @@
       </v-card>
     </v-dialog>
 
-    <v-snackbar v-model="successSnackbar" color="success" timeout="2000">
-      The advisor has been successfully created.
-      <template v-slot:action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="successSnackbar = false">
-          OK
-        </v-btn>
-      </template>
-    </v-snackbar>
-    <v-snackbar v-model="errorSnackbar" color="error">
-      Creating advisor failed. Details: {{ errorMessage }}
-      <template v-slot:action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="errorSnackbar = false">
-          OK
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <toast-message
+      ref="successSnackbar"
+      message="The advisor has been successfully created."
+      color="success"
+      prepend_icon="mdi-check"
+    />
+    <toast-message
+      ref="errorSnackbar"
+      :message="'Creating advisor failed. Details:' + errorMessage"
+      color="error"
+      prepend_icon="mdi-alert"
+    />
   </div>
 </template>
 
 <script>
+import ToastMessage from "../generic/ToastMessage.vue";
 export default {
+  components: { ToastMessage },
   name: "AdvisorDialog",
 
   data: () => ({
@@ -255,8 +253,6 @@ export default {
     ],
     diets: ["meat", "vegetarian", "vegan"],
     uploadPercentage: 0,
-    successSnackbar: false,
-    errorSnackbar: false,
     errorMessage: "",
     valid: false,
     validationRules: {
@@ -327,7 +323,7 @@ export default {
         })
         .then((r) => {
           if (r.status == 201) {
-            this.successSnackbar = true;
+            this.$refs.successSnackbar.show();
             this.dialog = false;
           } else {
             console.log(r.status);
@@ -337,7 +333,7 @@ export default {
         .catch((e) => {
           console.log(e);
           this.errorMessage = e.message;
-          this.errorSnackbar = true;
+          this.$refs.errorMessage.show();
           this.advisor = this.defaultAdvisor;
         });
     },

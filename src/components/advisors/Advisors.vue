@@ -271,12 +271,23 @@
         </template>
       </v-data-table>
 
-      <v-snackbar v-model="copyToClipboardSuccess" timeout="1000">
-        <v-icon color="white">mdi-content-copy</v-icon>
-        <v-spacer></v-spacer>
-        <span>Copied to clipboard!</span>
-        <v-spacer></v-spacer>
-      </v-snackbar>
+      <toast-message
+        ref="copiedToClipboardSnackbar"
+        message="Copied to clipboard!"
+        prepend_icon="mdi-content-copy"
+      />
+      <toast-message
+        ref="deletedSnackbar"
+        message="Deleted successfully"
+        prepend_icon="mdi-check"
+        color="success"
+      />
+      <toast-message
+        ref="deletedErrorSnackbar"
+        message="Deletion wasn't successful"
+        prepend_icon="mdi-alert"
+        color="error"
+      />
     </v-container>
   </div>
 </template>
@@ -284,8 +295,9 @@
 <script>
 import AdvisorDialog from "./AdvisorDialog.vue";
 import TooltippedIcon from "../generic/TooltippedIcon.vue";
+import ToastMessage from "../generic/ToastMessage.vue";
 export default {
-  components: { AdvisorDialog, TooltippedIcon },
+  components: { AdvisorDialog, TooltippedIcon, ToastMessage },
   name: "Advisors",
 
   data: () => ({
@@ -322,7 +334,6 @@ export default {
       },
       { text: "", value: "data-table-select", groupable: false },
     ],
-    copyToClipboardSuccess: false,
   }),
   async mounted() {
     try {
@@ -367,7 +378,7 @@ export default {
         )
         .then((r) => {
           if (r.status == 204) {
-            alert("Deleted");
+            this.$refs.deletedSnackbar.show();
             //TODO: trigger page refresh
           } else {
             console.log(r.status);
@@ -375,7 +386,7 @@ export default {
         })
         .catch((e) => {
           console.log(e);
-          alert("Deletion wasn't successful");
+          this.$refs.deletedErrorSnackbar.show();
         });
       this.advisors.splice(this.editedIndex, 1);
       this.closeDeleteDialog();
@@ -408,7 +419,7 @@ export default {
     },
     copyToClipboard(text) {
       this.$copyText(text).then(() => {
-        this.copyToClipboardSuccess = true;
+        this.$refs.copiedToClipboardSnackbar.show();
       });
     },
   },
