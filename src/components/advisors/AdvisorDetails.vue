@@ -192,7 +192,7 @@
     </v-container>
 
     <v-snackbar v-model="successSnackbar" color="success" timeout="2000">
-      The advisor has been successfully created.
+      The advisor has been successfully updated.
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="successSnackbar = false">
           OK
@@ -200,7 +200,7 @@
       </template>
     </v-snackbar>
     <v-snackbar v-model="errorSnackbar" color="error">
-      Creating advisor failed. Details: {{ errorMessage }}
+      Updating advisor failed. Details: {{ errorMessage }}
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="errorSnackbar = false">
           OK
@@ -248,7 +248,6 @@ export default {
       diet: "vegetarian",
       help: "",
     },
-    dialog: false,
     birthdayMenu: false,
     genders: [
       { text: "male", value: "m" },
@@ -324,13 +323,6 @@ export default {
     }
   },
   methods: {
-    open() {
-      this.dialog = true;
-    },
-    cancel() {
-      this.dialog = false;
-      this.advisor = this.defaultAdvisor;
-    },
     saveBirthday(date) {
       this.$refs.birthdayMenu.save(date);
     },
@@ -360,7 +352,6 @@ export default {
         .then((r) => {
           if (r.status == 200) {
             this.successSnackbar = true;
-            this.dialog = false;
           } else {
             console.log(r.status);
           }
