@@ -333,7 +333,7 @@ export default {
         .catch((e) => {
           console.log(e);
           this.errorMessage = e.message;
-          this.$refs.errorMessage.show();
+          this.$refs.errorSnackbar.show();
           this.advisor = this.defaultAdvisor;
         });
     },
