@@ -7,7 +7,9 @@ import Issues from '@/components/Issues'
 import Advisors from '@/components/advisors/Advisors'
 import AdvisorDetails from '@/components/advisors/AdvisorDetails'
 import MemberOrganizations from '@/components/MemberOrganizations'
-import Locations from '@/components/Locations'
+import Locations from '@/components/locations/Locations'
+import LocationDetails from '@/components/locations/LocationDetails'
+import RoomDetails from '@/components/locations/RoomDetails'
 
 Vue.use(Router)
 
@@ -53,6 +55,23 @@ export default new Router({
       name: 'Locations',
       component: Locations
     },
+    {
+      path: '/rooms',
+      name: 'Rooms',
+      component: Locations //TODO: automatically select rooms tab in Locations component
+    },
+    {
+      path: '/locations/:id',
+      name: 'LocationDetails',
+      component: LocationDetails,
+      props: true
+    },
+    {
+      path: '/rooms/:id',
+      name: 'RoomDetails',
+      component: RoomDetails,
+      props: true
+    }
   ],
   mode: 'history'
 })
