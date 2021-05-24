@@ -91,11 +91,15 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
+                <v-btn color="gray" @click="signInViaSharePoint()">
+                  Single Sign On via MUNOL SharePoint
+                </v-btn>
                 <v-spacer />
                 <v-btn color="primary" @click="login">
                   Login
                 </v-btn>
               </v-card-actions>
+              Signed in as: {{ this.user ? this.user.name : "" }}
             </v-card>
           </v-col>
         </v-row>
@@ -111,10 +115,12 @@
 <script>
 import axios from "axios";
 import Vue from "vue";
+import { msalMixin } from "vue-msal";
 
 export default {
   name: "App",
   components: {},
+  mixins: [msalMixin],
   filters: {
     upper(value) {
       if (!value) return "";
@@ -198,6 +204,17 @@ export default {
     isAuthenticated() {
       return this.token ? true : false;
     },
+    user() {
+      let user = null;
+      if (this.msal.isAuthenticated) {
+        // Note that the dollar sign ($) is missing from this.msal
+        user = {
+          ...this.msal.user,
+          profile: {},
+        };
+      }
+      return user;
+    },
   },
   methods: {
     /**
@@ -235,6 +252,9 @@ export default {
       this.token = null;
       this.username = null;
       this.loggedout = true;
+    },
+    signInViaSharePoint() {
+      this.$msal.signIn();
     },
   },
 };

@@ -7,6 +7,7 @@ import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
 import VueClipboard from 'vue-clipboard2';
 import JsonCSV from 'vue-json-csv';
 import JsonExcel from 'vue-json-excel';
+import msal from 'vue-msal'
 import {
   Icon
 } from 'leaflet'
@@ -24,6 +25,13 @@ Vue.use(VueTelInputVuetify, {
 Vue.use(VueClipboard);
 Vue.component('downloadCsv',JsonCSV);
 Vue.component('downloadExcel',JsonExcel);
+Vue.use(msal, {
+  auth: {
+    clientId: 'INSERT CLIENT ID HERE',
+    authority: 'https://login.microsoftonline.com/VERZEICHNIS-ID (MANDANT)',
+    redirectUri: 'http://localhost:8080',
+  }
+});
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
