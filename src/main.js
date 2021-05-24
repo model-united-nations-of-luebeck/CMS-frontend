@@ -3,12 +3,20 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import router from './router'
 import Vue2Filters from 'vue2-filters'
+import msal from 'vue-msal'
 import {
   Icon
 } from 'leaflet'
 
 Vue.config.productionTip = false
 Vue.use(Vue2Filters)
+Vue.use(msal, {
+  auth: {
+    clientId: 'INSERT CLIENT ID HERE',
+    authority: 'https://login.microsoftonline.com/VERZEICHNIS-ID (MANDANT)',
+    redirectUri: 'http://localhost:8080',
+  }
+});
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
