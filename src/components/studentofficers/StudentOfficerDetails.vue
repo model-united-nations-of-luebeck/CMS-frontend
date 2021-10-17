@@ -6,7 +6,7 @@
         <v-row>
           <v-col cols="3">
             <v-text-field
-              v-model="executive.first_name"
+              v-model="studentofficer.first_name"
               label="First name *"
               hint="Including second names if wanted"
               prepend-icon="mdi-account"
@@ -16,7 +16,7 @@
           </v-col>
           <v-col cols="3">
             <v-text-field
-              v-model="executive.last_name"
+              v-model="studentofficer.last_name"
               label="Last name *"
               hint="Including prefixes like 'von', 'zu', 'de' etc."
               :rules="validationRules.lastNameRules"
@@ -24,7 +24,7 @@
           </v-col>
           <v-col cols="3">
             <v-select
-              v-model="executive.gender"
+              v-model="studentofficer.gender"
               :items="genders"
               label="Gender"
               hint="the diversity of genders is reflected in the 'other' choice"
@@ -41,7 +41,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="executive.birthday"
+                  v-model="studentofficer.birthday"
                   label="Birthday"
                   hint="in format YYYY-MM-DD"
                   prepend-icon="mdi-calendar"
@@ -51,7 +51,7 @@
               </template>
               <v-date-picker
                 ref="picker"
-                v-model="executive.birthday"
+                v-model="studentofficer.birthday"
                 :max="new Date().toISOString().substr(0, 10)"
                 min="1920-01-01"
                 @change="saveBirthday"
@@ -61,7 +61,7 @@
 
           <v-col cols="6">
             <v-text-field
-              v-model="executive.position_name"
+              v-model="studentofficer.position_name"
               label="Position *"
               hint=""
               prepend-icon="mdi-account"
@@ -71,24 +71,24 @@
           </v-col>
           <v-col cols="1">
             <v-checkbox
-              v-model="executive.position_level"
-              label="Head of"
-              append-icon="mdi-chair-rolling"
-              hint="Check if person is head of, uncheck if person is Assistant"
+              v-model="studentofficer.position_level"
+              label="Main? "
+              append-icon="mdi-forum"
+              hint="Check if person is main student officer or president, uncheck if person is vice chair person"
             ></v-checkbox>
           </v-col>
           <v-col cols="5">
-            <v-text-field
-              v-model="executive.department_name"
-              label="Department *"
-              hint=""
-              :rules="validationRules.departmentRules"
-            ></v-text-field>
+            <v-select
+              v-model="studentofficer.forum"
+              :items="forums"
+              label="Forum"
+              hint="select the forum of this student officer"
+            ></v-select>
           </v-col>
 
           <v-col cols="4">
             <v-text-field
-              v-model="executive.email"
+              v-model="studentofficer.email"
               label="Email"
               prepend-icon="mdi-email"
               :rules="validationRules.emailRules"
@@ -109,7 +109,7 @@
           </v-col>
           <v-col cols="4" style="padding-left: 0px;">
             <vue-tel-input-vuetify
-              v-model="executive.mobile"
+              v-model="studentofficer.mobile"
               label="Mobile Phone"
               prepend-icon="mdi-phone"
               defaultCountry="DE"
@@ -120,7 +120,7 @@
           </v-col>
           <v-col cols="3">
             <v-select
-              v-model="executive.diet"
+              v-model="studentofficer.diet"
               :items="diets"
               label="Diet *"
               hint="main diet, smaller variations like allergies shall be indicated in the extras field"
@@ -132,7 +132,7 @@
         <v-row>
           <v-col cols="6">
             <v-file-input
-              v-model="executive.picture"
+              v-model="studentofficer.picture"
               accept="image/*"
               label="Badge photo"
               hint="please provide a passport-style photo for the badge"
@@ -143,7 +143,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="executive.school_name"
+              v-model="studentofficer.school_name"
               label="School"
               prepend-icon="mdi-bank"
             ></v-text-field>
@@ -152,7 +152,7 @@
         <v-row>
           <v-col cols="12">
             <v-textarea
-              v-model="executive.extras"
+              v-model="studentofficer.extras"
               outlined
               auto-grow
               rows="3"
@@ -175,8 +175,8 @@
         </template>
       </v-progress-linear>
       <v-row>
-        <v-btn dark color="red" @click="deleteExecutive">
-          <v-icon left> mdi-delete </v-icon>Delete executive
+        <v-btn dark color="red" @click="deleteStudentOfficer">
+          <v-icon left> mdi-delete </v-icon>Delete student officer
         </v-btn>
         <v-spacer></v-spacer>
 
@@ -187,7 +187,7 @@
     </v-container>
 
     <v-snackbar v-model="successSnackbar" color="success" timeout="2000">
-      The executive has been successfully updated.
+      The student officer has been successfully updated.
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="successSnackbar = false">
           OK
@@ -195,7 +195,7 @@
       </template>
     </v-snackbar>
     <v-snackbar v-model="errorSnackbar" color="error">
-      Updating executive failed. Details: {{ errorMessage }}
+      Updating student officer failed. Details: {{ errorMessage }}
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="errorSnackbar = false">
           OK
@@ -203,11 +203,11 @@
       </template>
     </v-snackbar>
 
-    <v-dialog v-model="deleteExecutiveDialog" max-width="500px">
+    <v-dialog v-model="deleteStudentOfficerDialog" max-width="500px">
       <v-card>
-        <v-card-title>Delete executive?</v-card-title>
+        <v-card-title>Delete student officer?</v-card-title>
         <v-card-text
-          >Are you sure you want to delete this executive?
+          >Are you sure you want to delete this student officer?
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -225,11 +225,12 @@
 
 <script>
 export default {
-  name: "ExecutiveDialog",
+  name: "StudentOfficerDialog",
   props: ["id"],
   data: () => ({
-    executive: null,
-    defaultExecutive: {
+    studentofficer: null,
+    forums: null,
+    defaultStudentOfficer: {
       first_name: "",
       last_name: "",
       position_name: "",
@@ -252,14 +253,14 @@ export default {
     diets: ["meat", "vegetarian", "vegan"],
     breadcrumbs: [
       {
-        text: "Executives",
-        href: "/executives",
+        text: "Student Officers",
+        href: "/student-officers",
       },
       {
         text: "",
       },
     ],
-    deleteExecutiveDialog: false,
+    deleteStudentOfficerDialog: false,
     uploadPercentage: 0,
     successSnackbar: false,
     errorSnackbar: false,
@@ -287,10 +288,9 @@ export default {
           "Mobile phone number must be valid, remember country code",
       ],
       positionRules: [
-        (v) => !!v || "Please enter a position for this executive",
-        (v) => v.length <= 20 || "Name must be less than 20 characters",
+        (v) => !!v || "Please enter a position for this studentofficer",
       ],
-      departmentRules: [
+      schoolRules: [
         (v) => !!v || "Please enter a department for this delegate",
       ],
     },
@@ -302,12 +302,16 @@ export default {
   },
   async mounted() {
     try {
+      const { forums } = (
+        await this.$http.get("https://munoltom.pythonanywhere.com/api/forums/")
+      ).data;
+      this.forums = forums;
       if (this.id != undefined) {
         const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/executives/${this.id}`
+          `https://munoltom.pythonanywhere.com/api/student-officers/${this.id}`
         );
-        this.executive = data;
-        this.breadcrumbs[1].text = `${this.executive.first_name} ${this.executive.last_name}`;
+        this.studentofficer = data;
+        this.breadcrumbs[1].text = `${this.studentofficer.first_name} ${this.studentofficer.last_name}`;
       }
     } catch (error) {
       alert(error);
@@ -320,14 +324,14 @@ export default {
     async save() {
       // convert object to form data to also upload file
       const fd = new FormData();
-      for (const key in this.executive) {
-        if (this.executive[key] != null) {
-          fd.append(key, this.executive[key]);
+      for (const key in this.studentofficer) {
+        if (this.studentofficer[key] != null) {
+          fd.append(key, this.studentofficer[key]);
         }
       }
       await this.$http
         .put(
-          `https://munoltom.pythonanywhere.com/api/executives/${this.id}/`,
+          `https://munoltom.pythonanywhere.com/api/student-officers/${this.id}/`,
           fd,
           {
             headers: {
@@ -353,19 +357,19 @@ export default {
           this.errorSnackbar = true;
         });
     },
-    deleteExecutive() {
-      this.deleteExecutiveDialog = true;
+    deleteStudentOfficer() {
+      this.deleteStudentOfficerDialog = true;
     },
     async deleteItemConfirm() {
       await this.$http
         .delete(
-          `https://munoltom.pythonanywhere.com/api/executives/${this.id}/`,
+          `https://munoltom.pythonanywhere.com/api/student-officers/${this.id}/`,
           {}
         )
         .then((r) => {
           if (r.status == 204) {
             alert("Deleted");
-            //TODO: trigger load executives page
+            //TODO: trigger load studentofficers page
           } else {
             console.log(r.status);
           }
@@ -377,7 +381,7 @@ export default {
       this.closeDeleteDialog();
     },
     closeDeleteDialog() {
-      this.deleteExecutiveDialog = false;
+      this.deleteStudentOfficerDialog = false;
     },
   },
 };
