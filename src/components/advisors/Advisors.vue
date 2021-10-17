@@ -1,0 +1,427 @@
+<template>
+  <div>
+    <v-container>
+      <v-btn
+        @click="openNewAdvisorDialog"
+        fab
+        right
+        bottom
+        fixed
+        color="primary"
+        ><v-icon>mdi-account-plus</v-icon></v-btn
+      >
+      <advisor-dialog ref="newAdvisorDialog"></advisor-dialog>
+
+      <v-card-title>
+        Advisors
+
+        <v-spacer></v-spacer>
+        <v-btn
+          icon
+          @click="closeAll"
+          color="primary"
+          v-if="this.expanded.length != 0"
+        >
+          <tooltipped-icon
+            icon="mdi-unfold-less-horizontal"
+            text="close all rows"
+            position="top"
+        /></v-btn>
+        <v-btn
+          icon
+          @click="openAll"
+          color="primary"
+          v-if="this.expanded.length < this.advisors.length"
+          ><tooltipped-icon
+            icon="mdi-unfold-more-horizontal"
+            text="expand all rows"
+            position="top"
+        /></v-btn>
+        <v-btn
+          icon
+          :href="download"
+          download="data.json"
+          color="primary"
+          v-if="this.selected.length != 0"
+          ><tooltipped-icon
+            icon="mdi-download"
+            text="download data of selected advisors as JSON"
+            position="top"
+        /></v-btn>
+        <v-btn icon color="primary" v-if="this.selected.length != 0"
+          ><download-csv :data="selected">
+            <tooltipped-icon
+              icon="mdi-file-delimited"
+              text="download data of selected advisors as CSV"
+              position="top"
+            /> </download-csv
+        ></v-btn>
+        <v-btn icon color="primary" v-if="this.selected.length != 0"
+          ><download-excel :data="selected">
+            <tooltipped-icon
+              icon="mdi-microsoft-excel"
+              text="download data of selected advisors as Excel file (xls)"
+              position="top"
+            /> </download-excel
+        ></v-btn>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+          autofocus
+        ></v-text-field>
+      </v-card-title>
+
+      <v-data-table
+        :headers="headers"
+        :items="advisors"
+        class="elevation-1"
+        show-expand
+        :expanded.sync="expanded"
+        show-select
+        v-model="selected"
+        :search="search"
+        :itemsPerPage="-1"
+        :footer-props="{
+          showFirstLastPage: true,
+          itemsPerPageOptions: [5, 15, -1],
+          itemsPerPageText: 'Advisors per page:',
+          showCurrentPage: true,
+        }"
+      >
+        <template v-slot:[`footer.page-text`]="props"
+          >Advisors {{ props.pageStart }} - {{ props.pageStop }} of
+          {{ props.itemsLength }}</template
+        >
+        <template v-slot:top>
+          <v-dialog v-model="deleteAdvisorDialog" max-width="500px">
+            <v-card>
+              <v-card-title>Delete advisor?</v-card-title>
+              <v-card-text
+                >Are you sure you want to delete this advisor?
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeDeleteDialog"
+                  >Cancel</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                  >OK</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </template>
+        <template v-slot:[`item.name`]="{ item }">
+          {{ `${item.first_name} ${item.last_name}` }}
+        </template>
+        <template v-slot:[`item.gender`]="{ item }">
+          <tooltipped-icon
+            v-if="item.gender == 'm'"
+            icon="mdi-gender-male"
+            text="male"
+            position="bottom"
+            color="blue"
+          />
+          <tooltipped-icon
+            v-if="item.gender == 'f'"
+            icon="mdi-gender-female"
+            text="female"
+            position="bottom"
+            color="pink"
+          />
+          <tooltipped-icon
+            v-if="item.gender == 'o'"
+            icon="mdi-gender-male-female"
+            text="other"
+            position="bottom"
+            color="green"
+          />
+        </template>
+
+        <template v-slot:[`item.email`]="{ item }">
+          <tooltipped-icon
+            v-if="item.email"
+            icon="mdi-email"
+            :text="item.email + ' (click to copy)'"
+            position="bottom"
+            @clicked="copyToClipboard(item.email)"
+          />
+        </template>
+        <template v-slot:[`item.mobile`]="{ item }">
+          <tooltipped-icon
+            v-if="item.mobile"
+            icon="mdi-phone"
+            :text="item.mobile + ' (click to copy)'"
+            position="bottom"
+            @clicked="copyToClipboard(item.mobile)"
+          />
+        </template>
+        <template v-slot:[`item.diet`]="{ item }">
+          <tooltipped-icon
+            v-if="item.diet == 'meat'"
+            icon="mdi-food-steak"
+            text="meat"
+            color="red"
+            position="bottom"
+          />
+          <tooltipped-icon
+            v-if="item.diet == 'vegetarian'"
+            icon="mdi-egg"
+            color="#ffbb00"
+            text="vegetarian"
+            position="bottom"
+          />
+          <tooltipped-icon
+            v-if="item.diet == 'vegan'"
+            icon="mdi-sprout"
+            color="green"
+            text="vegan"
+            position="bottom"
+          />
+        </template>
+        <template v-slot:[`item.birthday`]="{ item }">
+          <v-chip
+            class="ma-2"
+            v-if="item.birthday"
+            :color="birthdayColor(item.birthday)"
+          >
+            {{ item.birthday }}
+          </v-chip>
+        </template>
+        <template v-slot:[`item.car`]="{ item }">
+          <tooltipped-icon
+            v-if="item.car"
+            icon="mdi-car"
+            text="car available"
+            position="bottom"
+          />
+        </template>
+        <template v-slot:[`item.extras`]="{ item }">
+          <tooltipped-icon
+            v-if="item.extras"
+            icon="mdi-information-variant"
+            :text="item.extras"
+            position="bottom"
+          />
+        </template>
+        <template v-slot:[`item.actions`]="{ item }">
+          <v-btn
+            small
+            icon
+            :to="{ name: 'AdvisorDetails', params: { id: item.id } }"
+          >
+            <v-icon small color="primary">
+              mdi-pencil
+            </v-icon>
+          </v-btn>
+          <v-btn small icon @click="deleteAdvisor(item)">
+            <v-icon small color="red">
+              mdi-delete
+            </v-icon>
+          </v-btn>
+        </template>
+        <template v-slot:expanded-item="{ headers, item }">
+          <td :colspan="headers.length">
+            <v-row
+              ><v-col sm="3">
+                <v-textarea
+                  label="Availability during conference"
+                  outlined
+                  rows="3"
+                  readonly
+                  no-resize
+                  v-model="item.availability"
+                ></v-textarea> </v-col
+              ><v-col sm="3">
+                <v-textarea
+                  label="Experience"
+                  outlined
+                  rows="3"
+                  readonly
+                  no-resize
+                  v-model="item.experience"
+                ></v-textarea> </v-col
+              ><v-col sm="3">
+                <v-textarea
+                  label="Support areas"
+                  outlined
+                  rows="3"
+                  readonly
+                  no-resize
+                  v-model="item.help"
+                ></v-textarea>
+              </v-col>
+
+              <v-col sm="3"
+                ><v-img
+                  contain
+                  max-height="100"
+                  max-width="250"
+                  :src="item.picture"
+                ></v-img> </v-col
+            ></v-row>
+          </td>
+        </template>
+        <template v-slot:no-data>
+          <span>No advisors available!</span>
+        </template>
+      </v-data-table>
+
+      <toast-message
+        ref="copiedToClipboardSnackbar"
+        message="Copied to clipboard!"
+        prepend_icon="mdi-content-copy"
+      />
+      <toast-message
+        ref="deletedSnackbar"
+        message="Deleted successfully"
+        prepend_icon="mdi-check"
+        color="success"
+      />
+      <toast-message
+        ref="deletedErrorSnackbar"
+        message="Deletion wasn't successful"
+        prepend_icon="mdi-alert"
+        color="error"
+      />
+    </v-container>
+  </div>
+</template>
+
+<script>
+import AdvisorDialog from "./AdvisorDialog.vue";
+import TooltippedIcon from "../generic/TooltippedIcon.vue";
+import ToastMessage from "../generic/ToastMessage.vue";
+export default {
+  components: { AdvisorDialog, TooltippedIcon, ToastMessage },
+  name: "Advisors",
+
+  data: () => ({
+    advisors: [],
+    conference: null,
+    search: "",
+    expanded: [],
+    selected: [],
+    editedIndex: null,
+    editedItem: { first_name: "", last_name: "" },
+    newAdvisorDialog: false,
+    deleteAdvisorDialog: false,
+    headers: [
+      { text: "", value: "data-table-expand", groupable: false },
+      {
+        text: "Name",
+        align: "start",
+        sortable: true,
+        value: "name",
+        groupable: false,
+      },
+      { text: "Gender", value: "gender" },
+      { text: "Email", value: "email", groupable: false },
+      { text: "Mobile", value: "mobile", groupable: false },
+      { text: "Diet", value: "diet" },
+      { text: "Birthday", value: "birthday", groupable: false },
+      { text: "Car", value: "car" },
+      { text: "Extras", value: "extras", groupable: false },
+      {
+        text: "Actions",
+        value: "actions",
+        sortable: false,
+        groupable: false,
+      },
+      { text: "", value: "data-table-select", groupable: false },
+    ],
+  }),
+  async mounted() {
+    try {
+      const [conference] = (
+        await this.$http.get(
+          "https://munoltom.pythonanywhere.com/api/conferences/"
+        )
+      ).data;
+      this.conference = conference;
+      const { data } = await this.$http.get(
+        "https://munoltom.pythonanywhere.com/api/advisors/"
+      );
+      this.advisors = data;
+    } catch (error) {
+      alert(error);
+    }
+  },
+  filters: {},
+  computed: {
+    download() {
+      // downloads selected items as JSON
+      const json_encoded = JSON.stringify(this.selected, null, 4);
+      const blob = new Blob([json_encoded], { type: "application/json" });
+      return window.URL.createObjectURL(blob);
+    },
+  },
+  methods: {
+    openNewAdvisorDialog() {
+      this.$refs.newAdvisorDialog.open();
+    },
+    deleteAdvisor(item) {
+      this.editedIndex = this.advisors.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.deleteAdvisorDialog = true;
+    },
+
+    async deleteItemConfirm() {
+      await this.$http
+        .delete(
+          `https://munoltom.pythonanywhere.com/api/advisors/${this.editedItem.id}/`,
+          {}
+        )
+        .then((r) => {
+          if (r.status == 204) {
+            this.$refs.deletedSnackbar.show();
+            //TODO: trigger page refresh
+          } else {
+            console.log(r.status);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.$refs.deletedErrorSnackbar.show();
+        });
+      this.advisors.splice(this.editedIndex, 1);
+      this.closeDeleteDialog();
+    },
+    closeDeleteDialog() {
+      this.deleteAdvisorDialog = false;
+      this.editedIndex = null;
+      this.editedItem = null;
+    },
+    closeAll() {
+      console.log(this.expanded);
+      this.expanded = [];
+    },
+    openAll() {
+      this.expanded = this.advisors;
+    },
+    birthdayColor(dateString) {
+      const date = new Date(dateString);
+      const difference = new Date(this.conference.startdate) - date;
+      const years = difference / (1000 * 60 * 60 * 24 * 365);
+      if (years < 16) {
+        return "red";
+      } else if (years < 18) {
+        return "orange";
+      } else if (years >= 18) {
+        return "green";
+      } else {
+        return "gray";
+      }
+    },
+    copyToClipboard(text) {
+      this.$copyText(text).then(() => {
+        this.$refs.copiedToClipboardSnackbar.show();
+      });
+    },
+  },
+};
+</script>

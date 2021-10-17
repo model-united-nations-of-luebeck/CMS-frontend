@@ -6,7 +6,7 @@
     :top="position == 'top'"
   >
     <template v-slot:activator="{ on }">
-      <v-icon v-on="on" :color="color">{{ icon }}</v-icon>
+      <v-icon v-on="on" @click="clicked" :color="color">{{ icon }}</v-icon>
     </template>
     <span>{{ text }}</span>
   </v-tooltip>
@@ -22,6 +22,11 @@ export default {
     position: {
       type: String,
       default: "bottom",
+    },
+  },
+  methods: {
+    clicked() {
+      this.$emit("clicked");
     },
   },
 };
