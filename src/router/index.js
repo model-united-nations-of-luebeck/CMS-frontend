@@ -7,14 +7,10 @@ import Issues from '@/components/Issues'
 import Advisors from '@/components/advisors/Advisors'
 import AdvisorDetails from '@/components/advisors/AdvisorDetails'
 import MemberOrganizations from '@/components/MemberOrganizations'
-<<<<<<< HEAD
-import Locations from '@/components/Locations'
 import Conference from '@/components/Conference'
-=======
 import Locations from '@/components/locations/Locations'
 import LocationDetails from '@/components/locations/LocationDetails'
 import RoomDetails from '@/components/locations/RoomDetails'
->>>>>>> fa12d60 (Added location management)
 
 Vue.use(Router)
 
