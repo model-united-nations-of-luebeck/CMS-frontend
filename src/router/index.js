@@ -6,6 +6,8 @@ import Delegates from '@/components/Delegates'
 import Issues from '@/components/Issues'
 import Advisors from '@/components/advisors/Advisors'
 import AdvisorDetails from '@/components/advisors/AdvisorDetails'
+import Executives from '@/components/executives/Executives'
+import ExecutiveDetails from '@/components/executives/ExecutiveDetails'
 import MemberOrganizations from '@/components/MemberOrganizations'
 import Conference from '@/components/Conference'
 import Locations from '@/components/locations/Locations'
@@ -44,6 +46,17 @@ export default new Router({
       path: '/advisors/:id',
       name: 'AdvisorDetails',
       component: AdvisorDetails,
+      props: true,
+    },
+    {
+      path: '/executives',
+      name: 'Executives',
+      component: Executives
+    },
+    {
+      path: '/executives/:id',
+      name: 'ExecutiveDetails',
+      component: ExecutiveDetails,
       props: true,
     },
     {
