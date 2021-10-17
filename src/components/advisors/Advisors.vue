@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-container>
+      <!-- Floating action button -->
       <v-btn
         @click="openNewAdvisorDialog"
         fab
@@ -10,8 +11,10 @@
         color="primary"
         ><v-icon>mdi-account-plus</v-icon></v-btn
       >
+      <!-- Dialog for creating new advisors -->
       <advisor-dialog ref="newAdvisorDialog"></advisor-dialog>
 
+      <!-- Header with actions -->
       <v-card-title>
         Advisors
 
@@ -75,6 +78,7 @@
         ></v-text-field>
       </v-card-title>
 
+      <!-- Table with advisors -->
       <v-data-table
         :headers="headers"
         :items="advisors"
@@ -97,6 +101,7 @@
           {{ props.itemsLength }}</template
         >
         <template v-slot:top>
+          <!-- delete advisor dialog -->
           <v-dialog v-model="deleteAdvisorDialog" max-width="500px">
             <v-card>
               <v-card-title>Delete advisor?</v-card-title>
@@ -302,7 +307,7 @@ export default {
 
   data: () => ({
     advisors: [],
-    conference: null,
+    conference: null, // required to calculate age of participants at beginning of conference
     search: "",
     expanded: [],
     selected: [],
@@ -336,6 +341,7 @@ export default {
     ],
   }),
   async mounted() {
+    // fetch required data for this page
     try {
       const [conference] = (
         await this.$http.get(
@@ -351,7 +357,6 @@ export default {
       alert(error);
     }
   },
-  filters: {},
   computed: {
     download() {
       // downloads selected items as JSON
