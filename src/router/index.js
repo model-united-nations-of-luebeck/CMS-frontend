@@ -10,6 +10,8 @@ import Executives from '@/components/executives/Executives'
 import ExecutiveDetails from '@/components/executives/ExecutiveDetails'
 import StudentOfficers from '@/components/studentofficers/StudentOfficers'
 import StudentOfficerDetails from '@/components/studentofficers/StudentOfficerDetails'
+import Staffs from '@/components/staffs/Staffs'
+import StaffDetails from '@/components/staffs/StaffDetails'
 import MemberOrganizations from '@/components/MemberOrganizations'
 import Conference from '@/components/Conference'
 import Locations from '@/components/locations/Locations'
@@ -70,6 +72,17 @@ export default new Router({
       path: '/student-officers/:id',
       name: 'StudentOfficerDetails',
       component: StudentOfficerDetails,
+      props: true,
+    },
+    {
+      path: '/staffs',
+      name: 'Staffs',
+      component: Staffs
+    },
+    {
+      path: '/staffs/:id',
+      name: 'StaffDetails',
+      component: StaffDetails,
       props: true,
     },
     {
