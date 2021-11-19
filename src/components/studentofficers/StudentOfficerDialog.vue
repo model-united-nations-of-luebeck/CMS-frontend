@@ -40,7 +40,7 @@
                   <v-text-field
                     v-model="studentofficer.position_name"
                     label="Position *"
-                    hint=""
+                    hint="e.g. Chairman, Chairwoman, President, ... but NOT the entire title like 'Vice-Chairman of the First Committee' this will be generated automatically"
                     prepend-icon="mdi-account"
                     :rules="validationRules.positionRules"
                     required
