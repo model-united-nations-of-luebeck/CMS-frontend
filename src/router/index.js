@@ -4,6 +4,8 @@ import Home from '@/components/Home'
 import Schools from '@/components/Schools'
 import Delegates from '@/components/delegates/Delegates'
 import DelegateDetails from '@/components/delegates/DelegateDetails'
+import MUNDirectors from '@/components/mundirectors/MUNDirectors'
+import MUNDirectorDetails from '@/components/mundirectors/MUNDirectorDetails'
 import Issues from '@/components/Issues'
 import Advisors from '@/components/advisors/Advisors'
 import AdvisorDetails from '@/components/advisors/AdvisorDetails'
@@ -57,6 +59,17 @@ export default new Router({
       path: '/delegates/:id',
       name: 'DelegateDetails',
       component: DelegateDetails,
+      props: true,
+    },
+    {
+      path: '/mun-directors',
+      name: 'MUNDirectors',
+      component: MUNDirectors
+    },
+    {
+      path: '/mun-directors/:id',
+      name: 'MUNDirectorDetails',
+      component: MUNDirectorDetails,
       props: true,
     },
     {
