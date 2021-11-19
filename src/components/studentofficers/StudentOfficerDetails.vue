@@ -225,7 +225,7 @@
 
 <script>
 export default {
-  name: "StudentOfficerDialog",
+  name: "StudentOfficerDetails",
   props: ["id"],
   data: () => ({
     studentofficer: null,

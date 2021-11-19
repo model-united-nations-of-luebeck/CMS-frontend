@@ -225,7 +225,7 @@
 
 <script>
 export default {
-  name: "ExecutiveDialog",
+  name: "ExecutiveDetails",
   props: ["id"],
   data: () => ({
     executive: null,

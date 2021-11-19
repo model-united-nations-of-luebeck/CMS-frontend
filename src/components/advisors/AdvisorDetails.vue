@@ -230,7 +230,7 @@
 
 <script>
 export default {
-  name: "AdvisorDialog",
+  name: "AdvisorDetails",
   props: ["id"],
   data: () => ({
     advisor: null,

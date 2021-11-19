@@ -208,7 +208,7 @@
 
 <script>
 export default {
-  name: "StaffDialog",
+  name: "StaffDetails",
   props: ["id"],
   data: () => ({
     staff: null,

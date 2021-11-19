@@ -177,7 +177,7 @@
 
 <script>
 export default {
-  name: "DelegateDialog",
+  name: "DelegateDetails",
   props: ["id"],
   data: () => ({
     delegate: null,
