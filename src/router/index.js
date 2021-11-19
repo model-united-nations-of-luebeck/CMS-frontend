@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Schools from '@/components/Schools'
-import Delegates from '@/components/Delegates'
+import Delegates from '@/components/delegates/Delegates'
+import DelegateDetails from '@/components/delegates/DelegateDetails'
 import Issues from '@/components/Issues'
 import Advisors from '@/components/advisors/Advisors'
 import AdvisorDetails from '@/components/advisors/AdvisorDetails'
@@ -32,11 +33,6 @@ export default new Router({
       component: Schools
     },
     {
-      path: '/delegates',
-      name: 'Delegates',
-      component: Delegates
-    },
-    {
       path: '/issues',
       name: 'Issues',
       component: Issues
@@ -50,6 +46,17 @@ export default new Router({
       path: '/advisors/:id',
       name: 'AdvisorDetails',
       component: AdvisorDetails,
+      props: true,
+    },
+    {
+      path: '/delegates',
+      name: 'Delegates',
+      component: Delegates
+    },
+    {
+      path: '/delegates/:id',
+      name: 'DelegateDetails',
+      component: DelegateDetails,
       props: true,
     },
     {
