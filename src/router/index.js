@@ -2,10 +2,19 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Schools from '@/components/Schools'
-import Delegates from '@/components/Delegates'
+import Delegates from '@/components/delegates/Delegates'
+import DelegateDetails from '@/components/delegates/DelegateDetails'
+import MUNDirectors from '@/components/mundirectors/MUNDirectors'
+import MUNDirectorDetails from '@/components/mundirectors/MUNDirectorDetails'
 import Issues from '@/components/Issues'
 import Advisors from '@/components/advisors/Advisors'
 import AdvisorDetails from '@/components/advisors/AdvisorDetails'
+import Executives from '@/components/executives/Executives'
+import ExecutiveDetails from '@/components/executives/ExecutiveDetails'
+import StudentOfficers from '@/components/studentofficers/StudentOfficers'
+import StudentOfficerDetails from '@/components/studentofficers/StudentOfficerDetails'
+import Staffs from '@/components/staffs/Staffs'
+import StaffDetails from '@/components/staffs/StaffDetails'
 import MemberOrganizations from '@/components/MemberOrganizations'
 import Conference from '@/components/Conference'
 import Locations from '@/components/locations/Locations'
@@ -26,11 +35,6 @@ export default new Router({
       component: Schools
     },
     {
-      path: '/delegates',
-      name: 'Delegates',
-      component: Delegates
-    },
-    {
       path: '/issues',
       name: 'Issues',
       component: Issues
@@ -44,6 +48,61 @@ export default new Router({
       path: '/advisors/:id',
       name: 'AdvisorDetails',
       component: AdvisorDetails,
+      props: true,
+    },
+    {
+      path: '/delegates',
+      name: 'Delegates',
+      component: Delegates
+    },
+    {
+      path: '/delegates/:id',
+      name: 'DelegateDetails',
+      component: DelegateDetails,
+      props: true,
+    },
+    {
+      path: '/mun-directors',
+      name: 'MUNDirectors',
+      component: MUNDirectors
+    },
+    {
+      path: '/mun-directors/:id',
+      name: 'MUNDirectorDetails',
+      component: MUNDirectorDetails,
+      props: true,
+    },
+    {
+      path: '/executives',
+      name: 'Executives',
+      component: Executives
+    },
+    {
+      path: '/executives/:id',
+      name: 'ExecutiveDetails',
+      component: ExecutiveDetails,
+      props: true,
+    },
+    {
+      path: '/student-officers',
+      name: 'StudentOfficers',
+      component: StudentOfficers
+    },
+    {
+      path: '/student-officers/:id',
+      name: 'StudentOfficerDetails',
+      component: StudentOfficerDetails,
+      props: true,
+    },
+    {
+      path: '/staffs',
+      name: 'Staffs',
+      component: Staffs
+    },
+    {
+      path: '/staffs/:id',
+      name: 'StaffDetails',
+      component: StaffDetails,
       props: true,
     },
     {

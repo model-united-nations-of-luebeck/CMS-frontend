@@ -6,7 +6,7 @@
         <v-row>
           <v-col cols="3">
             <v-text-field
-              v-model="advisor.first_name"
+              v-model="staff.first_name"
               label="First name *"
               hint="Including second names if wanted"
               prepend-icon="mdi-account"
@@ -16,7 +16,7 @@
           </v-col>
           <v-col cols="3">
             <v-text-field
-              v-model="advisor.last_name"
+              v-model="staff.last_name"
               label="Last name *"
               hint="Including prefixes like 'von', 'zu', 'de' etc."
               :rules="validationRules.lastNameRules"
@@ -24,7 +24,7 @@
           </v-col>
           <v-col cols="3">
             <v-select
-              v-model="advisor.gender"
+              v-model="staff.gender"
               :items="genders"
               label="Gender"
               hint="the diversity of genders is reflected in the 'other' choice"
@@ -41,7 +41,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="advisor.birthday"
+                  v-model="staff.birthday"
                   label="Birthday"
                   hint="in format YYYY-MM-DD"
                   prepend-icon="mdi-calendar"
@@ -51,16 +51,36 @@
               </template>
               <v-date-picker
                 ref="picker"
-                v-model="advisor.birthday"
+                v-model="staff.birthday"
                 :max="new Date().toISOString().substr(0, 10)"
                 min="1920-01-01"
                 @change="saveBirthday"
               ></v-date-picker>
             </v-menu>
           </v-col>
+
+          <v-col cols="6">
+            <v-text-field
+              v-model="staff.position_name"
+              label="Position *"
+              hint=""
+              prepend-icon="mdi-account"
+              :rules="validationRules.positionRules"
+              required
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="6">
+            <v-text-field
+              v-model="staff.school_name"
+              label="School"
+              prepend-icon="mdi-bank"
+            ></v-text-field>
+          </v-col>
+
           <v-col cols="4">
             <v-text-field
-              v-model="advisor.email"
+              v-model="staff.email"
               label="Email"
               prepend-icon="mdi-email"
               :rules="validationRules.emailRules"
@@ -81,7 +101,7 @@
           </v-col>
           <v-col cols="4" style="padding-left: 0px;">
             <vue-tel-input-vuetify
-              v-model="advisor.mobile"
+              v-model="staff.mobile"
               label="Mobile Phone"
               prepend-icon="mdi-phone"
               defaultCountry="DE"
@@ -92,7 +112,7 @@
           </v-col>
           <v-col cols="3">
             <v-select
-              v-model="advisor.diet"
+              v-model="staff.diet"
               :items="diets"
               label="Diet *"
               hint="main diet, smaller variations like allergies shall be indicated in the extras field"
@@ -102,9 +122,9 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="8">
+          <v-col cols="12">
             <v-file-input
-              v-model="advisor.picture"
+              v-model="staff.picture"
               accept="image/*"
               label="Badge photo"
               hint="please provide a passport-style photo for the badge"
@@ -113,19 +133,11 @@
               truncate-length="15"
             ></v-file-input>
           </v-col>
-          <v-col cols="4"
-            ><v-checkbox
-              v-model="advisor.car"
-              label="Car available?"
-              append-icon="mdi-car-side"
-              hint="Do you have a car available and a valid drivers license?"
-            ></v-checkbox
-          ></v-col>
         </v-row>
         <v-row>
-          <v-col cols="6">
+          <v-col cols="12">
             <v-textarea
-              v-model="advisor.extras"
+              v-model="staff.extras"
               outlined
               auto-grow
               rows="3"
@@ -133,39 +145,7 @@
               hint="please include here all additional information about diet, allergies, preferences etc. so that we can try to provide a perfect conference"
             ></v-textarea>
           </v-col>
-          <v-col cols="6">
-            <v-textarea
-              v-model="advisor.availability"
-              outlined
-              auto-grow
-              rows="3"
-              label="Availibility during conference"
-              hint="Please specify on which days and nighs you will attend the conference and give your advice"
-            ></v-textarea>
-          </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="6">
-            <v-textarea
-              v-model="advisor.experience"
-              outlined
-              auto-grow
-              rows="3"
-              label="MUN Experience"
-              hint="Please specify which role you had in former MUNOL sessions and other conferences, e.g. 'School Management 2019'"
-            ></v-textarea> </v-col
-          ><v-col cols="6"
-            ><v-textarea
-              v-model="advisor.help"
-              outlined
-              auto-grow
-              rows="3"
-              label="Areas of help *"
-              hint="In which areas would you like to support the team?"
-              :rules="validationRules.helpRules"
-              required
-            ></v-textarea></v-col
-        ></v-row>
       </v-form>
       <small>*indicates required field</small>
       <v-progress-linear
@@ -180,8 +160,8 @@
         </template>
       </v-progress-linear>
       <v-row>
-        <v-btn dark color="red" @click="deleteAdvisor">
-          <v-icon left> mdi-delete </v-icon>Delete advisor
+        <v-btn dark color="red" @click="deleteStaff">
+          <v-icon left> mdi-delete </v-icon>Delete staff
         </v-btn>
         <v-spacer></v-spacer>
 
@@ -192,7 +172,7 @@
     </v-container>
 
     <v-snackbar v-model="successSnackbar" color="success" timeout="2000">
-      The advisor has been successfully updated.
+      The staff has been successfully updated.
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="successSnackbar = false">
           OK
@@ -200,7 +180,7 @@
       </template>
     </v-snackbar>
     <v-snackbar v-model="errorSnackbar" color="error">
-      Updating advisor failed. Details: {{ errorMessage }}
+      Updating staff failed. Details: {{ errorMessage }}
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="errorSnackbar = false">
           OK
@@ -208,12 +188,10 @@
       </template>
     </v-snackbar>
 
-    <v-dialog v-model="deleteAdvisorDialog" max-width="500px">
+    <v-dialog v-model="deleteStaffDialog" max-width="500px">
       <v-card>
-        <v-card-title>Delete advisor?</v-card-title>
-        <v-card-text
-          >Are you sure you want to delete this advisor?
-        </v-card-text>
+        <v-card-title>Delete staff?</v-card-title>
+        <v-card-text>Are you sure you want to delete this staff? </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="closeDeleteDialog"
@@ -230,23 +208,21 @@
 
 <script>
 export default {
-  name: "AdvisorDetails",
+  name: "StaffDetails",
   props: ["id"],
   data: () => ({
-    advisor: null,
-    defaultAdvisor: {
+    staff: null,
+    defaultStaff: {
       first_name: "",
       last_name: "",
+      position_name: "",
+      school_name: "",
       gender: "f",
       email: "",
       mobile: "",
       extras: "",
-      availability: "",
-      car: false,
-      experience: "",
       birthday: null,
       diet: "vegetarian",
-      help: "",
     },
     birthdayMenu: false,
     genders: [
@@ -257,14 +233,14 @@ export default {
     diets: ["meat", "vegetarian", "vegan"],
     breadcrumbs: [
       {
-        text: "Advisors",
-        href: "/advisors",
+        text: "Staffs",
+        href: "/staffs",
       },
       {
         text: "",
       },
     ],
-    deleteAdvisorDialog: false,
+    deleteStaffDialog: false,
     uploadPercentage: 0,
     successSnackbar: false,
     errorSnackbar: false,
@@ -291,10 +267,9 @@ export default {
           /^\+[1-9]{1}[0-9]{3,14}$/.test(v) ||
           "Mobile phone number must be valid, remember country code",
       ],
-      helpRules: [
-        (v) =>
-          !!v ||
-          "Please enter an area of help, advisors are supposed to support",
+      positionRules: [
+        (v) => !!v || "Please enter a position for this staff",
+        (v) => v.length <= 20 || "Name must be less than 20 characters",
       ],
     },
   }),
@@ -305,18 +280,12 @@ export default {
   },
   async mounted() {
     try {
-      const [conference] = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
-        )
-      ).data;
-      this.conference = conference;
       if (this.id != undefined) {
         const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/advisors/${this.id}`
+          `https://munoltom.pythonanywhere.com/api/staffs/${this.id}`
         );
-        this.advisor = data;
-        this.breadcrumbs[1].text = `${this.advisor.first_name} ${this.advisor.last_name}`;
+        this.staff = data;
+        this.breadcrumbs[1].text = `${this.staff.first_name} ${this.staff.last_name}`;
       }
     } catch (error) {
       alert(error);
@@ -329,26 +298,22 @@ export default {
     async save() {
       // convert object to form data to also upload file
       const fd = new FormData();
-      for (const key in this.advisor) {
-        if (this.advisor[key] != null) {
-          fd.append(key, this.advisor[key]);
+      for (const key in this.staff) {
+        if (this.staff[key] != null) {
+          fd.append(key, this.staff[key]);
         }
       }
       await this.$http
-        .put(
-          `https://munoltom.pythonanywhere.com/api/advisors/${this.id}/`,
-          fd,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = Math.round(
-                (progressEvent.loaded * 100.0) / progressEvent.total
-              );
-            }.bind(this),
-          }
-        )
+        .put(`https://munoltom.pythonanywhere.com/api/staffs/${this.id}/`, fd, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: function (progressEvent) {
+            this.uploadPercentage = Math.round(
+              (progressEvent.loaded * 100.0) / progressEvent.total
+            );
+          }.bind(this),
+        })
         .then((r) => {
           if (r.status == 200) {
             this.successSnackbar = true;
@@ -362,19 +327,19 @@ export default {
           this.errorSnackbar = true;
         });
     },
-    deleteAdvisor() {
-      this.deleteAdvisorDialog = true;
+    deleteStaff() {
+      this.deleteStaffDialog = true;
     },
     async deleteItemConfirm() {
       await this.$http
         .delete(
-          `https://munoltom.pythonanywhere.com/api/advisors/${this.id}/`,
+          `https://munoltom.pythonanywhere.com/api/staffs/${this.id}/`,
           {}
         )
         .then((r) => {
           if (r.status == 204) {
             alert("Deleted");
-            //TODO: trigger load advisors page
+            //TODO: trigger load staffs page
           } else {
             console.log(r.status);
           }
@@ -386,7 +351,7 @@ export default {
       this.closeDeleteDialog();
     },
     closeDeleteDialog() {
-      this.deleteAdvisorDialog = false;
+      this.deleteStaffDialog = false;
     },
   },
 };
