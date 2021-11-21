@@ -4,9 +4,9 @@
       <v-breadcrumbs :items="breadcrumbs" divider="/"></v-breadcrumbs>
       <v-form v-model="valid">
         <v-row>
-          <v-col cols="12" sm="4">
+          <v-col cols="12" sm="8">
             <v-text-field
-              v-model="forum.name"
+              v-model="issue.name"
               label="Name *"
               hint="e.g. 'First Committee', 'Economic and Social Council'"
               prepend-icon="mdi-message"
@@ -15,49 +15,20 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="4">
-            <v-text-field
-              v-model="forum.subtitle"
-              label="Explanatory Subtitle"
-              prepend-icon="mdi-text"
-              hint="e.g. 'Disarmament and International Security'"
-              :rules="validationRules.subtitleRules"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="2">
-            <v-text-field
-              v-model="forum.abbreviation"
-              prepend-icon="mdi-text-short"
-              label="Abbreviated forum name"
-              hint="e.g. 'GA1', 'ECOSOC'"
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="12" sm="2">
-            <v-text-field
-              v-model="forum.email"
-              label="Email"
-              prepend-icon="mdi-email"
-              hint="Email will be displayed on website"
-              :rules="validationRules.emailRules"
-            ></v-text-field>
+            <v-select
+              v-model="issue.forum"
+              :items="forums"
+              prepend-icon="mdi-message"
+              label="Forum"
+              hint="select the forum of this issue"
+            ></v-select>
           </v-col>
         </v-row>
       </v-form>
       <small>*indicates required field</small>
-      <v-progress-linear
-        v-model="uploadPercentage"
-        v-if="uploadPercentage"
-        color="primary"
-        height="25"
-        striped
-      >
-        <template v-slot:default="{ value }">
-          <strong>{{ Math.ceil(value) }}%</strong>
-        </template>
-      </v-progress-linear>
       <v-row>
-        <v-btn dark color="red" @click="deleteForum">
-          <v-icon left> mdi-delete </v-icon>Delete forum
+        <v-btn dark color="red" @click="deleteIssue">
+          <v-icon left> mdi-delete </v-icon>Delete issue
         </v-btn>
         <v-spacer></v-spacer>
 
@@ -68,7 +39,7 @@
     </v-container>
 
     <v-snackbar v-model="successSnackbar" color="success" timeout="2000">
-      The forum has been successfully updated.
+      The issue has been successfully updated.
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="successSnackbar = false">
           OK
@@ -76,7 +47,7 @@
       </template>
     </v-snackbar>
     <v-snackbar v-model="errorSnackbar" color="error">
-      Updating forum failed. Details: {{ errorMessage }}
+      Updating issue failed. Details: {{ errorMessage }}
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="errorSnackbar = false">
           OK
@@ -84,10 +55,10 @@
       </template>
     </v-snackbar>
 
-    <v-dialog v-model="deleteForumDialog" max-width="500px">
+    <v-dialog v-model="deleteIssueDialog" max-width="500px">
       <v-card>
-        <v-card-title>Delete forum?</v-card-title>
-        <v-card-text>Are you sure you want to delete this forum? </v-card-text>
+        <v-card-title>Delete issue?</v-card-title>
+        <v-card-text>Are you sure you want to delete this issue? </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="closeDeleteDialog"
@@ -104,11 +75,12 @@
 
 <script>
 export default {
-  name: "ForumDetails",
+  name: "IssueDetails",
   props: ["id"],
   data: () => ({
-    forum: null,
-    defaultForum: {
+    issue: null,
+    forums: null,
+    defaultIssue: {
       name: "",
       abbreviation: "",
       subtitle: "",
@@ -116,14 +88,14 @@ export default {
     },
     breadcrumbs: [
       {
-        text: "Forums",
-        href: "/forums",
+        text: "Issues on the Agenda",
+        href: "/issues",
       },
       {
         text: "",
       },
     ],
-    deleteForumDialog: false,
+    deleteIssueDialog: false,
     uploadPercentage: 0,
     successSnackbar: false,
     errorSnackbar: false,
@@ -150,11 +122,21 @@ export default {
     try {
       if (this.id != undefined) {
         const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/forums/${this.id}`
+          `https://munoltom.pythonanywhere.com/api/issues/${this.id}`
         );
-        this.forum = data;
-        this.breadcrumbs[1].text = `${this.forum.name}`;
+        this.issue = data;
+        this.breadcrumbs[1].text = `${this.issue.forum}: ${this.issue.name}`;
       }
+    } catch (error) {
+      alert(error);
+    }
+
+    // fetch required data for this page
+    try {
+      const { forums } = (
+        await this.$http.get("https://munoltom.pythonanywhere.com/api/forums/")
+      ).data;
+      this.forums = forums;
     } catch (error) {
       alert(error);
     }
@@ -166,13 +148,13 @@ export default {
     async save() {
       // convert object to form data to also upload file
       const fd = new FormData();
-      for (const key in this.forum) {
-        if (this.forum[key] != null) {
-          fd.append(key, this.forum[key]);
+      for (const key in this.issue) {
+        if (this.issue[key] != null) {
+          fd.append(key, this.issue[key]);
         }
       }
       await this.$http
-        .put(`https://munoltom.pythonanywhere.com/api/forums/${this.id}/`, fd, {
+        .put(`https://munoltom.pythonanywhere.com/api/issues/${this.id}/`, fd, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -195,19 +177,19 @@ export default {
           this.errorSnackbar = true;
         });
     },
-    deleteForum() {
-      this.deleteForumDialog = true;
+    deleteIssue() {
+      this.deleteIssueDialog = true;
     },
     async deleteItemConfirm() {
       await this.$http
         .delete(
-          `https://munoltom.pythonanywhere.com/api/forums/${this.id}/`,
+          `https://munoltom.pythonanywhere.com/api/issues/${this.id}/`,
           {}
         )
         .then((r) => {
           if (r.status == 204) {
             alert("Deleted");
-            //TODO: trigger load forums page
+            //TODO: trigger load issues page
           } else {
             console.log(r.status);
           }
@@ -219,7 +201,7 @@ export default {
       this.closeDeleteDialog();
     },
     closeDeleteDialog() {
-      this.deleteForumDialog = false;
+      this.deleteIssueDialog = false;
     },
   },
 };

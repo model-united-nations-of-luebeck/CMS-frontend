@@ -6,7 +6,6 @@ import Delegates from '@/components/delegates/Delegates'
 import DelegateDetails from '@/components/delegates/DelegateDetails'
 import MUNDirectors from '@/components/mundirectors/MUNDirectors'
 import MUNDirectorDetails from '@/components/mundirectors/MUNDirectorDetails'
-import Issues from '@/components/Issues'
 import Advisors from '@/components/advisors/Advisors'
 import AdvisorDetails from '@/components/advisors/AdvisorDetails'
 import Executives from '@/components/executives/Executives'
@@ -18,6 +17,8 @@ import StaffDetails from '@/components/staffs/StaffDetails'
 import MemberOrganizations from '@/components/MemberOrganizations'
 import Forums from '@/components/forums/Forums'
 import ForumDetails from '@/components/forums/ForumDetails'
+import Issues from '@/components/issues/Issues'
+import IssueDetails from '@/components/issues/IssueDetails'
 import Conference from '@/components/Conference'
 import Locations from '@/components/locations/Locations'
 import LocationDetails from '@/components/locations/LocationDetails'
@@ -35,11 +36,6 @@ export default new Router({
       path: '/schools',
       name: 'Schools',
       component: Schools
-    },
-    {
-      path: '/issues',
-      name: 'Issues',
-      component: Issues
     },
     {
       path: '/advisors',
@@ -121,6 +117,17 @@ export default new Router({
       path: '/forums/:id',
       name: 'ForumDetails',
       component: ForumDetails,
+      props: true,
+    },
+    {
+      path: '/issues',
+      name: 'Issues',
+      component: Issues
+    },
+    {
+      path: '/issues/:id',
+      name: 'IssueDetails',
+      component: IssueDetails,
       props: true,
     },
     {
