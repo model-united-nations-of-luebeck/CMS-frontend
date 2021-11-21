@@ -174,7 +174,7 @@ export default {
               icon: "mdi-flag-variant",
               action: "member-organizations",
             },
-            { title: "Forums", icon: "mdi-forum" },
+            { title: "Forums", icon: "mdi-forum", action: "forums" },
             {
               title: "Issues",
               icon: "mdi-format-list-bulleted-type",

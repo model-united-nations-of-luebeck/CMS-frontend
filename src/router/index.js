@@ -16,6 +16,8 @@ import StudentOfficerDetails from '@/components/studentofficers/StudentOfficerDe
 import Staffs from '@/components/staffs/Staffs'
 import StaffDetails from '@/components/staffs/StaffDetails'
 import MemberOrganizations from '@/components/MemberOrganizations'
+import Forums from '@/components/forums/Forums'
+import ForumDetails from '@/components/forums/ForumDetails'
 import Conference from '@/components/Conference'
 import Locations from '@/components/locations/Locations'
 import LocationDetails from '@/components/locations/LocationDetails'
@@ -109,6 +111,17 @@ export default new Router({
       path: '/member-organizations',
       name: 'MemberOrganizations',
       component: MemberOrganizations
+    },
+    {
+      path: '/forums',
+      name: 'Forums',
+      component: Forums
+    },
+    {
+      path: '/forums/:id',
+      name: 'ForumDetails',
+      component: ForumDetails,
+      props: true,
     },
     {
       path: '/locations',
