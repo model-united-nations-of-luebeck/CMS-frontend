@@ -17,7 +17,9 @@
           <v-col cols="12" sm="4">
             <v-select
               v-model="issue.forum"
-              :items="forums"
+              :items="this.forums"
+              item-text="name"
+              item-value="id"
               prepend-icon="mdi-message"
               label="Forum"
               hint="select the forum of this issue"
@@ -118,28 +120,25 @@ export default {
     },
   }),
   watch: {},
-  async mounted() {
-    try {
-      if (this.id != undefined) {
-        const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/issues/${this.id}`
-        );
-        this.issue = data;
-        this.breadcrumbs[1].text = `${this.issue.forum}: ${this.issue.name}`;
-      }
-    } catch (error) {
-      alert(error);
+  mounted() {
+    if (this.id != undefined) {
+      this.$http
+        .get(`https://munoltom.pythonanywhere.com/api/issues/${this.id}`)
+        .then((response) => {
+          this.issue = response.data;
+          this.breadcrumbs[1].text = `${this.issue.forum}: ${this.issue.name}`;
+        })
+        .catch((error) => alert(error));
     }
 
     // fetch required data for this page
-    try {
-      const { forums } = (
-        await this.$http.get("https://munoltom.pythonanywhere.com/api/forums/")
-      ).data;
-      this.forums = forums;
-    } catch (error) {
-      alert(error);
-    }
+
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/forums/")
+      .then((response) => {
+        this.forums = response.data;
+      })
+      .catch((error) => alert(error));
   },
   methods: {
     saveBirthday(date) {

@@ -13,7 +13,7 @@
                   <v-text-field
                     v-model="issue.name"
                     label="Name *"
-                    hint="e.g. 'First Committee', 'Economic and Social Council'"
+                    hint="Official Issue title as on the Agenda"
                     prepend-icon="mdi-format-list-bulleted-type"
                     :rules="validationRules.nameRules"
                     required
@@ -23,6 +23,8 @@
                   <v-select
                     v-model="issue.forum"
                     :items="forums"
+                    item-text="name"
+                    item-value="id"
                     prepend-icon="mdi-message"
                     label="Forum"
                     hint="select the forum of this issue"
@@ -97,18 +99,14 @@ export default {
     },
   }),
   watch: {},
-  async mounted() {
+  mounted() {
     this.issue = this.defaultIssue;
-
-    // fetch required data for this page
-    try {
-      const { forums } = (
-        await this.$http.get("https://munoltom.pythonanywhere.com/api/forums/")
-      ).data;
-      this.forums = forums;
-    } catch (error) {
-      alert(error);
-    }
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/forums/")
+      .then((response) => {
+        this.forums = response.data;
+      })
+      .catch((error) => alert(error));
   },
   methods: {
     open() {

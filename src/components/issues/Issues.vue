@@ -71,7 +71,6 @@
           autofocus
         ></v-text-field>
       </v-card-title>
-
       <!-- Table with issues -->
       <v-data-table
         :headers="headers"
@@ -114,6 +113,9 @@
         </template>
         <template v-slot:[`item.name`]="{ item }">
           {{ item.name }}
+        </template>
+        <template v-slot:[`item.forum`]="{ item }">
+          {{ forums.find((forum) => forum.id === item.forum).name }}
         </template>
         <template v-slot:[`item.actions`]="{ item }">
           <v-btn
@@ -167,7 +169,7 @@ export default {
 
   data: () => ({
     issues: [],
-    forums: null,
+    forums: [],
     conference: null, // required to calculate age of participants at beginning of conference
     search: "",
     expanded: [],
@@ -199,22 +201,28 @@ export default {
       { text: "", value: "data-table-select", groupable: false },
     ],
   }),
-  async mounted() {
+  mounted() {
     // fetch required data for this page
-    try {
-      const [conference] = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
-        )
-      ).data;
-      this.conference = conference;
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/issues/"
-      );
-      this.issues = data;
-    } catch (error) {
-      alert(error);
-    }
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/conferences/")
+      .then((response) => {
+        this.conference = response.data;
+      })
+      .catch((error) => alert(error));
+
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/issues/")
+      .then((response) => {
+        this.issues = response.data;
+      })
+      .catch((error) => alert(error));
+
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/forums/")
+      .then((response) => {
+        this.forums = response.data;
+      })
+      .catch((error) => alert(error));
   },
   computed: {
     download() {
