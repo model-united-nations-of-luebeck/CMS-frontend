@@ -81,6 +81,8 @@
             <v-select
               v-model="studentofficer.forum"
               :items="forums"
+              item-text="name"
+              item-value="id"
               label="Forum"
               hint="select the forum of this student officer"
             ></v-select>
@@ -300,21 +302,23 @@ export default {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
     },
   },
-  async mounted() {
-    try {
-      const { forums } = (
-        await this.$http.get("https://munoltom.pythonanywhere.com/api/forums/")
-      ).data;
-      this.forums = forums;
-      if (this.id != undefined) {
-        const { data } = await this.$http.get(
+  mounted() {
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/forums/")
+      .then((response) => {
+        this.forums = response.data;
+      })
+      .catch((error) => alert(error));
+    if (this.id != undefined) {
+      this.$http
+        .get(
           `https://munoltom.pythonanywhere.com/api/student-officers/${this.id}`
-        );
-        this.studentofficer = data;
-        this.breadcrumbs[1].text = `${this.studentofficer.first_name} ${this.studentofficer.last_name}`;
-      }
-    } catch (error) {
-      alert(error);
+        )
+        .then((response) => {
+          this.studentofficer = response.data;
+          this.breadcrumbs[1].text = `${this.studentofficer.first_name} ${this.studentofficer.last_name}`;
+        })
+        .catch((error) => alert(error));
     }
   },
   methods: {

@@ -59,6 +59,8 @@
                     v-model="studentofficer.forum"
                     :items="forums"
                     label="Forum"
+                    item-text="name"
+                    item-value="id"
                     hint="select the forum of this student officer"
                   ></v-select>
                 </v-col>
@@ -280,18 +282,16 @@ export default {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
     },
   },
-  async mounted() {
+  mounted() {
     this.studentofficer = this.defaultStudentOfficer;
 
     // fetch required data for this page
-    try {
-      const { forums } = (
-        await this.$http.get("https://munoltom.pythonanywhere.com/api/forums/")
-      ).data;
-      this.forums = forums;
-    } catch (error) {
-      alert(error);
-    }
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/forums/")
+      .then((response) => {
+        this.forums = response.data;
+      })
+      .catch((error) => alert(error));
   },
   methods: {
     open() {

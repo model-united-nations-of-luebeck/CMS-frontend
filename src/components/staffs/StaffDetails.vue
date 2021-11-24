@@ -278,17 +278,15 @@ export default {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
     },
   },
-  async mounted() {
-    try {
-      if (this.id != undefined) {
-        const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/staffs/${this.id}`
-        );
-        this.staff = data;
-        this.breadcrumbs[1].text = `${this.staff.first_name} ${this.staff.last_name}`;
-      }
-    } catch (error) {
-      alert(error);
+  mounted() {
+    if (this.id != undefined) {
+      this.$http
+        .get(`https://munoltom.pythonanywhere.com/api/staffs/${this.id}`)
+        .then((response) => {
+          this.staff = response.data;
+          this.breadcrumbs[1].text = `${this.staff.first_name} ${this.staff.last_name}`;
+        })
+        .catch((error) => alert(error));
     }
   },
   methods: {

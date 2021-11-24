@@ -146,17 +146,15 @@ export default {
     },
   }),
   watch: {},
-  async mounted() {
-    try {
-      if (this.id != undefined) {
-        const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/forums/${this.id}`
-        );
-        this.forum = data;
-        this.breadcrumbs[1].text = `${this.forum.name}`;
-      }
-    } catch (error) {
-      alert(error);
+  mounted() {
+    if (this.id != undefined) {
+      this.$http
+        .get(`https://munoltom.pythonanywhere.com/api/forums/${this.id}`)
+        .then((response) => {
+          this.forum = response.data;
+          this.breadcrumbs[1].text = `${this.forum.name}`;
+        })
+        .catch((error) => alert(error));
     }
   },
   methods: {

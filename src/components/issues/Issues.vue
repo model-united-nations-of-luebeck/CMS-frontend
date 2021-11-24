@@ -170,7 +170,6 @@ export default {
   data: () => ({
     issues: [],
     forums: [],
-    conference: null, // required to calculate age of participants at beginning of conference
     search: "",
     expanded: [],
     selected: [],
@@ -203,13 +202,6 @@ export default {
   }),
   mounted() {
     // fetch required data for this page
-    this.$http
-      .get("https://munoltom.pythonanywhere.com/api/conferences/")
-      .then((response) => {
-        this.conference = response.data;
-      })
-      .catch((error) => alert(error));
-
     this.$http
       .get("https://munoltom.pythonanywhere.com/api/issues/")
       .then((response) => {

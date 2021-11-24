@@ -126,13 +126,10 @@ export default {
         .get(`https://munoltom.pythonanywhere.com/api/issues/${this.id}`)
         .then((response) => {
           this.issue = response.data;
-          this.breadcrumbs[1].text = `${this.issue.forum}: ${this.issue.name}`;
+          this.breadcrumbs[1].text = `${this.issue.name}`;
         })
         .catch((error) => alert(error));
     }
-
-    // fetch required data for this page
-
     this.$http
       .get("https://munoltom.pythonanywhere.com/api/forums/")
       .then((response) => {

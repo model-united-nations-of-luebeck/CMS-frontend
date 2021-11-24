@@ -327,24 +327,20 @@ export default {
       deletedRoomItem: null,
     };
   },
-  async mounted() {
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/locations/"
-      );
-      this.locations = data;
-    } catch (error) {
-      alert(error);
-    }
+  mounted() {
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/locations/")
+      .then((response) => {
+        this.locations = response.data;
+      })
+      .catch((error) => alert(error));
 
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/rooms/"
-      );
-      this.rooms = data;
-    } catch (error) {
-      alert(error);
-    }
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/rooms/")
+      .then((response) => {
+        this.rooms = response.data;
+      })
+      .catch((error) => alert(error));
   },
   methods: {
     deleteLocation(locationID) {

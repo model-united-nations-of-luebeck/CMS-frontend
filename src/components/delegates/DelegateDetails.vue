@@ -241,24 +241,14 @@ export default {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
     },
   },
-  async mounted() {
-    try {
-      const [conference] = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
-        )
-      ).data;
-      this.conference = conference;
-      if (this.id != undefined) {
-        const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/delegates/${this.id}`
-        );
-        this.delegate = data;
+  mounted() {
+    this.$http
+      .get(`https://munoltom.pythonanywhere.com/api/delegates/${this.id}`)
+      .then((response) => {
+        this.delegate = response.data;
         this.breadcrumbs[1].text = `${this.delegate.first_name} ${this.delegate.last_name}`;
-      }
-    } catch (error) {
-      alert(error);
-    }
+      })
+      .catch((error) => alert(error));
   },
   methods: {
     saveBirthday(date) {

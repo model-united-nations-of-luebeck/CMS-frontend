@@ -293,22 +293,20 @@ export default {
       { text: "", value: "data-table-select", groupable: false },
     ],
   }),
-  async mounted() {
+  mounted() {
     // fetch required data for this page
-    try {
-      const [conference] = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
-        )
-      ).data;
-      this.conference = conference;
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/student-officers/"
-      );
-      this.studentofficers = data;
-    } catch (error) {
-      alert(error);
-    }
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/conferences/")
+      .then((response) => {
+        [this.conference] = response.data;
+      })
+      .catch((error) => console.trace(`%c ${error}", "#FF0000`));
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/student-officers/")
+      .then((response) => {
+        this.studentofficers = response.data;
+      })
+      .catch((error) => alert(error));
   },
   computed: {
     download() {
