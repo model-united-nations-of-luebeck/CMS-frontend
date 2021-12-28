@@ -182,7 +182,7 @@ export default {
             },
             { title: "Country Allocation", icon: "mdi-gesture-double-tap" },
             { title: "Locations", icon: "mdi-map-marker", action: "locations" },
-            { title: "Events", icon: "mdi-calendar" },
+            { title: "Events", icon: "mdi-calendar", action: "events" },
             {
               title: "Conference Settings",
               icon: "mdi-web",
@@ -241,7 +241,7 @@ export default {
 </script>
 
 <style>
-header {
+.v-application--wrap > header {
   z-index: 6 !important;
 }
 

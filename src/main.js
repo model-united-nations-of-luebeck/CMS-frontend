@@ -16,6 +16,7 @@ Vue.config.productionTip = false
 Vue.use(Vue2Filters)
 Vue.use(DatetimePicker)
 
+
 Vue.use(VueTelInputVuetify, {
   vuetify,
   placeholder: '',

@@ -23,6 +23,7 @@ import Conference from '@/components/Conference'
 import Locations from '@/components/locations/Locations'
 import LocationDetails from '@/components/locations/LocationDetails'
 import RoomDetails from '@/components/locations/RoomDetails'
+import Events from '@/components/events/Events'
 
 Vue.use(Router)
 
@@ -156,7 +157,12 @@ export default new Router({
       name: 'RoomDetails',
       component: RoomDetails,
       props: true
-    }
+    },{
+      path: '/events',
+      name: 'Events',
+      component: Events,
+      props: true
+    },
   ],
   mode: 'history'
 })

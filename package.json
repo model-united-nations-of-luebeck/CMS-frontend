@@ -19,7 +19,7 @@
     "vue-tel-input-vuetify": "^1.2.16",
     "vue2-filters": "^0.9.1",
     "vue2-leaflet": "^2.5.2",
-    "vuetify": "^2.4.9",
+    "vuetify": "^2.6.0",
     "vuetify-datetime-picker": "^2.1.1"
   },
   "devDependencies": {
