@@ -24,6 +24,7 @@ import Locations from '@/components/locations/Locations'
 import LocationDetails from '@/components/locations/LocationDetails'
 import RoomDetails from '@/components/locations/RoomDetails'
 import Events from '@/components/events/Events'
+import CountryAllocation from '@/components/countryallocation/CountryAllocation'
 
 Vue.use(Router)
 
@@ -161,7 +162,10 @@ export default new Router({
       path: '/events',
       name: 'Events',
       component: Events,
-      props: true
+    },{
+      path: '/country-allocation',
+      name: 'CountryAllocation',
+      component: CountryAllocation,
     },
   ],
   mode: 'history'

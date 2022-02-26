@@ -180,7 +180,11 @@ export default {
               icon: "mdi-format-list-bulleted-type",
               action: "issues",
             },
-            { title: "Country Allocation", icon: "mdi-gesture-double-tap" },
+            {
+              title: "Country Allocation",
+              icon: "mdi-gesture-double-tap",
+              action: "country-allocation",
+            },
             { title: "Locations", icon: "mdi-map-marker", action: "locations" },
             { title: "Events", icon: "mdi-calendar", action: "events" },
             {
