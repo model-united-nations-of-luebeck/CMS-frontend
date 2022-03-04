@@ -175,5 +175,7 @@ export default new Router({
     },
   ],
   mode: 'history',
-
+  base: process.env.NODE_ENV === 'production'     
+  ? '/trix/cms/'     
+  : '/'
 })
