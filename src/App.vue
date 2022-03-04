@@ -137,7 +137,6 @@ export default {
         {
           title: "Registration",
           icon: "mdi-account-plus",
-          action: "registration",
           items: [
             { title: "Schools", icon: "mdi-bank", action: "schools" },
             {
@@ -167,7 +166,6 @@ export default {
         {
           title: "Administration",
           icon: "mdi-folder-settings-variant",
-          action: "administration",
           items: [
             {
               title: "Member Organizations",
@@ -194,7 +192,22 @@ export default {
             },
           ],
         },
-        { title: "Secretariat", icon: "mdi-printer" },
+        {
+          title: "Secretariat",
+          icon: "mdi-printer",
+          items: [
+            {
+              title: "Printing",
+              icon: "mdi-printer",
+              action: "printing",
+            },
+            {
+              title: "Insights",
+              icon: "mdi-lightbulb-on",
+              action: "insights",
+            },
+          ],
+        },
       ],
     };
   },

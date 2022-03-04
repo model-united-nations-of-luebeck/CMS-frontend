@@ -25,6 +25,7 @@ import LocationDetails from '@/components/locations/LocationDetails'
 import RoomDetails from '@/components/locations/RoomDetails'
 import Events from '@/components/events/Events'
 import CountryAllocation from '@/components/countryallocation/CountryAllocation'
+import Printing from '@/components/Printing'
 
 Vue.use(Router)
 
@@ -167,6 +168,12 @@ export default new Router({
       name: 'CountryAllocation',
       component: CountryAllocation,
     },
+    {
+      path: '/printing',
+      name: 'Printing',
+      component: Printing
+    },
   ],
-  mode: 'history'
+  mode: 'history',
+
 })
