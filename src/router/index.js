@@ -26,6 +26,7 @@ import RoomDetails from '@/components/locations/RoomDetails'
 import Events from '@/components/events/Events'
 import CountryAllocation from '@/components/countryallocation/CountryAllocation'
 import Printing from '@/components/Printing'
+import Insights from '@/components/insights/Insights'
 
 Vue.use(Router)
 
@@ -172,6 +173,11 @@ export default new Router({
       path: '/printing',
       name: 'Printing',
       component: Printing
+    },
+    {
+      path: '/insights',
+      name: 'Insights',
+      component: Insights
     },
   ],
   mode: 'history',

@@ -11,10 +11,12 @@ import {
   Icon
 } from 'leaflet'
 import DatetimePicker from "vuetify-datetime-picker";
+import HighchartsVue from 'highcharts-vue'
 
 Vue.config.productionTip = false
 Vue.use(Vue2Filters)
 Vue.use(DatetimePicker)
+Vue.use(HighchartsVue)
 
 
 Vue.use(VueTelInputVuetify, {
