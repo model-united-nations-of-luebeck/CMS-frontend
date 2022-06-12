@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "HousingChart",
-  props: { male: Number, female: Number, diverse: Number, title: String },
+  props: { data: Object },
   data: () => ({
     chartOptions: {
       chart: {
@@ -63,11 +63,35 @@ export default {
       ],
     },
   }),
+  watch: {
+    data(newData) {
+      this.chartOptions.series[0].data = [
+        newData.delegates.guest_family,
+        newData.schools.guest_family,
+      ];
+      this.chartOptions.series[1].data = [
+        newData.delegates.hostel,
+        newData.schools.hostel,
+      ];
+      this.chartOptions.series[2].data = [
+        newData.delegates.other,
+        newData.schools.other,
+      ];
+    },
+  },
   mounted() {
-    this.chartOptions.series[0].data[0].y = this.male;
-    this.chartOptions.series[0].data[1].y = this.female;
-    this.chartOptions.series[0].data[2].y = this.diverse;
-    this.chartOptions.title.text = this.title;
+    this.chartOptions.series[0].data = [
+      this.data.delegates.guest_family,
+      this.data.schools.guest_family,
+    ];
+    this.chartOptions.series[1].data = [
+      this.data.delegates.hostel,
+      this.data.schools.hostel,
+    ];
+    this.chartOptions.series[2].data = [
+      this.data.delegates.other,
+      this.data.schools.other,
+    ];
   },
 };
 </script>

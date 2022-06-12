@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "DietChart",
-  props: { male: Number, female: Number, diverse: Number, title: String },
+  props: { data: Object },
   data: () => ({
     chartOptions: {
       colors: ["red", "orange", "limegreen"],
@@ -63,11 +63,17 @@ export default {
       ],
     },
   }),
+  watch: {
+    data(newData) {
+      this.chartOptions.series[0].data[0].y = newData.meat;
+      this.chartOptions.series[0].data[1].y = newData.vegetarian;
+      this.chartOptions.series[0].data[2].y = newData.vegan;
+    },
+  },
   mounted() {
-    this.chartOptions.series[0].data[0].y = this.male;
-    this.chartOptions.series[0].data[1].y = this.female;
-    this.chartOptions.series[0].data[2].y = this.diverse;
-    this.chartOptions.title.text = this.title;
+    this.chartOptions.series[0].data[0].y = this.data.meat;
+    this.chartOptions.series[0].data[1].y = this.data.vegetarian;
+    this.chartOptions.series[0].data[2].y = this.data.vegan;
   },
 };
 </script>

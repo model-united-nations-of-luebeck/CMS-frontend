@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container grid-list-md>
-      <v-layout row wrap>
+      <v-layout row>
         <v-flex d-flex xs12 sm5 md5>
           <v-card>
             <v-card-title
@@ -22,31 +22,41 @@
               >
                 <v-carousel-item>
                   <gender-chart
-                    :participants="participants"
+                    :male="gender.participant.male"
+                    :female="gender.participant.female"
+                    :other="gender.participant.other"
                     title="All participants"
                   ></gender-chart>
                 </v-carousel-item>
                 <v-carousel-item>
                   <gender-chart
-                    :participants="delegates"
+                    :male="gender.delegate.male"
+                    :female="gender.delegate.female"
+                    :other="gender.delegate.other"
                     title="Delegates"
                   ></gender-chart>
                 </v-carousel-item>
                 <v-carousel-item>
                   <gender-chart
-                    :participants="student_officers"
+                    :male="gender.studentofficer.male"
+                    :female="gender.studentofficer.female"
+                    :other="gender.studentofficer.other"
                     title="Student Officers"
                   ></gender-chart>
                 </v-carousel-item>
                 <v-carousel-item>
                   <gender-chart
-                    :participants="staffs"
+                    :male="gender.staff.male"
+                    :female="gender.staff.female"
+                    :other="gender.staff.other"
                     title="Staff"
                   ></gender-chart>
                 </v-carousel-item>
                 <v-carousel-item>
                   <gender-chart
-                    :participants="executives"
+                    :male="gender.executive.male"
+                    :female="gender.executive.female"
+                    :other="gender.executive.other"
                     title="Executives"
                   ></gender-chart>
                 </v-carousel-item>
@@ -66,14 +76,7 @@
                 is.
               </p>
 
-              <age-chart
-                :delegates="delegates"
-                :executives="executives"
-                :student_officers="student_officers"
-                :mundirectors="mundirectors"
-                :advisors="advisors"
-                :staffs="staffs"
-              ></age-chart>
+              <age-chart :age_stats="age_stats"></age-chart>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -87,43 +90,43 @@
                 and might need a new wristband:
               </p>
               <ul>
-                <li><a href="">XXX</a> on YYY</li>
+                <li v-for="birthday in birthdays" :key="birthday">
+                  <a href="">{{ birthday.name }}</a> on {{ birthday.date }}
+                </li>
               </ul>
             </v-card-text>
           </v-card>
         </v-flex>
 
         <v-flex d-flex xs12 sm8 md8>
-          <v-card>
+          <v-card width="100%">
             <v-card-title
               ><v-icon left>mdi-home-export-outline</v-icon>Origin</v-card-title
             >
             <v-card-text>
               <p>
-                See where the participants come from See where the participants
-                come fromSee where the participants come fromSee where the
-                participants come fromSee where the participants come from
+                See where the participants come from
               </p>
               <v-row no-gutters>
                 <v-col cols="12" sm="7">
                   <v-card elevation="0">
-                    <origin-chart
-                      :male="10"
-                      :female="20"
-                      :diverse="1"
-                      :title="group"
-                    ></origin-chart>
+                    <origin-chart :data="origin_data"></origin-chart>
                   </v-card>
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-col cols="12" sm="4"
                   ><v-card elevation="0">
-                    <h3>Participating schools from:</h3>
-                    <ol>
-                      <li v-for="country in countries" :key="country">
-                        {{ country }}
-                      </li>
-                    </ol>
+                    <h3>Participating delegates from:</h3>
+                    <div style="height: 300px; overflow: scroll;">
+                      <ol>
+                        <li
+                          v-for="country in delegates_from_countries"
+                          :key="country"
+                        >
+                          {{ country.school__country }}: {{ country.total }}
+                        </li>
+                      </ol>
+                    </div>
                   </v-card>
                 </v-col>
               </v-row>
@@ -143,12 +146,7 @@
                 abroad how are in the housing, only Delegates.
               </p>
 
-              <housing-chart
-                :male="10"
-                :female="20"
-                :diverse="1"
-                :title="group"
-              ></housing-chart>
+              <housing-chart :data="housing_data"></housing-chart>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -165,12 +163,7 @@
                 week.
               </p>
 
-              <diet-chart
-                :male="10"
-                :female="20"
-                :diverse="1"
-                :title="group"
-              ></diet-chart>
+              <diet-chart :data="diet_data"></diet-chart>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -199,47 +192,52 @@
                   <tbody>
                     <tr>
                       <td>Number of forums</td>
-                      <td>11</td>
+                      <td>{{ stats.number_of_forums }}</td>
                     </tr>
                     <tr>
                       <td>Number of issues</td>
-                      <td>50</td>
+                      <td>{{ stats.number_of_issues }}</td>
                     </tr>
                     <tr>
                       <td>Number of simulated member organizations</td>
-                      <td>59</td>
+                      <td>
+                        {{ stats.number_of_simulated_member_organizations }}
+                      </td>
                     </tr>
                     <tr>
                       <td>Number of participating Delegates</td>
-                      <td>250</td>
+                      <td>{{ stats.number_of_delegates }}</td>
                     </tr>
                     <tr>
                       <td>Number of participating Student Officers</td>
-                      <td>30</td>
+                      <td>{{ stats.number_of_student_officers }}</td>
                     </tr>
                     <tr>
                       <td>Number of participating MUN-Directors</td>
-                      <td>45</td>
+                      <td>{{ stats.number_of_mun_directors }}</td>
                     </tr>
                     <tr>
                       <td>Number of participating Executives</td>
-                      <td>33</td>
+                      <td>{{ stats.number_of_executives }}</td>
                     </tr>
                     <tr>
                       <td>Number of participating Staff</td>
-                      <td>45</td>
+                      <td>{{ stats.number_of_staff }}</td>
                     </tr>
                     <tr>
                       <td>Number of participating Advisors</td>
-                      <td>20</td>
+                      <td>{{ stats.number_of_advisors }}</td>
                     </tr>
                     <tr>
                       <td>Participants in total</td>
-                      <td>500</td>
+                      <td>{{ stats.number_of_participants }}</td>
                     </tr>
                     <tr>
-                      <td>Average age</td>
-                      <td>16.4</td>
+                      <td>Minimum and maximum birthday</td>
+                      <td>
+                        {{ stats.minimum_birthday.birthday__min }};
+                        {{ stats.maximum_birthday.birthday__max }}
+                      </td>
                     </tr>
                     <tr>
                       <td></td>
@@ -273,129 +271,101 @@ export default {
   },
   name: "Insights",
   data: () => ({
-    delegates: null,
-    executives: null,
-    mundirectors: null,
-    staffs: null,
-    student_officers: null,
-    advisors: null,
-    participants: null,
-    schools: null,
-    forums: null,
-    issues: null,
-    member_organizations: null,
-    conference: null,
-    countries: ["Germany", "Sweden", "Italy"],
+    gender: null,
+    age_stats: null,
+    birthdays: null,
+    origin_data: null,
+    housing_data: null,
+    diet_data: null,
+    stats: null,
+    delegates_from_countries: null,
   }),
   watch: {},
   methods: {},
   async mounted() {
     try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/delegates/"
-      );
-      this.delegates = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/executives/"
-      );
-      this.executives = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/student-officers/"
-      );
-      this.student_officers = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/mun-directors/"
-      );
-      this.mundirectors = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/staffs/"
-      );
-      this.staffs = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/advisors/"
-      );
-      this.advisors = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/participants/"
-      );
-      this.participants = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/schools/"
-      );
-      this.schools = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/issues/"
-      );
-      this.issues = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/forums/"
-      );
-      this.forums = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/member-organizations/"
-      );
-      this.member_organizations = data;
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const [conference] = (
+      const gender = (
         await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
+          "https://munoltom.pythonanywhere.com/stats/gender_all"
         )
       ).data;
-      this.conference = conference;
+      this.gender = gender;
+    } catch (error) {
+      alert(error);
+    }
+
+    try {
+      const age_stats = (
+        await this.$http.get(
+          "https://munoltom.pythonanywhere.com/stats/age_counts_all"
+        )
+      ).data;
+      this.age_stats = age_stats;
+    } catch (error) {
+      alert(error);
+    }
+
+    try {
+      const birthdays = (
+        await this.$http.get(
+          "https://munoltom.pythonanywhere.com/stats/birthdays_during_conference"
+        )
+      ).data;
+      this.birthdays = birthdays.birthdays;
+    } catch (error) {
+      alert(error);
+    }
+
+    try {
+      const origin_data = (
+        await this.$http.get(
+          "https://munoltom.pythonanywhere.com/stats/origin_all"
+        )
+      ).data;
+      this.origin_data = origin_data;
+    } catch (error) {
+      alert(error);
+    }
+
+    try {
+      const delegates_from_countries = (
+        await this.$http.get(
+          "https://munoltom.pythonanywhere.com/stats/delegates_from_countries"
+        )
+      ).data;
+      this.delegates_from_countries = delegates_from_countries.origin;
+    } catch (error) {
+      alert(error);
+    }
+
+    try {
+      const housing_data = (
+        await this.$http.get(
+          "https://munoltom.pythonanywhere.com/stats/housing_all"
+        )
+      ).data;
+      this.housing_data = housing_data;
+    } catch (error) {
+      alert(error);
+    }
+
+    try {
+      const diet_data = (
+        await this.$http.get("https://munoltom.pythonanywhere.com/stats/diet")
+      ).data;
+      this.diet_data = diet_data;
+    } catch (error) {
+      alert(error);
+    }
+
+    try {
+      const stats = (
+        await this.$http.get(
+          "https://munoltom.pythonanywhere.com/stats/all_stats"
+        )
+      ).data;
+      this.stats = stats;
+      console.log(this.stats);
     } catch (error) {
       alert(error);
     }

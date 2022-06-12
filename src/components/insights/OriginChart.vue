@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "OriginChart",
-  props: { male: Number, female: Number, diverse: Number, title: String },
+  props: { data: Object },
   data: () => ({
     chartOptions: {
       chart: {
@@ -17,12 +17,7 @@ export default {
         text: null,
       },
       xAxis: {
-        categories: [
-          "Delegates",
-          "Student Officers",
-          "MUN-Directors",
-          "Schools",
-        ],
+        categories: ["Delegates", "MUN-Directors", "Schools"],
       },
       yAxis: {
         min: 0,
@@ -55,28 +50,68 @@ export default {
       series: [
         {
           name: "TMS",
-          data: [40, 15, 10, 1],
+          data: [40, 10, 1],
         },
         {
           name: "Lübeck",
-          data: [35, 3, 7, 5],
+          data: [35, 7, 5],
         },
         {
           name: "Germany",
-          data: [120, 4, 20, 18],
+          data: [120, 20, 18],
         },
         {
           name: "International",
-          data: [125, 6, 24, 14],
+          data: [125, 24, 14],
         },
       ],
     },
   }),
+  watch: {
+    data(newData) {
+      this.chartOptions.series[0].data = [
+        newData.delegate.tms,
+        newData.mundirector.tms,
+        newData.school.tms,
+      ];
+      this.chartOptions.series[1].data = [
+        newData.delegate.luebeck,
+        newData.mundirector.luebeck,
+        newData.school.luebeck,
+      ];
+      this.chartOptions.series[2].data = [
+        newData.delegate.national,
+        newData.mundirector.national,
+        newData.school.national,
+      ];
+      this.chartOptions.series[3].data = [
+        newData.delegate.international,
+        newData.mundirector.international,
+        newData.school.international,
+      ];
+    },
+  },
   mounted() {
-    this.chartOptions.series[0].data[0].y = this.male;
-    this.chartOptions.series[0].data[1].y = this.female;
-    this.chartOptions.series[0].data[2].y = this.diverse;
-    this.chartOptions.title.text = this.title;
+    this.chartOptions.series[0].data = [
+      this.data.delegate.tms,
+      this.data.mundirector.tms,
+      this.data.school.tms,
+    ];
+    this.chartOptions.series[1].data = [
+      this.data.delegate.luebeck,
+      this.data.mundirector.luebeck,
+      this.data.school.luebeck,
+    ];
+    this.chartOptions.series[2].data = [
+      this.data.delegate.national,
+      this.data.mundirector.national,
+      this.data.school.national,
+    ];
+    this.chartOptions.series[3].data = [
+      this.data.delegate.international,
+      this.data.mundirector.international,
+      this.data.school.international,
+    ];
   },
 };
 </script>
