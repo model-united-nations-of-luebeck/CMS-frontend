@@ -2,21 +2,15 @@
   <div>
     <v-container>
       <!-- Floating action button -->
-      <v-btn
-        @click="openNewExecutiveDialog"
-        fab
-        right
-        bottom
-        fixed
-        color="primary"
-        ><v-icon>mdi-account-plus</v-icon></v-btn
+      <v-btn @click="openNewIssueDialog" fab right bottom fixed color="primary"
+        ><v-icon>mdi-plus</v-icon></v-btn
       >
-      <!-- Dialog for creating new executives -->
-      <executive-dialog ref="newExecutiveDialog"></executive-dialog>
+      <!-- Dialog for creating new issues -->
+      <issue-dialog ref="newIssueDialog"></issue-dialog>
 
       <!-- Header with actions -->
       <v-card-title>
-        Executives
+        Issues on the Agenda
 
         <v-spacer></v-spacer>
         <v-btn
@@ -34,7 +28,7 @@
           icon
           @click="openAll"
           color="primary"
-          v-if="this.expanded.length < this.executives.length"
+          v-if="this.expanded.length < this.issues.length"
           ><tooltipped-icon
             icon="mdi-unfold-more-horizontal"
             text="expand all rows"
@@ -48,14 +42,14 @@
           v-if="this.selected.length != 0"
           ><tooltipped-icon
             icon="mdi-download"
-            text="download data of selected executives as JSON"
+            text="download data of selected issues as JSON"
             position="top"
         /></v-btn>
         <v-btn icon color="primary" v-if="this.selected.length != 0"
           ><download-csv :data="selected">
             <tooltipped-icon
               icon="mdi-file-delimited"
-              text="download data of selected executives as CSV"
+              text="download data of selected issues as CSV"
               position="top"
             /> </download-csv
         ></v-btn>
@@ -63,7 +57,7 @@
           ><download-excel :data="selected">
             <tooltipped-icon
               icon="mdi-microsoft-excel"
-              text="download data of selected executives as Excel file (xls)"
+              text="download data of selected issues as Excel file (xls)"
               position="top"
             /> </download-excel
         ></v-btn>
@@ -77,11 +71,10 @@
           autofocus
         ></v-text-field>
       </v-card-title>
-
-      <!-- Table with executives -->
+      <!-- Table with issues -->
       <v-data-table
         :headers="headers"
-        :items="executives"
+        :items="issues"
         class="elevation-1"
         show-select
         v-model="selected"
@@ -90,21 +83,21 @@
         :footer-props="{
           showFirstLastPage: true,
           itemsPerPageOptions: [5, 15, -1],
-          itemsPerPageText: 'Executives per page:',
+          itemsPerPageText: 'Issues per page:',
           showCurrentPage: true,
         }"
       >
         <template v-slot:[`footer.page-text`]="props"
-          >Executives {{ props.pageStart }} - {{ props.pageStop }} of
+          >Issues {{ props.pageStart }} - {{ props.pageStop }} of
           {{ props.itemsLength }}</template
         >
         <template v-slot:top>
-          <!-- delete executive dialog -->
-          <v-dialog v-model="deleteExecutiveDialog" max-width="500px">
+          <!-- delete issue dialog -->
+          <v-dialog v-model="deleteIssueDialog" max-width="500px">
             <v-card>
-              <v-card-title>Delete executive?</v-card-title>
+              <v-card-title>Delete issue?</v-card-title>
               <v-card-text
-                >Are you sure you want to delete this executive?
+                >Are you sure you want to delete this issue?
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -119,111 +112,29 @@
           </v-dialog>
         </template>
         <template v-slot:[`item.name`]="{ item }">
-          {{ `${item.first_name} ${item.last_name}` }}
+          {{ item.name }}
         </template>
-        <template v-slot:[`item.position_name`]="{ item }">
-          {{ item.position_name }}
-        </template>
-        <template v-slot:[`item.gender`]="{ item }">
-          <tooltipped-icon
-            v-if="item.gender == 'm'"
-            icon="mdi-gender-male"
-            text="male"
-            position="bottom"
-            color="blue"
-          />
-          <tooltipped-icon
-            v-if="item.gender == 'f'"
-            icon="mdi-gender-female"
-            text="female"
-            position="bottom"
-            color="pink"
-          />
-          <tooltipped-icon
-            v-if="item.gender == 'o'"
-            icon="mdi-gender-male-female"
-            text="other"
-            position="bottom"
-            color="green"
-          />
-        </template>
-
-        <template v-slot:[`item.email`]="{ item }">
-          <tooltipped-icon
-            v-if="item.email"
-            icon="mdi-email"
-            :text="item.email + ' (click to copy)'"
-            position="bottom"
-            @clicked="copyToClipboard(item.email)"
-          />
-        </template>
-        <template v-slot:[`item.mobile`]="{ item }">
-          <tooltipped-icon
-            v-if="item.mobile"
-            icon="mdi-phone"
-            :text="item.mobile + ' (click to copy)'"
-            position="bottom"
-            @clicked="copyToClipboard(item.mobile)"
-          />
-        </template>
-        <template v-slot:[`item.diet`]="{ item }">
-          <tooltipped-icon
-            v-if="item.diet == 'meat'"
-            icon="mdi-food-steak"
-            text="meat"
-            color="red"
-            position="bottom"
-          />
-          <tooltipped-icon
-            v-if="item.diet == 'vegetarian'"
-            icon="mdi-egg"
-            color="#ffbb00"
-            text="vegetarian"
-            position="bottom"
-          />
-          <tooltipped-icon
-            v-if="item.diet == 'vegan'"
-            icon="mdi-sprout"
-            color="green"
-            text="vegan"
-            position="bottom"
-          />
-        </template>
-        <template v-slot:[`item.birthday`]="{ item }">
-          <v-chip
-            class="ma-2"
-            v-if="item.birthday"
-            :color="birthdayColor(item.birthday)"
-          >
-            {{ item.birthday }}
-          </v-chip>
-        </template>
-        <template v-slot:[`item.extras`]="{ item }">
-          <tooltipped-icon
-            v-if="item.extras"
-            icon="mdi-information-variant"
-            :text="item.extras"
-            position="bottom"
-          />
+        <template v-slot:[`item.forum`]="{ item }">
+          {{ forums.find((forum) => forum.id === item.forum).name }}
         </template>
         <template v-slot:[`item.actions`]="{ item }">
           <v-btn
             small
             icon
-            :to="{ name: 'ExecutiveDetails', params: { id: item.id } }"
+            :to="{ name: 'IssueDetails', params: { id: item.id } }"
           >
             <v-icon small color="primary">
               mdi-pencil
             </v-icon>
           </v-btn>
-          <v-btn small icon @click="deleteExecutive(item)">
+          <v-btn small icon @click="deleteIssue(item)">
             <v-icon small color="red">
               mdi-delete
             </v-icon>
           </v-btn>
         </template>
         <template v-slot:no-data>
-          <span>No executives available!</span>
+          <span>No issues available!</span>
         </template>
       </v-data-table>
 
@@ -249,25 +160,24 @@
 </template>
 
 <script>
-import ExecutiveDialog from "./ExecutiveDialog.vue";
+import IssueDialog from "./IssueDialog.vue";
 import TooltippedIcon from "../generic/TooltippedIcon.vue";
 import ToastMessage from "../generic/ToastMessage.vue";
 export default {
-  components: { ExecutiveDialog, TooltippedIcon, ToastMessage },
-  name: "Executives",
+  components: { IssueDialog, TooltippedIcon, ToastMessage },
+  name: "Issues",
 
   data: () => ({
-    executives: [],
-    conference: null, // required to calculate age of participants at beginning of conference
+    issues: [],
+    forums: [],
     search: "",
     expanded: [],
     selected: [],
     editedIndex: null,
     editedItem: { first_name: "", last_name: "" },
-    newExecutiveDialog: false,
-    deleteExecutiveDialog: false,
+    newIssueDialog: false,
+    deleteIssueDialog: false,
     headers: [
-      { text: "", value: "data-table-expand", groupable: false },
       {
         text: "Name",
         align: "start",
@@ -275,13 +185,12 @@ export default {
         value: "name",
         groupable: false,
       },
-      { text: "Position", value: "position_name" },
-      { text: "Gender", value: "gender" },
-      { text: "Email", value: "email", groupable: false },
-      { text: "Mobile", value: "mobile", groupable: false },
-      { text: "Diet", value: "diet" },
-      { text: "Birthday", value: "birthday", groupable: false },
-      { text: "Extras", value: "extras", groupable: false },
+      {
+        text: "Forum",
+        sortable: true,
+        value: "forum",
+        groupable: false,
+      },
       {
         text: "Actions",
         value: "actions",
@@ -294,15 +203,16 @@ export default {
   mounted() {
     // fetch required data for this page
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/conferences/")
+      .get("https://munoltom.pythonanywhere.com/api/issues/")
       .then((response) => {
-        [this.conference] = response.data;
+        this.issues = response.data;
       })
-      .catch((error) => console.trace(`%c ${error}", "#FF0000`));
+      .catch((error) => alert(error));
+
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/executives/")
+      .get("https://munoltom.pythonanywhere.com/api/forums/")
       .then((response) => {
-        this.executives = response.data;
+        this.forums = response.data;
       })
       .catch((error) => alert(error));
   },
@@ -315,19 +225,19 @@ export default {
     },
   },
   methods: {
-    openNewExecutiveDialog() {
-      this.$refs.newExecutiveDialog.open();
+    openNewIssueDialog() {
+      this.$refs.newIssueDialog.open();
     },
-    deleteExecutive(item) {
-      this.editedIndex = this.executives.indexOf(item);
+    deleteIssue(item) {
+      this.editedIndex = this.issues.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      this.deleteExecutiveDialog = true;
+      this.deleteIssueDialog = true;
     },
 
     async deleteItemConfirm() {
       await this.$http
         .delete(
-          `https://munoltom.pythonanywhere.com/api/executives/${this.editedItem.id}/`,
+          `https://munoltom.pythonanywhere.com/api/issues/${this.editedItem.id}/`,
           {}
         )
         .then((r) => {
@@ -342,11 +252,11 @@ export default {
           console.log(e);
           this.$refs.deletedErrorSnackbar.show();
         });
-      this.executives.splice(this.editedIndex, 1);
+      this.issues.splice(this.editedIndex, 1);
       this.closeDeleteDialog();
     },
     closeDeleteDialog() {
-      this.deleteExecutiveDialog = false;
+      this.deleteIssueDialog = false;
       this.editedIndex = null;
       this.editedItem = null;
     },
@@ -355,21 +265,7 @@ export default {
       this.expanded = [];
     },
     openAll() {
-      this.expanded = this.executives;
-    },
-    birthdayColor(dateString) {
-      const date = new Date(dateString);
-      const difference = new Date(this.conference.startdate) - date;
-      const years = difference / (1000 * 60 * 60 * 24 * 365);
-      if (years < 16) {
-        return "red";
-      } else if (years < 18) {
-        return "orange";
-      } else if (years >= 18) {
-        return "green";
-      } else {
-        return "gray";
-      }
+      this.expanded = this.issues;
     },
     copyToClipboard(text) {
       this.$copyText(text).then(() => {

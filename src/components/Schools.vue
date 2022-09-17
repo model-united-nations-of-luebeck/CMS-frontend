@@ -125,16 +125,13 @@ export default {
   data: () => ({
     schools: null,
   }),
-  async mounted() {
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/schools/"
-      );
-
-      this.schools = data;
-    } catch (error) {
-      alert(error);
-    }
+  mounted() {
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/schools/")
+      .then((response) => {
+        this.schools = response.data;
+      })
+      .catch((error) => alert(error));
   },
 };
 </script>

@@ -126,16 +126,14 @@ export default {
     search: "",
     selectedStatus: [],
   }),
-  async mounted() {
-    try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/member-organizations/"
-      );
-      this.memberOrganizations = data;
-      this.selectedStatus = this.getStatusOptions();
-    } catch (error) {
-      alert(error);
-    }
+  mounted() {
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/member-organizations/")
+      .then((response) => {
+        this.memberOrganizations = response.data;
+        this.selectedStatus = this.getStatusOptions();
+      })
+      .catch((error) => alert(error));
   },
   methods: {
     getStatusOptions() {

@@ -303,23 +303,15 @@ export default {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
     },
   },
-  async mounted() {
-    try {
-      const [conference] = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
-        )
-      ).data;
-      this.conference = conference;
-      if (this.id != undefined) {
-        const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/advisors/${this.id}`
-        );
-        this.advisor = data;
-        this.breadcrumbs[1].text = `${this.advisor.first_name} ${this.advisor.last_name}`;
-      }
-    } catch (error) {
-      alert(error);
+  mounted() {
+    if (this.id != undefined) {
+      this.$http
+        .get(`https://munoltom.pythonanywhere.com/api/advisors/${this.id}`)
+        .then((response) => {
+          this.advisor = response.data;
+          this.breadcrumbs[1].text = `${this.advisor.first_name} ${this.advisor.last_name}`;
+        })
+        .catch((error) => alert(error));
     }
   },
   methods: {

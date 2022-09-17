@@ -361,27 +361,23 @@ export default {
     errorSnackbar: false,
     errorMessage: "",
   }),
-  async mounted() {
-    try {
-      const [conference] = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
-        )
-      ).data;
-      this.conference = conference;
-      this.conference.pre_registration_deadline = new Date(
-        conference.pre_registration_deadline
-      );
-      this.conference.final_registration_deadline = new Date(
-        conference.final_registration_deadline
-      );
-      this.conference.position_paper_deadline = new Date(
-        conference.position_paper_deadline
-      );
-      this.$refs.form.resetValidation();
-    } catch (error) {
-      console.trace(`%c ${error}", "#FF0000`);
-    }
+  mounted() {
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/conferences/")
+      .then((response) => {
+        [this.conference] = response.data;
+        this.conference.pre_registration_deadline = new Date(
+          this.conference.pre_registration_deadline
+        );
+        this.conference.final_registration_deadline = new Date(
+          this.conference.final_registration_deadline
+        );
+        this.conference.position_paper_deadline = new Date(
+          this.conference.position_paper_deadline
+        );
+        this.$refs.form.resetValidation();
+      })
+      .catch((error) => console.trace(`%c ${error}", "#FF0000`));
   },
   methods: {
     async updateConferenceSettings() {

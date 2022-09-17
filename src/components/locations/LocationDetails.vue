@@ -139,17 +139,15 @@ export default {
       ],
     },
   }),
-  async mounted() {
-    try {
-      if (this.id != undefined) {
-        const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/locations/${this.id}`
-        );
-        this.location = data;
-        this.breadcrumbs[1].text = `${this.location.name}`;
-      }
-    } catch (error) {
-      alert(error);
+  mounted() {
+    if (this.id != undefined) {
+      this.$http
+        .get(`https://munoltom.pythonanywhere.com/api/locations/${this.id}`)
+        .then((response) => {
+          this.location = response.data;
+          this.breadcrumbs[1].text = `${this.location.name}`;
+        })
+        .catch((error) => alert(error));
     }
   },
   methods: {

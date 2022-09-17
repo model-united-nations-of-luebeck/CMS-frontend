@@ -174,15 +174,19 @@ export default {
               icon: "mdi-flag-variant",
               action: "member-organizations",
             },
-            { title: "Forums", icon: "mdi-forum" },
+            { title: "Forums", icon: "mdi-forum", action: "forums" },
             {
               title: "Issues",
               icon: "mdi-format-list-bulleted-type",
               action: "issues",
             },
-            { title: "Country Allocation", icon: "mdi-gesture-double-tap" },
+            {
+              title: "Country Allocation",
+              icon: "mdi-gesture-double-tap",
+              action: "country-allocation",
+            },
             { title: "Locations", icon: "mdi-map-marker", action: "locations" },
-            { title: "Events", icon: "mdi-calendar" },
+            { title: "Events", icon: "mdi-calendar", action: "events" },
             {
               title: "Conference Settings",
               icon: "mdi-web",
@@ -241,7 +245,7 @@ export default {
 </script>
 
 <style>
-header {
+.v-application--wrap > header {
   z-index: 6 !important;
 }
 

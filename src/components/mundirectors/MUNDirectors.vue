@@ -259,22 +259,14 @@ export default {
       { text: "", value: "data-table-select", groupable: false },
     ],
   }),
-  async mounted() {
+  mounted() {
     // fetch required data for this page
-    try {
-      const [conference] = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
-        )
-      ).data;
-      this.conference = conference;
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/mun-directors/"
-      );
-      this.mundirectors = data;
-    } catch (error) {
-      alert(error);
-    }
+    this.$http
+      .get("https://munoltom.pythonanywhere.com/api/mun-directors/")
+      .then((response) => {
+        this.mundirectors = response.data;
+      })
+      .catch((error) => alert(error));
   },
   computed: {
     download() {
@@ -291,20 +283,6 @@ export default {
     },
     openAll() {
       this.expanded = this.mundirectors;
-    },
-    birthdayColor(dateString) {
-      const date = new Date(dateString);
-      const difference = new Date(this.conference.startdate) - date;
-      const years = difference / (1000 * 60 * 60 * 24 * 365);
-      if (years < 16) {
-        return "red";
-      } else if (years < 18) {
-        return "orange";
-      } else if (years >= 18) {
-        return "green";
-      } else {
-        return "gray";
-      }
     },
     copyToClipboard(text) {
       this.$copyText(text).then(() => {

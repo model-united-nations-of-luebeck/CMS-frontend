@@ -6,7 +6,6 @@ import Delegates from '@/components/delegates/Delegates'
 import DelegateDetails from '@/components/delegates/DelegateDetails'
 import MUNDirectors from '@/components/mundirectors/MUNDirectors'
 import MUNDirectorDetails from '@/components/mundirectors/MUNDirectorDetails'
-import Issues from '@/components/Issues'
 import Advisors from '@/components/advisors/Advisors'
 import AdvisorDetails from '@/components/advisors/AdvisorDetails'
 import Executives from '@/components/executives/Executives'
@@ -16,10 +15,16 @@ import StudentOfficerDetails from '@/components/studentofficers/StudentOfficerDe
 import Staffs from '@/components/staffs/Staffs'
 import StaffDetails from '@/components/staffs/StaffDetails'
 import MemberOrganizations from '@/components/MemberOrganizations'
+import Forums from '@/components/forums/Forums'
+import ForumDetails from '@/components/forums/ForumDetails'
+import Issues from '@/components/issues/Issues'
+import IssueDetails from '@/components/issues/IssueDetails'
 import Conference from '@/components/Conference'
 import Locations from '@/components/locations/Locations'
 import LocationDetails from '@/components/locations/LocationDetails'
 import RoomDetails from '@/components/locations/RoomDetails'
+import Events from '@/components/events/Events'
+import CountryAllocation from '@/components/countryallocation/CountryAllocation'
 
 Vue.use(Router)
 
@@ -33,11 +38,6 @@ export default new Router({
       path: '/schools',
       name: 'Schools',
       component: Schools
-    },
-    {
-      path: '/issues',
-      name: 'Issues',
-      component: Issues
     },
     {
       path: '/advisors',
@@ -111,6 +111,28 @@ export default new Router({
       component: MemberOrganizations
     },
     {
+      path: '/forums',
+      name: 'Forums',
+      component: Forums
+    },
+    {
+      path: '/forums/:id',
+      name: 'ForumDetails',
+      component: ForumDetails,
+      props: true,
+    },
+    {
+      path: '/issues',
+      name: 'Issues',
+      component: Issues
+    },
+    {
+      path: '/issues/:id',
+      name: 'IssueDetails',
+      component: IssueDetails,
+      props: true,
+    },
+    {
       path: '/locations',
       name: 'Locations',
       component: Locations
@@ -136,7 +158,15 @@ export default new Router({
       name: 'RoomDetails',
       component: RoomDetails,
       props: true
-    }
+    },{
+      path: '/events',
+      name: 'Events',
+      component: Events,
+    },{
+      path: '/country-allocation',
+      name: 'CountryAllocation',
+      component: CountryAllocation,
+    },
   ],
   mode: 'history'
 })

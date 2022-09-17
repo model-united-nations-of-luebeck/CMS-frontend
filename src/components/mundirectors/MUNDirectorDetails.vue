@@ -230,23 +230,15 @@ export default {
     },
   }),
   watch: {},
-  async mounted() {
-    try {
-      const [conference] = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/api/conferences/"
-        )
-      ).data;
-      this.conference = conference;
-      if (this.id != undefined) {
-        const { data } = await this.$http.get(
-          `https://munoltom.pythonanywhere.com/api/mun-directors/${this.id}`
-        );
-        this.mundirector = data;
-        this.breadcrumbs[1].text = `${this.mundirector.first_name} ${this.mundirector.last_name}`;
-      }
-    } catch (error) {
-      alert(error);
+  mounted() {
+    if (this.id != undefined) {
+      this.$http
+        .get(`https://munoltom.pythonanywhere.com/api/mun-directors/${this.id}`)
+        .then((response) => {
+          this.mundirector = response.data;
+          this.breadcrumbs[1].text = `${this.mundirector.first_name} ${this.mundirector.last_name}`;
+        })
+        .catch((error) => alert(error));
     }
   },
   methods: {
