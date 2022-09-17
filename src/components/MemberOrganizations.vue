@@ -164,7 +164,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .grayscale {
   filter: gray; /* IE6-9 */
   -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
