@@ -1,10 +1,14 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="nav-headline d-flex align-center">
-        <v-icon>mdi-bank</v-icon>
-        <span> Conference Management System </span>
-      </div>
+      <router-link to="/">
+        <div class="nav-headline d-flex align-center">
+          <v-icon>mdi-bank</v-icon>
+          <span id="app-bar-title">
+            Conference Management System
+          </span>
+        </div>
+      </router-link>
 
       <v-spacer />
 
@@ -275,5 +279,9 @@ export default {
 .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
+}
+
+#app-bar-title {
+  color: white;
 }
 </style>
