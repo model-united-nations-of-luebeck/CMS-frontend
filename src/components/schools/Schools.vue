@@ -1,6 +1,14 @@
 <template>
   <div>
     <v-container>
+      <!-- Floating action button -->
+      <v-btn @click="openNewSchoolDialog" fab right bottom fixed color="primary"
+        ><v-icon>mdi-plus</v-icon></v-btn
+      >
+
+      <!-- Dialog for creating new schools -->
+      <school-dialog ref="newSchoolDialog"></school-dialog>
+
       <!-- Header with actions -->
       <v-card-title>
         Schools
@@ -134,7 +142,7 @@
           <v-btn
             small
             icon
-            :to="{ name: 'DelegateDetails', params: { id: item.id } }"
+            :to="{ name: 'SchoolDetails', params: { id: item.id } }"
           >
             <v-icon small color="primary">
               mdi-pencil
@@ -191,12 +199,13 @@
 </template>
 
 <script>
+import SchoolDialog from "./SchoolDialog.vue";
 import TooltippedIcon from "../generic/TooltippedIcon";
 import ToastMessage from "../generic/ToastMessage.vue";
 
 export default {
   name: "Schools",
-  components: { TooltippedIcon, ToastMessage },
+  components: { TooltippedIcon, ToastMessage, SchoolDialog },
   filters: {
     capitalize(value) {
       if (!value) return "";
@@ -239,6 +248,7 @@ export default {
     selected: [],
     editedIndex: null,
     editedItem: { first_name: "", last_name: "" },
+    newAdvisorDialog: false,
     headers: [
       { text: "", value: "data-table-expand", groupable: false },
       {
@@ -298,6 +308,9 @@ export default {
       this.$copyText(text).then(() => {
         this.$refs.copiedToClipboardSnackbar.show();
       });
+    },
+    openNewSchoolDialog() {
+      this.$refs.newSchoolDialog.open();
     },
   },
 };

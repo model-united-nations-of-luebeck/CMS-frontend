@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Schools from '@/components/schools/Schools'
+import SchoolDetails from '@/components/schools/SchoolDetails'
 import Delegates from '@/components/delegates/Delegates'
 import DelegateDetails from '@/components/delegates/DelegateDetails'
 import MUNDirectors from '@/components/mundirectors/MUNDirectors'
@@ -40,6 +41,12 @@ export default new Router({
       path: '/schools',
       name: 'Schools',
       component: Schools
+    },
+    {
+      path: '/schools/:id',
+      name: 'SchoolDetails',
+      component: SchoolDetails,
+      props: true,
     },
     {
       path: '/advisors',
