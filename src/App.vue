@@ -25,7 +25,7 @@
       expand-on-hover
       fixed
       width="250px"
-      style="padding-top: 64px; z-index: 5;"
+      style="margin-top: 64px; z-index: 5;"
       class="elevation-4"
     >
       <v-list nav dense>
