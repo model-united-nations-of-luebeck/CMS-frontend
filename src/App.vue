@@ -25,7 +25,7 @@
       expand-on-hover
       fixed
       width="250px"
-      style="margin-top: 64px; z-index: 5;"
+      style="margin-top: 64px; z-index: 5; height: calc(100vh - 64px);"
       class="elevation-4"
     >
       <v-list nav dense>
@@ -262,6 +262,14 @@ export default {
 </script>
 
 <style>
+/* no scrollbar but still scrolling behavior */
+.v-navigation-drawer__content::-webkit-scrollbar {
+  display: none;
+}
+.v-navigation-drawer__content {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 .v-application--wrap > header {
   z-index: 6 !important;
 }
