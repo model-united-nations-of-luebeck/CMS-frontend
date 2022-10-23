@@ -179,7 +179,7 @@ export default {
 <style scoped>
 #center-container {
   width: 100vw;
-  background-image: url("../assets/images/logo.png");
+  background-image: url("~@/assets/images/logo.png");
   background-size: contain;
   background-position: center;
 }
