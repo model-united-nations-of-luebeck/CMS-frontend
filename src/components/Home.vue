@@ -161,7 +161,7 @@ export default {
   filters: {},
   methods: {
     playEasy: () => {
-      new Audio("http://localhost:8080/audio/easy.mp3").play();
+      new Audio(require("@/assets/audio/easy.mp3")).play();
     },
   },
   mounted() {
@@ -179,7 +179,7 @@ export default {
 <style scoped>
 #center-container {
   width: 100vw;
-  background-image: url("/images/logo.png");
+  background-image: url("~@/assets/images/logo.png");
   background-size: contain;
   background-position: center;
 }

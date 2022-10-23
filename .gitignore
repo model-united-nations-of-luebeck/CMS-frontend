@@ -1,6 +1,6 @@
-# ignore audio and image files due to privavy and ip reasons
-public/audio*
-public/images*
+# ignore audio and image files due to privacy and ip reasons
+src/assets/audio*
+src/assets/images*
 
 #Mac specific files
 .DS_Store
