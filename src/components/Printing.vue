@@ -40,7 +40,7 @@
                 </v-col>
                 <v-col class="d-flex" sm="3" align="center">
                   <v-btn
-                    :href="`https://munoltom.pythonanywhere.com/pdfs/placards?pagesize=${this.ga_pagesize}&memberstates=${this.ga_member_states}`"
+                    :href="`https://lebinphy.ml/cms/pdfs/placards?pagesize=${this.ga_pagesize}&memberstates=${this.ga_member_states}`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Print</v-btn
@@ -82,7 +82,7 @@
                 </v-col>
                 <v-col class="d-flex" sm="3" align="center">
                   <v-btn
-                    :href="`https://munoltom.pythonanywhere.com/pdfs/forum_placards?pagesize=${this.forum_pagesize}&forumid=${this.forumid}&memberstates=${this.forum_member_states}`"
+                    :href="`${this.backend_url}pdfs/forum_placards?pagesize=${this.forum_pagesize}&forumid=${this.forumid}&memberstates=${this.forum_member_states}`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Print</v-btn
@@ -99,7 +99,7 @@
               <v-row align="center">
                 <v-col class="d-flex" sm="4">
                   <v-btn
-                    :href="`https://munoltom.pythonanywhere.com/pdfs/executive_placards?pagesize=A3`"
+                    :href="`${this.backend_url}pdfs/executive_placards?pagesize=A3`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Print Executives</v-btn
@@ -107,7 +107,7 @@
                 </v-col>
                 <v-col class="d-flex" sm="4">
                   <v-btn
-                    :href="`https://munoltom.pythonanywhere.com/pdfs/student_officer_placards?pagesize=A3`"
+                    :href="`${this.backend_url}pdfs/student_officer_placards?pagesize=A3`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Print Student
@@ -137,7 +137,7 @@
                 </v-col>
                 <v-col class="d-flex" sm="3" align="center">
                   <v-btn
-                    :href="`https://munoltom.pythonanywhere.com/pdfs/custom_placard?pagesize=${this.custom_pagesize}&name=${this.custom_title}`"
+                    :href="`${this.backend_url}pdfs/custom_placard?pagesize=${this.custom_pagesize}&name=${this.custom_title}`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Print</v-btn
@@ -163,21 +163,21 @@
               <v-row align="center">
                 <v-col class="d-flex" sm="4">
                   <v-btn
-                    href="https://munoltom.pythonanywhere.com/pdfs/delegate_badge"
+                    :href="`${this.backend_url}pdfs/delegate_badge`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Delegates</v-btn
                   > </v-col
                 ><v-col class="d-flex" sm="4">
                   <v-btn
-                    href="https://munoltom.pythonanywhere.com/pdfs/mundirector_badge"
+                    :href="`${this.backend_url}pdfs/mundirector_badge`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>MUN-Directors</v-btn
                   ></v-col
                 ><v-col class="d-flex" sm="4">
                   <v-btn
-                    href="https://munoltom.pythonanywhere.com/pdfs/staff_badge"
+                    :href="`${this.backend_url}pdfs/staff_badge`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Staffs</v-btn
@@ -187,21 +187,21 @@
               <v-row align="center">
                 <v-col class="d-flex" sm="4">
                   <v-btn
-                    href="https://munoltom.pythonanywhere.com/pdfs/executive_badge"
+                    :href="`${this.backend_url}pdfs/executive_badge`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Executives</v-btn
                   ></v-col
                 ><v-col class="d-flex" sm="4">
                   <v-btn
-                    href="https://munoltom.pythonanywhere.com/pdfs/student_officer_badge"
+                    :href="`${this.backend_url}pdfs/student_officer_badge`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Student Officers</v-btn
                   ></v-col
                 ><v-col class="d-flex" sm="4">
                   <v-btn
-                    href="https://munoltom.pythonanywhere.com/pdfs/advisor_badge"
+                    :href="`${this.backend_url}pdfs/advisor_badge`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Advisors</v-btn
@@ -213,7 +213,7 @@
               <!-- firstname, lastname, affiliation, position, color, base64photo -->
               <v-form
                 method="post"
-                action="https://munoltom.pythonanywhere.com/pdfs/custom_badge"
+                :action="`${this.backend_url}pdfs/custom_badge`"
               >
                 <v-text-field
                   name="csrftoken"
@@ -309,13 +309,13 @@
 
               <h3>Signed by SecGens</h3>
               <v-btn
-                href="https://munoltom.pythonanywhere.com/pdfs/delegate_certificate"
+                :href="`${this.backend_url}pdfs/delegate_certificate`"
                 target="_blank"
                 color="primary"
                 ><v-icon left>mdi-printer</v-icon>Delegates</v-btn
               >
               <v-btn
-                href="https://munoltom.pythonanywhere.com/pdfs/student_officer_certificate"
+                :href="`${this.backend_url}pdfs/student_officer_certificate`"
                 target="_blank"
                 color="primary"
                 ><v-icon left>mdi-printer</v-icon>Student Officers</v-btn
@@ -323,19 +323,19 @@
 
               <h3>Signed by CMs</h3>
               <v-btn
-                href="https://munoltom.pythonanywhere.com/pdfs/staff_certificate"
+                :href="`${this.backend_url}pdfs/staff_certificate`"
                 target="_blank"
                 color="primary"
                 ><v-icon left>mdi-printer</v-icon>Staffs</v-btn
               >
               <v-btn
-                href="https://munoltom.pythonanywhere.com/pdfs/executive_certificate"
+                :href="`${this.backend_url}pdfs/executive_certificate`"
                 target="_blank"
                 color="primary"
                 ><v-icon left>mdi-printer</v-icon>Executives</v-btn
               >
               <v-btn
-                href="https://munoltom.pythonanywhere.com/pdfs/mundirector_certificate"
+                :href="`${this.backend_url}pdfs/mundirector_certificate`"
                 target="_blank"
                 color="primary"
                 ><v-icon left>mdi-printer</v-icon>MUN-Directors</v-btn
@@ -373,7 +373,7 @@
                 </v-col>
                 <v-col class="d-flex" sm="6" align="center">
                   <v-btn
-                    :href="`https://munoltom.pythonanywhere.com/pdfs/forum_roll_call_list?pagesize=${this.forum_pagesize}&forumid=${this.forumid}`"
+                    :href="`${this.backend_url}pdfs/forum_roll_call_list?pagesize=${this.forum_pagesize}&forumid=${this.forumid}`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Print</v-btn
@@ -383,7 +383,7 @@
               <v-row align="center">
                 <v-col sm="12">
                   <v-btn
-                    :href="`https://munoltom.pythonanywhere.com/pdfs/forum_roll_call_list?pagesize=A3`"
+                    :href="`${this.backend_url}pdfs/forum_roll_call_list?pagesize=A3`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Print Plenary</v-btn
@@ -418,7 +418,7 @@
                 </v-col>
                 <v-col sm="6">
                   <v-btn
-                    :href="`https://munoltom.pythonanywhere.com/pdfs/signs?pagesize=${sign_pagesize}$&text=${text}`"
+                    :href="`${this.backend_url}pdfs/signs?pagesize=${sign_pagesize}$&text=${text}`"
                     target="_blank"
                     color="primary"
                     ><v-icon left>mdi-printer</v-icon>Print</v-btn
@@ -457,6 +457,7 @@ export default {
     sign_pagesize: "A4",
     sign_text: "",
     csrf_token: "",
+    backend_url: null,
   }),
   methods: {
     encodePhoto: function (file) {
@@ -471,7 +472,7 @@ export default {
     customBadge: function () {
       // make post request with cookie containing csrf token
       axios({
-        url: "https://munoltom.pythonanywhere.com/pdfs/custom_badge",
+        url: "pdfs/custom_badge",
         method: "post",
         data: {
           first_name: "Tom",
@@ -487,13 +488,14 @@ export default {
     },
   },
   async mounted() {
+    // get backend url for PDF file retrieval
+    this.backend_url = process.env.VUE_APP_BACKEND_URL;
+
     // obtain CSRF Token from backend and set it in cookie
     this.csrf_token = Cookies.get("csrftoken");
     if (!this.csrf_token) {
       try {
-        const { data } = await this.$http.get(
-          "https://munoltom.pythonanywhere.com/pdfs/get-token"
-        );
+        const { data } = await this.$http.get("pdfs/get-token");
         this.csrf_token = data.token;
         Cookies.set("csrftoken", this.csrf_token);
       } catch (error) {

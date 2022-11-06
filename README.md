@@ -28,7 +28,7 @@ so that in production the webapp looks for the files in the first path, whereas 
 
 Also make sure to include all required assets in the assets folder. They might not be under version control due to large size, privacy or ip reasons.
 
-Set the `baseURL` in `main.js` file for axios web requests to the correct backend address for the production system.
+Set the `VUE_APP_BACKEND_URL` in `.env` file to the correct backend address for all API requests. This might be changed between development and production.
 
 **Building**:
 Run `npm install` followed by `npm run build --production` in the project's root folder. This will install all required packages and build the app and place it in a `dist/` folder. Lastly, copy the content of this folder into your desired serving folder, which you have specified during the preparations.

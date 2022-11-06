@@ -44,6 +44,6 @@ new Vue({
 
 // create global axios instance for backend requests
 const backend_instance = axios.create({
-  baseURL: "https://munoltom.pythonanywhere.com/",
+  baseURL: process.env.VUE_APP_BACKEND_URL
 });
 Vue.prototype.$http = backend_instance;
