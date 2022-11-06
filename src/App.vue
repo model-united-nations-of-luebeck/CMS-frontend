@@ -113,9 +113,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import Vue from "vue";
-
 export default {
   name: "App",
   components: {},
@@ -226,11 +223,6 @@ export default {
      * TODO: API base domain
      */
     async login() {
-      const instance = axios.create({
-        baseURL: "https://munoltom.pythonanywhere.com",
-      });
-      Vue.prototype.$http = instance;
-
       try {
         const { data } = await this.$http.post("/api-token-auth/", {
           username: "Tom", //this.username,

@@ -288,13 +288,13 @@ export default {
   mounted() {
     // fetch required data for this page
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/conferences/")
+      .get("api/conferences/")
       .then((response) => {
         [this.conference] = response.data;
       })
       .catch((error) => console.trace(`%c ${error}", "#FF0000`));
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/staffs/")
+      .get("api/staffs/")
       .then((response) => {
         this.staffs = response.data;
       })
@@ -320,10 +320,7 @@ export default {
 
     async deleteItemConfirm() {
       await this.$http
-        .delete(
-          `https://munoltom.pythonanywhere.com/api/staffs/${this.editedItem.id}/`,
-          {}
-        )
+        .delete(`api/staffs/${this.editedItem.id}/`, {})
         .then((r) => {
           if (r.status == 204) {
             this.$refs.deletedSnackbar.show();

@@ -277,7 +277,7 @@ export default {
         }
       }
       await this.$http
-        .post(`https://munoltom.pythonanywhere.com/api/staffs/`, fd, {
+        .post(`api/staffs/`, fd, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

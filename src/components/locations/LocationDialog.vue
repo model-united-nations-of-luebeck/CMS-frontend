@@ -221,9 +221,7 @@ export default {
           }
         }
       }
-      const url = this.isRoom
-        ? "https://munoltom.pythonanywhere.com/api/rooms/"
-        : "https://munoltom.pythonanywhere.com/api/locations/";
+      const url = this.isRoom ? "api/rooms/" : "api/locations/";
       await this.$http
         .post(url, fd, {
           headers: {

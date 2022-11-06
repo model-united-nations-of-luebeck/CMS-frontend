@@ -228,7 +228,7 @@ export default {
   }),
   mounted() {
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/member-organizations/")
+      .get("api/member-organizations/")
       .then((response) => {
         this.memberOrganizations = response.data;
       })
@@ -246,10 +246,7 @@ export default {
 
     async deleteItemConfirm() {
       await this.$http
-        .delete(
-          `https://munoltom.pythonanywhere.com/api/member-organizations/${this.editedItem.id}/`,
-          {}
-        )
+        .delete(`api/member-organizations/${this.editedItem.id}/`, {})
         .then((r) => {
           if (r.status == 204) {
             this.$refs.deletedSnackbar.show();

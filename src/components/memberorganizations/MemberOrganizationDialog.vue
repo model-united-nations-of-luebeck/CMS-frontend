@@ -177,20 +177,16 @@ export default {
         }
       }
       await this.$http
-        .post(
-          `https://munoltom.pythonanywhere.com/api/member-organizations/`,
-          fd,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = Math.round(
-                (progressEvent.loaded * 100.0) / progressEvent.total
-              );
-            }.bind(this),
-          }
-        )
+        .post(`api/member-organizations/`, fd, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: function (progressEvent) {
+            this.uploadPercentage = Math.round(
+              (progressEvent.loaded * 100.0) / progressEvent.total
+            );
+          }.bind(this),
+        })
         .then((r) => {
           if (r.status == 201) {
             this.$refs.successSnackbar.show();

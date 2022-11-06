@@ -233,7 +233,7 @@ export default {
   mounted() {
     if (this.id != undefined) {
       this.$http
-        .get(`https://munoltom.pythonanywhere.com/api/mun-directors/${this.id}`)
+        .get(`api/mun-directors/${this.id}`)
         .then((response) => {
           this.mundirector = response.data;
           this.breadcrumbs[1].text = `${this.mundirector.first_name} ${this.mundirector.last_name}`;
@@ -251,20 +251,16 @@ export default {
         }
       }
       await this.$http
-        .put(
-          `https://munoltom.pythonanywhere.com/api/mun-directors/${this.id}/`,
-          fd,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = Math.round(
-                (progressEvent.loaded * 100.0) / progressEvent.total
-              );
-            }.bind(this),
-          }
-        )
+        .put(`api/mun-directors/${this.id}/`, fd, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: function (progressEvent) {
+            this.uploadPercentage = Math.round(
+              (progressEvent.loaded * 100.0) / progressEvent.total
+            );
+          }.bind(this),
+        })
         .then((r) => {
           if (r.status == 200) {
             this.successSnackbar = true;

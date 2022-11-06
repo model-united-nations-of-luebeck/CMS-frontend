@@ -218,7 +218,7 @@ export default {
   mounted() {
     if (this.id != undefined) {
       this.$http
-        .get(`https://munoltom.pythonanywhere.com/api/schools/${this.id}`)
+        .get(`api/schools/${this.id}`)
         .then((response) => {
           this.school = response.data;
           this.breadcrumbs[1].text = `${this.school.name}`;
@@ -236,15 +236,11 @@ export default {
         }
       }
       await this.$http
-        .put(
-          `https://munoltom.pythonanywhere.com/api/schools/${this.id}/`,
-          fd,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+        .put(`api/schools/${this.id}/`, fd, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((r) => {
           if (r.status == 200) {
             this.successSnackbar = true;

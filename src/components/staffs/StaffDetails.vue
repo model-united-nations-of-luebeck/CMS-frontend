@@ -281,7 +281,7 @@ export default {
   mounted() {
     if (this.id != undefined) {
       this.$http
-        .get(`https://munoltom.pythonanywhere.com/api/staffs/${this.id}`)
+        .get(`api/staffs/${this.id}`)
         .then((response) => {
           this.staff = response.data;
           this.breadcrumbs[1].text = `${this.staff.first_name} ${this.staff.last_name}`;
@@ -302,7 +302,7 @@ export default {
         }
       }
       await this.$http
-        .put(`https://munoltom.pythonanywhere.com/api/staffs/${this.id}/`, fd, {
+        .put(`api/staffs/${this.id}/`, fd, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -330,10 +330,7 @@ export default {
     },
     async deleteItemConfirm() {
       await this.$http
-        .delete(
-          `https://munoltom.pythonanywhere.com/api/staffs/${this.id}/`,
-          {}
-        )
+        .delete(`api/staffs/${this.id}/`, {})
         .then((r) => {
           if (r.status == 204) {
             alert("Deleted");

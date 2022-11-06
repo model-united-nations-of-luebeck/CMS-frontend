@@ -502,9 +502,7 @@ export default {
     }
 
     try {
-      const { data } = await this.$http.get(
-        "https://munoltom.pythonanywhere.com/api/forums/"
-      );
+      const { data } = await this.$http.get("api/forums/");
       this.forums = data;
     } catch (error) {
       alert(error);

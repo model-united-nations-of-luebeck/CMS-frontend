@@ -262,13 +262,13 @@ export default {
   mounted() {
     // fetch required data for this page
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/conferences/")
+      .get("api/conferences/")
       .then((response) => {
         [this.conference] = response.data;
       })
       .catch((error) => console.trace(`%c ${error}", "#FF0000`));
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/delegates/")
+      .get("api/delegates/")
       .then((response) => {
         this.delegates = response.data;
       })

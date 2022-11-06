@@ -163,25 +163,25 @@ export default {
   mounted() {
     // fetch required data for this page
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/delegates/")
+      .get("api/delegates/")
       .then((response) => {
         this.delegates = response.data;
       })
       .catch((error) => alert(error));
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/schools/")
+      .get("api/schools/")
       .then((response) => {
         this.schools = response.data;
       })
       .catch((error) => alert(error));
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/forums/")
+      .get("api/forums/")
       .then((response) => {
         this.forums = response.data;
       })
       .catch((error) => alert(error));
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/member-organizations/")
+      .get("api/member-organizations/")
       .then((response) => {
         this.memberOrganizations = response.data;
       })
@@ -245,7 +245,7 @@ export default {
           school: 1,
         };
         this.$http
-          .post("https://munoltom.pythonanywhere.com/api/delegates/", delegate)
+          .post("api/delegates/", delegate)
           .then((r) => {
             if (r.status == 201) {
               this.delegates.push(r.data);
@@ -268,10 +268,7 @@ export default {
       )[0].id;
       console.log(delegateId);
       this.$http
-        .delete(
-          `https://munoltom.pythonanywhere.com/api/delegates/${delegateId}/`,
-          {}
-        )
+        .delete(`api/delegates/${delegateId}/`, {})
         .then((r) => {
           if (r.status == 204) {
             // this.$refs.deletedSnackbar.show();
@@ -315,12 +312,9 @@ export default {
       delegatesInMemberOrganization.forEach((delegate) => {
         //update school property of delegates
         this.$http
-          .patch(
-            `https://munoltom.pythonanywhere.com/api/delegates/${delegate.id}/`,
-            {
-              school: null,
-            }
-          )
+          .patch(`api/delegates/${delegate.id}/`, {
+            school: null,
+          })
           .then((response) => {
             console.log(response);
           })
@@ -337,12 +331,9 @@ export default {
       delegatesInMemberOrganization.forEach((delegate) => {
         //update school property of delegates
         this.$http
-          .put(
-            `https://munoltom.pythonanywhere.com/api/delegates/${delegate.id}`,
-            {
-              school: schoolId,
-            }
-          )
+          .put(`api/delegates/${delegate.id}`, {
+            school: schoolId,
+          })
           .then((response) => {
             console.log(response);
           })
