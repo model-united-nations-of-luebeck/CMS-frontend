@@ -306,7 +306,7 @@ export default {
   mounted() {
     if (this.id != undefined) {
       this.$http
-        .get(`https://munoltom.pythonanywhere.com/api/advisors/${this.id}`)
+        .get(`api/advisors/${this.id}`)
         .then((response) => {
           this.advisor = response.data;
           this.breadcrumbs[1].text = `${this.advisor.first_name} ${this.advisor.last_name}`;
@@ -327,20 +327,16 @@ export default {
         }
       }
       await this.$http
-        .put(
-          `https://munoltom.pythonanywhere.com/api/advisors/${this.id}/`,
-          fd,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = Math.round(
-                (progressEvent.loaded * 100.0) / progressEvent.total
-              );
-            }.bind(this),
-          }
-        )
+        .put(`api/advisors/${this.id}/`, fd, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: function (progressEvent) {
+            this.uploadPercentage = Math.round(
+              (progressEvent.loaded * 100.0) / progressEvent.total
+            );
+          }.bind(this),
+        })
         .then((r) => {
           if (r.status == 200) {
             this.successSnackbar = true;
@@ -359,10 +355,7 @@ export default {
     },
     async deleteItemConfirm() {
       await this.$http
-        .delete(
-          `https://munoltom.pythonanywhere.com/api/advisors/${this.id}/`,
-          {}
-        )
+        .delete(`api/advisors/${this.id}/`, {})
         .then((r) => {
           if (r.status == 204) {
             alert("Deleted");

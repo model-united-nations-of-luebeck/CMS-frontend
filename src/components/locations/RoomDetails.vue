@@ -180,7 +180,7 @@ export default {
   mounted() {
     if (this.id != undefined) {
       this.$http
-        .get(`https://munoltom.pythonanywhere.com/api/rooms/${this.id}`)
+        .get(`api/rooms/${this.id}`)
         .then((response) => {
           this.room = response.data;
           this.breadcrumbs[1].text = `${this.room.name}`;
@@ -198,7 +198,7 @@ export default {
         }
       }
       await this.$http
-        .put(`https://munoltom.pythonanywhere.com/api/rooms/${this.id}/`, fd, {
+        .put(`api/rooms/${this.id}/`, fd, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

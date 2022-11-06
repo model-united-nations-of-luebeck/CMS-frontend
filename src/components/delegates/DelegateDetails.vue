@@ -243,7 +243,7 @@ export default {
   },
   mounted() {
     this.$http
-      .get(`https://munoltom.pythonanywhere.com/api/delegates/${this.id}`)
+      .get(`api/delegates/${this.id}`)
       .then((response) => {
         this.delegate = response.data;
         this.breadcrumbs[1].text = `${this.delegate.first_name} ${this.delegate.last_name}`;
@@ -263,20 +263,16 @@ export default {
         }
       }
       await this.$http
-        .put(
-          `https://munoltom.pythonanywhere.com/api/delegates/${this.id}/`,
-          fd,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = Math.round(
-                (progressEvent.loaded * 100.0) / progressEvent.total
-              );
-            }.bind(this),
-          }
-        )
+        .put(`api/delegates/${this.id}/`, fd, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: function (progressEvent) {
+            this.uploadPercentage = Math.round(
+              (progressEvent.loaded * 100.0) / progressEvent.total
+            );
+          }.bind(this),
+        })
         .then((r) => {
           if (r.status == 200) {
             this.successSnackbar = true;

@@ -284,22 +284,14 @@ export default {
   methods: {},
   async mounted() {
     try {
-      const gender = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/stats/gender_all"
-        )
-      ).data;
+      const gender = (await this.$http.get("stats/gender_all")).data;
       this.gender = gender;
     } catch (error) {
       alert(error);
     }
 
     try {
-      const age_stats = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/stats/age_counts_all"
-        )
-      ).data;
+      const age_stats = (await this.$http.get("stats/age_counts_all")).data;
       this.age_stats = age_stats;
     } catch (error) {
       alert(error);
@@ -307,9 +299,7 @@ export default {
 
     try {
       const birthdays = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/stats/birthdays_during_conference"
-        )
+        await this.$http.get("stats/birthdays_during_conference")
       ).data;
       this.birthdays = birthdays.birthdays;
     } catch (error) {
@@ -317,11 +307,7 @@ export default {
     }
 
     try {
-      const origin_data = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/stats/origin_all"
-        )
-      ).data;
+      const origin_data = (await this.$http.get("stats/origin_all")).data;
       this.origin_data = origin_data;
     } catch (error) {
       alert(error);
@@ -329,9 +315,7 @@ export default {
 
     try {
       const delegates_from_countries = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/stats/delegates_from_countries"
-        )
+        await this.$http.get("stats/delegates_from_countries")
       ).data;
       this.delegates_from_countries = delegates_from_countries.origin;
     } catch (error) {
@@ -339,31 +323,21 @@ export default {
     }
 
     try {
-      const housing_data = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/stats/housing_all"
-        )
-      ).data;
+      const housing_data = (await this.$http.get("stats/housing_all")).data;
       this.housing_data = housing_data;
     } catch (error) {
       alert(error);
     }
 
     try {
-      const diet_data = (
-        await this.$http.get("https://munoltom.pythonanywhere.com/stats/diet")
-      ).data;
+      const diet_data = (await this.$http.get("stats/diet")).data;
       this.diet_data = diet_data;
     } catch (error) {
       alert(error);
     }
 
     try {
-      const stats = (
-        await this.$http.get(
-          "https://munoltom.pythonanywhere.com/stats/all_stats"
-        )
-      ).data;
+      const stats = (await this.$http.get("stats/all_stats")).data;
       this.stats = stats;
       console.log(this.stats);
     } catch (error) {

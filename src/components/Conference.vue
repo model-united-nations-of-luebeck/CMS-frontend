@@ -363,7 +363,7 @@ export default {
   }),
   mounted() {
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/conferences/")
+      .get("api/conferences/")
       .then((response) => {
         [this.conference] = response.data;
         this.conference.pre_registration_deadline = new Date(
@@ -382,11 +382,7 @@ export default {
   methods: {
     async updateConferenceSettings() {
       await this.$http
-        .put(
-          `https://munoltom.pythonanywhere.com/api/conferences/1/`,
-          this.conference,
-          {}
-        )
+        .put(`api/conferences/1/`, this.conference, {})
         .then((r) => {
           if (r.status == 200) {
             this.successSnackbar = true;

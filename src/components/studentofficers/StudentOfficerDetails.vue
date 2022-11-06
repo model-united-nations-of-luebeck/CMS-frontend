@@ -304,16 +304,14 @@ export default {
   },
   mounted() {
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/forums/")
+      .get("api/forums/")
       .then((response) => {
         this.forums = response.data;
       })
       .catch((error) => alert(error));
     if (this.id != undefined) {
       this.$http
-        .get(
-          `https://munoltom.pythonanywhere.com/api/student-officers/${this.id}`
-        )
+        .get(`api/student-officers/${this.id}`)
         .then((response) => {
           this.studentofficer = response.data;
           this.breadcrumbs[1].text = `${this.studentofficer.first_name} ${this.studentofficer.last_name}`;
@@ -334,20 +332,16 @@ export default {
         }
       }
       await this.$http
-        .put(
-          `https://munoltom.pythonanywhere.com/api/student-officers/${this.id}/`,
-          fd,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = Math.round(
-                (progressEvent.loaded * 100.0) / progressEvent.total
-              );
-            }.bind(this),
-          }
-        )
+        .put(`api/student-officers/${this.id}/`, fd, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: function (progressEvent) {
+            this.uploadPercentage = Math.round(
+              (progressEvent.loaded * 100.0) / progressEvent.total
+            );
+          }.bind(this),
+        })
         .then((r) => {
           if (r.status == 200) {
             this.successSnackbar = true;
@@ -366,10 +360,7 @@ export default {
     },
     async deleteItemConfirm() {
       await this.$http
-        .delete(
-          `https://munoltom.pythonanywhere.com/api/student-officers/${this.id}/`,
-          {}
-        )
+        .delete(`api/student-officers/${this.id}/`, {})
         .then((r) => {
           if (r.status == 204) {
             alert("Deleted");

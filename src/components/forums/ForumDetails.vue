@@ -149,7 +149,7 @@ export default {
   mounted() {
     if (this.id != undefined) {
       this.$http
-        .get(`https://munoltom.pythonanywhere.com/api/forums/${this.id}`)
+        .get(`api/forums/${this.id}`)
         .then((response) => {
           this.forum = response.data;
           this.breadcrumbs[1].text = `${this.forum.name}`;
@@ -170,7 +170,7 @@ export default {
         }
       }
       await this.$http
-        .put(`https://munoltom.pythonanywhere.com/api/forums/${this.id}/`, fd, {
+        .put(`api/forums/${this.id}/`, fd, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -198,10 +198,7 @@ export default {
     },
     async deleteItemConfirm() {
       await this.$http
-        .delete(
-          `https://munoltom.pythonanywhere.com/api/forums/${this.id}/`,
-          {}
-        )
+        .delete(`api/forums/${this.id}/`, {})
         .then((r) => {
           if (r.status == 204) {
             alert("Deleted");

@@ -282,7 +282,7 @@ export default {
   mounted() {
     // fetch required data for this page
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/schools/")
+      .get("api/schools/")
       .then((response) => {
         this.schools = response.data;
       })

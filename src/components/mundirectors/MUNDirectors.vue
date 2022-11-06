@@ -262,7 +262,7 @@ export default {
   mounted() {
     // fetch required data for this page
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/mun-directors/")
+      .get("api/mun-directors/")
       .then((response) => {
         this.mundirectors = response.data;
       })

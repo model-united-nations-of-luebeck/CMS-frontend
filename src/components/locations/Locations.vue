@@ -329,14 +329,14 @@ export default {
   },
   mounted() {
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/locations/")
+      .get("api/locations/")
       .then((response) => {
         this.locations = response.data;
       })
       .catch((error) => alert(error));
 
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/rooms/")
+      .get("api/rooms/")
       .then((response) => {
         this.rooms = response.data;
       })
@@ -355,10 +355,7 @@ export default {
     },
     async deleteItemConfirm() {
       await this.$http
-        .delete(
-          `https://munoltom.pythonanywhere.com/api/locations/${this.deletedItem.id}/`,
-          {}
-        )
+        .delete(`api/locations/${this.deletedItem.id}/`, {})
         .then((r) => {
           if (r.status == 204) {
             this.$refs.deletedSnackbar.show();
@@ -376,10 +373,7 @@ export default {
     },
     async deleteRoomItemConfirm() {
       await this.$http
-        .delete(
-          `https://munoltom.pythonanywhere.com/api/rooms/${this.deletedRoomItem.id}/`,
-          {}
-        )
+        .delete(`api/rooms/${this.deletedRoomItem.id}/`, {})
         .then((r) => {
           if (r.status == 204) {
             this.$refs.deletedSnackbar.show();

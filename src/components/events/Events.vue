@@ -163,31 +163,29 @@ export default {
   }),
   mounted() {
     // fetch required data for this page
-    this.$http
-      .get("https://munoltom.pythonanywhere.com/api/locations/")
-      .then((response) => {
-        this.locations = response.data;
+    this.$http.get("api/locations/").then((response) => {
+      this.locations = response.data;
 
-        this.$http
-          .get("https://munoltom.pythonanywhere.com/api/events/")
-          .then((response) => {
-            this.raw_events = response.data;
-            this.raw_events.forEach((event) => {
-              event.start = new Date(`${event.day} ${event.start_time}`);
-              event.end = new Date(`${event.day} ${event.end_time}`);
-              event.timed = true;
-              event.color = "red";
-              if (event.location) {
-                event.location_name = this.locations[event.location].name;
-              }
-            });
-            this.events = this.raw_events;
-          })
-          .catch((error) => alert(error));
-      });
+      this.$http
+        .get("api/events/")
+        .then((response) => {
+          this.raw_events = response.data;
+          this.raw_events.forEach((event) => {
+            event.start = new Date(`${event.day} ${event.start_time}`);
+            event.end = new Date(`${event.day} ${event.end_time}`);
+            event.timed = true;
+            event.color = "red";
+            if (event.location) {
+              event.location_name = this.locations[event.location].name;
+            }
+          });
+          this.events = this.raw_events;
+        })
+        .catch((error) => alert(error));
+    });
 
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/conferences/")
+      .get("api/conferences/")
       .then((response) => {
         [this.conference] = response.data;
         this.setMUNOLWeek();
@@ -227,7 +225,7 @@ export default {
       event.end_time = this.toHoursMinutes(event.end);
       this.events.push(event);
       this.$http
-        .post("https://munoltom.pythonanywhere.com/api/events/", event)
+        .post("api/events/", event)
         .then((r) => {
           if (r.status == 201) {
             const i = this.events.indexOf(event);
@@ -251,10 +249,7 @@ export default {
       } else {
         console.log(newEvent);
         this.$http
-          .put(
-            `https://munoltom.pythonanywhere.com/api/events/${newEvent.id}/`,
-            newEvent
-          )
+          .put(`api/events/${newEvent.id}/`, newEvent)
           .then((r) => {
             if (r.status == 200) {
               this.successSnackbar = true;
@@ -272,7 +267,7 @@ export default {
     deleteEvent(event) {
       console.log("delete");
       this.$http
-        .delete(`https://munoltom.pythonanywhere.com/api/events/${event.id}/`)
+        .delete(`api/events/${event.id}/`)
         .then((r) => {
           if (r.status == 204) {
             const i = this.events.indexOf(event);

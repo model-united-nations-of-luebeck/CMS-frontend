@@ -166,7 +166,7 @@ export default {
   },
   mounted() {
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/conferences/")
+      .get("api/conferences/")
       .then((response) => {
         [this.conference] = response.data;
       })

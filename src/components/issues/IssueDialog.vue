@@ -102,7 +102,7 @@ export default {
   mounted() {
     this.issue = this.defaultIssue;
     this.$http
-      .get("https://munoltom.pythonanywhere.com/api/forums/")
+      .get("api/forums/")
       .then((response) => {
         this.forums = response.data;
       })
@@ -125,7 +125,7 @@ export default {
         }
       }
       await this.$http
-        .post(`https://munoltom.pythonanywhere.com/api/issues/`, fd, {
+        .post(`api/issues/`, fd, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

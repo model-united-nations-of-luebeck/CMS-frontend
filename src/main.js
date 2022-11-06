@@ -12,6 +12,7 @@ import {
 } from 'leaflet'
 import DatetimePicker from "vuetify-datetime-picker";
 import HighchartsVue from 'highcharts-vue'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 Vue.use(Vue2Filters)
@@ -40,3 +41,9 @@ new Vue({
   router,
   render: h => h(App),
 }).$mount('#app')
+
+// create global axios instance for backend requests
+const backend_instance = axios.create({
+  baseURL: process.env.VUE_APP_BACKEND_URL
+});
+Vue.prototype.$http = backend_instance;
