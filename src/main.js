@@ -1,49 +1,58 @@
-import Vue from 'vue';
-import App from './App.vue';
-import vuetify from './plugins/vuetify';
-import router from './router';
-import Vue2Filters from 'vue2-filters';
-import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
-import VueClipboard from 'vue-clipboard2';
-import JsonCSV from 'vue-json-csv';
-import JsonExcel from 'vue-json-excel';
-import {
-  Icon
-} from 'leaflet'
-import DatetimePicker from "vuetify-datetime-picker";
-import HighchartsVue from 'highcharts-vue'
+import './assets/main.css'
+
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
+import App from './App.vue'
+import router from './router'
+
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+import '@mdi/font/css/materialdesignicons.css'
+import { VDateInput } from 'vuetify/labs/VDateInput' //currently still in labs
+import { VNumberInput } from 'vuetify/labs/VNumberInput' //currently still in labs
+
+import VueClipboard from 'vue3-clipboard'
+import Vue3Toastify from 'vue3-toastify'
 import axios from 'axios'
 
-Vue.config.productionTip = false
-Vue.use(Vue2Filters)
-Vue.use(DatetimePicker)
-Vue.use(HighchartsVue)
 
+const vuetify = createVuetify({
+  components: {
+    ...components,
+    VDateInput,
+    VNumberInput
+  },
+  directives,
+  icons: {
+    defaultSet: 'mdi' // This is already the default value - only for display purposes
+  },
+  font: {
+    family: 'Roboto'
+  },
+})
 
-Vue.use(VueTelInputVuetify, {
-  vuetify,
-  placeholder: '',
-  label: 'Phone'
-});
-Vue.use(VueClipboard);
-Vue.component('downloadCsv',JsonCSV);
-Vue.component('downloadExcel',JsonExcel);
+const app = createApp(App)
 
-delete Icon.Default.prototype._getIconUrl;
-Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
-});
-
-new Vue({
-  vuetify,
-  router,
-  render: h => h(App),
-}).$mount('#app')
+app.use(createPinia())
+app.use(router)
+app.use(vuetify)
+app.use(VueClipboard, {
+  autoSetContainer: true,
+  appendToBody: true,
+})
+app.use(Vue3Toastify, {
+  autoClose: 3000,
+})
 
 // create global axios instance for backend requests
 const backend_instance = axios.create({
-  baseURL: process.env.VUE_APP_BACKEND_URL
+  baseURL: import.meta.env.VITE_BACKEND_URL
 });
-Vue.prototype.$http = backend_instance;
+app.provide('backend_instance', backend_instance)
+
+app.mount('#app')
+
