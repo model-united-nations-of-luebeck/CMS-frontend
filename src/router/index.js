@@ -1,194 +1,185 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '@/components/Home'
-import Schools from '@/components/schools/Schools'
-import SchoolDetails from '@/components/schools/SchoolDetails'
-import Delegates from '@/components/delegates/Delegates'
-import DelegateDetails from '@/components/delegates/DelegateDetails'
-import MUNDirectors from '@/components/mundirectors/MUNDirectors'
-import MUNDirectorDetails from '@/components/mundirectors/MUNDirectorDetails'
-import Advisors from '@/components/advisors/Advisors'
-import AdvisorDetails from '@/components/advisors/AdvisorDetails'
-import Executives from '@/components/executives/Executives'
-import ExecutiveDetails from '@/components/executives/ExecutiveDetails'
-import StudentOfficers from '@/components/studentofficers/StudentOfficers'
-import StudentOfficerDetails from '@/components/studentofficers/StudentOfficerDetails'
-import Staffs from '@/components/staffs/Staffs'
-import StaffDetails from '@/components/staffs/StaffDetails'
-import MemberOrganizations from '@/components/memberorganizations/MemberOrganizations'
-import Forums from '@/components/forums/Forums'
-import ForumDetails from '@/components/forums/ForumDetails'
-import Issues from '@/components/issues/Issues'
-import IssueDetails from '@/components/issues/IssueDetails'
-import Conference from '@/components/Conference'
-import Locations from '@/components/locations/Locations'
-import LocationDetails from '@/components/locations/LocationDetails'
-import RoomDetails from '@/components/locations/RoomDetails'
-import Events from '@/components/events/Events'
-import CountryAllocation from '@/components/countryallocation/CountryAllocation'
-import Printing from '@/components/Printing'
-import Insights from '@/components/insights/Insights'
+import { createRouter, createWebHistory } from 'vue-router'
 
-Vue.use(Router)
+/**
+ * The meta property allows to add additional information like the title.
+ * This will be used to set the HTML header title.
+ */
 
-export default new Router({
-  routes: [{
-      path: '/',
-      name: 'Home',
-      component: Home
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  },
+  routes: [
+    {
+      path: '/management/',
+      name: 'conference-management-system',
+      meta: {
+        title: 'MUNOL CMS',
+      },
+      component: () => import('../views/management/ManagementView.vue'),
+      children: [
+        {
+          path: '',
+          name: 'startpage',
+          component: () => import('../views/management/StartpageView.vue')
+        },
+        {
+          path: 'conference',
+          name: 'conference',
+          component: () => import('../views/management/ConferenceView.vue')
+        },
+        {
+          path: 'schools/:school_id',
+          name: 'school-detail',
+          component: () => import('../views/management/SchoolDetailView.vue')
+        },
+        {
+          path: 'schools',
+          name: 'schools',
+          component: () => import('../views/management/SchoolsView.vue')
+        },
+        {
+          path: 'member-organizations/:member_organization_id',
+          name: 'member-organization-detail',
+          component: () => import('../views/management/MemberOrganizationDetailView.vue')
+        },
+        {
+          path: 'member-organizations',
+          name: 'member-organizations',
+          component: () => import('../views/management/MemberOrganizationsView.vue')
+        },
+        {
+          path: 'forums/:forum_id',
+          name: 'forum-detail',
+          component: () => import('../views/management/ForumDetailView.vue')
+        },
+        {
+          path: 'forums',
+          name: 'forums',
+          component: () => import('../views/management/ForumsView.vue')
+        },
+        {
+          path: 'plenaries/:plenary_id',
+          name: 'plenary-detail',
+          component: () => import('../views/management/PlenaryDetailView.vue')
+        },
+        {
+          path: 'issues/:issue_id',
+          name: 'issue-detail',
+          component: () => import('../views/management/IssueDetailView.vue')
+        },
+        {
+          path: 'issues',
+          name: 'issues',
+          component: () => import('../views/management/IssuesView.vue')
+        },
+        {
+          path: 'country-allocation',
+          name: 'country-allocation',
+          component: () => import('../views/management/CountryAllocationView.vue')
+        }
+        
+      ]
     },
     {
-      path: '/schools',
-      name: 'Schools',
-      component: Schools
+      path: '/registration/advisors/:advisor_id',
+      name: 'advisor-registration',
+      meta: {
+        title: 'Advisor Registration',
+      },
+      component: () => import('../views/registration/AdvisorRegistrationView.vue')
     },
     {
-      path: '/schools/:id',
-      name: 'SchoolDetails',
-      component: SchoolDetails,
-      props: true,
+      path: '/registration/staffs/:staff_id',
+      name: 'staff-registration',
+      meta: {
+        title: 'Staff Registration',
+      },
+      component: () => import('../views/registration/StaffRegistrationView.vue')
     },
     {
-      path: '/advisors',
-      name: 'Advisors',
-      component: Advisors
+      path: '/registration/executives/:executive_id',
+      name: 'executive-registration',
+      meta: {
+        title: 'Executive Registration',
+      },
+      component: () => import('../views/registration/ExecutiveRegistrationView.vue')
     },
     {
-      path: '/advisors/:id',
-      name: 'AdvisorDetails',
-      component: AdvisorDetails,
-      props: true,
+      path: '/registration/student-officers/:student_officer_id',
+      name: 'student-officer-registration',
+      meta: {
+        title: 'Student Officer Registration',
+      },
+      component: () => import('../views/registration/StudentOfficerRegistrationView.vue')
     },
     {
-      path: '/delegates',
-      name: 'Delegates',
-      component: Delegates
+      path: '/registration/final-registration-delegate/:delegate_id',
+      name: 'final-registration-delegate',
+      meta: {
+        title: 'Delegate Registration',
+      },
+      component: () => import('../views/registration/FinalRegistrationDelegateView.vue')
     },
     {
-      path: '/delegates/:id',
-      name: 'DelegateDetails',
-      component: DelegateDetails,
-      props: true,
+      path: '/registration/final-registration-mun-director/:mun_director_id',
+      name: 'final-registration-mun-director',
+      meta: {
+        title: 'MUN-Director Registration',
+      },
+      component: () => import('../views/registration/FinalRegistrationMUNDirectorView.vue')
     },
     {
-      path: '/mun-directors',
-      name: 'MUNDirectors',
-      component: MUNDirectors
+      path: '/registration/:school_id',  // school_id is a parameter that should be passed to the registration view
+      name: 'registration',
+      meta: {
+        title: 'MUNOL Registration',
+      },
+      component: () => import('../views/registration/RegistrationView.vue'),
+      children: [
+        { 
+          path: '',
+          name: 'registration-startpage',
+          component: () => import('../views/registration/RegistrationStartpageView.vue')
+        },
+        {
+          path: 'pre-registration',
+          name: 'pre-registration',
+          component: () => import('../views/registration/PreRegistrationView.vue')
+        },
+        {
+          path: 'final-registration',
+          name: 'final-registration',
+          component: () => import('../views/registration/FinalRegistrationView.vue')
+        }
+      ]
     },
     {
-      path: '/mun-directors/:id',
-      name: 'MUNDirectorDetails',
-      component: MUNDirectorDetails,
-      props: true,
+      // Sets the default path to the registration
+      path: "/",
+      redirect: "/registration",
     },
     {
-      path: '/executives',
-      name: 'Executives',
-      component: Executives
-    },
-    {
-      path: '/executives/:id',
-      name: 'ExecutiveDetails',
-      component: ExecutiveDetails,
-      props: true,
-    },
-    {
-      path: '/student-officers',
-      name: 'StudentOfficers',
-      component: StudentOfficers
-    },
-    {
-      path: '/student-officers/:id',
-      name: 'StudentOfficerDetails',
-      component: StudentOfficerDetails,
-      props: true,
-    },
-    {
-      path: '/staffs',
-      name: 'Staffs',
-      component: Staffs
-    },
-    {
-      path: '/staffs/:id',
-      name: 'StaffDetails',
-      component: StaffDetails,
-      props: true,
-    },
-    {
-      path: '/member-organizations',
-      name: 'MemberOrganizations',
-      component: MemberOrganizations
-    },
-    {
-      path: '/forums',
-      name: 'Forums',
-      component: Forums
-    },
-    {
-      path: '/forums/:id',
-      name: 'ForumDetails',
-      component: ForumDetails,
-      props: true,
-    },
-    {
-      path: '/issues',
-      name: 'Issues',
-      component: Issues
-    },
-    {
-      path: '/issues/:id',
-      name: 'IssueDetails',
-      component: IssueDetails,
-      props: true,
-    },
-    {
-      path: '/locations',
-      name: 'Locations',
-      component: Locations
-    },
-    {
-      path: '/conference',
-      name: 'Conference',
-      component: Conference
-    },
-    {
-      path: '/rooms',
-      name: 'Rooms',
-      component: Locations //TODO: automatically select rooms tab in Locations component
-    },
-    {
-      path: '/locations/:id',
-      name: 'LocationDetails',
-      component: LocationDetails,
-      props: true
-    },
-    {
-      path: '/rooms/:id',
-      name: 'RoomDetails',
-      component: RoomDetails,
-      props: true
-    },{
-      path: '/events',
-      name: 'Events',
-      component: Events,
-    },{
-      path: '/country-allocation',
-      name: 'CountryAllocation',
-      component: CountryAllocation,
-    },
-    {
-      path: '/printing',
-      name: 'Printing',
-      component: Printing
-    },
-    {
-      path: '/insights',
-      name: 'Insights',
-      component: Insights
-    },
-  ],
-  mode: 'history',
-  base: process.env.NODE_ENV === 'production'     
-  ? '/trix/cms/'     
-  : '/'
+      // catch all path to avoid 404 errors, redirects to /
+      path: '/:pathMatch(.*)*',
+      redirect: "/"
+    }
+  ]
 })
+
+// Sets the title depending on the route (e.g MUNOL Registration for /registration), defaults to MUNOL CMS
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title || 'MUNOL CMS'
+
+  // gives the page a bit of time to render the UI, e.g. closing the nav drawer into rail mode, before actually loading the new page
+  setTimeout(() => {
+    next()
+  }, 500)
+})
+
+export default router
