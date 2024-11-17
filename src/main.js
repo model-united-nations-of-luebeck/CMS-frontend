@@ -12,7 +12,8 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
-import fonts from './fonts/fonts.css'
+// eslint-disable-next-line no-unused-vars
+import fonts from './fonts/fonts.module.scss'
 import { VDateInput } from 'vuetify/labs/VDateInput' //currently still in labs
 import { VNumberInput } from 'vuetify/labs/VNumberInput' //currently still in labs
 
