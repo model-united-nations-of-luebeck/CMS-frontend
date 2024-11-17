@@ -2,6 +2,9 @@
 src/assets/audio*
 src/assets/images*
 
+# ignore fonts for copyright reasons
+src/fonts*
+
 #Mac specific files
 .DS_Store
 
