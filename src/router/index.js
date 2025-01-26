@@ -82,7 +82,17 @@ const router = createRouter({
           path: 'country-allocation',
           name: 'country-allocation',
           component: () => import('../views/management/CountryAllocationView.vue')
-        }
+        },
+        {
+          path: 'delegates/:delegate_id',
+          name: 'delegate-detail',
+          component: () => import('../views/management/DelegateDetailView.vue')
+        },
+        {
+          path: 'delegates',
+          name: 'delegates',
+          component: () => import('../views/management/DelegatesView.vue')
+        },
         
       ]
     },
