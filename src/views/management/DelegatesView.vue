@@ -4,7 +4,23 @@ import { useDelegatesStore } from "../../stores/delegates";
 import { useSchoolsStore } from "../../stores/schools";
 import { useForumsStore } from "../../stores/forums";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
-import { getAge, getAgeColor } from "../../stores/participants";
+import {
+  sortParticipantsByName,
+  sortParticipantsByAge,
+} from "../../stores/participants";
+import ConsentDisplay from "../../components/displays/ConsentDisplay.vue";
+import BadgePhotoDisplay from "../../components/displays/BadgePhotoDisplay.vue";
+import FirstTimerIcon from "../../components/icons/FirstTimerIcon.vue";
+import MediaConsentIcon from "../../components/icons/MediaConsentIcon.vue";
+import ExtraInformationIcon from "../../components/icons/ExtraInformationIcon.vue";
+import AmbassadorIcon from "../../components/icons/AmbassadorIcon.vue";
+import BirthdayChip from "../../components/chips/BirthdayChip.vue";
+import MobilePhoneIcon from "../../components/icons/MobilePhoneIcon.vue";
+import MailIcon from "../../components/icons/MailIcon.vue";
+import SchoolChip from "../../components/chips/SchoolChip.vue";
+import ForumChip from "../../components/chips/ForumChip.vue";
+import MemberOrganizationChip from "../../components/chips/MemberOrganizationChip.vue";
+import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
 
 const schoolsStore = useSchoolsStore();
 schoolsStore.getSchools();
@@ -25,12 +41,7 @@ const headers = [
     align: "start",
     sortable: true,
     key: "name",
-    sortRaw(a, b) {
-      if (a && b && a.first_name && b.first_name) {
-        return a.first_name < b.first_name;
-      }
-      return 0;
-    },
+    sortRaw: sortParticipantsByName,
   },
 
   {
@@ -104,14 +115,7 @@ const headers = [
     align: "start",
     sortable: true,
     key: "age",
-    sortRaw(a, b) {
-      if (a && b && a.birthday && b.birthday) {
-        const age_a = getAge(a.birthday);
-        const age_b = getAge(b.birthday);
-        return age_a - age_b;
-      }
-      return 0;
-    },
+    sortRaw: sortParticipantsByAge,
   },
   {
     title: "Icons",
@@ -215,181 +219,64 @@ const custom_filter = function (value, query, item) {
             ></v-btn>
           </td>
           <td>
-            <b
-              v-if="item.pronouns"
-              v-tooltip:bottom="`${item.gender} (${item.pronouns})`"
-              >{{ item.first_name }} {{ item.last_name }}</b
+            <ParticipantDisplay
+              :first_name="item.first_name"
+              :last_name="item.last_name"
+              :pronouns="item.pronouns"
+              :gender="item.gender"
             >
-            <b v-else v-tooltip:bottom="`${item.gender}`"
-              >{{ item.first_name }} {{ item.last_name }}</b
-            >
+            </ParticipantDisplay>
           </td>
 
           <td>
-            <v-chip
-              v-tooltip:bottom="
+            <MemberOrganizationChip
+              :org="
                 memberOrganizationsStore.member_organizations.find(
                   (org) => org.id === item.represents,
-                )?.official_name
+                )
               "
-              :to="{
-                name: 'member-organization-detail',
-                params: { member_organization_id: item.represents },
-              }"
-            >
-              <template v-slot:prepend>
-                <v-avatar
-                  start
-                  v-if="
-                    memberOrganizationsStore.member_organizations.find(
-                      (org) => org.id === item.represents,
-                    )?.flag
-                  "
-                  :image="
-                    memberOrganizationsStore.member_organizations.find(
-                      (org) => org.id === item.represents,
-                    )?.flag
-                  "
-                ></v-avatar>
-              </template>
-              {{
-                memberOrganizationsStore.member_organizations.find(
-                  (org) => org.id === item.represents,
-                )?.placard_name
-              }}
-            </v-chip>
+            ></MemberOrganizationChip>
           </td>
 
           <td>
-            <v-chip
-              v-tooltip:bottom="
+            <ForumChip
+              :forum="
                 forumsStore.forums.find((forum) => forum.id === item.forum)
-                  ?.name
               "
-              :to="{
-                name: 'forum-detail',
-                params: { forum_id: item.forum },
-              }"
-            >
-              {{
-                forumsStore.forums.find((forum) => forum.id === item.forum)
-                  ?.abbreviation
-              }}
-            </v-chip>
+            ></ForumChip>
           </td>
 
           <td>
-            <v-chip
-              variant="text"
-              :to="{
-                name: 'school-detail',
-                params: { school_id: item.school },
-              }"
-            >
-              {{
+            <SchoolChip
+              :school="
                 schoolsStore.schools.find((school) => school.id === item.school)
-                  ?.name
-              }}
-            </v-chip>
+              "
+            ></SchoolChip>
           </td>
 
           <td>
-            <v-icon
-              v-if="item.email"
-              v-tooltip:bottom-center="
-                `${item.email}  (Click to copy e-mail to your clipboard)`
-              "
-              v-clipboard:copy="item.email"
-              v-clipboard:success="
-                () => {
-                  toast.success('E-mail was copied successfully', {
-                    position: toast.POSITION.BOTTOM_CENTER,
-                    style: 'width: auto',
-                  });
-                }
-              "
-              v-clipboard:error="
-                (e) =>
-                  toast.error('Copying E-mail failed' + e.text, {
-                    position: toast.POSITION.BOTTOM_CENTER,
-                  })
-              "
-              :color="item.email_verified ? 'success' : 'error'"
-              >{{
-                item.email_verified ? "mdi-email-check" : "mdi-email"
-              }}</v-icon
-            >
+            <MailIcon
+              :email="item.email"
+              :email_verified="item.email_verified"
+            ></MailIcon>
           </td>
           <td>
-            <v-icon
-              v-if="item.mobile"
-              v-tooltip:bottom-center="
-                `${item.mobile}  (Click to copy mobile phone number to your clipboard)`
-              "
-              v-clipboard:copy="item.mobile"
-              v-clipboard:success="
-                () => {
-                  toast.success('Mobile phone number was copied successfully', {
-                    position: toast.POSITION.BOTTOM_CENTER,
-                    style: 'width: auto',
-                  });
-                }
-              "
-              v-clipboard:error="
-                (e) =>
-                  toast.error('Copying mobile phone number failed' + e.text, {
-                    position: toast.POSITION.BOTTOM_CENTER,
-                  })
-              "
-            >
-              mdi-phone
-            </v-icon>
+            <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>
           </td>
 
           <td>
-            <v-chip
-              v-if="item.birthday"
-              variant="tonal"
-              :color="getAgeColor(item.birthday)"
-            >
-              {{ getAge(item.birthday) }}
-            </v-chip>
+            <BirthdayChip :birthday="item.birthday"></BirthdayChip>
           </td>
 
           <td>
-            <v-icon
-              :class="{ hidden: !item.ambassador }"
-              color="#ebbe4d"
-              icon="mdi-shield-star-outline"
-              v-tooltip:bottom="'Ambassador of delegation'"
-            ></v-icon>
+            <AmbassadorIcon :ambassador="item.ambassador"></AmbassadorIcon>
 
-            <v-icon
-              :class="{ hidden: !item.first_timer }"
-              color="primary"
-              icon="mdi-account-question"
-              v-tooltip:bottom="'First timer'"
-            ></v-icon>
+            <FirstTimerIcon :first_timer="item.first_timer"></FirstTimerIcon>
+            <MediaConsentIcon
+              :media_consent_time="item.media_consent_time"
+            ></MediaConsentIcon>
 
-            <v-icon
-              v-if="item.media_consent_time"
-              icon="mdi-camera"
-              color="success"
-              v-tooltip:bottom="'Media consent given'"
-            ></v-icon>
-            <v-icon
-              v-else
-              icon="mdi-camera-off"
-              color="error"
-              v-tooltip:bottom="'Media consent not given'"
-            ></v-icon>
-
-            <v-icon
-              :class="{ hidden: !item.extras }"
-              color="primary"
-              icon="mdi-information-variant"
-              v-tooltip:bottom="`${item.extras}`"
-            ></v-icon>
+            <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>
 
           <td>
@@ -411,48 +298,15 @@ const custom_filter = function (value, query, item) {
           <td :colspan="columns.length">
             <div style="display: flex; gap: 16px">
               <div style="flex: 1">
-                <div v-if="item.picture">
-                  <v-img :src="item.picture" height="250px">
-                    <template v-slot:placeholder>
-                      <div
-                        class="d-flex align-center justify-center fill-height"
-                      >
-                        <v-progress-circular
-                          color="grey-lighten-4"
-                          indeterminate
-                        ></v-progress-circular>
-                      </div>
-                    </template>
-                  </v-img>
-                </div>
-                <div v-else>No badge photo uploaded yet.</div>
+                <BadgePhotoDisplay :picture="item.picture"></BadgePhotoDisplay>
               </div>
               <div style="flex: 2; padding: 16px">
-                <h2>Consent Information</h2>
-
-                <h3>Data consent</h3>
-                <div v-if="item.data_consent_time">
-                  <p>
-                    <b>Time:</b>
-                    {{ new Date(item.data_consent_time).toLocaleString() }}
-                  </p>
-                  <p><b>IP-Address:</b> {{ item.data_consent_ip }}</p>
-                </div>
-                <div v-else>
-                  <p>Data consent not given yet</p>
-                </div>
-                <br />
-                <h3>Media consent</h3>
-                <div v-if="item.media_consent_time">
-                  <p>
-                    <b>Time:</b>
-                    {{ new Date(item.media_consent_time).toLocaleString() }}
-                  </p>
-                  <p><b>IP-Address:</b> {{ item.media_consent_ip }}</p>
-                </div>
-                <div v-else>
-                  <p>Media consent not given</p>
-                </div>
+                <ConsentDisplay
+                  :data_consent_time="item.data_consent_time"
+                  :data_consent_ip="item.data_consent_ip"
+                  :media_consent_time="item.media_consent_time"
+                  :media_consent_ip="item.media_consent_ip"
+                ></ConsentDisplay>
               </div>
             </div>
           </td>
