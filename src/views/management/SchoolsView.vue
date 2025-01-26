@@ -4,64 +4,64 @@ import {
   getRegistrationStatusTitle,
   getRegistrationStatusColor,
   getHousingIcon,
-  getHousingText
-} from '../../stores/schools'
+  getHousingText,
+} from "../../stores/schools";
 
-import { ref } from 'vue'
-import { useDelegatesStore } from '../../stores/delegates'
-import ConfirmDialog from '../../components/ConfirmDialog.vue'
+import { ref } from "vue";
+import { useDelegatesStore } from "../../stores/delegates";
+import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 
-const schoolsStore = useSchoolsStore()
-schoolsStore.getSchools()
-const delegatesStore = useDelegatesStore()
-delegatesStore.getDelegates()
+const schoolsStore = useSchoolsStore();
+schoolsStore.getSchools();
+const delegatesStore = useDelegatesStore();
+delegatesStore.getDelegates();
 
-const deleteDialog = ref(null)
-const addNewSchoolDialog = ref(false)
-const newSchoolName = ref('')
+const deleteDialog = ref(null);
+const addNewSchoolDialog = ref(false);
+const newSchoolName = ref("");
 
-const search = ref('')
-const expanded = ref([])
+const search = ref("");
+const expanded = ref([]);
 
 const headers = [
-  { title: '', key: 'data-table-expand', sortable: false },
+  { title: "", key: "data-table-expand", sortable: false },
   {
-    title: 'Name',
-    align: 'start',
+    title: "Name",
+    align: "start",
     sortable: true,
-    key: 'name'
+    key: "name",
   },
 
   {
-    title: 'Delegates',
-    align: 'center',
+    title: "Delegates",
+    align: "center",
     children: [
       {
-        title: 'requested',
-        key: 'requested',
-        algin: 'end'
+        title: "requested",
+        key: "requested",
+        algin: "end",
       },
-      { title: 'confirmed', key: 'confirmed' }
-    ]
+      { title: "confirmed", key: "confirmed" },
+    ],
   },
-  { title: 'Pre-Reg Fee', key: 'fee_paid' },
+  { title: "Pre-Reg Fee", key: "fee_paid" },
   {
-    title: 'Housing ',
-    align: 'center',
+    title: "Housing ",
+    align: "center",
     children: [
-      { title: 'Delegates', key: 'housing_delegates' },
-      { title: 'MUN Directors', key: 'housing_mun_directors' }
-    ]
+      { title: "Delegates", key: "housing_delegates" },
+      { title: "MUN Directors", key: "housing_mun_directors" },
+    ],
   },
-  { title: 'Status', key: 'registration_status' },
+  { title: "Status", key: "registration_status" },
   {
-    title: 'Actions',
-    key: 'actions',
-    sortable: false
-  }
+    title: "Actions",
+    key: "actions",
+    sortable: false,
+  },
 
   // { text: '', value: 'data-table-select'}
-]
+];
 
 const custom_filter = function (value, query, item) {
   // searches all attributes of the item (not only the columns) if they contain the query
@@ -69,32 +69,34 @@ const custom_filter = function (value, query, item) {
     item != null &&
     query != null &&
     Object.values(item.raw).some((value) =>
-      String(value).toLowerCase().includes(query.toLowerCase())
+      String(value).toLowerCase().includes(query.toLowerCase()),
     )
-  )
-}
+  );
+};
 
 const confirmedDelegatesFromSchool = function (school_id) {
-  return delegatesStore.delegates.filter((delegate) => delegate.school === school_id).length
-}
+  return delegatesStore.delegates.filter(
+    (delegate) => delegate.school === school_id,
+  ).length;
+};
 
 const createSchool = function () {
-  if (newSchoolName.value !== '') {
+  if (newSchoolName.value !== "") {
     schoolsStore.createSchool(newSchoolName.value).then(() => {
-      addNewSchoolDialog.value = false
-      newSchoolName.value = ''
-    })
+      addNewSchoolDialog.value = false;
+      newSchoolName.value = "";
+    });
   }
-}
+};
 
 const deleteSchool = function (school_id) {
-  this.deleteDialog = school_id
-}
+  this.deleteDialog = school_id;
+};
 
 const confirmedDeleteSchool = function () {
-  schoolsStore.deleteSchool(this.deleteDialog)
-  this.deleteDialog = false
-}
+  schoolsStore.deleteSchool(this.deleteDialog);
+  this.deleteDialog = false;
+};
 </script>
 
 <template>
@@ -151,12 +153,16 @@ const confirmedDeleteSchool = function () {
         <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item, internalItem, toggleExpand, isExpanded }">
-        <tr :class="{ school_canceled: item.registration_status === 'CANCELED' }">
+        <tr
+          :class="{ school_canceled: item.registration_status === 'CANCELED' }"
+        >
           <td>
             <v-btn
               @click="toggleExpand(internalItem)"
               variant="plain"
-              :icon="isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+              :icon="
+                isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'
+              "
             ></v-btn>
           </td>
           <td>
@@ -174,7 +180,9 @@ const confirmedDeleteSchool = function () {
             >
             </v-icon>
 
-            <span v-if="item.requested">{{ String(item.requested).padStart(4, '&nbsp;') }}</span>
+            <span v-if="item.requested">{{
+              String(item.requested).padStart(4, "&nbsp;")
+            }}</span>
           </td>
           <td>
             <v-icon
@@ -184,7 +192,12 @@ const confirmedDeleteSchool = function () {
             >
             </v-icon>
 
-            {{ String(confirmedDelegatesFromSchool(item.id)).padStart(4, '&nbsp;') }}
+            {{
+              String(confirmedDelegatesFromSchool(item.id)).padStart(
+                4,
+                "&nbsp;",
+              )
+            }}
           </td>
           <td>
             <v-icon
@@ -209,14 +222,18 @@ const confirmedDeleteSchool = function () {
             }}</v-chip>
           </td>
           <td>
-            <v-chip :prepend-icon="getHousingIcon(item.housing_mun_directors)">{{
-              getHousingText(item.housing_mun_directors)
-            }}</v-chip>
+            <v-chip
+              :prepend-icon="getHousingIcon(item.housing_mun_directors)"
+              >{{ getHousingText(item.housing_mun_directors) }}</v-chip
+            >
           </td>
           <td>
-            <v-chip :color="getRegistrationStatusColor(item.registration_status)">{{
-              getRegistrationStatusTitle(item.registration_status)
-            }}</v-chip>
+            <v-chip
+              :color="getRegistrationStatusColor(item.registration_status)"
+              >{{
+                getRegistrationStatusTitle(item.registration_status)
+              }}</v-chip
+            >
           </td>
           <td>
             <v-btn
@@ -224,7 +241,7 @@ const confirmedDeleteSchool = function () {
               icon="mdi-pencil"
               :to="{
                 name: 'school-detail',
-                params: { school_id: item.id }
+                params: { school_id: item.id },
               }"
             >
             </v-btn>
@@ -233,13 +250,19 @@ const confirmedDeleteSchool = function () {
               v-tooltip="{
                 text: 'Only school without assigned delegates can be deleted.',
                 location: 'start',
-                disabled: !delegatesStore.delegates.some((delegate) => delegate.school === item.id)
+                disabled: !delegatesStore.delegates.some(
+                  (delegate) => delegate.school === item.id,
+                ),
               }"
             >
               <v-btn
                 variant="plain"
                 icon="mdi-delete"
-                :disabled="delegatesStore.delegates.some((delegate) => delegate.school === item.id)"
+                :disabled="
+                  delegatesStore.delegates.some(
+                    (delegate) => delegate.school === item.id,
+                  )
+                "
                 @click.stop="deleteSchool(item.id)"
               >
               </v-btn>
@@ -282,7 +305,9 @@ const confirmedDeleteSchool = function () {
       text="Are you sure you want to delete this school?"
       @ok-clicked="
         confirmedDeleteSchool(
-          schoolsStore.schools.filter((school) => school.id == this.deleteDialog).id
+          schoolsStore.schools.filter(
+            (school) => school.id == this.deleteDialog,
+          ).id,
         )
       "
       @cancel-clicked="deleteDialog = false"

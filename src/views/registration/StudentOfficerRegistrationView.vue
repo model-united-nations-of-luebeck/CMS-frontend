@@ -1,35 +1,35 @@
 <script setup>
-import { ref } from 'vue'
-import { useStudentOfficersStore } from '../../stores/student_officers'
-import { useRoute } from 'vue-router'
-import GenderSelector from '../../components/GenderSelector.vue'
-import PronounsSelector from '../../components/PronounsSelector.vue'
-import NameFields from '../../components/NameFields.vue'
-import EmailAddressField from '../../components/EmailAddressField.vue'
-import PhoneNumberField from '../../components/PhoneNumberField.vue'
-import DietSelector from '../../components/DietSelector.vue'
-import ExtrasField from '../../components/ExtrasField.vue'
-import { useDisplay } from 'vuetify'
-import BadgePhotoCropper from '../../components/BadgePhotoCropper.vue'
-import BirthdateField from '../../components/BirthdateField.vue'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
-import ConsentField from '../../components/ConsentField.vue'
-const { mobile } = useDisplay()
+import { ref } from "vue";
+import { useStudentOfficersStore } from "../../stores/student_officers";
+import { useRoute } from "vue-router";
+import GenderSelector from "../../components/inputs/GenderSelector.vue";
+import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
+import NameFields from "../../components/inputs/NameFields.vue";
+import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
+import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
+import DietSelector from "../../components/inputs/DietSelector.vue";
+import ExtrasField from "../../components/inputs/ExtrasField.vue";
+import { useDisplay } from "vuetify";
+import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
+import BirthdateField from "../../components/inputs/BirthdateField.vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import ConsentField from "../../components/inputs/ConsentField.vue";
+const { mobile } = useDisplay();
 
-const route = useRoute()
+const route = useRoute();
 
-const studentOfficersStore = useStudentOfficersStore()
+const studentOfficersStore = useStudentOfficersStore();
 
 if (route.params.student_officer_id) {
-  studentOfficersStore.getStudentOfficer(route.params.student_officer_id)
+  studentOfficersStore.getStudentOfficer(route.params.student_officer_id);
 } else {
-  toast.error('Student Officer not found', {
-    position: toast.POSITION.BOTTOM_CENTER
-  })
+  toast.error("Student Officer not found", {
+    position: toast.POSITION.BOTTOM_CENTER,
+  });
 }
 
-const valid = ref(true)
+const valid = ref(true);
 </script>
 
 <template>
@@ -37,8 +37,8 @@ const valid = ref(true)
     <v-alert>
       <p>Dear student officer,</p>
       <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please register by providing
-        some information about yourself and a badge photo.
+        it is our pleasure to welcome you to this years MUNOL session. Please
+        register by providing some information about yourself and a badge photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>
@@ -48,7 +48,9 @@ const valid = ref(true)
         <v-row no-gutters="">
           <v-col cols="12" sm="12" md="6">
             <NameFields
-              v-model:first_name="studentOfficersStore.student_officer.first_name"
+              v-model:first_name="
+                studentOfficersStore.student_officer.first_name
+              "
               v-model:last_name="studentOfficersStore.student_officer.last_name"
             ></NameFields>
 
@@ -69,8 +71,12 @@ const valid = ref(true)
             <BirthdateField
               v-model:birthday="studentOfficersStore.student_officer.birthday"
             ></BirthdateField>
-            <DietSelector v-model:diet="studentOfficersStore.student_officer.diet"></DietSelector>
-            <ExtrasField v-model:extras="studentOfficersStore.student_officer.extras"></ExtrasField>
+            <DietSelector
+              v-model:diet="studentOfficersStore.student_officer.diet"
+            ></DietSelector>
+            <ExtrasField
+              v-model:extras="studentOfficersStore.student_officer.extras"
+            ></ExtrasField>
 
             <v-text-field
               v-model="studentOfficersStore.student_officer.position_name"
@@ -102,10 +108,18 @@ const valid = ref(true)
         </v-row>
         <v-row no-gutters>
           <ConsentField
-            v-model:data_consent_time="studentOfficersStore.student_officer.data_consent_time"
-            v-model:data_consent_ip="studentOfficersStore.student_officer.data_consent_ip"
-            v-model:media_consent_time="studentOfficersStore.student_officer.media_consent_time"
-            v-model:media_consent_ip="studentOfficersStore.student_officer.media_consent_ip"
+            v-model:data_consent_time="
+              studentOfficersStore.student_officer.data_consent_time
+            "
+            v-model:data_consent_ip="
+              studentOfficersStore.student_officer.data_consent_ip
+            "
+            v-model:media_consent_time="
+              studentOfficersStore.student_officer.media_consent_time
+            "
+            v-model:media_consent_ip="
+              studentOfficersStore.student_officer.media_consent_ip
+            "
           ></ConsentField>
         </v-row>
         <v-row no-gutters class="justify-center">
@@ -124,7 +138,9 @@ const valid = ref(true)
               prepend-icon="mdi-send"
               :disabled="!valid"
               @click="
-                studentOfficersStore.updateStudentOfficer(studentOfficersStore.student_officer.id)
+                studentOfficersStore.updateStudentOfficer(
+                  studentOfficersStore.student_officer.id,
+                )
               "
               >Submit registration form</v-btn
             >

@@ -1,56 +1,56 @@
 <script setup>
-import { useMemberOrganizationsStore } from '../../stores/member_organizations'
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
-import ConfirmDialog from '../../components/ConfirmDialog.vue'
+import { useMemberOrganizationsStore } from "../../stores/member_organizations";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 
-const memberOrganizationsStore = useMemberOrganizationsStore()
-memberOrganizationsStore.getMemberOrganizations()
-const router = useRouter()
+const memberOrganizationsStore = useMemberOrganizationsStore();
+memberOrganizationsStore.getMemberOrganizations();
+const router = useRouter();
 
-const deleteDialog = ref(null)
-const search = ref('')
+const deleteDialog = ref(null);
+const search = ref("");
 
 const headers = [
-  { title: 'Flag', key: 'flag', sortable: false },
-  { title: 'Name', key: 'name' },
-  { title: 'Official Name', key: 'official_name' },
-  { title: 'Placard Name', key: 'placard_name' },
-  { title: 'Status', key: 'status' },
-  { title: 'Active', key: 'active' },
-  { title: 'Actions', key: 'actions' }
-]
+  { title: "Flag", key: "flag", sortable: false },
+  { title: "Name", key: "name" },
+  { title: "Official Name", key: "official_name" },
+  { title: "Placard Name", key: "placard_name" },
+  { title: "Status", key: "status" },
+  { title: "Active", key: "active" },
+  { title: "Actions", key: "actions" },
+];
 
 const toggleActive = function (member_organization_id) {
-  console.log('toggleActive' + member_organization_id)
-  memberOrganizationsStore.toggleActive(member_organization_id)
-}
+  console.log("toggleActive" + member_organization_id);
+  memberOrganizationsStore.toggleActive(member_organization_id);
+};
 
 const deleteMemberOrganization = function (member_organization_id) {
-  console.log('deleteMemberOrganization' + member_organization_id)
-  this.deleteDialog = member_organization_id
-}
+  console.log("deleteMemberOrganization" + member_organization_id);
+  this.deleteDialog = member_organization_id;
+};
 
 const confirmedDeleteMemberOrganization = function () {
-  console.log('confirmedDeleteMemberOrganization' + this.deleteDialog)
+  console.log("confirmedDeleteMemberOrganization" + this.deleteDialog);
   memberOrganizationsStore
     .deleteMemberOrganization(this.deleteDialog)
     .then(() => {
-      this.deleteDialog = false
-      toast.success('Member Organization was deleted successfully', {
+      this.deleteDialog = false;
+      toast.success("Member Organization was deleted successfully", {
         position: toast.POSITION.BOTTOM_CENTER,
-        style: 'width: auto'
-      })
+        style: "width: auto",
+      });
     })
     .catch(() => {
-      this.deleteDialog = false
-      toast.error('Deleting Member Organization failed', {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-    })
-}
+      this.deleteDialog = false;
+      toast.error("Deleting Member Organization failed", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    });
+};
 </script>
 
 <template>
@@ -81,7 +81,7 @@ const confirmedDeleteMemberOrganization = function () {
         @click="
           router.push({
             name: 'member-organization-detail',
-            params: { member_organization_id: 'add' }
+            params: { member_organization_id: 'add' },
           })
         "
       ></v-fab>
@@ -160,7 +160,7 @@ const confirmedDeleteMemberOrganization = function () {
               icon="mdi-pencil"
               :to="{
                 name: 'member-organization-detail',
-                params: { member_organization_id: item.id }
+                params: { member_organization_id: item.id },
               }"
             >
             </v-btn>
@@ -181,8 +181,9 @@ const confirmedDeleteMemberOrganization = function () {
       text="Are you sure you want to delete this member organization?"
       @ok-clicked="
         confirmedDeleteMemberOrganization(
-          memberOrganizationsStore.member_organizations.filter((org) => org.id == this.deleteDialog)
-            .id
+          memberOrganizationsStore.member_organizations.filter(
+            (org) => org.id == this.deleteDialog,
+          ).id,
         )
       "
       @cancel-clicked="deleteDialog = false"

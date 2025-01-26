@@ -1,37 +1,37 @@
 <script setup>
-import { ref } from 'vue'
-import { useMUNDirectorsStore } from '../../stores/mun_directors'
-import { useRoute } from 'vue-router'
-import { useDisplay } from 'vuetify'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
-import NameFields from '../../components/NameFields.vue'
-import GenderSelector from '../../components/GenderSelector.vue'
-import PronounsSelector from '../../components/PronounsSelector.vue'
+import { ref } from "vue";
+import { useMUNDirectorsStore } from "../../stores/mun_directors";
+import { useRoute } from "vue-router";
+import { useDisplay } from "vuetify";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import NameFields from "../../components/inputs/NameFields.vue";
+import GenderSelector from "../../components/inputs/GenderSelector.vue";
+import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
 
-import EmailAddressField from '../../components/EmailAddressField.vue'
-import PhoneNumberField from '../../components/PhoneNumberField.vue'
-import DietSelector from '../../components/DietSelector.vue'
-import ExtrasField from '../../components/ExtrasField.vue'
-import BadgePhotoCropper from '../../components/BadgePhotoCropper.vue'
-import CheckboxField from '../../components/CheckboxField.vue'
-import ConsentField from '../../components/ConsentField.vue'
+import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
+import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
+import DietSelector from "../../components/inputs/DietSelector.vue";
+import ExtrasField from "../../components/inputs/ExtrasField.vue";
+import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
+import CheckboxField from "../../components/inputs/CheckboxField.vue";
+import ConsentField from "../../components/inputs/ConsentField.vue";
 
-const { mobile } = useDisplay()
+const { mobile } = useDisplay();
 
-const route = useRoute()
+const route = useRoute();
 
-const munDirectorsStore = useMUNDirectorsStore()
+const munDirectorsStore = useMUNDirectorsStore();
 
 if (route.params.mun_director_id) {
-  munDirectorsStore.getMUNDirector(route.params.mun_director_id)
+  munDirectorsStore.getMUNDirector(route.params.mun_director_id);
 } else {
-  toast.error('MUN-Director not found', {
-    position: toast.POSITION.BOTTOM_CENTER
-  })
+  toast.error("MUN-Director not found", {
+    position: toast.POSITION.BOTTOM_CENTER,
+  });
 }
 
-const valid = ref(true)
+const valid = ref(true);
 </script>
 
 <template>
@@ -41,11 +41,13 @@ const valid = ref(true)
         <p>
           Dear MUN-Director, <br />
 
-          we are excited that you are participating in MUNOL 2024. To organize the conference and
-          prepare everything, we would like you to fill in this form and upload a photo for your
-          badge. Please don't hesitate contacting the Conference Managers in case you have any
-          questions
-          <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.
+          we are excited that you are participating in MUNOL 2024. To organize
+          the conference and prepare everything, we would like you to fill in
+          this form and upload a photo for your badge. Please don't hesitate
+          contacting the Conference Managers in case you have any questions
+          <a href="mailto:conferencemanager@munol.org"
+            >conferencemanager@munol.org</a
+          >.
         </p>
         <p>Your Conference Managers</p>
       </v-alert>
@@ -60,7 +62,9 @@ const valid = ref(true)
               v-model:last_name="munDirectorsStore.mun_director.last_name"
             ></NameFields>
 
-            <GenderSelector v-model:gender="munDirectorsStore.mun_director.gender"></GenderSelector>
+            <GenderSelector
+              v-model:gender="munDirectorsStore.mun_director.gender"
+            ></GenderSelector>
 
             <PronounsSelector
               v-model:pronouns="munDirectorsStore.mun_director.pronouns"
@@ -72,14 +76,18 @@ const valid = ref(true)
             <PhoneNumberField
               v-model:phone="munDirectorsStore.mun_director.mobile"
             ></PhoneNumberField>
-            <DietSelector v-model:diet="munDirectorsStore.mun_director.diet"></DietSelector>
+            <DietSelector
+              v-model:diet="munDirectorsStore.mun_director.diet"
+            ></DietSelector>
             <CheckboxField
               v-model:value="munDirectorsStore.mun_director.english_teacher"
               label="Are you an English teacher and able to help checking the grammar of written resolutions?"
               hint="There is a first MUN conference for everyone. Knowing this in advance, the team can prepare a smooth first conference for first timers."
               prepend-icon="mdi-human-male-board"
             ></CheckboxField>
-            <ExtrasField v-model:extras="munDirectorsStore.mun_director.extras"></ExtrasField>
+            <ExtrasField
+              v-model:extras="munDirectorsStore.mun_director.extras"
+            ></ExtrasField>
           </v-col>
 
           <v-col
@@ -96,10 +104,18 @@ const valid = ref(true)
         </v-row>
         <v-row no-gutters>
           <ConsentField
-            v-model:data_consent_time="munDirectorsStore.mun_director.data_consent_time"
-            v-model:data_consent_ip="munDirectorsStore.mun_director.data_consent_ip"
-            v-model:media_consent_time="munDirectorsStore.mun_director.media_consent_time"
-            v-model:media_consent_ip="munDirectorsStore.mun_director.media_consent_ip"
+            v-model:data_consent_time="
+              munDirectorsStore.mun_director.data_consent_time
+            "
+            v-model:data_consent_ip="
+              munDirectorsStore.mun_director.data_consent_ip
+            "
+            v-model:media_consent_time="
+              munDirectorsStore.mun_director.media_consent_time
+            "
+            v-model:media_consent_ip="
+              munDirectorsStore.mun_director.media_consent_ip
+            "
           ></ConsentField>
         </v-row>
         <v-row no-gutters class="justify-center">
@@ -117,7 +133,11 @@ const valid = ref(true)
               color="primary"
               prepend-icon="mdi-send"
               :disabled="!valid"
-              @click="munDirectorsStore.updateMUNDirector(munDirectorsStore.mun_director.id)"
+              @click="
+                munDirectorsStore.updateMUNDirector(
+                  munDirectorsStore.mun_director.id,
+                )
+              "
               >Submit registration form</v-btn
             >
           </div>
@@ -129,8 +149,8 @@ const valid = ref(true)
       <ul>
         <li>refactor consent field and its handling to component</li>
         <li>
-          Possibility to withdraw consent to data processing (confirmation dialog => deleting all
-          data and closing tab) and media publication
+          Possibility to withdraw consent to data processing (confirmation
+          dialog => deleting all data and closing tab) and media publication
         </li>
         <li>Polish legal texts</li>
       </ul>

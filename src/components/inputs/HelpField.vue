@@ -1,26 +1,27 @@
 <script setup>
-import { ref } from 'vue'
-import { useDisplay } from 'vuetify'
-import { predefined_help_keywords } from '../stores/advisors'
+import { ref } from "vue";
+import { useDisplay } from "vuetify";
+import { predefined_help_keywords } from "../../stores/advisors";
 
-const { mobile } = useDisplay()
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  help: Array[String]
-})
+  help: Array[String],
+});
 
-const search = ref('')
+const search = ref("");
 
-const emit = defineEmits(['update:help'])
+const emit = defineEmits(["update:help"]);
 
 const updateHelp = (value) => {
-  emit('update:help', value)
-}
+  emit("update:help", value);
+};
 
 const rules = [
   (v) =>
-    v.length > 0 || 'You want to be a conference advisor, please enter at least one support area.'
-]
+    v.length > 0 ||
+    "You want to be a conference advisor, please enter at least one support area.",
+];
 </script>
 
 <template>

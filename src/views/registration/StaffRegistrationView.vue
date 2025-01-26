@@ -1,35 +1,35 @@
 <script setup>
-import { ref } from 'vue'
-import { useStaffsStore } from '../../stores/staffs'
-import { useRoute } from 'vue-router'
-import GenderSelector from '../../components/GenderSelector.vue'
-import PronounsSelector from '../../components/PronounsSelector.vue'
-import NameFields from '../../components/NameFields.vue'
-import EmailAddressField from '../../components/EmailAddressField.vue'
-import PhoneNumberField from '../../components/PhoneNumberField.vue'
-import DietSelector from '../../components/DietSelector.vue'
-import ExtrasField from '../../components/ExtrasField.vue'
-import { useDisplay } from 'vuetify'
-import BadgePhotoCropper from '../../components/BadgePhotoCropper.vue'
-import BirthdateField from '../../components/BirthdateField.vue'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
-import ConsentField from '../../components/ConsentField.vue'
-const { mobile } = useDisplay()
+import { ref } from "vue";
+import { useStaffsStore } from "../../stores/staffs";
+import { useRoute } from "vue-router";
+import GenderSelector from "../../components/inputs/GenderSelector.vue";
+import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
+import NameFields from "../../components/inputs/NameFields.vue";
+import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
+import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
+import DietSelector from "../../components/inputs/DietSelector.vue";
+import ExtrasField from "../../components/inputs/ExtrasField.vue";
+import { useDisplay } from "vuetify";
+import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
+import BirthdateField from "../../components/inputs/BirthdateField.vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import ConsentField from "../../components/inputs/ConsentField.vue";
+const { mobile } = useDisplay();
 
-const route = useRoute()
+const route = useRoute();
 
-const staffsStore = useStaffsStore()
+const staffsStore = useStaffsStore();
 
 if (route.params.staff_id) {
-  staffsStore.getStaff(route.params.staff_id)
+  staffsStore.getStaff(route.params.staff_id);
 } else {
-  toast.error('Staff not found', {
-    position: toast.POSITION.BOTTOM_CENTER
-  })
+  toast.error("Staff not found", {
+    position: toast.POSITION.BOTTOM_CENTER,
+  });
 }
 
-const valid = ref(true)
+const valid = ref(true);
 </script>
 
 <template>
@@ -37,8 +37,8 @@ const valid = ref(true)
     <v-alert>
       <p>Dear staff member,</p>
       <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please register by providing
-        some information about yourself and a badge photo.
+        it is our pleasure to welcome you to this years MUNOL session. Please
+        register by providing some information about yourself and a badge photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>
@@ -52,15 +52,27 @@ const valid = ref(true)
               v-model:last_name="staffsStore.staff.last_name"
             ></NameFields>
 
-            <GenderSelector v-model:gender="staffsStore.staff.gender"></GenderSelector>
+            <GenderSelector
+              v-model:gender="staffsStore.staff.gender"
+            ></GenderSelector>
 
-            <PronounsSelector v-model:pronouns="staffsStore.staff.pronouns"></PronounsSelector>
+            <PronounsSelector
+              v-model:pronouns="staffsStore.staff.pronouns"
+            ></PronounsSelector>
 
-            <EmailAddressField v-model:email="staffsStore.staff.email"></EmailAddressField>
-            <PhoneNumberField v-model:phone="staffsStore.staff.mobile"></PhoneNumberField>
-            <BirthdateField v-model:birthday="staffsStore.staff.birthday"></BirthdateField>
+            <EmailAddressField
+              v-model:email="staffsStore.staff.email"
+            ></EmailAddressField>
+            <PhoneNumberField
+              v-model:phone="staffsStore.staff.mobile"
+            ></PhoneNumberField>
+            <BirthdateField
+              v-model:birthday="staffsStore.staff.birthday"
+            ></BirthdateField>
             <DietSelector v-model:diet="staffsStore.staff.diet"></DietSelector>
-            <ExtrasField v-model:extras="staffsStore.staff.extras"></ExtrasField>
+            <ExtrasField
+              v-model:extras="staffsStore.staff.extras"
+            ></ExtrasField>
 
             <v-text-field
               v-model="staffsStore.staff.position_name"
@@ -85,7 +97,9 @@ const valid = ref(true)
             :offset="mobile ? 0 : 8"
             :class="mobile ? '' : 'badge-photo'"
           >
-            <BadgePhotoCropper v-model:image="staffsStore.staff.picture"></BadgePhotoCropper>
+            <BadgePhotoCropper
+              v-model:image="staffsStore.staff.picture"
+            ></BadgePhotoCropper>
           </v-col>
         </v-row>
         <v-row no-gutters>

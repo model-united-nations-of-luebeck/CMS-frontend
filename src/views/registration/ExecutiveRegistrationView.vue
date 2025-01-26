@@ -1,35 +1,35 @@
 <script setup>
-import { ref } from 'vue'
-import { useExecutivesStore } from '../../stores/executives'
-import { useRoute } from 'vue-router'
-import GenderSelector from '../../components/GenderSelector.vue'
-import PronounsSelector from '../../components/PronounsSelector.vue'
-import NameFields from '../../components/NameFields.vue'
-import EmailAddressField from '../../components/EmailAddressField.vue'
-import PhoneNumberField from '../../components/PhoneNumberField.vue'
-import DietSelector from '../../components/DietSelector.vue'
-import ExtrasField from '../../components/ExtrasField.vue'
-import { useDisplay } from 'vuetify'
-import BadgePhotoCropper from '../../components/BadgePhotoCropper.vue'
-import BirthdateField from '../../components/BirthdateField.vue'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
-import ConsentField from '../../components/ConsentField.vue'
-const { mobile } = useDisplay()
+import { ref } from "vue";
+import { useExecutivesStore } from "../../stores/executives";
+import { useRoute } from "vue-router";
+import GenderSelector from "../../components/inputs/GenderSelector.vue";
+import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
+import NameFields from "../../components/inputs/NameFields.vue";
+import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
+import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
+import DietSelector from "../../components/inputs/DietSelector.vue";
+import ExtrasField from "../../components/inputs/ExtrasField.vue";
+import { useDisplay } from "vuetify";
+import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
+import BirthdateField from "../../components/inputs/BirthdateField.vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import ConsentField from "../../components/inputs/ConsentField.vue";
+const { mobile } = useDisplay();
 
-const route = useRoute()
+const route = useRoute();
 
-const executivesStore = useExecutivesStore()
+const executivesStore = useExecutivesStore();
 
 if (route.params.executive_id) {
-  executivesStore.getExecutive(route.params.executive_id)
+  executivesStore.getExecutive(route.params.executive_id);
 } else {
-  toast.error('Executive not found', {
-    position: toast.POSITION.BOTTOM_CENTER
-  })
+  toast.error("Executive not found", {
+    position: toast.POSITION.BOTTOM_CENTER,
+  });
 }
 
-const valid = ref(true)
+const valid = ref(true);
 </script>
 
 <template>
@@ -37,8 +37,8 @@ const valid = ref(true)
     <v-alert>
       <p>Dear executive team member,</p>
       <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please register by providing
-        some information about yourself and a badge photo.
+        it is our pleasure to welcome you to this years MUNOL session. Please
+        register by providing some information about yourself and a badge photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>
@@ -52,17 +52,29 @@ const valid = ref(true)
               v-model:last_name="executivesStore.executive.last_name"
             ></NameFields>
 
-            <GenderSelector v-model:gender="executivesStore.executive.gender"></GenderSelector>
+            <GenderSelector
+              v-model:gender="executivesStore.executive.gender"
+            ></GenderSelector>
 
             <PronounsSelector
               v-model:pronouns="executivesStore.executive.pronouns"
             ></PronounsSelector>
 
-            <EmailAddressField v-model:email="executivesStore.executive.email"></EmailAddressField>
-            <PhoneNumberField v-model:phone="executivesStore.executive.mobile"></PhoneNumberField>
-            <BirthdateField v-model:birthday="executivesStore.executive.birthday"></BirthdateField>
-            <DietSelector v-model:diet="executivesStore.executive.diet"></DietSelector>
-            <ExtrasField v-model:extras="executivesStore.executive.extras"></ExtrasField>
+            <EmailAddressField
+              v-model:email="executivesStore.executive.email"
+            ></EmailAddressField>
+            <PhoneNumberField
+              v-model:phone="executivesStore.executive.mobile"
+            ></PhoneNumberField>
+            <BirthdateField
+              v-model:birthday="executivesStore.executive.birthday"
+            ></BirthdateField>
+            <DietSelector
+              v-model:diet="executivesStore.executive.diet"
+            ></DietSelector>
+            <ExtrasField
+              v-model:extras="executivesStore.executive.extras"
+            ></ExtrasField>
 
             <v-text-field
               v-model="executivesStore.executive.position_name"
@@ -94,10 +106,16 @@ const valid = ref(true)
         </v-row>
         <v-row no-gutters>
           <ConsentField
-            v-model:data_consent_time="executivesStore.executive.data_consent_time"
+            v-model:data_consent_time="
+              executivesStore.executive.data_consent_time
+            "
             v-model:data_consent_ip="executivesStore.executive.data_consent_ip"
-            v-model:media_consent_time="executivesStore.executive.media_consent_time"
-            v-model:media_consent_ip="executivesStore.executive.media_consent_ip"
+            v-model:media_consent_time="
+              executivesStore.executive.media_consent_time
+            "
+            v-model:media_consent_ip="
+              executivesStore.executive.media_consent_ip
+            "
           ></ConsentField>
         </v-row>
         <v-row no-gutters class="justify-center">
@@ -115,7 +133,9 @@ const valid = ref(true)
               color="primary"
               prepend-icon="mdi-send"
               :disabled="!valid"
-              @click="executivesStore.updateExecutive(executivesStore.executive.id)"
+              @click="
+                executivesStore.updateExecutive(executivesStore.executive.id)
+              "
               >Submit registration form</v-btn
             >
           </div>

@@ -1,31 +1,31 @@
 <script setup>
-import { ref } from 'vue'
-import { useAdvisorsStore } from '../../stores/advisors'
-import { useRoute } from 'vue-router'
-import GenderSelector from '../../components/GenderSelector.vue'
-import PronounsSelector from '../../components/PronounsSelector.vue'
-import NameFields from '../../components/NameFields.vue'
-import EmailAddressField from '../../components/EmailAddressField.vue'
-import PhoneNumberField from '../../components/PhoneNumberField.vue'
-import DietSelector from '../../components/DietSelector.vue'
-import ExtrasField from '../../components/ExtrasField.vue'
-import HelpField from '../../components/HelpField.vue'
-import { useDisplay } from 'vuetify'
-import BadgePhotoCropper from '../../components/BadgePhotoCropper.vue'
-import ConsentField from '../../components/ConsentField.vue'
-const { mobile } = useDisplay()
+import { ref } from "vue";
+import { useAdvisorsStore } from "../../stores/advisors";
+import { useRoute } from "vue-router";
+import GenderSelector from "../../components/inputs/GenderSelector.vue";
+import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
+import NameFields from "../../components/inputs/NameFields.vue";
+import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
+import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
+import DietSelector from "../../components/inputs/DietSelector.vue";
+import ExtrasField from "../../components/inputs/ExtrasField.vue";
+import HelpField from "../../components/inputs/HelpField.vue";
+import { useDisplay } from "vuetify";
+import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
+import ConsentField from "../../components/inputs/ConsentField.vue";
+const { mobile } = useDisplay();
 
-const route = useRoute()
+const route = useRoute();
 
-const advisorsStore = useAdvisorsStore()
+const advisorsStore = useAdvisorsStore();
 
-if (route.params.advisor_id != 'add') {
-  advisorsStore.getAdvisor(route.params.advisor_id)
+if (route.params.advisor_id != "add") {
+  advisorsStore.getAdvisor(route.params.advisor_id);
 } else {
-  advisorsStore.initializeAdvisor()
+  advisorsStore.initializeAdvisor();
 }
 
-const valid = ref(true)
+const valid = ref(true);
 </script>
 
 <template>
@@ -33,8 +33,9 @@ const valid = ref(true)
     <v-alert>
       <p>Dear Conference Advisor,</p>
       <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please register by providing
-        some information about yourself, the support that you can offer and a badge photo.
+        it is our pleasure to welcome you to this years MUNOL session. Please
+        register by providing some information about yourself, the support that
+        you can offer and a badge photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>
@@ -48,14 +49,26 @@ const valid = ref(true)
               v-model:last_name="advisorsStore.advisor.last_name"
             ></NameFields>
 
-            <GenderSelector v-model:gender="advisorsStore.advisor.gender"></GenderSelector>
+            <GenderSelector
+              v-model:gender="advisorsStore.advisor.gender"
+            ></GenderSelector>
 
-            <PronounsSelector v-model:pronouns="advisorsStore.advisor.pronouns"></PronounsSelector>
+            <PronounsSelector
+              v-model:pronouns="advisorsStore.advisor.pronouns"
+            ></PronounsSelector>
 
-            <EmailAddressField v-model:email="advisorsStore.advisor.email"></EmailAddressField>
-            <PhoneNumberField v-model:phone="advisorsStore.advisor.mobile"></PhoneNumberField>
-            <DietSelector v-model:diet="advisorsStore.advisor.diet"></DietSelector>
-            <ExtrasField v-model:extras="advisorsStore.advisor.extras"></ExtrasField>
+            <EmailAddressField
+              v-model:email="advisorsStore.advisor.email"
+            ></EmailAddressField>
+            <PhoneNumberField
+              v-model:phone="advisorsStore.advisor.mobile"
+            ></PhoneNumberField>
+            <DietSelector
+              v-model:diet="advisorsStore.advisor.diet"
+            ></DietSelector>
+            <ExtrasField
+              v-model:extras="advisorsStore.advisor.extras"
+            ></ExtrasField>
 
             <v-checkbox
               v-model="advisorsStore.advisor.car"
@@ -65,7 +78,8 @@ const valid = ref(true)
             >
               <template v-slot:label>
                 <span
-                  >I have a car available and can offer transportation during the conference.</span
+                  >I have a car available and can offer transportation during
+                  the conference.</span
                 >
               </template>
             </v-checkbox>
@@ -78,7 +92,8 @@ const valid = ref(true)
               v-model="advisorsStore.advisor.experience"
               :rules="[
                 (v) =>
-                  !!v || 'Please briefly specify your experience in MUNOL and other conferences'
+                  !!v ||
+                  'Please briefly specify your experience in MUNOL and other conferences',
               ]"
             ></v-textarea>
             <v-textarea
@@ -88,7 +103,9 @@ const valid = ref(true)
               :density="mobile ? 'compact' : 'default'"
               v-model="advisorsStore.advisor.availability"
               :rules="[
-                (v) => !!v || 'Please specify your estimated availability during the conference'
+                (v) =>
+                  !!v ||
+                  'Please specify your estimated availability during the conference',
               ]"
             ></v-textarea>
             <HelpField v-model:help="advisorsStore.advisor.help"></HelpField>
@@ -101,14 +118,18 @@ const valid = ref(true)
             :offset="mobile ? 0 : 8"
             :class="mobile ? '' : 'badge-photo'"
           >
-            <BadgePhotoCropper v-model:image="advisorsStore.advisor.picture"></BadgePhotoCropper>
+            <BadgePhotoCropper
+              v-model:image="advisorsStore.advisor.picture"
+            ></BadgePhotoCropper>
           </v-col>
         </v-row>
         <v-row no-gutters>
           <ConsentField
             v-model:data_consent_time="advisorsStore.advisor.data_consent_time"
             v-model:data_consent_ip="advisorsStore.advisor.data_consent_ip"
-            v-model:media_consent_time="advisorsStore.advisor.media_consent_time"
+            v-model:media_consent_time="
+              advisorsStore.advisor.media_consent_time
+            "
             v-model:media_consent_ip="advisorsStore.advisor.media_consent_ip"
           ></ConsentField>
         </v-row>

@@ -1,24 +1,28 @@
 <script setup>
-import { useRoute } from 'vue-router'
-import { useSchoolsStore } from '../../stores/schools'
-import SchoolNameField from '../../components/SchoolNameField.vue'
-import StreetField from '../../components/StreetField.vue'
-import ZipCodeField from '../../components/ZipCodeField.vue'
-import CityField from '../../components/CityField.vue'
-import CountryField from '../../components/CountryField.vue'
-import { useDisplay } from 'vuetify'
-import DelegateNumberField from '../../components/DelegateNumberField.vue'
-import AccommodationSelector from '../../components/AccommodationSelector.vue'
-const { mobile } = useDisplay()
-const route = useRoute()
+import { useRoute } from "vue-router";
+import { useSchoolsStore } from "../../stores/schools";
+import SchoolNameField from "../../components/inputs/SchoolNameField.vue";
+import StreetField from "../../components/inputs/StreetField.vue";
+import ZipCodeField from "../../components/inputs/ZipCodeField.vue";
+import CityField from "../../components/inputs/CityField.vue";
+import CountryField from "../../components/inputs/CountryField.vue";
+import { useDisplay } from "vuetify";
+import DelegateNumberField from "../../components/inputs/DelegateNumberField.vue";
+import AccommodationSelector from "../../components/inputs/AccommodationSelector.vue";
+const { mobile } = useDisplay();
+const route = useRoute();
 
-const schoolsStore = useSchoolsStore()
-schoolsStore.getSchool(route.params.school_id)
+const schoolsStore = useSchoolsStore();
+schoolsStore.getSchool(route.params.school_id);
 </script>
 
 <template>
   <div class="pre-registration">
-    <v-sheet id="sheet" :elevation="mobile ? 0 : 2" :rounded="mobile ? false : 'lg'">
+    <v-sheet
+      id="sheet"
+      :elevation="mobile ? 0 : 2"
+      :rounded="mobile ? false : 'lg'"
+    >
       <v-btn
         variant="plain"
         prepend-icon="mdi-arrow-left"
@@ -30,32 +34,44 @@ schoolsStore.getSchool(route.params.school_id)
 
       <p>
         Dear MUN-Director, <br />
-        we are very delighted that you are interested in taking part in the 27th MUNOL session in
-        2024. In order to register you and your school's delegation, please fill in this form by
-        {{ new Date('2023-12-20').toLocaleDateString('en') }}. Please don't hesitate contacting the
-        Conference Managers in case you have any questions
-        <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.
+        we are very delighted that you are interested in taking part in the 27th
+        MUNOL session in 2024. In order to register you and your school's
+        delegation, please fill in this form by
+        {{ new Date("2023-12-20").toLocaleDateString("en") }}. Please don't
+        hesitate contacting the Conference Managers in case you have any
+        questions
+        <a href="mailto:conferencemanager@munol.org"
+          >conferencemanager@munol.org</a
+        >.
       </p>
 
       <v-form>
         <v-container fluid>
           <v-row no-gutters>
             <v-col cols="12" sm="12" md="3">
-              <SchoolNameField v-model:name="schoolsStore.schools.name"></SchoolNameField>
+              <SchoolNameField
+                v-model:name="schoolsStore.schools.name"
+              ></SchoolNameField>
             </v-col>
           </v-row>
           <v-row no-gutters>
             <v-col cols="12" sm="12" md="3">
-              <StreetField v-model:street="schoolsStore.schools.street"></StreetField>
+              <StreetField
+                v-model:street="schoolsStore.schools.street"
+              ></StreetField>
             </v-col>
             <v-col cols="12" sm="2" md="1">
-              <ZipCodeField v-model:zip="schoolsStore.schools.zipcode"></ZipCodeField>
+              <ZipCodeField
+                v-model:zip="schoolsStore.schools.zipcode"
+              ></ZipCodeField>
             </v-col>
             <v-col cols="12" sm="10" md="3">
               <CityField v-model:city="schoolsStore.schools.city"></CityField>
             </v-col>
             <v-col cols="12" sm="12" md="3">
-              <CountryField v-model:country="schoolsStore.schools.country"></CountryField>
+              <CountryField
+                v-model:country="schoolsStore.schools.country"
+              ></CountryField>
             </v-col>
           </v-row>
           <v-row no-gutters="">
@@ -66,11 +82,13 @@ schoolsStore.getSchool(route.params.school_id)
             </v-col>
             <v-col cols="12" sm="12" md="7">
               <p class="text-medium-emphasis" :class="{ 'px-8': !mobile }">
-                Please note, that this is the number of students requested. Although the Conference
-                Managers do their best to fulfil all requests and constraints, this is not always
-                possible. So, it might happen that only a smaller number of students will be
-                confirmed by the Conference Managers. Sometimes however, places become free again
-                and MUN-Directors might be granted to bring more students.
+                Please note, that this is the number of students requested.
+                Although the Conference Managers do their best to fulfil all
+                requests and constraints, this is not always possible. So, it
+                might happen that only a smaller number of students will be
+                confirmed by the Conference Managers. Sometimes however, places
+                become free again and MUN-Directors might be granted to bring
+                more students.
               </p>
             </v-col>
           </v-row>
@@ -171,20 +189,24 @@ schoolsStore.getSchool(route.params.school_id)
                 </v-btn-toggle>
               </v-input> -->
               <AccommodationSelector
-                v-model:accommodation="schoolsStore.schools.housing_mun_directors"
+                v-model:accommodation="
+                  schoolsStore.schools.housing_mun_directors
+                "
                 label="Accommodation for MUN-Directors"
               ></AccommodationSelector>
             </v-col>
             <v-col cols="12" sm="12" md="6">
               <p class="text-medium-emphasis" :class="{ 'py-8': !mobile }">
-                MUNOL offers the possibility to stay in host families depending on who many families
-                agree on hosting delegates. Most of the host families have children in the same age
-                attending a school in Lübeck. In order to have a memorable time together, both, the
-                host family and the guest have to be open-minded and stick to some self-evident
-                rules. We assume that guest students follow the parents instructions, e.g. regarding
-                staying out in the evening. If you have further questions regarding the housing
-                please don't hesitate asking the Conference Managers or the Student Supervisors, who
-                coordinate the accommodation.
+                MUNOL offers the possibility to stay in host families depending
+                on who many families agree on hosting delegates. Most of the
+                host families have children in the same age attending a school
+                in Lübeck. In order to have a memorable time together, both, the
+                host family and the guest have to be open-minded and stick to
+                some self-evident rules. We assume that guest students follow
+                the parents instructions, e.g. regarding staying out in the
+                evening. If you have further questions regarding the housing
+                please don't hesitate asking the Conference Managers or the
+                Student Supervisors, who coordinate the accommodation.
               </p>
             </v-col>
           </v-row>
