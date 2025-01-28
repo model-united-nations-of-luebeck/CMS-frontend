@@ -119,6 +119,18 @@ const router = createRouter({
           component: () => import("../views/management/ExecutivesView.vue"),
         },
         {
+          path: "student-officers/:student_officer_id",
+          name: "student-officer-detail",
+          component: () =>
+            import("../views/management/StudentOfficerDetailView.vue"),
+        },
+        {
+          path: "student-officers",
+          name: "student-officers",
+          component: () =>
+            import("../views/management/StudentOfficersView.vue"),
+        },
+        {
           path: "staffs/:staff_id",
           name: "staff-detail",
           component: () => import("../views/management/StaffDetailView.vue"),
