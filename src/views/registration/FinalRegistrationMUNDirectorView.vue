@@ -82,7 +82,6 @@ const valid = ref(true);
             <CheckboxField
               v-model:value="munDirectorsStore.mun_director.english_teacher"
               label="Are you an English teacher and able to help checking the grammar of written resolutions?"
-              hint="There is a first MUN conference for everyone. Knowing this in advance, the team can prepare a smooth first conference for first timers."
               prepend-icon="mdi-human-male-board"
             ></CheckboxField>
             <ExtrasField
