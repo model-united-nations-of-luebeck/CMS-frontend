@@ -107,6 +107,17 @@ const router = createRouter({
           name: "mun-directors",
           component: () => import("../views/management/MUNDirectorsView.vue"),
         },
+        {
+          path: "executives",
+          name: "executives",
+          component: () => import("../views/management/ExecutivesView.vue"),
+        },
+        {
+          path: "executives/:executive_id",
+          name: "executive-detail",
+          component: () =>
+            import("../views/management/ExecutiveDetailView.vue"),
+        },
       ],
     },
     {
