@@ -34,6 +34,20 @@ const headers = [
     align: "start",
     sortable: true,
     key: "position_name",
+    sortRaw(a, b) {
+      if (a && b && a.position_name && b.position_name) {
+        const getComparablePosition = (position) =>
+          position.startsWith("Assistant")
+            ? position.replace("Assistant", "").trim()
+            : position;
+
+        return (
+          getComparablePosition(a.position_name) <
+          getComparablePosition(b.position_name)
+        );
+      }
+      return 0;
+    },
   },
   {
     title: "School",
@@ -128,7 +142,10 @@ const custom_filter = function (value, query, item) {
       :loading="executivesStore.loading ? 'primary' : false"
       sticky
       :search="search"
-      :sort-by="[{ key: 'name', order: 'desc' }]"
+      :sort-by="[
+        { key: 'position_name', order: 'desc' },
+        { key: 'name', order: 'desc' },
+      ]"
       :multi-sort="true"
       v-model:expanded="expanded"
       hide-default-footer

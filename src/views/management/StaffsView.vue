@@ -123,7 +123,10 @@ const custom_filter = function (value, query, item) {
       :loading="staffsStore.loading ? 'primary' : false"
       sticky
       :search="search"
-      :sort-by="[{ key: 'name', order: 'desc' }]"
+      :sort-by="[
+        { key: 'position_name', order: 'asc' },
+        { key: 'name', order: 'desc' },
+      ]"
       :multi-sort="true"
       v-model:expanded="expanded"
       hide-default-footer

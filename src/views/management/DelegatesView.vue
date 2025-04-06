@@ -198,7 +198,10 @@ const custom_filter = function (value, query, item) {
       :loading="delegatesStore.loading ? 'primary' : false"
       sticky
       :search="search"
-      :sort-by="[{ key: 'name', order: 'desc' }]"
+      :sort-by="[
+        { key: 'member_organization', order: 'desc' },
+        { key: 'forum', order: 'desc' },
+      ]"
       :multi-sort="true"
       v-model:expanded="expanded"
       hide-default-footer
