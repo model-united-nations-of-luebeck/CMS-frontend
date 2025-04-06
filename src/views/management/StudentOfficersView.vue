@@ -191,7 +191,15 @@ const custom_filter = function (value, query, item) {
           </td>
 
           <td>
-            <v-chip>{{ item.position_name }}</v-chip>
+            <v-chip
+              v-if="item.position_name.length > 50"
+              v-tooltip:bottom="item.position_name"
+            >
+              {{ item.position_name.slice(0, 50) + "..." }}
+            </v-chip>
+            <v-chip v-else>
+              {{ item.position_name }}
+            </v-chip>
           </td>
 
           <td>
