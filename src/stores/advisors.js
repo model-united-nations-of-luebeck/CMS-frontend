@@ -33,7 +33,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
         loading.value = true
         await http.get("advisors/").then( (res) => {
                 advisors.value = res.data.map(advisor => {
-                    advisor.help = advisor.help.split(',').map(item => item.trim());
+                    advisor.help = advisor.help.split(',').map(item => item.trim()).filter(item => item !== '');
                     return advisor;
                 });
                 loading.value = false
@@ -48,7 +48,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
         loading.value = true
         await http.get(`advisors/${advisor_id}/`).then( (res) => {
             advisor.value = res.data
-            advisor.value.help = advisor.value.help.split(',').map(item => item.trim());
+            advisor.value.help = advisor.value.help.split(',').map(item => item.trim()).filter(item => item !== '');
             loading.value = false
         }).catch((error) => {
             console.log(error)
@@ -60,7 +60,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
 
     async function updateAdvisor(advisor_id){
         loading.value = true
-        advisor.value.help = advisor.value.help.join(', ');
+        advisor.value.help = advisor.value.help.filter(item => item.trim() !== '').join(', ');
         await http.patch(`advisors/${advisor_id}/`, advisor.value).then(() => {
             loading.value = false
             toast.success('Advisor was updated successfully', {
@@ -79,7 +79,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
 
     async function createAdvisor(){
         loading.value = true
-        advisor.value.help = advisor.value.help.join(', ');
+        advisor.value.help = advisor.value.help.filter(item => item.trim() !== '').join(', ');
         await http.post("advisors/", advisor.value).then( (res) => {
             advisors.value.push(res.data)
             loading.value = false

@@ -7,7 +7,7 @@ const props = defineProps({
 <template>
   <v-icon
     :class="{ hidden: !props.ambassador }"
-    color="#ebbe4d"
+    color="#00ff00"
     icon="mdi-shield-star-outline"
     v-tooltip:bottom="'Ambassador of delegation'"
   ></v-icon>

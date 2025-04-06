@@ -140,6 +140,16 @@ const router = createRouter({
           name: "staffs",
           component: () => import("../views/management/StaffsView.vue"),
         },
+        {
+          path: "advisors/:advisor_id",
+          name: "advisor-detail",
+          component: () => import("../views/management/AdvisorDetailView.vue"),
+        },
+        {
+          path: "advisors",
+          name: "advisors",
+          component: () => import("../views/management/AdvisorsView.vue"),
+        }
       ],
     },
     {
