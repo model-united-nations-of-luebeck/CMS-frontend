@@ -31,6 +31,14 @@ const updateStudentOfficer = (student_officer_id) => {
   router.push({ name: "student-officers" });
 };
 
+const forumSelectProps = function (forum) {
+  return {
+    title: forum.name,
+    subtitle: forum.subtitle,
+    value: forum.id,
+  };
+};
+
 const valid = ref(true);
 </script>
 
@@ -66,6 +74,19 @@ const valid = ref(true);
               prepend-icon="mdi-account-tie"
               type="text"
             ></v-text-field>
+
+            <v-select
+              :model-value="studentOfficersStore.student_officer.forum"
+              :item-props="forumSelectProps"
+              :items="forumsStore.forums"
+              label="Forum"
+              prepend-icon="mdi-forum"
+              @update:modelValue="
+                studentOfficersStore.student_officer.forum = $event
+              "
+            >
+            </v-select>
+
             <v-text-field
               v-model="studentOfficersStore.student_officer.school_name"
               label="School"
