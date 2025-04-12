@@ -12,12 +12,14 @@ import MailIcon from "../../components/icons/MailIcon.vue";
 import EnglishTeacherIcon from "../../components/icons/EnglishTeacherIcon.vue";
 import SchoolChip from "../../components/chips/SchoolChip.vue";
 import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
+import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 
 const schoolsStore = useSchoolsStore();
 schoolsStore.getSchools();
 const munDirectorsStore = useMUNDirectorsStore();
 munDirectorsStore.getMUNDirectors();
 
+const deleteDialog = ref(null);
 const search = ref("");
 const expanded = ref([]);
 
@@ -77,7 +79,6 @@ const headers = [
     key: "actions",
     sortable: false,
   },
-
   // { text: "", value: "data-table-select" },
 ];
 
@@ -99,6 +100,15 @@ const custom_filter = function (value, query, item) {
   return searchFields.some((field) =>
     String(field).toLowerCase().includes(query.toLowerCase()),
   );
+};
+
+const deleteMUNDirector = function (mun_director_id) {
+  this.deleteDialog = mun_director_id;
+};
+
+const confirmedDeleteMUNDirector = function () {
+  munDirectorsStore.deleteMUNDirector(this.deleteDialog);
+  this.deleteDialog = false;
 };
 </script>
 
@@ -211,6 +221,12 @@ const custom_filter = function (value, query, item) {
               }"
             >
             </v-btn>
+            <v-btn
+              variant="plain"
+              icon="mdi-delete"
+              @click.stop="deleteMUNDirector(item.id)"
+            >
+            </v-btn>
           </td>
         </tr>
       </template>
@@ -235,6 +251,20 @@ const custom_filter = function (value, query, item) {
         </tr>
       </template>
     </v-data-table-virtual>
+
+    <ConfirmDialog
+      :model="deleteDialog"
+      title="Confirm Delete"
+      text="Are you sure you want to delete this MUN-Director?"
+      @ok-clicked="
+        confirmedDeleteMUNDirector(
+          munDirectorsStore.mun_directors.filter(
+            (mun_director) => mun_director.id == this.deleteDialog,
+          ).id,
+        )
+      "
+      @cancel-clicked="deleteDialog = false"
+    />
   </div>
 </template>
 

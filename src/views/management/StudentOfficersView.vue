@@ -15,12 +15,14 @@ import MobilePhoneIcon from "../../components/icons/MobilePhoneIcon.vue";
 import MailIcon from "../../components/icons/MailIcon.vue";
 import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
 import ForumChip from "../../components/chips/ForumChip.vue";
+import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 
 const forumsStore = useForumsStore();
 forumsStore.getForums();
 const studentOfficersStore = useStudentOfficersStore();
 studentOfficersStore.getStudentOfficers();
 
+const deleteDialog = ref(null);
 const search = ref("");
 const expanded = ref([]);
 
@@ -113,6 +115,15 @@ const custom_filter = function (value, query, item) {
   return searchFields.some((field) =>
     String(field).toLowerCase().includes(query.toLowerCase()),
   );
+};
+
+const deleteStudentOfficer = function (student_officer_id) {
+  this.deleteDialog = student_officer_id;
+};
+
+const confirmedDeleteStudentOfficer = function () {
+  studentOfficersStore.deleteStudentOfficer(this.deleteDialog);
+  this.deleteDialog = false;
 };
 </script>
 
@@ -246,6 +257,12 @@ const custom_filter = function (value, query, item) {
               }"
             >
             </v-btn>
+            <v-btn
+              variant="plain"
+              icon="mdi-delete"
+              @click.stop="deleteStudentOfficer(item.id)"
+            >
+            </v-btn>
           </td>
         </tr>
       </template>
@@ -270,6 +287,20 @@ const custom_filter = function (value, query, item) {
         </tr>
       </template>
     </v-data-table-virtual>
+
+    <ConfirmDialog
+      :model="deleteDialog"
+      title="Confirm Delete"
+      text="Are you sure you want to delete this Student Officer?"
+      @ok-clicked="
+        confirmedDeleteStudentOfficer(
+          studentOfficersStore.student_officers.filter(
+            (student_officer) => student_officer.id == this.deleteDialog,
+          ).id,
+        )
+      "
+      @cancel-clicked="deleteDialog = false"
+    />
   </div>
 </template>
 

@@ -10,10 +10,12 @@ import ExtraInformationIcon from "../../components/icons/ExtraInformationIcon.vu
 import MobilePhoneIcon from "../../components/icons/MobilePhoneIcon.vue";
 import MailIcon from "../../components/icons/MailIcon.vue";
 import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
+import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 
 const advisorsStore = useAdvisorsStore();
 advisorsStore.getAdvisors();
 
+const deleteDialog = ref(null);
 const search = ref("");
 const expanded = ref([]);
 
@@ -86,6 +88,15 @@ const custom_filter = function (value, query, item) {
   return searchFields.some((field) =>
     String(field).toLowerCase().includes(query.toLowerCase()),
   );
+};
+
+const deleteAdvisor = function (advisor_id) {
+  this.deleteDialog = advisor_id;
+};
+
+const confirmedDeleteAdvisor = function () {
+  advisorsStore.deleteAdvisor(this.deleteDialog);
+  this.deleteDialog = false;
 };
 </script>
 
@@ -223,6 +234,12 @@ const custom_filter = function (value, query, item) {
               }"
             >
             </v-btn>
+            <v-btn
+              variant="plain"
+              icon="mdi-delete"
+              @click.stop="deleteAdvisor(item.id)"
+            >
+            </v-btn>
           </td>
         </tr>
       </template>
@@ -292,6 +309,20 @@ const custom_filter = function (value, query, item) {
         </tr>
       </template>
     </v-data-table-virtual>
+
+    <ConfirmDialog
+      :model="deleteDialog"
+      title="Confirm Delete"
+      text="Are you sure you want to delete this Advisor?"
+      @ok-clicked="
+        confirmedDeleteAdvisor(
+          advisorsStore.advisors.filter(
+            (advisor) => advisor.id == this.deleteDialog,
+          ).id,
+        )
+      "
+      @cancel-clicked="deleteDialog = false"
+    />
   </div>
 </template>
 
