@@ -20,6 +20,9 @@ const munDirectorsStore = useMUNDirectorsStore();
 munDirectorsStore.getMUNDirectors();
 
 const deleteDialog = ref(null);
+const addNewMUNDirectorDialog = ref(false);
+const newSchoolID = ref(null);
+
 const search = ref("");
 const expanded = ref([]);
 
@@ -102,6 +105,17 @@ const custom_filter = function (value, query, item) {
   );
 };
 
+const createMUNDirector = function () {
+  if (newSchoolID.value !== null) {
+    munDirectorsStore
+      .createEmptyMUNDirectorForSchool(newSchoolID.value)
+      .then(() => {
+        addNewMUNDirectorDialog.value = false;
+        newSchoolID.value = null;
+      });
+  }
+};
+
 const deleteMUNDirector = function (mun_director_id) {
   this.deleteDialog = mun_director_id;
 };
@@ -135,7 +149,16 @@ const confirmedDeleteMUNDirector = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="1" style="display: flex"> </v-col>
+      <v-col cols="1" style="display: flex">
+        <v-fab
+          color="primary"
+          rounded
+          style="justify-content: end"
+          prepend-icon="mdi-plus"
+          text="add new MUN-Director"
+          @click="addNewMUNDirectorDialog = true"
+        ></v-fab>
+      </v-col>
     </v-row>
 
     <v-data-table-virtual
@@ -264,7 +287,36 @@ const confirmedDeleteMUNDirector = function () {
         )
       "
       @cancel-clicked="deleteDialog = false"
-    />
+    ></ConfirmDialog>
+
+    <v-dialog max-width="500" v-model="addNewMUNDirectorDialog">
+      <template v-slot:default="{ isActive }">
+        <v-card title="Add new MUN-Director">
+          <v-card-text>
+            <p>
+              Select the school this new MUN-Director belongs to. Add further
+              information once the MUN-Director is created.
+            </p>
+            <br />
+            <v-select
+              v-model="newSchoolID"
+              :items="schoolsStore.schools"
+              :item-title="(school) => school.name"
+              :item-value="(school) => school.id"
+              label="Select School"
+              outlined
+            ></v-select>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+            <v-btn text="Create" @click="createMUNDirector"></v-btn>
+          </v-card-actions>
+        </v-card>
+      </template>
+    </v-dialog>
   </div>
 </template>
 

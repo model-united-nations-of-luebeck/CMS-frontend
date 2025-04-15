@@ -19,6 +19,11 @@ const staffsStore = useStaffsStore();
 staffsStore.getStaffs();
 
 const deleteDialog = ref(null);
+const addNewStaffDialog = ref(false);
+const newFirstName = ref("");
+const newLastName = ref("");
+const newPosition = ref("");
+
 const search = ref("");
 const expanded = ref([]);
 
@@ -88,6 +93,23 @@ const custom_filter = function (value, query, item) {
   );
 };
 
+const createStaff = function () {
+  if (
+    newFirstName.value !== "" &&
+    newLastName.value !== "" &&
+    newPosition.value !== ""
+  ) {
+    staffsStore
+      .createStaff(newFirstName.value, newLastName.value, newPosition.value)
+      .then(() => {
+        addNewStaffDialog.value = false;
+        newFirstName.value = "";
+        newLastName.value = "";
+        newPosition.value = "";
+      });
+  }
+};
+
 const deleteStaff = function (staff_id) {
   this.deleteDialog = staff_id;
 };
@@ -121,7 +143,16 @@ const confirmedDeleteStaff = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="1" style="display: flex"> </v-col>
+      <v-col cols="1" style="display: flex">
+        <v-fab
+          color="primary"
+          rounded
+          style="justify-content: end"
+          prepend-icon="mdi-plus"
+          text="add new staff"
+          @click="addNewStaffDialog = true"
+        ></v-fab>
+      </v-col>
     </v-row>
 
     <v-data-table-virtual
@@ -249,7 +280,39 @@ const confirmedDeleteStaff = function () {
         )
       "
       @cancel-clicked="deleteDialog = false"
-    />
+    ></ConfirmDialog>
+
+    <v-dialog max-width="500" v-model="addNewStaffDialog">
+      <template v-slot:default="{ isActive }">
+        <v-card title="Add new Staff">
+          <v-card-text>
+            <v-text-field
+              v-model="newFirstName"
+              label="First name"
+              outlined
+              autofocus="autofocus"
+            ></v-text-field>
+            <v-text-field
+              v-model="newLastName"
+              label="Last name"
+              outlined
+            ></v-text-field>
+            <v-text-field
+              v-model="newPosition"
+              label="Position"
+              outlined
+            ></v-text-field>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+            <v-btn text="Create" @click="createStaff"></v-btn>
+          </v-card-actions>
+        </v-card>
+      </template>
+    </v-dialog>
   </div>
 </template>
 

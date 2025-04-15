@@ -19,6 +19,11 @@ const executivesStore = useExecutivesStore();
 executivesStore.getExecutives();
 
 const deleteDialog = ref(null);
+const addNewExecutiveDialog = ref(false);
+const newFirstName = ref("");
+const newLastName = ref("");
+const newPosition = ref("");
+
 const search = ref("");
 const expanded = ref([]);
 
@@ -102,6 +107,23 @@ const custom_filter = function (value, query, item) {
   );
 };
 
+const createExecutive = function () {
+  if (
+    newFirstName.value !== "" &&
+    newLastName.value !== "" &&
+    newPosition.value !== ""
+  ) {
+    executivesStore
+      .createExecutive(newFirstName.value, newLastName.value, newPosition.value)
+      .then(() => {
+        addNewExecutiveDialog.value = false;
+        newFirstName.value = "";
+        newLastName.value = "";
+        newPosition.value = "";
+      });
+  }
+};
+
 const deleteExecutive = function (executive_id) {
   this.deleteDialog = executive_id;
 };
@@ -140,7 +162,16 @@ const confirmedDeleteExecutive = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="1" style="display: flex"> </v-col>
+      <v-col cols="1" style="display: flex">
+        <v-fab
+          color="primary"
+          rounded
+          style="justify-content: end"
+          prepend-icon="mdi-plus"
+          text="add new executive"
+          @click="addNewExecutiveDialog = true"
+        ></v-fab>
+      </v-col>
     </v-row>
 
     <v-data-table-virtual
@@ -269,7 +300,39 @@ const confirmedDeleteExecutive = function () {
         )
       "
       @cancel-clicked="deleteDialog = false"
-    />
+    ></ConfirmDialog>
+
+    <v-dialog max-width="500" v-model="addNewExecutiveDialog">
+      <template v-slot:default="{ isActive }">
+        <v-card title="Add new Executive">
+          <v-card-text>
+            <v-text-field
+              v-model="newFirstName"
+              label="First name"
+              outlined
+              autofocus="autofocus"
+            ></v-text-field>
+            <v-text-field
+              v-model="newLastName"
+              label="Last name"
+              outlined
+            ></v-text-field>
+            <v-text-field
+              v-model="newPosition"
+              label="Position"
+              outlined
+            ></v-text-field>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+            <v-btn text="Create" @click="createExecutive"></v-btn>
+          </v-card-actions>
+        </v-card>
+      </template>
+    </v-dialog>
   </div>
 </template>
 

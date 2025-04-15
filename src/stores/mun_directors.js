@@ -66,7 +66,7 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
         })    
     }
 
-    async function addEmptyMUNDirectorToSchool(school_id){
+    async function createEmptyMUNDirectorForSchool(school_id){
         loading.value = true 
         await http.post("mun-directors/", {'school': school_id}).then( (res) => {
             mun_directors.value.push(res.data)
@@ -83,5 +83,5 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
         })
     }
     
-    return {mun_directors, mun_director, loading, getMUNDirectors, getMUNDirector, updateMUNDirector, deleteMUNDirector, addEmptyMUNDirectorToSchool}
+    return {mun_directors, mun_director, loading, getMUNDirectors, getMUNDirector, updateMUNDirector, deleteMUNDirector, createEmptyMUNDirectorForSchool}
 })

@@ -23,6 +23,13 @@ const studentOfficersStore = useStudentOfficersStore();
 studentOfficersStore.getStudentOfficers();
 
 const deleteDialog = ref(null);
+const addNewStudentOfficerDialog = ref(false);
+const newFirstName = ref("");
+const newLastName = ref("");
+const newPositionName = ref("");
+const newSchoolName = ref("");
+const newForumID = ref(null);
+
 const search = ref("");
 const expanded = ref([]);
 
@@ -117,6 +124,33 @@ const custom_filter = function (value, query, item) {
   );
 };
 
+const createStudentOfficer = function () {
+  if (
+    newFirstName.value !== "" &&
+    newLastName.value !== "" &&
+    newPositionName.value !== "" &&
+    newSchoolName.value !== "" &&
+    newForumID.value !== null
+  ) {
+    studentOfficersStore
+      .createStudentOfficer(
+        newFirstName.value,
+        newLastName.value,
+        newPositionName.value,
+        newSchoolName.value,
+        newForumID.value,
+      )
+      .then(() => {
+        addNewStudentOfficerDialog.value = false;
+        newFirstName.value = "";
+        newLastName.value = "";
+        newPositionName.value = "";
+        newSchoolName.value = "";
+        newForumID.value = null;
+      });
+  }
+};
+
 const deleteStudentOfficer = function (student_officer_id) {
   this.deleteDialog = student_officer_id;
 };
@@ -155,7 +189,16 @@ const confirmedDeleteStudentOfficer = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="1" style="display: flex"> </v-col>
+      <v-col cols="1" style="display: flex">
+        <v-fab
+          color="primary"
+          rounded
+          style="justify-content: end"
+          prepend-icon="mdi-plus"
+          text="add new Student Officer"
+          @click="addNewStudentOfficerDialog = true"
+        ></v-fab>
+      </v-col>
     </v-row>
 
     <v-data-table-virtual
@@ -300,7 +343,52 @@ const confirmedDeleteStudentOfficer = function () {
         )
       "
       @cancel-clicked="deleteDialog = false"
-    />
+    ></ConfirmDialog>
+
+    <v-dialog max-width="500" v-model="addNewStudentOfficerDialog">
+      <template v-slot:default="{ isActive }">
+        <v-card title="Add new Student Officer">
+          <v-card-text>
+            <v-text-field
+              v-model="newFirstName"
+              label="First name"
+              outlined
+              autofocus="autofocus"
+            ></v-text-field>
+            <v-text-field
+              v-model="newLastName"
+              label="Last name"
+              outlined
+            ></v-text-field>
+            <v-text-field
+              v-model="newPositionName"
+              label="Position"
+              outlined
+            ></v-text-field>
+            <v-text-field
+              v-model="newSchoolName"
+              label="School name"
+              outlined
+            ></v-text-field>
+            <v-select
+              v-model="newForumID"
+              :items="forumsStore.forums"
+              :item-title="(forum) => forum.name"
+              :item-value="(forum) => forum.id"
+              label="Select Forum"
+              outlined
+            ></v-select>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+            <v-btn text="Create" @click="createStudentOfficer"></v-btn>
+          </v-card-actions>
+        </v-card>
+      </template>
+    </v-dialog>
   </div>
 </template>
 

@@ -329,7 +329,7 @@ const confirmedDeleteSchool = function () {
             <v-spacer></v-spacer>
 
             <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-            <v-btn text="OK" @click="createSchool"></v-btn>
+            <v-btn text="Create" @click="createSchool"></v-btn>
           </v-card-actions>
         </v-card>
       </template>
