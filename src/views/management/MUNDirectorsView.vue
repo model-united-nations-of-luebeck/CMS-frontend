@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const origin = window.location.origin;
 import { useMUNDirectorsStore } from "../../stores/mun_directors";
 import { useSchoolsStore } from "../../stores/schools";
 import { sortParticipantsByName } from "../../stores/participants";
@@ -13,6 +16,7 @@ import EnglishTeacherIcon from "../../components/icons/EnglishTeacherIcon.vue";
 import SchoolChip from "../../components/chips/SchoolChip.vue";
 import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
+import LinkIcon from "../../components/icons/LinkIcon.vue";
 
 const schoolsStore = useSchoolsStore();
 schoolsStore.getSchools();
@@ -235,6 +239,14 @@ const confirmedDeleteMUNDirector = function () {
           </td>
 
           <td>
+            <LinkIcon
+              :link="`${origin}${
+                router.resolve({
+                  name: 'final-registration-mun-director',
+                  params: { mun_director_id: item.id },
+                }).path
+              }`"
+            ></LinkIcon>
             <v-btn
               variant="plain"
               icon="mdi-pencil"
@@ -327,6 +339,10 @@ const confirmedDeleteMUNDirector = function () {
 
 h3 {
   margin-top: 8px;
+}
+
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  padding: 0 4px;
 }
 </style>
 

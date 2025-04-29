@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const origin = window.location.origin;
 import { useDelegatesStore } from "../../stores/delegates";
 import { useSchoolsStore } from "../../stores/schools";
 import { useForumsStore } from "../../stores/forums";
@@ -21,6 +24,7 @@ import SchoolChip from "../../components/chips/SchoolChip.vue";
 import ForumChip from "../../components/chips/ForumChip.vue";
 import MemberOrganizationChip from "../../components/chips/MemberOrganizationChip.vue";
 import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
+import LinkIcon from "../../components/icons/LinkIcon.vue";
 
 const schoolsStore = useSchoolsStore();
 schoolsStore.getSchools();
@@ -283,6 +287,14 @@ const custom_filter = function (value, query, item) {
           </td>
 
           <td>
+            <LinkIcon
+              :link="`${origin}${
+                router.resolve({
+                  name: 'final-registration-delegate',
+                  params: { delegate_id: item.id },
+                }).path
+              }`"
+            ></LinkIcon>
             <v-btn
               variant="plain"
               icon="mdi-pencil"
@@ -326,6 +338,10 @@ const custom_filter = function (value, query, item) {
 
 h3 {
   margin-top: 8px;
+}
+
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  padding: 0 4px;
 }
 </style>
 

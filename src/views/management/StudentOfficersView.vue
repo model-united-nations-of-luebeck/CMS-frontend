@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const origin = window.location.origin;
 import { useStudentOfficersStore } from "../../stores/student_officers";
 import { useForumsStore } from "../../stores/forums";
 import {
@@ -16,6 +19,7 @@ import MailIcon from "../../components/icons/MailIcon.vue";
 import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
 import ForumChip from "../../components/chips/ForumChip.vue";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
+import LinkIcon from "../../components/icons/LinkIcon.vue";
 
 const forumsStore = useForumsStore();
 forumsStore.getForums();
@@ -291,6 +295,14 @@ const confirmedDeleteStudentOfficer = function () {
           </td>
 
           <td>
+            <LinkIcon
+              :link="`${origin}${
+                router.resolve({
+                  name: 'student-officer-registration',
+                  params: { student_officer_id: item.id },
+                }).path
+              }`"
+            ></LinkIcon>
             <v-btn
               variant="plain"
               icon="mdi-pencil"
@@ -399,6 +411,10 @@ const confirmedDeleteStudentOfficer = function () {
 
 h3 {
   margin-top: 8px;
+}
+
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  padding: 0 4px;
 }
 </style>
 

@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const origin = window.location.origin;
 import { useStaffsStore } from "../../stores/staffs";
 import {
   sortParticipantsByName,
@@ -14,6 +17,7 @@ import MobilePhoneIcon from "../../components/icons/MobilePhoneIcon.vue";
 import MailIcon from "../../components/icons/MailIcon.vue";
 import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
+import LinkIcon from "../../components/icons/LinkIcon.vue";
 
 const staffsStore = useStaffsStore();
 staffsStore.getStaffs();
@@ -229,6 +233,14 @@ const confirmedDeleteStaff = function () {
           </td>
 
           <td>
+            <LinkIcon
+              :link="`${origin}${
+                router.resolve({
+                  name: 'staff-registration',
+                  params: { staff_id: item.id },
+                }).path
+              }`"
+            ></LinkIcon>
             <v-btn
               variant="plain"
               icon="mdi-pencil"
@@ -323,6 +335,10 @@ const confirmedDeleteStaff = function () {
 
 h3 {
   margin-top: 8px;
+}
+
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  padding: 0 4px;
 }
 </style>
 

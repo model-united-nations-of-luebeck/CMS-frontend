@@ -341,4 +341,8 @@ const confirmedDeleteSchool = function () {
 .school_canceled {
   color: lightgray;
 }
+
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  padding: 0 4px;
+}
 </style>

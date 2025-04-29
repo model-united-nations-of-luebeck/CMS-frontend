@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const origin = window.location.origin;
 import { useAdvisorsStore } from "../../stores/advisors";
 import { sortParticipantsByName } from "../../stores/participants";
 import ConsentDisplay from "../../components/displays/ConsentDisplay.vue";
@@ -11,6 +14,7 @@ import MobilePhoneIcon from "../../components/icons/MobilePhoneIcon.vue";
 import MailIcon from "../../components/icons/MailIcon.vue";
 import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
+import LinkIcon from "../../components/icons/LinkIcon.vue";
 
 const advisorsStore = useAdvisorsStore();
 advisorsStore.getAdvisors();
@@ -250,6 +254,14 @@ const confirmedDeleteAdvisor = function () {
           </td>
 
           <td>
+            <LinkIcon
+              :link="`${origin}${
+                router.resolve({
+                  name: 'advisor-registration',
+                  params: { advisor_id: item.id },
+                }).path
+              }`"
+            ></LinkIcon>
             <v-btn
               variant="plain"
               icon="mdi-pencil"
@@ -389,6 +401,10 @@ h3 {
 
 .center {
   text-align: center;
+}
+
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  padding: 0 4px;
 }
 </style>
 
