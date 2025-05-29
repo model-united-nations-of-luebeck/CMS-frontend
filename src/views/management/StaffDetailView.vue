@@ -1,47 +1,50 @@
 <script setup>
 import { ref } from "vue";
 import { useStaffsStore } from "../../stores/staffs";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useDisplay } from "vuetify";
+import NameFields from "../../components/inputs/NameFields.vue";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
 import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
-import NameFields from "../../components/inputs/NameFields.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
 import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
-import { useDisplay } from "vuetify";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
 import BirthdateField from "../../components/inputs/BirthdateField.vue";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 import ConsentField from "../../components/inputs/ConsentField.vue";
+
 const { mobile } = useDisplay();
-
 const route = useRoute();
-
+const router = useRouter();
 const staffsStore = useStaffsStore();
+staffsStore.getStaff(route.params.staff_id);
 
-if (route.params.staff_id) {
-  staffsStore.getStaff(route.params.staff_id);
-} else {
-  toast.error("Staff not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
-}
+const updateStaff = (staff_id) => {
+  // update staff
+  staffsStore.updateStaff(staff_id);
+
+  // go back to staffs view
+  router.push({ name: "staffs" });
+};
 
 const valid = ref(true);
 </script>
 
 <template>
-  <div class="staff-reg">
-    <v-alert>
-      <p>Dear staff member,</p>
-      <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please
-        register by providing some information about yourself and a badge photo.
-      </p>
-      <p>Your Conference Managers</p>
-    </v-alert>
+  <div class="">
+    <v-breadcrumbs
+      :items="[
+        { title: 'Staffs', to: { name: 'staffs' } },
+        {
+          title: `${staffsStore.staff?.first_name} ${staffsStore.staff?.last_name}`,
+        },
+      ]"
+    >
+      <template v-slot:prepend>
+        <v-icon icon="mdi-account" size="small" start></v-icon>
+      </template>
+    </v-breadcrumbs>
 
     <v-form v-model="valid" validate-on="blur">
       <v-container fluid>
@@ -51,6 +54,19 @@ const valid = ref(true);
               v-model:first_name="staffsStore.staff.first_name"
               v-model:last_name="staffsStore.staff.last_name"
             ></NameFields>
+
+            <v-text-field
+              v-model="staffsStore.staff.position_name"
+              label="Position"
+              prepend-icon="mdi-account-tie"
+              type="text"
+            ></v-text-field>
+            <v-text-field
+              v-model="staffsStore.staff.school_name"
+              label="School"
+              prepend-icon="mdi-school"
+              type="text"
+            ></v-text-field>
 
             <GenderSelector
               v-model:gender="staffsStore.staff.gender"
@@ -73,21 +89,6 @@ const valid = ref(true);
             <ExtrasField
               v-model:extras="staffsStore.staff.extras"
             ></ExtrasField>
-
-            <v-text-field
-              v-model="staffsStore.staff.position_name"
-              label="Position"
-              prepend-icon="mdi-account-tie"
-              type="text"
-              readonly
-            ></v-text-field>
-            <v-text-field
-              v-model="staffsStore.staff.school_name"
-              label="School"
-              prepend-icon="mdi-school"
-              type="text"
-              readonly
-            ></v-text-field>
           </v-col>
 
           <v-col
@@ -125,8 +126,8 @@ const valid = ref(true);
               color="primary"
               prepend-icon="mdi-send"
               :disabled="!valid"
-              @click="staffsStore.updateStaff(staffsStore.staff.id)"
-              >Submit registration form</v-btn
+              @click="updateStaff(staffsStore.staff.id)"
+              >Update Staff</v-btn
             >
           </div>
         </v-row>
@@ -136,19 +137,12 @@ const valid = ref(true);
 </template>
 
 <style>
-.staff-reg {
-  padding: 20px;
+.fab-bottom-right {
+  position: fixed;
+  top: 75px;
+  right: 25px;
 }
-
-.v-col {
-  padding: 0px !important;
-}
-
-#submit-btn {
-  margin-top: 24px;
-}
-
-.badge-photo {
-  position: absolute;
+#search {
+  width: 300px;
 }
 </style>

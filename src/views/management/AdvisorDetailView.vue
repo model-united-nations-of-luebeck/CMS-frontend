@@ -1,44 +1,50 @@
 <script setup>
 import { ref } from "vue";
 import { useAdvisorsStore } from "../../stores/advisors";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useDisplay } from "vuetify";
+import NameFields from "../../components/inputs/NameFields.vue";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
 import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
-import NameFields from "../../components/inputs/NameFields.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
 import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
-import HelpField from "../../components/inputs/HelpField.vue";
-import { useDisplay } from "vuetify";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
+import HelpField from "../../components/inputs/HelpField.vue";
 import ConsentField from "../../components/inputs/ConsentField.vue";
+
 const { mobile } = useDisplay();
-
 const route = useRoute();
-
+const router = useRouter();
 const advisorsStore = useAdvisorsStore();
+advisorsStore.getAdvisor(route.params.advisor_id);
 
-if (route.params.advisor_id != "add") {
-  advisorsStore.getAdvisor(route.params.advisor_id);
-} else {
-  advisorsStore.initializeAdvisor();
-}
+const updateAdvisor = (advisor_id) => {
+  // update advisor
+  advisorsStore.updateAdvisor(advisor_id);
+
+  // go back to advisors view
+  router.push({ name: "advisors" });
+};
 
 const valid = ref(true);
 </script>
 
 <template>
-  <div class="advisor-reg">
-    <v-alert>
-      <p>Dear Conference Advisor,</p>
-      <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please
-        register by providing some information about yourself, the support that
-        you can offer and a badge photo.
-      </p>
-      <p>Your Conference Managers</p>
-    </v-alert>
+  <div class="">
+    <v-breadcrumbs
+      :items="[
+        { title: 'Advisors', to: { name: 'advisors' } },
+        {
+          title: `${advisorsStore.advisor?.first_name} ${advisorsStore.advisor?.last_name}`,
+        },
+      ]"
+    >
+      <template v-slot:prepend>
+        <v-icon icon="mdi-account-star" size="small" start></v-icon>
+      </template>
+    </v-breadcrumbs>
 
     <v-form v-model="valid" validate-on="blur">
       <v-container fluid>
@@ -144,23 +150,12 @@ const valid = ref(true);
             >
 
             <v-btn
-              v-if="route.params.advisor_id != 'add'"
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
               :disabled="!valid"
-              @click="advisorsStore.updateAdvisor(advisorsStore.advisor.id)"
-              >Update information</v-btn
-            >
-
-            <v-btn
-              v-if="route.params.advisor_id == 'add'"
-              id="submit-btn"
-              color="primary"
-              prepend-icon="mdi-send"
-              :disabled="!valid"
-              @click="advisorsStore.createAdvisor()"
-              >Submit registration form</v-btn
+              @click="updateAdvisor(advisorsStore.advisor.id)"
+              >Update Advisor</v-btn
             >
           </div>
         </v-row>
@@ -170,19 +165,12 @@ const valid = ref(true);
 </template>
 
 <style>
-.advisor-reg {
-  padding: 20px;
+.fab-bottom-right {
+  position: fixed;
+  top: 75px;
+  right: 25px;
 }
-
-.v-col {
-  padding: 0px !important;
-}
-
-#submit-btn {
-  margin-top: 24px;
-}
-
-.badge-photo {
-  position: absolute;
+#search {
+  width: 300px;
 }
 </style>

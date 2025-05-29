@@ -1,47 +1,61 @@
 <script setup>
 import { ref } from "vue";
 import { useStudentOfficersStore } from "../../stores/student_officers";
-import { useRoute } from "vue-router";
+import { useForumsStore } from "../../stores/forums";
+import { useRoute, useRouter } from "vue-router";
+import { useDisplay } from "vuetify";
+import NameFields from "../../components/inputs/NameFields.vue";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
 import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
-import NameFields from "../../components/inputs/NameFields.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
 import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
-import { useDisplay } from "vuetify";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
 import BirthdateField from "../../components/inputs/BirthdateField.vue";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 import ConsentField from "../../components/inputs/ConsentField.vue";
+
 const { mobile } = useDisplay();
-
 const route = useRoute();
-
+const router = useRouter();
+const forumsStore = useForumsStore();
+forumsStore.getForums();
 const studentOfficersStore = useStudentOfficersStore();
+studentOfficersStore.getStudentOfficer(route.params.student_officer_id);
 
-if (route.params.student_officer_id) {
-  studentOfficersStore.getStudentOfficer(route.params.student_officer_id);
-} else {
-  toast.error("Student Officer not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
-}
+const updateStudentOfficer = (student_officer_id) => {
+  // update student officer
+  studentOfficersStore.updateStudentOfficer(student_officer_id);
+
+  // go back to student officer view
+  router.push({ name: "student-officers" });
+};
+
+const forumSelectProps = function (forum) {
+  return {
+    title: forum.name,
+    subtitle: forum.subtitle,
+    value: forum.id,
+  };
+};
 
 const valid = ref(true);
 </script>
 
 <template>
-  <div class="student-officer-reg">
-    <v-alert>
-      <p>Dear student officer,</p>
-      <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please
-        register by providing some information about yourself and a badge photo.
-      </p>
-      <p>Your Conference Managers</p>
-    </v-alert>
+  <div class="">
+    <v-breadcrumbs
+      :items="[
+        { title: 'Student Officers', to: { name: 'student-officers' } },
+        {
+          title: `${studentOfficersStore.student_officer?.first_name} ${studentOfficersStore.student_officer?.last_name}`,
+        },
+      ]"
+    >
+      <template v-slot:prepend>
+        <v-icon icon="mdi-account-settings" size="small" start></v-icon>
+      </template>
+    </v-breadcrumbs>
 
     <v-form v-model="valid" validate-on="blur">
       <v-container fluid>
@@ -53,6 +67,32 @@ const valid = ref(true);
               "
               v-model:last_name="studentOfficersStore.student_officer.last_name"
             ></NameFields>
+
+            <v-text-field
+              v-model="studentOfficersStore.student_officer.position_name"
+              label="Position"
+              prepend-icon="mdi-account-tie"
+              type="text"
+            ></v-text-field>
+
+            <v-select
+              :model-value="studentOfficersStore.student_officer.forum"
+              :item-props="forumSelectProps"
+              :items="forumsStore.forums"
+              label="Forum"
+              prepend-icon="mdi-forum"
+              @update:modelValue="
+                studentOfficersStore.student_officer.forum = $event
+              "
+            >
+            </v-select>
+
+            <v-text-field
+              v-model="studentOfficersStore.student_officer.school_name"
+              label="School"
+              prepend-icon="mdi-school"
+              type="text"
+            ></v-text-field>
 
             <GenderSelector
               v-model:gender="studentOfficersStore.student_officer.gender"
@@ -77,21 +117,6 @@ const valid = ref(true);
             <ExtrasField
               v-model:extras="studentOfficersStore.student_officer.extras"
             ></ExtrasField>
-
-            <v-text-field
-              v-model="studentOfficersStore.student_officer.position_name"
-              label="Position"
-              prepend-icon="mdi-account-tie"
-              type="text"
-              readonly
-            ></v-text-field>
-            <v-text-field
-              v-model="studentOfficersStore.student_officer.school_name"
-              label="School"
-              prepend-icon="mdi-school"
-              type="text"
-              readonly
-            ></v-text-field>
           </v-col>
 
           <v-col
@@ -138,11 +163,9 @@ const valid = ref(true);
               prepend-icon="mdi-send"
               :disabled="!valid"
               @click="
-                studentOfficersStore.updateStudentOfficer(
-                  studentOfficersStore.student_officer.id,
-                )
+                updateStudentOfficer(studentOfficersStore.student_officer.id)
               "
-              >Submit registration form</v-btn
+              >Update Student Officer</v-btn
             >
           </div>
         </v-row>
@@ -152,19 +175,12 @@ const valid = ref(true);
 </template>
 
 <style>
-.student-officer-reg {
-  padding: 20px;
+.fab-bottom-right {
+  position: fixed;
+  top: 75px;
+  right: 25px;
 }
-
-.v-col {
-  padding: 0px !important;
-}
-
-#submit-btn {
-  margin-top: 24px;
-}
-
-.badge-photo {
-  position: absolute;
+#search {
+  width: 300px;
 }
 </style>

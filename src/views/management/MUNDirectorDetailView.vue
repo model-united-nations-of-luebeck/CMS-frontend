@@ -1,14 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import { useMUNDirectorsStore } from "../../stores/mun_directors";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 import NameFields from "../../components/inputs/NameFields.vue";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
 import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
-
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
 import DietSelector from "../../components/inputs/DietSelector.vue";
@@ -18,40 +15,36 @@ import CheckboxField from "../../components/inputs/CheckboxField.vue";
 import ConsentField from "../../components/inputs/ConsentField.vue";
 
 const { mobile } = useDisplay();
-
 const route = useRoute();
-
+const router = useRouter();
 const munDirectorsStore = useMUNDirectorsStore();
+munDirectorsStore.getMUNDirector(route.params.mun_director_id);
 
-if (route.params.mun_director_id) {
-  munDirectorsStore.getMUNDirector(route.params.mun_director_id);
-} else {
-  toast.error("MUN-Director not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
-}
+const updateMUNDirector = (mun_director_id) => {
+  // update MUN director
+  munDirectorsStore.updateMUNDirector(mun_director_id);
+
+  // go back to MUN director view
+  router.push({ name: "mun-directors" });
+};
 
 const valid = ref(true);
 </script>
 
 <template>
-  <div class="mun-director-reg">
-    <div id="intro" v-if="munDirectorsStore.loading == false">
-      <v-alert>
-        <p>
-          Dear MUN-Director, <br />
-
-          we are excited that you are participating in MUNOL 2024. To organize
-          the conference and prepare everything, we would like you to fill in
-          this form and upload a photo for your badge. Please don't hesitate
-          contacting the Conference Managers in case you have any questions
-          <a href="mailto:conferencemanager@munol.org"
-            >conferencemanager@munol.org</a
-          >.
-        </p>
-        <p>Your Conference Managers</p>
-      </v-alert>
-    </div>
+  <div class="">
+    <v-breadcrumbs
+      :items="[
+        { title: 'MUN-Directors', to: { name: 'mun-directors' } },
+        {
+          title: `${munDirectorsStore.mun_director?.first_name} ${munDirectorsStore.mun_director?.last_name}`,
+        },
+      ]"
+    >
+      <template v-slot:prepend>
+        <v-icon icon="mdi-school" size="small" start></v-icon>
+      </template>
+    </v-breadcrumbs>
 
     <v-form v-model="valid" validate-on="blur">
       <v-container fluid>
@@ -76,6 +69,7 @@ const valid = ref(true);
             <PhoneNumberField
               v-model:phone="munDirectorsStore.mun_director.mobile"
             ></PhoneNumberField>
+
             <DietSelector
               v-model:diet="munDirectorsStore.mun_director.diet"
             ></DietSelector>
@@ -132,45 +126,23 @@ const valid = ref(true);
               color="primary"
               prepend-icon="mdi-send"
               :disabled="!valid"
-              @click="
-                munDirectorsStore.updateMUNDirector(
-                  munDirectorsStore.mun_director.id,
-                )
-              "
-              >Submit registration form</v-btn
+              @click="updateMUNDirector(munDirectorsStore.mun_director.id)"
+              >Update MUN-Director</v-btn
             >
           </div>
         </v-row>
       </v-container>
     </v-form>
-
-    <v-alert style="margin-top: 20px" title="TODOs" color="info">
-      <ul>
-        <li>refactor consent field and its handling to component</li>
-        <li>
-          Possibility to withdraw consent to data processing (confirmation
-          dialog => deleting all data and closing tab) and media publication
-        </li>
-        <li>Polish legal texts</li>
-      </ul>
-    </v-alert>
   </div>
 </template>
 
 <style>
-.mun-director-reg {
-  padding: 20px;
+.fab-bottom-right {
+  position: fixed;
+  top: 75px;
+  right: 25px;
 }
-
-.v-col {
-  padding: 0px !important;
-}
-
-#submit-btn {
-  margin-top: 24px;
-}
-
-.badge-photo {
-  position: absolute;
+#search {
+  width: 300px;
 }
 </style>

@@ -1,18 +1,20 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  extras: String
-})
+  extras: String,
+});
 
-const emit = defineEmits(['update:extras'])
+const emit = defineEmits(["update:extras"]);
 
 const updateExtras = (event) => {
-  emit('update:extras', event.target.value)
-}
+  emit("update:extras", event.target.value);
+};
 
-const rules = [(v) => (v && v.length <= 50000) || 'The text is too long. Please shorten it.']
+const rules = [
+  (v) => !v || v.length <= 50000 || "The text is too long. Please shorten it.",
+];
 </script>
 
 <template>

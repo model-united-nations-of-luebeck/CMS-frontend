@@ -53,9 +53,9 @@ export const useStaffsStore = defineStore('staffs', () => {
         })
     }
 
-    async function createStaff(){
+    async function createStaff(first_name, last_name, position_name){
         loading.value = true
-        await http.post("staffs/", staff.value).then( (res) => {
+        await http.post("staffs/", {first_name: first_name, last_name: last_name, position_name: position_name}).then( (res) => {
             staffs.value.push(res.data)
             loading.value = false
             toast.success('Staff was added successfully', {

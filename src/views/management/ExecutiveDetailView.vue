@@ -1,47 +1,50 @@
 <script setup>
 import { ref } from "vue";
 import { useExecutivesStore } from "../../stores/executives";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useDisplay } from "vuetify";
+import NameFields from "../../components/inputs/NameFields.vue";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
 import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
-import NameFields from "../../components/inputs/NameFields.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
 import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
-import { useDisplay } from "vuetify";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
 import BirthdateField from "../../components/inputs/BirthdateField.vue";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 import ConsentField from "../../components/inputs/ConsentField.vue";
+
 const { mobile } = useDisplay();
-
 const route = useRoute();
-
+const router = useRouter();
 const executivesStore = useExecutivesStore();
+executivesStore.getExecutive(route.params.executive_id);
 
-if (route.params.executive_id) {
-  executivesStore.getExecutive(route.params.executive_id);
-} else {
-  toast.error("Executive not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
-}
+const updateExecutive = (executive_id) => {
+  // update executive
+  executivesStore.updateExecutive(executive_id);
+
+  // go back to executives view
+  router.push({ name: "executives" });
+};
 
 const valid = ref(true);
 </script>
 
 <template>
-  <div class="executive-reg">
-    <v-alert>
-      <p>Dear executive team member,</p>
-      <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please
-        register by providing some information about yourself and a badge photo.
-      </p>
-      <p>Your Conference Managers</p>
-    </v-alert>
+  <div class="">
+    <v-breadcrumbs
+      :items="[
+        { title: 'Executives', to: { name: 'executives' } },
+        {
+          title: `${executivesStore.executive?.first_name} ${executivesStore.executive?.last_name}`,
+        },
+      ]"
+    >
+      <template v-slot:prepend>
+        <v-icon icon="mdi-account-settings" size="small" start></v-icon>
+      </template>
+    </v-breadcrumbs>
 
     <v-form v-model="valid" validate-on="blur">
       <v-container fluid>
@@ -51,6 +54,19 @@ const valid = ref(true);
               v-model:first_name="executivesStore.executive.first_name"
               v-model:last_name="executivesStore.executive.last_name"
             ></NameFields>
+
+            <v-text-field
+              v-model="executivesStore.executive.position_name"
+              label="Position"
+              prepend-icon="mdi-account-tie"
+              type="text"
+            ></v-text-field>
+            <v-text-field
+              v-model="executivesStore.executive.school_name"
+              label="School"
+              prepend-icon="mdi-school"
+              type="text"
+            ></v-text-field>
 
             <GenderSelector
               v-model:gender="executivesStore.executive.gender"
@@ -75,21 +91,6 @@ const valid = ref(true);
             <ExtrasField
               v-model:extras="executivesStore.executive.extras"
             ></ExtrasField>
-
-            <v-text-field
-              v-model="executivesStore.executive.position_name"
-              label="Position"
-              prepend-icon="mdi-account-tie"
-              type="text"
-              readonly
-            ></v-text-field>
-            <v-text-field
-              v-model="executivesStore.executive.school_name"
-              label="School"
-              prepend-icon="mdi-school"
-              type="text"
-              readonly
-            ></v-text-field>
           </v-col>
 
           <v-col
@@ -133,10 +134,8 @@ const valid = ref(true);
               color="primary"
               prepend-icon="mdi-send"
               :disabled="!valid"
-              @click="
-                executivesStore.updateExecutive(executivesStore.executive.id)
-              "
-              >Submit registration form</v-btn
+              @click="updateExecutive(executivesStore.executive.id)"
+              >Update Executive</v-btn
             >
           </div>
         </v-row>
@@ -146,19 +145,12 @@ const valid = ref(true);
 </template>
 
 <style>
-.executive-reg {
-  padding: 20px;
+.fab-bottom-right {
+  position: fixed;
+  top: 75px;
+  right: 25px;
 }
-
-.v-col {
-  padding: 0px !important;
-}
-
-#submit-btn {
-  margin-top: 24px;
-}
-
-.badge-photo {
-  position: absolute;
+#search {
+  width: 300px;
 }
 </style>

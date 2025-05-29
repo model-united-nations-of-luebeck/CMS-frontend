@@ -1,57 +1,57 @@
 <script setup>
-import { useForumsStore } from '../../stores/forums'
-import { usePlenariesStore } from '../../stores/plenaries'
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
-import ConfirmDialog from '../../components/ConfirmDialog.vue'
+import { useForumsStore } from "../../stores/forums";
+import { usePlenariesStore } from "../../stores/plenaries";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 
-const forumsStore = useForumsStore()
-forumsStore.getForums()
-const plenariesStore = usePlenariesStore()
-plenariesStore.getPlenaries()
-const router = useRouter()
+const forumsStore = useForumsStore();
+forumsStore.getForums();
+const plenariesStore = usePlenariesStore();
+plenariesStore.getPlenaries();
+const router = useRouter();
 
-const deleteDialog = ref(null)
-const deleteDialogPlenary = ref(null)
-const search = ref('')
+const deleteDialog = ref(null);
+const deleteDialogPlenary = ref(null);
+const search = ref("");
 
 const headers = [
-  { title: 'Abbreviation', key: 'abbreviation' },
-  { title: 'Name', key: 'name' },
-  { title: 'Subtitle', key: 'subtitle' },
-  { title: 'Plenary', key: 'plenary' },
-  { title: 'Email', key: 'email' },
-  { title: 'Room', key: '' },
-  { title: 'Actions', key: 'actions' }
-]
+  { title: "Abbreviation", key: "abbreviation" },
+  { title: "Name", key: "name" },
+  { title: "Subtitle", key: "subtitle" },
+  { title: "Plenary", key: "plenary" },
+  { title: "Email", key: "email" },
+  { title: "Room", key: "" },
+  { title: "Actions", key: "actions" },
+];
 
 const plenary_headers = [
-  { title: 'Abbreviation', key: 'abbreviation' },
-  { title: 'Name', key: 'name' },
-  { title: 'Location', key: '' },
-  { title: 'Size', key: '' },
-  { title: 'Actions', key: 'actions' }
-]
+  { title: "Abbreviation", key: "abbreviation" },
+  { title: "Name", key: "name" },
+  { title: "Location", key: "" },
+  { title: "Size", key: "" },
+  { title: "Actions", key: "actions" },
+];
 
 const deleteForum = function (forum_id) {
-  this.deleteDialog = forum_id
-}
+  this.deleteDialog = forum_id;
+};
 
 const confirmedDeleteForum = function () {
-  forumsStore.deleteForum(this.deleteDialog)
-  this.deleteDialog = false
-}
+  forumsStore.deleteForum(this.deleteDialog);
+  this.deleteDialog = false;
+};
 
 const deletePlenary = function (plenary_id) {
-  this.deleteDialogPlenary = plenary_id
-}
+  this.deleteDialogPlenary = plenary_id;
+};
 
 const confirmedDeletePlenary = function () {
-  plenariesStore.deletePlenary(this.deleteDialogPlenary)
-  this.deleteDialogPlenary = false
-}
+  plenariesStore.deletePlenary(this.deleteDialogPlenary);
+  this.deleteDialogPlenary = false;
+};
 </script>
 
 <template>
@@ -82,7 +82,7 @@ const confirmedDeletePlenary = function () {
         @click="
           router.push({
             name: 'forum-detail',
-            params: { forum_id: 'add' }
+            params: { forum_id: 'add' },
           })
         "
       ></v-fab>
@@ -100,7 +100,7 @@ const confirmedDeletePlenary = function () {
       :search="search"
       :sort-by="[
         { key: 'plenary', order: 'asc' },
-        { key: 'abbreviation', order: 'asc' }
+        { key: 'abbreviation', order: 'asc' },
       ]"
     >
       <template v-slot:loading>
@@ -117,26 +117,30 @@ const confirmedDeletePlenary = function () {
           </td>
           <td>
             <v-chip v-if="item.plenary" prepend-icon="mdi-account-group">{{
-              plenariesStore.plenaries.find((plenary) => plenary.id == item.plenary)?.name
+              plenariesStore.plenaries.find(
+                (plenary) => plenary.id == item.plenary,
+              )?.name
             }}</v-chip>
           </td>
           <td>
             <v-icon
               v-if="item.email"
-              v-tooltip:bottom-center="`${item.email}  (Click to copy e-mail to your clipboard)`"
+              v-tooltip:bottom-center="
+                `${item.email}  (Click to copy e-mail to your clipboard)`
+              "
               v-clipboard:copy="item.email"
               v-clipboard:success="
                 () => {
                   toast.success('E-mail was copied successfully', {
                     position: toast.POSITION.BOTTOM_CENTER,
-                    style: 'width: auto'
-                  })
+                    style: 'width: auto',
+                  });
                 }
               "
               v-clipboard:error="
                 (e) =>
                   toast.error('Copying E-mail failed' + e.text, {
-                    position: toast.POSITION.BOTTOM_CENTER
+                    position: toast.POSITION.BOTTOM_CENTER,
                   })
               "
               >mdi-email</v-icon
@@ -150,11 +154,16 @@ const confirmedDeletePlenary = function () {
               icon="mdi-pencil"
               :to="{
                 name: 'forum-detail',
-                params: { forum_id: item.id }
+                params: { forum_id: item.id },
               }"
             >
             </v-btn>
-            <v-btn variant="plain" icon="mdi-delete" @click.stop="deleteForum(item.id)"> </v-btn>
+            <v-btn
+              variant="plain"
+              icon="mdi-delete"
+              @click.stop="deleteForum(item.id)"
+            >
+            </v-btn>
           </td>
         </tr>
       </template>
@@ -171,7 +180,7 @@ const confirmedDeletePlenary = function () {
         @click="
           router.push({
             name: 'plenary-detail',
-            params: { plenary_id: 'add' }
+            params: { plenary_id: 'add' },
           })
         "
       ></v-fab>
@@ -206,7 +215,7 @@ const confirmedDeletePlenary = function () {
               icon="mdi-pencil"
               :to="{
                 name: 'plenary-detail',
-                params: { plenary_id: item.id }
+                params: { plenary_id: item.id },
               }"
             >
             </v-btn>
@@ -215,13 +224,17 @@ const confirmedDeletePlenary = function () {
               v-tooltip="{
                 text: 'Only plenary sessions without assigned forums can be deleted.',
                 location: 'start',
-                disabled: !forumsStore.forums.some((forum) => forum.plenary === item.id)
+                disabled: !forumsStore.forums.some(
+                  (forum) => forum.plenary === item.id,
+                ),
               }"
             >
               <v-btn
                 variant="plain"
                 icon="mdi-delete"
-                :disabled="forumsStore.forums.some((forum) => forum.plenary === item.id)"
+                :disabled="
+                  forumsStore.forums.some((forum) => forum.plenary === item.id)
+                "
                 @click.stop="deletePlenary(item.id)"
               >
               </v-btn>
@@ -237,7 +250,10 @@ const confirmedDeletePlenary = function () {
       title="Confirm Delete"
       text="Are you sure you want to delete this forum?"
       @ok-clicked="
-        confirmedDeleteForum(forumsStore.forums.filter((forum) => forum.id == this.deleteDialog).id)
+        confirmedDeleteForum(
+          forumsStore.forums.filter((forum) => forum.id == this.deleteDialog)
+            .id,
+        )
       "
       @cancel-clicked="deleteDialog = false"
     ></ConfirmDialog>
@@ -249,7 +265,9 @@ const confirmedDeletePlenary = function () {
       text="Are you sure you want to delete this plenary?"
       @ok-clicked="
         confirmedDeletePlenary(
-          plenariesStore.plenaries.filter((plenary) => plenary.id == this.deleteDialogPlenary).id
+          plenariesStore.plenaries.filter(
+            (plenary) => plenary.id == this.deleteDialogPlenary,
+          ).id,
         )
       "
       @cancel-clicked="deleteDialogPlenary = false"
@@ -262,8 +280,8 @@ const confirmedDeletePlenary = function () {
         <li>Make lunches not required for plenaries</li>
         <li>Add rules to detail forms, e.g. email, lengths</li>
         <li>
-          Grayout delete button of forums which have assigned delegates or issues as they would also
-          be deleted. Explain this in a tooltip
+          Grayout delete button of forums which have assigned delegates or
+          issues as they would also be deleted. Explain this in a tooltip
         </li>
       </ul>
     </v-alert>
