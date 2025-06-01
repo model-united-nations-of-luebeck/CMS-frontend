@@ -15,7 +15,6 @@ import '@mdi/font/css/materialdesignicons.css'
 // eslint-disable-next-line no-unused-vars
 import fonts from './fonts/fonts.module.scss'
 import { VDateInput } from 'vuetify/labs/VDateInput' //currently still in labs
-import { VNumberInput } from 'vuetify/labs/VNumberInput' //currently still in labs
 
 import VueClipboard from 'vue3-clipboard'
 import Vue3Toastify from 'vue3-toastify'
@@ -26,7 +25,6 @@ const vuetify = createVuetify({
   components: {
     ...components,
     VDateInput,
-    VNumberInput
   },
   directives,
   icons: {
