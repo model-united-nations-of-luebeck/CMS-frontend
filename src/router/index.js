@@ -19,7 +19,7 @@ const router = createRouter({
       path: "/management/",
       name: "conference-management-system",
       meta: {
-        title: "MUNOL CMS",
+        title: "MUNOL Conference Management System",
       },
       component: () => import("../views/management/ManagementView.vue"),
       children: [

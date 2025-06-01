@@ -123,7 +123,7 @@ const confirmedDeleteAdvisor = function () {
 <template>
   <div class="">
     <v-row>
-      <v-col cols="11">
+      <v-col cols="10">
         <v-breadcrumbs :items="[{ title: 'Advisors' }]">
           <template v-slot:prepend>
             <v-icon
@@ -148,7 +148,7 @@ const confirmedDeleteAdvisor = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="1" style="display: flex">
+      <v-col cols="2" style="display: flex">
         <v-fab
           color="primary"
           rounded
