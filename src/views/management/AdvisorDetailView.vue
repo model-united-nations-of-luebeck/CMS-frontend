@@ -14,6 +14,8 @@ import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
 import HelpField from "../../components/inputs/HelpField.vue";
 import ConsentField from "../../components/inputs/ConsentField.vue";
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
 const { mobile } = useDisplay();
 const route = useRoute();
 const router = useRouter();
@@ -93,13 +95,13 @@ const valid = ref(true);
               prepend-icon="mdi-card-account-details-star"
               label="MUN Experience"
               rows="2"
-              hint="Please specify which role you had in former MUNOL sessions and other conferences, e.g. 'School Management 2013"
+              :hint="`Please specify which role you had in former ${conference_abbr} sessions and other conferences, e.g. 'School Management 2013`"
               :density="mobile ? 'compact' : 'default'"
               v-model="advisorsStore.advisor.experience"
               :rules="[
                 (v) =>
                   !!v ||
-                  'Please briefly specify your experience in MUNOL and other conferences',
+                  `Please briefly specify your experience in ${conference_abbr} and other conferences`,
               ]"
             ></v-textarea>
             <v-textarea

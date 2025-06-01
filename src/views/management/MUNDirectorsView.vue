@@ -77,7 +77,7 @@ const headers = [
   },
   {
     title: "Icons",
-    align: "start",
+    align: "center",
     key: "icons",
     sortable: false,
   },
@@ -133,7 +133,7 @@ const confirmedDeleteMUNDirector = function () {
 <template>
   <div class="">
     <v-row>
-      <v-col cols="11">
+      <v-col cols="9">
         <v-breadcrumbs :items="[{ title: 'MUN-Directors' }]">
           <template v-slot:prepend>
             <v-icon icon="mdi-school" size="small" start disabled></v-icon>
@@ -153,7 +153,7 @@ const confirmedDeleteMUNDirector = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="1" style="display: flex">
+      <v-col cols="3" style="display: flex">
         <v-fab
           color="primary"
           rounded
@@ -215,22 +215,22 @@ const confirmedDeleteMUNDirector = function () {
               "
             ></SchoolChip>
           </td>
-          <td>
+          <td class="center">
             <EnglishTeacherIcon
               :english_teacher="item.english_teacher"
             ></EnglishTeacherIcon>
           </td>
-          <td>
+          <td class="center">
             <MailIcon
               :email="item.email"
               :email_verified="item.email_verified"
             ></MailIcon>
           </td>
-          <td>
+          <td class="center">
             <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>
           </td>
 
-          <td>
+          <td class="center">
             <MediaConsentIcon
               :media_consent_time="item.media_consent_time"
             ></MediaConsentIcon>
@@ -339,6 +339,10 @@ const confirmedDeleteMUNDirector = function () {
 
 h3 {
   margin-top: 8px;
+}
+
+.center {
+  text-align: center;
 }
 
 .v-table > .v-table__wrapper > table > tbody > tr > td {

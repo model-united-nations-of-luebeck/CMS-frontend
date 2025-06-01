@@ -116,7 +116,7 @@ const headers = [
   },
   {
     title: "Age",
-    align: "start",
+    align: "center",
     sortable: true,
     key: "age",
     sortRaw: sortParticipantsByAge,
@@ -261,17 +261,17 @@ const custom_filter = function (value, query, item) {
             ></SchoolChip>
           </td>
 
-          <td>
+          <td class="center">
             <MailIcon
               :email="item.email"
               :email_verified="item.email_verified"
             ></MailIcon>
           </td>
-          <td>
+          <td class="center">
             <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>
           </td>
 
-          <td>
+          <td class="center">
             <BirthdayChip :birthday="item.birthday"></BirthdayChip>
           </td>
 
@@ -286,7 +286,7 @@ const custom_filter = function (value, query, item) {
             <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>
 
-          <td>
+          <td class="center">
             <LinkIcon
               :link="`${origin}${
                 router.resolve({
@@ -338,6 +338,10 @@ const custom_filter = function (value, query, item) {
 
 h3 {
   margin-top: 8px;
+}
+
+.center {
+  text-align: center;
 }
 
 .v-table > .v-table__wrapper > table > tbody > tr > td {

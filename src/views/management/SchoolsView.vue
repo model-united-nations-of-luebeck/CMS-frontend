@@ -39,18 +39,18 @@ const headers = [
       {
         title: "requested",
         key: "requested",
-        algin: "end",
+        align: "center",
       },
-      { title: "confirmed", key: "confirmed" },
+      { title: "confirmed", key: "confirmed", align: "center" },
     ],
   },
-  { title: "Pre-Reg Fee", key: "fee_paid" },
+  { title: "Pre-Reg Fee", key: "fee_paid", align: "center" },
   {
     title: "Housing ",
     align: "center",
     children: [
-      { title: "Delegates", key: "housing_delegates" },
-      { title: "MUN Directors", key: "housing_mun_directors" },
+      { title: "Delegates", key: "housing_delegates", align: "center" },
+      { title: "MUN Directors", key: "housing_mun_directors", align: "center" },
     ],
   },
   { title: "Status", key: "registration_status" },
@@ -102,7 +102,7 @@ const confirmedDeleteSchool = function () {
 <template>
   <div class="">
     <v-row>
-      <v-col cols="11">
+      <v-col cols="10">
         <v-breadcrumbs :items="[{ title: 'Schools' }]">
           <template v-slot:prepend>
             <v-icon icon="mdi-bank" size="small" start disabled></v-icon>
@@ -122,7 +122,7 @@ const confirmedDeleteSchool = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="1" style="display: flex">
+      <v-col cols="2" style="display: flex">
         <v-fab
           color="primary"
           rounded
@@ -166,14 +166,15 @@ const confirmedDeleteSchool = function () {
             ></v-btn>
           </td>
           <td>
-            <b>{{ item.name }}</b>
+            <b>{{ item.name }}</b
+            ><br />
             <span v-if="item.city"> ({{ item.city }})</span>
             <span v-if="item.country"
               >, <i>{{ item.country }}</i></span
             >
           </td>
 
-          <td>
+          <td class="center">
             <v-icon
               icon="mdi-account-outline"
               v-tooltip:start="'Number of delegate positions requested'"
@@ -184,7 +185,7 @@ const confirmedDeleteSchool = function () {
               String(item.requested).padStart(4, "&nbsp;")
             }}</span>
           </td>
-          <td>
+          <td class="center">
             <v-icon
               color="success"
               icon="mdi-account"
@@ -199,7 +200,7 @@ const confirmedDeleteSchool = function () {
               )
             }}
           </td>
-          <td>
+          <td class="center">
             <v-icon
               v-if="!item.fee_paid"
               color="warning"
@@ -340,6 +341,10 @@ const confirmedDeleteSchool = function () {
 <style>
 .school_canceled {
   color: lightgray;
+}
+
+.center {
+  text-align: center;
 }
 
 .v-table > .v-table__wrapper > table > tbody > tr > td {

@@ -15,6 +15,8 @@ import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
 import ConsentField from "../../components/inputs/ConsentField.vue";
 const { mobile } = useDisplay();
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
 const route = useRoute();
 
 const advisorsStore = useAdvisorsStore();
@@ -33,9 +35,10 @@ const valid = ref(true);
     <v-alert>
       <p>Dear Conference Advisor,</p>
       <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please
-        register by providing some information about yourself, the support that
-        you can offer and a badge photo.
+        it is our pleasure to welcome you to this years
+        {{ conference_abbr }} session. Please register by providing some
+        information about yourself, the support that you can offer and a badge
+        photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>
@@ -87,19 +90,19 @@ const valid = ref(true);
               prepend-icon="mdi-card-account-details-star"
               label="MUN Experience"
               rows="2"
-              hint="Please specify which role you had in former MUNOL sessions and other conferences, e.g. 'School Management 2013"
+              :hint="`Please specify which role you had in former ${conference_abbr} sessions and other conferences, e.g. 'School Management 2013`"
               :density="mobile ? 'compact' : 'default'"
               v-model="advisorsStore.advisor.experience"
               :rules="[
                 (v) =>
                   !!v ||
-                  'Please briefly specify your experience in MUNOL and other conferences',
+                  `Please briefly specify your experience in ${conference_abbr} and other conferences`,
               ]"
             ></v-textarea>
             <v-textarea
               prepend-icon="mdi-hours-24"
               label="Availability during conference"
-              hint="Please specify on which days and nighs you will attend the conference and give your advice"
+              hint="Please specify on which days and nights you will attend the conference and give your advice"
               :density="mobile ? 'compact' : 'default'"
               v-model="advisorsStore.advisor.availability"
               :rules="[

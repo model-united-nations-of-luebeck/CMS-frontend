@@ -19,7 +19,7 @@ const router = createRouter({
       path: "/management/",
       name: "conference-management-system",
       meta: {
-        title: "MUNOL CMS",
+        title: `${import.meta.env.VITE_CONFERENCE_ABBREVIATION} Conference Management System`,
       },
       component: () => import("../views/management/ManagementView.vue"),
       children: [
@@ -210,7 +210,7 @@ const router = createRouter({
       path: "/registration/:school_id", // school_id is a parameter that should be passed to the registration view
       name: "registration",
       meta: {
-        title: "MUNOL Registration",
+        title: `${import.meta.env.VITE_CONFERENCE_ABBREVIATION} Registration`,
       },
       component: () => import("../views/registration/RegistrationView.vue"),
       children: [
@@ -247,9 +247,9 @@ const router = createRouter({
   ],
 });
 
-// Sets the title depending on the route (e.g MUNOL Registration for /registration), defaults to MUNOL CMS
+// Sets the title depending on the route (e.g Conference Registration for /registration), defaults to Conference Management System
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || "MUNOL CMS";
+  document.title = to.meta.title || `${import.meta.env.VITE_CONFERENCE_ABBREVIATION} Conference Management System`; 
 
   // gives the page a bit of time to render the UI, e.g. closing the nav drawer into rail mode, before actually loading the new page
   setTimeout(() => {

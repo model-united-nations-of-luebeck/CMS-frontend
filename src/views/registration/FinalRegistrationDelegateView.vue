@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useDelegatesStore } from "../../stores/delegates";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
 import { useForumsStore } from "../../stores/forums";
+import { useConferenceStore } from "../../stores/conference";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 import { toast } from "vue3-toastify";
@@ -20,6 +21,8 @@ import BirthdateField from "../../components/inputs/BirthdateField.vue";
 import CheckboxField from "../../components/inputs/CheckboxField.vue";
 import ConsentField from "../../components/inputs/ConsentField.vue";
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
 const { mobile } = useDisplay();
 
 const route = useRoute();
@@ -29,6 +32,8 @@ const memberOrganizationsStore = useMemberOrganizationsStore();
 memberOrganizationsStore.getMemberOrganizations();
 const forumsStore = useForumsStore();
 forumsStore.getForums();
+const conferenceStore = useConferenceStore();
+conferenceStore.getCurrentConference();
 
 if (route.params.delegate_id) {
   delegatesStore.getDelegate(route.params.delegate_id);
@@ -55,8 +60,8 @@ const valid = ref(true);
         <p>
           Dear Delegate, <br />
 
-          we are excited that you are participating in MUNOL 1999 as a delegate
-          of the
+          we are excited that you are participating in {{ conference_abbr }}
+          {{ conferenceStore.conference.year }} as a delegate of the
           <b>{{
             memberOrganizationsStore.member_organizations?.find(
               (org) => org.id == delegatesStore.delegate.represents,
@@ -137,7 +142,7 @@ const valid = ref(true);
             ></DietSelector>
             <CheckboxField
               v-model:value="delegatesStore.delegate.first_timer"
-              label="Will MUNOL be your first MUN conference?"
+              :label="`Will ${conference_abbr} be your first MUN conference?`"
               hint="There is a first MUN conference for everyone. Knowing this in advance, the team can prepare a smooth first conference for first timers."
               prepend-icon="mdi-account-question"
             ></CheckboxField>

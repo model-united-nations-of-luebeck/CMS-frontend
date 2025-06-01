@@ -15,6 +15,8 @@ import BirthdateField from "../../components/inputs/BirthdateField.vue";
 import CheckboxField from "../../components/inputs/CheckboxField.vue";
 import ConsentField from "../../components/inputs/ConsentField.vue";
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
 const { mobile } = useDisplay();
 const route = useRoute();
 const router = useRouter();
@@ -78,7 +80,7 @@ const valid = ref(true);
             ></DietSelector>
             <CheckboxField
               v-model:value="delegatesStore.delegate.first_timer"
-              label="Will MUNOL be your first MUN conference?"
+              :label="`Will ${conference_abbr} be your first MUN conference?`"
               hint="There is a first MUN conference for everyone. Knowing this in advance, the team can prepare a smooth first conference for first timers."
               prepend-icon="mdi-account-question"
             ></CheckboxField>

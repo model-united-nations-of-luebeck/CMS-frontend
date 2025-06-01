@@ -15,8 +15,8 @@ export const useConferenceStore = defineStore('conference', () => {
                 (y && 2000 < y && y < 2100) || 'Please give the year in YYYY format between 2000 and 2100'
         ],
         annualSessionRules: [(as) => !!as || 'Annual session is required', (as) => as > 0 || 'Annual session must be greater than 0'],
-        startDateRules: [(sd) => !!sd || 'Start date is required', (sd) => /^\d{4}-\d{2}-\d{2}$/.test(sd) || 'Please give the start date in YYYY-MM-DD format', (sd) => new Date(sd) <= new Date(conference.value.end_date) || 'Start date must be earlier than end date', (sd) => new Date(sd).getFullYear() == conference.value.year || 'Start date must be in the same year as the conference'],
-        endDateRules: [(ed) => !!ed || 'End date is required', (ed) => /^\d{4}-\d{2}-\d{2}$/.test(ed) || 'Please give the end date in YYYY-MM-DD format', (ed) => new Date(ed) >= new Date(conference.value.start_date) || 'End date must be later than start date', (ed) => new Date(ed).getFullYear() == conference.value.year || 'End date must be in the same year as the conference'],
+        startDateRules: [(sd) => !!sd || 'Start date is required', (sd) => new Date(sd) <= new Date(conference.value.end_date) || 'Start date must be earlier than end date', (sd) => new Date(sd).getFullYear() == conference.value.year || 'Start date must be in the same year as the conference'],
+        endDateRules: [(ed) => !!ed || 'End date is required', (ed) => new Date(ed) >= new Date(conference.value.start_date) || 'End date must be later than start date', (ed) => new Date(ed).getFullYear() == conference.value.year || 'End date must be in the same year as the conference'],
         associationRules: [(a) => !!a || 'Board members are required']
     }
     

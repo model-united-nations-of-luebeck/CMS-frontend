@@ -124,8 +124,20 @@ const confirmedDeleteMemberOrganization = function () {
             ></v-avatar>
             <!-- <v-skeleton-loader type="avatar"></v-skeleton-loader> -->
           </td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.official_name }}</td>
+          <td>
+            <span v-if="item.name.length > 30" v-tooltip:bottom="item.name"
+              >{{ item.name.slice(0, 30) }} ...</span
+            >
+            <span v-else>{{ item.name }}</span>
+          </td>
+          <td>
+            <span
+              v-if="item.official_name.length > 40"
+              v-tooltip:bottom="item.official_name"
+              >{{ item.official_name.slice(0, 40) }} ...</span
+            >
+            <span v-else>{{ item.official_name }}</span>
+          </td>
           <td>
             <v-chip v-if="item.active">
               <v-icon start> mdi-tag </v-icon>
