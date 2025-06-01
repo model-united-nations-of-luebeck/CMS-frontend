@@ -19,7 +19,11 @@ conferenceStore.getCurrentConference();
       id="logo"
       width="300"
     />
-    <h1 id="motto" class="text-center">AD URBEM TERRARUM CONSOCIANDUM</h1>
+    <h1 id="motto" class="text-center">
+      {{
+        conferenceStore.conference?.theme || "AD URBEM TERRARUM CONSOCIANDUM"
+      }}
+    </h1>
 
     <div class="columns">
       <v-card class="column" hover title="Countdown">
