@@ -20,11 +20,21 @@ const rules = [
 <template>
   <v-textarea
     prepend-icon="mdi-pen-plus"
-    label="Additional information"
-    hint="e.g. dietary restrictions, allergies, etc. that the kitchen needs to know or that your host family needs to know"
+    label="Additional information, e.g. dietary restrictions, allergies, etc."
+    hint="everything that we, kitchen or your host family needs to know"
     :density="mobile ? 'compact' : 'default'"
     :model-value="props.extras"
     @input="updateExtras"
     :rules="rules"
-  ></v-textarea>
+  >
+    <template v-slot:append>
+      <v-icon
+        icon="mdi-help-circle"
+        v-tooltip="
+          'If you have a deviating name in your passport, please enter it here.'
+        "
+      >
+      </v-icon>
+    </template>
+  </v-textarea>
 </template>
