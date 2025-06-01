@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
 const items = ref([
   {
     title: "REGISTRATION",
@@ -97,7 +99,10 @@ const collapse = () => {
 
     <template v-slot:append>
       <v-list>
-        <v-list-item title="(c) MUNOL" prepend-icon="mdi-white"></v-list-item>
+        <v-list-item
+          :title="`(c) ${conference_abbr}`"
+          prepend-icon="mdi-white"
+        ></v-list-item>
       </v-list>
     </template>
   </v-navigation-drawer>

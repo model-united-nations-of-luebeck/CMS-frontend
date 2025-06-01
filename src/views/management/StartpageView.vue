@@ -2,6 +2,8 @@
 import easy from "@/assets/audio/easy.mp3";
 import { useConferenceStore } from "../../stores/conference";
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
 const playEasy = function () {
   const audio = new Audio(easy);
   audio.play();
@@ -15,7 +17,7 @@ conferenceStore.getCurrentConference();
   <div class="">
     <img
       src="@/assets/images/munollogo.png"
-      alt="MUNOL Logo"
+      :alt="`${conference_abbr} Logo`"
       id="logo"
       width="300"
     />
@@ -42,7 +44,8 @@ conferenceStore.getCurrentConference();
             }}
           </h1>
           <p class="text-h6">
-            days until MUNOL {{ conferenceStore.conference?.year }}
+            days until {{ conference_abbr }}
+            {{ conferenceStore.conference?.year }}
           </p>
         </v-card-text>
       </v-card>

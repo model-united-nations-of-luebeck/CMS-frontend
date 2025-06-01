@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useMUNDirectorsStore } from "../../stores/mun_directors";
+import { useConferenceStore } from "../../stores/conference";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 import { toast } from "vue3-toastify";
@@ -17,6 +18,8 @@ import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
 import CheckboxField from "../../components/inputs/CheckboxField.vue";
 import ConsentField from "../../components/inputs/ConsentField.vue";
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
 const { mobile } = useDisplay();
 
 const route = useRoute();
@@ -31,6 +34,9 @@ if (route.params.mun_director_id) {
   });
 }
 
+const conferenceStore = useConferenceStore();
+conferenceStore.getCurrentConference();
+
 const valid = ref(true);
 </script>
 
@@ -41,10 +47,11 @@ const valid = ref(true);
         <p>
           Dear MUN-Director, <br />
 
-          we are excited that you are participating in MUNOL 2024. To organize
-          the conference and prepare everything, we would like you to fill in
-          this form and upload a photo for your badge. Please don't hesitate
-          contacting the Conference Managers in case you have any questions
+          we are excited that you are participating in {{ conference_abbr }}
+          {{ conferenceStore.conference.year }}. To organize the conference and
+          prepare everything, we would like you to fill in this form and upload
+          a photo for your badge. Please don't hesitate contacting the
+          Conference Managers in case you have any questions
           <a href="mailto:conferencemanager@munol.org"
             >conferencemanager@munol.org</a
           >.

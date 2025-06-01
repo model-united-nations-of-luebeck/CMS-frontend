@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { useSchoolsStore } from "../../stores/schools";
+import { useConferenceStore } from "../../stores/conference";
 import SchoolNameField from "../../components/inputs/SchoolNameField.vue";
 import StreetField from "../../components/inputs/StreetField.vue";
 import ZipCodeField from "../../components/inputs/ZipCodeField.vue";
@@ -12,8 +13,19 @@ import AccommodationSelector from "../../components/inputs/AccommodationSelector
 const { mobile } = useDisplay();
 const route = useRoute();
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
+const conferenceStore = useConferenceStore();
+conferenceStore.getCurrentConference();
+
 const schoolsStore = useSchoolsStore();
 schoolsStore.getSchool(route.params.school_id);
+
+const ordinal = (n) => {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};
 </script>
 
 <template>
@@ -34,12 +46,22 @@ schoolsStore.getSchool(route.params.school_id);
 
       <p>
         Dear MUN-Director, <br />
-        we are very delighted that you are interested in taking part in the 27th
-        MUNOL session in 2024. In order to register you and your school's
-        delegation, please fill in this form by
-        {{ new Date("2023-12-20").toLocaleDateString("en") }}. Please don't
-        hesitate contacting the Conference Managers in case you have any
-        questions
+        we are very delighted that you are interested in taking part in the
+        {{ ordinal(conferenceStore.conference.annual_session) }}
+        {{ conference_abbr }} session in {{ conferenceStore.conference.year }}.
+        In order to register you and your school's delegation, please fill in
+        this form by
+        {{
+          new Date(
+            conferenceStore.conference.pre_registration_deadline,
+          ).toLocaleDateString("en-GB", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        }}. Please don't hesitate contacting the Conference Managers in case you
+        have any questions
         <a href="mailto:conferencemanager@munol.org"
           >conferencemanager@munol.org</a
         >.
@@ -197,16 +219,17 @@ schoolsStore.getSchool(route.params.school_id);
             </v-col>
             <v-col cols="12" sm="12" md="6">
               <p class="text-medium-emphasis" :class="{ 'py-8': !mobile }">
-                MUNOL offers the possibility to stay in host families depending
-                on who many families agree on hosting delegates. Most of the
-                host families have children in the same age attending a school
-                in Lübeck. In order to have a memorable time together, both, the
-                host family and the guest have to be open-minded and stick to
-                some self-evident rules. We assume that guest students follow
-                the parents instructions, e.g. regarding staying out in the
-                evening. If you have further questions regarding the housing
-                please don't hesitate asking the Conference Managers or the
-                Student Supervisors, who coordinate the accommodation.
+                {{ conference_abbr }} offers the possibility to stay in host
+                families depending on who many families agree on hosting
+                delegates. Most of the host families have children in the same
+                age attending a school in Lübeck. In order to have a memorable
+                time together, both, the host family and the guest have to be
+                open-minded and stick to some self-evident rules. We assume that
+                guest students follow the parents instructions, e.g. regarding
+                staying out in the evening. If you have further questions
+                regarding the housing please don't hesitate asking the
+                Conference Managers or the Student Supervisors, who coordinate
+                the accommodation.
               </p>
             </v-col>
           </v-row>

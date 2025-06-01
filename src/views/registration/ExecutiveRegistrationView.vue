@@ -17,6 +17,8 @@ import "vue3-toastify/dist/index.css";
 import ConsentField from "../../components/inputs/ConsentField.vue";
 const { mobile } = useDisplay();
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
 const route = useRoute();
 
 const executivesStore = useExecutivesStore();
@@ -37,8 +39,9 @@ const valid = ref(true);
     <v-alert>
       <p>Dear executive team member,</p>
       <p>
-        it is our pleasure to welcome you to this years MUNOL session. Please
-        register by providing some information about yourself and a badge photo.
+        it is our pleasure to welcome you to this years
+        {{ conference_abbr }} session. Please register by providing some
+        information about yourself and a badge photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>

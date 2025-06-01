@@ -4,6 +4,8 @@ import { ref } from "vue";
 import { VDateInput } from "vuetify/labs/VDateInput";
 import { useDate } from "vuetify";
 
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
 const conferenceStore = useConferenceStore();
 conferenceStore.getCurrentConference();
 
@@ -55,7 +57,7 @@ function ISOformat(date) {
               prepend-inner-icon="mdi-counter"
               type="number"
               :rules="conferenceStore.validationRules.annualSessionRules"
-              hint="First session was in 1998, i.e. MUNOL 2022 was the 25th session"
+              :hint="`First session was in 1998, i.e. ${conference_abbr} 2022 was the 25th session`"
             ></v-text-field>
           </v-col>
           <v-col sm="3">
@@ -71,8 +73,7 @@ function ISOformat(date) {
               prepend-icon=""
               label="Start date"
               placeholder="YYYY-MM-DD"
-              hint="Use the first day of the conference as start date, at MUNOL it's usually
-                        Monday."
+              :hint="`Use the first day of the conference as start date, at ${conference_abbr} it's usually Monday.`"
               clearable
               :display-format="ISOformat"
             ></v-date-input>
@@ -91,7 +92,7 @@ function ISOformat(date) {
               prepend-icon=""
               :rules="conferenceStore.validationRules.endDateRules"
               placeholder="YYYY-MM-DD"
-              hint="Last day of the conference, at MUNOL usually Friday or Saturday. "
+              :hint="`Last day of the conference, at ${conference_abbr} usually Friday or Saturday.`"
               clearable
               :display-format="ISOformat"
             ></v-date-input>
@@ -166,7 +167,7 @@ function ISOformat(date) {
               type="text"
               :rules="conferenceStore.validationRules.associationRules"
               required
-              hint="Full name of the Chairman/woman of the MUNOL Association"
+              :hint="`Full name of the Chairman/woman of the ${conference_abbr} Association`"
             ></v-text-field>
           </v-col>
           <v-col sm="3">
@@ -177,7 +178,7 @@ function ISOformat(date) {
               prepend-inner-icon="mdi-account"
               type="text"
               :rules="conferenceStore.validationRules.associationRules"
-              hint="Full name of the Vice-Chairman/woman of the MUNOL Association"
+              :hint="`Full name of the Vice-Chairman/woman of the ${conference_abbr} Association`"
             ></v-text-field>
           </v-col>
           <v-col sm="3">
@@ -188,7 +189,7 @@ function ISOformat(date) {
               prepend-inner-icon="mdi-account-cash"
               type="text"
               :rules="conferenceStore.validationRules.associationRules"
-              hint="Full name of the Treasurer of the MUNOL Association"
+              :hint="`Full name of the Treasurer of the ${conference_abbr} Association`"
             ></v-text-field>
           </v-col>
           <v-col sm="3">
@@ -199,7 +200,7 @@ function ISOformat(date) {
               prepend-inner-icon="mdi-account-cash"
               type="text"
               :rules="conferenceStore.validationRules.associationRules"
-              hint="Full name of the Vice-Treasurer of the MUNOL Association"
+              :hint="`Full name of the Vice-Treasurer of the ${conference_abbr} Association`"
             ></v-text-field>
           </v-col>
         </v-row>
