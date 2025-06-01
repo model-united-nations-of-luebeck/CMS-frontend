@@ -203,14 +203,14 @@ const confirmedDeleteAdvisor = function () {
           <td>
             <v-chip variant="outlined"> Conference Advisor </v-chip>
           </td>
-          <td>
+          <td class="center">
             <MailIcon
               :email="item.email"
               :email_verified="item.email_verified"
             ></MailIcon>
           </td>
 
-          <td>
+          <td class="center">
             <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>
           </td>
 

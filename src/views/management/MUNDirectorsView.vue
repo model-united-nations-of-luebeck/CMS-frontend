@@ -77,7 +77,7 @@ const headers = [
   },
   {
     title: "Icons",
-    align: "start",
+    align: "center",
     key: "icons",
     sortable: false,
   },
@@ -215,22 +215,22 @@ const confirmedDeleteMUNDirector = function () {
               "
             ></SchoolChip>
           </td>
-          <td>
+          <td class="center">
             <EnglishTeacherIcon
               :english_teacher="item.english_teacher"
             ></EnglishTeacherIcon>
           </td>
-          <td>
+          <td class="center">
             <MailIcon
               :email="item.email"
               :email_verified="item.email_verified"
             ></MailIcon>
           </td>
-          <td>
+          <td class="center">
             <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>
           </td>
 
-          <td>
+          <td class="center">
             <MediaConsentIcon
               :media_consent_time="item.media_consent_time"
             ></MediaConsentIcon>
@@ -339,6 +339,10 @@ const confirmedDeleteMUNDirector = function () {
 
 h3 {
   margin-top: 8px;
+}
+
+.center {
+  text-align: center;
 }
 
 .v-table > .v-table__wrapper > table > tbody > tr > td {

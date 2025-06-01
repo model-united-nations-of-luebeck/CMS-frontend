@@ -250,10 +250,10 @@ const confirmedDeleteStudentOfficer = function () {
 
           <td>
             <v-chip
-              v-if="item.position_name.length > 50"
+              v-if="item.position_name.length > 30"
               v-tooltip:bottom="item.position_name"
             >
-              {{ item.position_name.slice(0, 50) + "..." }}
+              {{ item.position_name.slice(0, 30) }} ...
             </v-chip>
             <v-chip v-else>
               {{ item.position_name }}
@@ -261,7 +261,13 @@ const confirmedDeleteStudentOfficer = function () {
           </td>
 
           <td>
-            <v-chip variant="text">{{ item.school_name }}</v-chip>
+            <v-chip
+              v-if="item.school_name.length > 40"
+              v-tooltip:bottom="item.school_name"
+              variant="text"
+              >{{ item.school_name.slice(0, 40) }} ...</v-chip
+            >
+            <v-chip v-else variant="text">{{ item.school_name }}</v-chip>
           </td>
 
           <td>
@@ -272,21 +278,21 @@ const confirmedDeleteStudentOfficer = function () {
             ></ForumChip>
           </td>
 
-          <td>
+          <td class="center">
             <MailIcon
               :email="item.email"
               :email_verified="item.email_verified"
             ></MailIcon>
           </td>
-          <td>
+          <td class="center">
             <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>
           </td>
 
-          <td>
+          <td class="center">
             <BirthdayChip :birthday="item.birthday"></BirthdayChip>
           </td>
 
-          <td>
+          <td class="center">
             <MediaConsentIcon
               :media_consent_time="item.media_consent_time"
             ></MediaConsentIcon>
@@ -411,6 +417,10 @@ const confirmedDeleteStudentOfficer = function () {
 
 h3 {
   margin-top: 8px;
+}
+
+.center {
+  text-align: center;
 }
 
 .v-table > .v-table__wrapper > table > tbody > tr > td {

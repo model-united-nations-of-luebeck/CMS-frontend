@@ -80,14 +80,14 @@ const headers = [
   },
   {
     title: "Age",
-    align: "start",
+    align: "center",
     sortable: true,
     key: "age",
     sortRaw: sortParticipantsByAge,
   },
   {
     title: "Icons",
-    align: "start",
+    align: "center",
     key: "icons",
     sortable: false,
   },
@@ -229,21 +229,21 @@ const confirmedDeleteExecutive = function () {
             <v-chip variant="text">{{ item.school_name }}</v-chip>
           </td>
 
-          <td>
+          <td class="center">
             <MailIcon
               :email="item.email"
               :email_verified="item.email_verified"
             ></MailIcon>
           </td>
-          <td>
+          <td class="center">
             <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>
           </td>
 
-          <td>
+          <td class="center">
             <BirthdayChip :birthday="item.birthday"></BirthdayChip>
           </td>
 
-          <td>
+          <td class="center">
             <MediaConsentIcon
               :media_consent_time="item.media_consent_time"
             ></MediaConsentIcon>
@@ -355,6 +355,10 @@ const confirmedDeleteExecutive = function () {
 
 h3 {
   margin-top: 8px;
+}
+
+.center {
+  text-align: center;
 }
 
 .v-table > .v-table__wrapper > table > tbody > tr > td {
