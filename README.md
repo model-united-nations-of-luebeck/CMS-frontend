@@ -8,7 +8,7 @@ The management system is mainly split up into three sections:
 - administration: dealing with all conference related data
 - secretariat: printing and data visualization
 
-The frontend is written with JavaScript in the Vue 3 (vue 3.3.4, vue/cli 5.0.8) and uses Vuetify (3.3.17) as the design library. It was developed with node 20.7.0 and npm 10.1.0.
+The frontend is written with JavaScript in the Vue 3 (vue 3.5.0, vue/cli 5.0.8) and uses Vuetify (3.8.7) as the design library. It was developed with node 20.7.0 and npm 10.1.0.
 
 ## Development
 
