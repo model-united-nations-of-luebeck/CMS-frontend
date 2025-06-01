@@ -121,6 +121,18 @@ conferenceStore.getCurrentConference();
   animation-fill-mode: forwards;
 }
 
+@media (max-width: 600px) {
+  .columns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .column {
+    width: 100%;
+    margin: 10px !important;
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -150,6 +162,9 @@ conferenceStore.getCurrentConference();
   animation-duration: 2s;
 }
 
+@media (max-width: 600px) {
+}
+
 @keyframes rotating-logo {
   from {
     transform: rotate(240deg);
@@ -165,7 +180,7 @@ conferenceStore.getCurrentConference();
     opacity: 0;
   }
   to {
-    font-size: 32pt;
+    font-size: 24çpt;
     opacity: 1;
   }
 }
