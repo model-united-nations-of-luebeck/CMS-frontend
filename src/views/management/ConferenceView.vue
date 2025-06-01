@@ -1,14 +1,21 @@
 <script setup>
-import { useConferenceStore } from '../../stores/conference'
-import { ref } from 'vue'
+import { useConferenceStore } from "../../stores/conference";
+import { ref } from "vue";
+import { VDateInput } from "vuetify/labs/VDateInput";
+import { useDate } from "vuetify";
 
-const conferenceStore = useConferenceStore()
-conferenceStore.getCurrentConference()
+const conferenceStore = useConferenceStore();
+conferenceStore.getCurrentConference();
 
-const valid = ref(false)
+const valid = ref(false);
 
 const updateConferenceSettings = function () {
-  conferenceStore.updateConferenceSettings()
+  conferenceStore.updateConferenceSettings();
+};
+
+const adapter = useDate();
+function ISOformat(date) {
+  return adapter.toISO(date);
 }
 </script>
 
@@ -52,25 +59,42 @@ const updateConferenceSettings = function () {
             ></v-text-field>
           </v-col>
           <v-col sm="3">
-            <v-text-field
-              v-model="conferenceStore.conference.start_date"
-              label="Start date"
-              prepend-inner-icon="mdi-calendar-today"
+            <v-date-input
+              :model-value="new Date(conferenceStore.conference.start_date)"
+              @update:model-value="
+                (val) =>
+                  (conferenceStore.conference.start_date =
+                    val.toLocaleDateString('en-CA')) // ISO format YYYY-MM-DD
+              "
               :rules="conferenceStore.validationRules.startDateRules"
+              prepend-inner-icon="mdi-calendar-today"
+              prepend-icon=""
+              label="Start date"
               placeholder="YYYY-MM-DD"
               hint="Use the first day of the conference as start date, at MUNOL it's usually
-                        Monday. Local time zone at 0 o'clock will be selected automatically."
-            ></v-text-field>
+                        Monday."
+              clearable
+              :display-format="ISOformat"
+            ></v-date-input>
           </v-col>
+
           <v-col sm="3">
-            <v-text-field
-              v-model="conferenceStore.conference.end_date"
+            <v-date-input
+              :model-value="new Date(conferenceStore.conference.end_date)"
+              @update:model-value="
+                (val) =>
+                  (conferenceStore.conference.end_date =
+                    val.toLocaleDateString('en-CA')) // ISO format YYYY-MM-DD
+              "
               label="End date"
               prepend-inner-icon="mdi-calendar"
+              prepend-icon=""
               :rules="conferenceStore.validationRules.endDateRules"
               placeholder="YYYY-MM-DD"
-              hint="Last day of the conference, at MUNOL usually Saturday. Local time zone at 0 o'clock will be selected automatically."
-            ></v-text-field>
+              hint="Last day of the conference, at MUNOL usually Friday or Saturday. "
+              clearable
+              :display-format="ISOformat"
+            ></v-date-input>
           </v-col>
         </v-row>
 
@@ -78,29 +102,55 @@ const updateConferenceSettings = function () {
 
         <v-row>
           <v-col sm="4">
-            <v-text-field
-              v-model="conferenceStore.conference.pre_registration_deadline"
+            <v-date-input
+              :model-value="
+                new Date(conferenceStore.conference.pre_registration_deadline)
+              "
+              @update:model-value="
+                (val) =>
+                  (conferenceStore.conference.pre_registration_deadline = val) // ISO format YYYY-MM-DD
+              "
               prepend-inner-icon="mdi-calendar-clock"
+              prepend-icon=""
               label="Pre-Registration deadline"
               placeholder="Format YYYY-MM-DD"
-            ></v-text-field>
+              clearable
+              :display-format="ISOformat"
+            ></v-date-input>
           </v-col>
           <v-col sm="4">
-            <v-text-field
-              v-model="conferenceStore.conference.final_registration_deadline"
+            <v-date-input
+              :model-value="
+                new Date(conferenceStore.conference.final_registration_deadline)
+              "
+              @update:model-value="
+                (val) =>
+                  (conferenceStore.conference.final_registration_deadline = val) // ISO format YYYY-MM-DD
+              "
               prepend-inner-icon="mdi-calendar-clock"
+              prepend-icon=""
               label="Final Registration deadline"
               placeholder="Format YYYY-MM-DD"
-            >
-            </v-text-field>
+              clearable
+              :display-format="ISOformat"
+            ></v-date-input>
           </v-col>
           <v-col sm="4">
-            <v-text-field
-              v-model="conferenceStore.conference.position_paper_deadline"
+            <v-date-input
+              :model-value="
+                new Date(conferenceStore.conference.position_paper_deadline)
+              "
+              @update:model-value="
+                (val) =>
+                  (conferenceStore.conference.position_paper_deadline = val) // ISO format YYYY-MM-DD
+              "
               prepend-inner-icon="mdi-calendar-clock"
-              label="position paper deadline"
+              prepend-icon=""
+              label="Position paper deadline"
               placeholder="Format YYYY-MM-DD"
-            ></v-text-field>
+              clearable
+              :display-format="ISOformat"
+            ></v-date-input>
           </v-col>
         </v-row>
 
@@ -155,28 +205,17 @@ const updateConferenceSettings = function () {
         </v-row>
         <v-row>
           <v-col sm="12" style="text-align: right">
-            <v-btn :disabled="!valid" color="primary" @click="updateConferenceSettings">
+            <v-btn
+              :disabled="!valid"
+              color="primary"
+              @click="updateConferenceSettings"
+              append-icon="mdi-send"
+            >
               Update
-              <v-icon right dark> mdi-send </v-icon>
             </v-btn></v-col
           ></v-row
         >
       </v-form>
-
-      <v-alert style="margin-top: 20px" title="TODOs" color="warning">
-        <ul>
-          <li>Fix validation rules, state is null in the beginning</li>
-          <li>Define custom date text field with opening date picker</li>
-          <li>
-            Fix bug with value not being shown and instead label being shown (might be related to
-            type)
-          </li>
-          <li>
-            Fix bug with text field being selected and thus two clicks are needed to select date
-          </li>
-          <li>Fix bug with time zone</li>
-        </ul>
-      </v-alert>
     </v-container>
   </div>
 </template>
