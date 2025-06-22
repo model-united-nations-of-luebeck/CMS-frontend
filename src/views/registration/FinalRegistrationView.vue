@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute } from "vue-router";
+const origin = window.location.origin;
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import { useSchoolsStore } from "../../stores/schools";
@@ -7,6 +8,8 @@ import { useMUNDirectorsStore } from "../../stores/mun_directors";
 import { useDelegatesStore } from "../../stores/delegates";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
 import { useForumsStore } from "../../stores/forums";
+import MemberOrganizationChip from "../../components/chips/MemberOrganizationChip.vue";
+
 import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 
@@ -42,6 +45,10 @@ const deleteMUNDirector = (director_id) => {
 
 const addMUNDirector = () => {
   munDirectorsStore.createEmptyMUNDirectorForSchool(route.params.school_id);
+};
+
+const changeAmbassador = (delegate_id) => {
+  delegatesStore.changeAmbassador(delegate_id);
 };
 
 /**
@@ -146,7 +153,8 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                   name: 'final-registration-mun-director',
                   params: { mun_director_id: director.id },
                 }"
-                >{{
+                >{{ origin
+                }}{{
                   this.$router.resolve({
                     name: "final-registration-mun-director",
                     params: { mun_director_id: director.id },
@@ -163,7 +171,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                 density="comfortable"
                 prepend-icon="mdi-content-copy"
                 v-clipboard:copy="
-                  `${
+                  `${origin}${
                     this.$router.resolve({
                       name: 'final-registration-mun-director',
                       params: { mun_director_id: director.id },
@@ -204,7 +212,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                 color="green"
                 prepend-icon="mdi-account-plus"
                 @click="addMUNDirector"
-                >Add additional MUN-Director</v-btn
+                >Add an MUN-Director</v-btn
               >
             </td>
           </tr>
@@ -213,146 +221,142 @@ const getUniqueMemberOrganizationsFromSchool = () => {
 
       <h2>Delegates</h2>
 
-      <div
-        class="delegation"
-        v-for="org in getUniqueMemberOrganizationsFromSchool()"
-        :key="org.id"
-      >
-        <v-container>
-          <v-row justify="space-between">
-            <v-col cols="4">
-              <h3>
-                <v-avatar :image="org.flag"></v-avatar>
-                {{ org.official_name }}
-              </h3>
-            </v-col>
-            <v-col cols="6" align="right">
-              <v-btn
-                color="primary"
-                variant="outlined"
-                @click="console.log('ambassador')"
+      <v-table hover>
+        <thead>
+          <tr>
+            <th class="text-center">Role</th>
+            <th class="text-left">Member Organization</th>
+            <th class="text-left">Forum</th>
+            <th class="text-left">Name</th>
+            <th class="text-left">Registration Link</th>
+            <th class="text-left">Status</th>
+            <th class="text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="delegate in delegatesStore.delegates
+              .filter((delegate) => delegate.school == route.params.school_id)
+              .sort((a, b) => {
+                return a.forum.id > b.forum.id;
+              })"
+            :key="delegate.id"
+          >
+            <td class="text-center">
+              <v-icon
+                v-tooltip:right-center="
+                  delegate.ambassador ? 'Ambassador' : 'Delegate'
+                "
+                :color="delegate.ambassador ? 'primary' : 'auto'"
+                >{{
+                  delegate.ambassador ? "mdi-account-star" : "mdi-account"
+                }}</v-icon
               >
-                <v-icon start>mdi-account-star</v-icon>
-                Select ambassador for {{ org.name }}
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
-
-        <v-table hover>
-          <thead>
-            <tr>
-              <th class="text-center">Role</th>
-              <th class="text-left">Member Organization</th>
-              <th class="text-left">Forum</th>
-              <th class="text-left">Name</th>
-              <th class="text-left">Registration Link</th>
-              <th class="text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="delegate in delegatesStore.delegates
-                .filter((delegate) => delegate.school == route.params.school_id)
-                .filter((delegate) => delegate.represents === org.id)
-                .sort((a, b) => {
-                  return a.forum.id > b.forum.id;
-                })"
-              :key="delegate.id"
-            >
-              <td class="text-center">
-                <v-icon
-                  v-tooltip:right-center="
-                    delegate.ambassador ? 'Ambassador' : 'Delegate'
-                  "
-                  :color="delegate.ambassador ? 'primary' : 'auto'"
-                  >{{
-                    delegate.ambassador ? "mdi-account-star" : "mdi-account"
-                  }}</v-icon
-                >
-              </td>
-              <td>
-                <span
-                  v-tooltip:right-center="
-                    memberOrganizationsStore.member_organizations.find(
-                      (org) => org.id === delegate.represents,
-                    ).official_name
-                  "
-                  >{{
-                    memberOrganizationsStore.member_organizations.find(
-                      (org) => org.id === delegate.represents,
-                    ).name
-                  }}</span
-                >
-              </td>
-              <td>
+            </td>
+            <td>
+              <MemberOrganizationChip
+                :org="
+                  memberOrganizationsStore.member_organizations.find(
+                    (org) => org.id === delegate.represents,
+                  )
+                "
+              ></MemberOrganizationChip>
+            </td>
+            <td>
+              <v-chip>
                 {{
                   forumsStore.forums.find(
                     (forum) => forum.id === delegate.forum,
                   ).name
                 }}
-              </td>
-              <td>
-                <v-icon v-if="delegate.first_name" color="green" start
-                  >mdi-check-circle</v-icon
-                >
-                {{ delegate.first_name }} {{ delegate.last_name }}
-              </td>
-              <td>
-                <Router-Link
-                  class="link"
-                  target="_blank"
-                  :to="{
-                    name: 'final-registration-delegate',
+                ({{
+                  forumsStore.forums.find(
+                    (forum) => forum.id === delegate.forum,
+                  ).abbreviation
+                }})
+              </v-chip>
+            </td>
+            <td>{{ delegate?.first_name }} {{ delegate?.last_name }}</td>
+            <td>
+              <Router-Link
+                class="link"
+                target="_blank"
+                :to="{
+                  name: 'final-registration-delegate',
+                  params: { delegate_id: delegate.id },
+                }"
+                >{{ origin
+                }}{{
+                  this.$router.resolve({
+                    name: "final-registration-delegate",
                     params: { delegate_id: delegate.id },
-                  }"
-                  >{{
+                  }).href
+                }}</Router-Link
+              >
+              <v-btn
+                rounded
+                variant="tonal"
+                density="comfortable"
+                prepend-icon="mdi-content-copy"
+                v-clipboard:copy="
+                  `${origin}${
                     this.$router.resolve({
-                      name: "final-registration-delegate",
+                      name: 'final-registration-delegate',
                       params: { delegate_id: delegate.id },
                     }).href
-                  }}</Router-Link
-                >
-                <v-btn
-                  rounded
-                  variant="tonal"
-                  density="comfortable"
-                  prepend-icon="mdi-content-copy"
-                  v-clipboard:copy="
-                    `${
-                      this.$router.resolve({
-                        name: 'final-registration-delegate',
-                        params: { delegate_id: delegate.id },
-                      }).href
-                    }`
-                  "
-                  v-clipboard:success="onCopy"
-                  v-clipboard:error="onError"
-                  v-tooltip:bottom-center="
-                    'Click to copy registration link into your clipboard'
-                  "
-                >
-                  Copy link
-                </v-btn>
-              </td>
-              <td>...</td>
-            </tr>
-          </tbody>
-        </v-table>
-      </div>
+                  }`
+                "
+                v-clipboard:success="onCopy"
+                v-clipboard:error="onError"
+                v-tooltip:bottom-center="
+                  'Click to copy registration link into your clipboard'
+                "
+              >
+                Copy link
+              </v-btn>
+            </td>
+            <td>
+              <v-chip
+                v-if="
+                  delegate.first_name &&
+                  delegate.last_name &&
+                  delegate.email &&
+                  delegate.data_consent_time &&
+                  delegate.data_consent_ip &&
+                  delegate.gender
+                "
+                color="green"
+              >
+                <v-icon start>mdi-check-circle</v-icon>
+                Completed
+              </v-chip>
+              <v-chip v-else color="red">
+                <v-icon start>mdi-close-circle</v-icon>
+                Not completed
+              </v-chip>
+            </td>
+            <td>
+              <v-btn
+                v-if="!delegate.ambassador"
+                variant="plain"
+                icon="mdi-star"
+                v-tooltip:start="
+                  'Click to make this delegate the ambassador for this delegation'
+                "
+                @click="changeAmbassador(delegate.id)"
+              >
+              </v-btn>
+            </td>
+          </tr></tbody
+      ></v-table>
 
       <v-alert style="margin-top: 20px" title="TODOs" color="info">
         <ul>
-          <li>ambassador assignment per member organization</li>
-          <li>Copy/export to spreadsheet button</li>
-          <li>Adjust links to actual urls, i.e. add domain</li>
+          <li>export to spreadsheet button</li>
+
           <li>
             Questions for testers: Is highlighting of ambassador enough or
             should entire row be highlighted?
-          </li>
-          <li>
-            Add short name and member status of member organizations to the
-            table?
           </li>
         </ul>
       </v-alert>
