@@ -1,23 +1,23 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  requested: Number
-})
+  requested: Number,
+});
 
-const emit = defineEmits(['update:requested'])
+const emit = defineEmits(["update:requested"]);
 
-const updateRequested = (event) => {
-  emit('update:requested', event.target.value)
-}
+const updateRequested = (value) => {
+  emit("update:requested", value);
+};
 
 const rules = [
-  (v) => !!v || 'Number of Delegates is required',
-  (v) => v >= 0 || 'Number of Delegates must be greater than 0',
-  (v) => v <= 49 || 'Number of Delegates must be less than 50',
-  (v) => v % 1 === 0 || 'Number of Delegates must be an integer'
-]
+  (v) => !!v || "Number of Delegates is required",
+  (v) => v >= 0 || "Number of Delegates must be greater than 0",
+  (v) => v <= 49 || "Number of Delegates must be less than 50",
+  (v) => v % 1 === 0 || "Number of Delegates must be an integer",
+];
 </script>
 
 <template>
