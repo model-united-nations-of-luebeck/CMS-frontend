@@ -153,61 +153,35 @@ const router = createRouter({
       ],
     },
     {
-      path: "/registration/advisors/:advisor_id",
-      name: "advisor-registration",
+      path: "/school-registration/", 
+      name: "school-registration",
       meta: {
-        title: "Advisor Registration",
+        title: `${import.meta.env.VITE_CONFERENCE_ABBREVIATION} Registration`,
       },
-      component: () =>
-        import("../views/registration/AdvisorRegistrationView.vue"),
+      component: () => import("../views/registration/SchoolRegistrationView.vue"),
+      children: [
+        {
+          path: ":school_id/", // school_id is a parameter that should be passed to the registration view
+          name: "registration-startpage",
+          component: () =>
+            import("../views/registration/RegistrationStartpageView.vue"),
+        },
+        {
+          path: ":school_id/pre-registration",
+          name: "pre-registration",
+          component: () =>
+            import("../views/registration/PreRegistrationView.vue"),
+        },
+        {
+          path: ":school_id/final-registration",
+          name: "final-registration",
+          component: () =>
+            import("../views/registration/FinalRegistrationView.vue"),
+        },
+      ],
     },
     {
-      path: "/registration/staffs/:staff_id",
-      name: "staff-registration",
-      meta: {
-        title: "Staff Registration",
-      },
-      component: () =>
-        import("../views/registration/StaffRegistrationView.vue"),
-    },
-    {
-      path: "/registration/executives/:executive_id",
-      name: "executive-registration",
-      meta: {
-        title: "Executive Registration",
-      },
-      component: () =>
-        import("../views/registration/ExecutiveRegistrationView.vue"),
-    },
-    {
-      path: "/registration/student-officers/:student_officer_id",
-      name: "student-officer-registration",
-      meta: {
-        title: "Student Officer Registration",
-      },
-      component: () =>
-        import("../views/registration/StudentOfficerRegistrationView.vue"),
-    },
-    {
-      path: "/registration/final-registration-delegate/:delegate_id",
-      name: "final-registration-delegate",
-      meta: {
-        title: "Delegate Registration",
-      },
-      component: () =>
-        import("../views/registration/FinalRegistrationDelegateView.vue"),
-    },
-    {
-      path: "/registration/final-registration-mun-director/:mun_director_id",
-      name: "final-registration-mun-director",
-      meta: {
-        title: "MUN-Director Registration",
-      },
-      component: () =>
-        import("../views/registration/FinalRegistrationMUNDirectorView.vue"),
-    },
-    {
-      path: "/registration/:school_id", // school_id is a parameter that should be passed to the registration view
+      path: "/registration/",
       name: "registration",
       meta: {
         title: `${import.meta.env.VITE_CONFERENCE_ABBREVIATION} Registration`,
@@ -215,22 +189,58 @@ const router = createRouter({
       component: () => import("../views/registration/RegistrationView.vue"),
       children: [
         {
-          path: "",
-          name: "registration-startpage",
+          path: "advisors/:advisor_id",
+          name: "advisor-registration",
+          meta: {
+            title: "Advisor Registration",
+          },
           component: () =>
-            import("../views/registration/RegistrationStartpageView.vue"),
+            import("../views/registration/AdvisorRegistrationView.vue"),
         },
         {
-          path: "pre-registration",
-          name: "pre-registration",
+          path: "staffs/:staff_id",
+          name: "staff-registration",
+          meta: {
+            title: "Staff Registration",
+          },
           component: () =>
-            import("../views/registration/PreRegistrationView.vue"),
+            import("../views/registration/StaffRegistrationView.vue"),
         },
         {
-          path: "final-registration",
-          name: "final-registration",
+          path: "executives/:executive_id",
+          name: "executive-registration",
+          meta: {
+            title: "Executive Registration",
+          },
           component: () =>
-            import("../views/registration/FinalRegistrationView.vue"),
+            import("../views/registration/ExecutiveRegistrationView.vue"),
+        },
+        {
+          path: "student-officers/:student_officer_id",
+          name: "student-officer-registration",
+          meta: {
+            title: "Student Officer Registration",
+          },
+          component: () =>
+            import("../views/registration/StudentOfficerRegistrationView.vue"),
+        },
+        {
+          path: "final-registration-delegate/:delegate_id",
+          name: "final-registration-delegate",
+          meta: {
+            title: "Delegate Registration",
+          },
+          component: () =>
+            import("../views/registration/FinalRegistrationDelegateView.vue"),
+        },
+        {
+          path: "final-registration-mun-director/:mun_director_id",
+          name: "final-registration-mun-director",
+          meta: {
+            title: "MUN-Director Registration",
+          },
+          component: () =>
+            import("../views/registration/FinalRegistrationMUNDirectorView.vue"),
         },
       ],
     },

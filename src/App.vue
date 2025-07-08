@@ -1,6 +1,8 @@
 <script setup>
 import { inject, ref, onMounted } from "vue";
 
+const showLogout = ref(false);
+const routedComponent = ref(null);
 const error = ref("");
 const token = ref("");
 
@@ -35,6 +37,13 @@ const login = async function () {
 onMounted(() => {
   login();
 });
+
+const logout = function () {
+  // call logout function of RegistrationView.vue
+
+  console.log("Logging out", routedComponent.value);
+  routedComponent.value?.logout();
+};
 </script>
 
 <template>
@@ -46,7 +55,11 @@ onMounted(() => {
       <v-app-bar-title>{{ this.$route.meta.title }} </v-app-bar-title>
 
       <template v-slot:append>
-        <v-btn icon="mdi-dots-vertical"></v-btn>
+        <v-btn v-if="showLogout" @click="logout()">
+          <v-icon>mdi-logout</v-icon>
+          Logout
+        </v-btn>
+        <v-btn v-else icon="mdi-dots-vertical"></v-btn>
       </template>
     </v-app-bar>
 
@@ -58,7 +71,13 @@ onMounted(() => {
     ></v-alert>
 
     <v-main>
-      <RouterView></RouterView>
+      <RouterView v-slot="{ Component }">
+        <component
+          :is="Component"
+          @show-logout="(v) => (showLogout = v)"
+          ref="routedComponent"
+        />
+      </RouterView>
     </v-main>
   </v-app>
 </template>

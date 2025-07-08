@@ -16,9 +16,22 @@ schoolsStore.getSchools();
 const delegatesStore = useDelegatesStore();
 delegatesStore.getDelegates();
 
+const generateRandomPassword = function () {
+  // Generates a random 24 chars long password with a mix of lowercase, uppercase letters, and numbers
+  return (
+    Math.random().toString(36).slice(2, 10) +
+    Math.random().toString(36).toUpperCase().slice(2, 10) +
+    Math.random().toString(36).slice(2, 10)
+  );
+};
+
 const deleteDialog = ref(null);
 const addNewSchoolDialog = ref(false);
 const newSchoolName = ref("");
+const newSchoolUserName = ref("");
+const newSchoolPassword = ref(generateRandomPassword());
+const showPassword = ref(false);
+const valid = ref(true);
 
 const search = ref("");
 const expanded = ref([]);
@@ -82,10 +95,20 @@ const confirmedDelegatesFromSchool = function (school_id) {
 
 const createSchool = function () {
   if (newSchoolName.value !== "") {
-    schoolsStore.createSchool(newSchoolName.value).then(() => {
-      addNewSchoolDialog.value = false;
-      newSchoolName.value = "";
-    });
+    schoolsStore
+      .createSchool(
+        newSchoolName.value,
+        newSchoolUserName.value,
+        newSchoolPassword.value,
+      )
+      .then(() => {
+        addNewSchoolDialog.value = false;
+        newSchoolName.value = "";
+        newSchoolUserName.value = "";
+        newSchoolPassword.value = generateRandomPassword();
+        showPassword.value = false;
+        valid.value = true;
+      });
   }
 };
 
@@ -316,23 +339,72 @@ const confirmedDeleteSchool = function () {
 
     <v-dialog max-width="500" v-model="addNewSchoolDialog">
       <template v-slot:default="{ isActive }">
-        <v-card title="Add new school">
-          <v-card-text>
-            <v-text-field
-              v-model="newSchoolName"
-              label="School name"
-              outlined
-              autofocus="autofocus"
-            ></v-text-field>
-          </v-card-text>
+        <v-form v-model="valid" validate-on="input">
+          <v-card title="Add new school">
+            <v-card-text>
+              <v-text-field
+                v-model="newSchoolName"
+                label="School name"
+                outlined
+                prepend-inner-icon="mdi-bank"
+                :rules="[
+                  (v) => !!v || 'School name is required',
+                  (v) =>
+                    v.length <= 50 || 'Name must be less than 50 characters',
+                ]"
+                :hint="`Full name of the school, e.g. 'Thomas-Mann-Schule'`"
+                required
+                autofocus="autofocus"
+              ></v-text-field>
+              <v-text-field
+                v-model="newSchoolUserName"
+                label="Username"
+                :rules="[
+                  (v) => !!v || 'Username is required',
+                  (v) =>
+                    v.length <= 150 ||
+                    'Username must be less than 150 characters',
+                  (v) =>
+                    /^[a-zA-Z0-9@.+_-]+$/.test(v) ||
+                    'Username can only contain letters, digits, and @/./+/-/_',
+                ]"
+                outlined
+                prepend-inner-icon="mdi-account"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="newSchoolPassword"
+                label="Password"
+                required
+                :rules="[
+                  (v) => !!v || 'Password is required',
+                  (v) =>
+                    v.length >= 8 || 'Password must be at least 8 characters',
+                  (v) =>
+                    !/^\d+$/.test(v) || 'Password must not be entirely numeric',
+                ]"
+                :hint="`Please save a copy of the password, as it will not be shown again.`"
+                prepend-inner-icon="mdi-lock"
+                :append-inner-icon="!showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPassword ? 'text' : 'password'"
+                @click:append-inner="showPassword = !showPassword"
+                counter
+                outlined
+              ></v-text-field>
+            </v-card-text>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-card-actions>
+              <v-spacer></v-spacer>
 
-            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-            <v-btn text="Create" @click="createSchool"></v-btn>
-          </v-card-actions>
-        </v-card>
+              <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+              <v-btn
+                text="Create"
+                :disabled="!valid"
+                @click="createSchool"
+              ></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
       </template>
     </v-dialog>
   </div>

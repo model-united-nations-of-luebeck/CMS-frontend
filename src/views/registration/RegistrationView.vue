@@ -1,12 +1,10 @@
-<script setup></script>
+<script setup>
+const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+</script>
 
 <template>
   <div class="registration">
-    <RouterView v-slot="{ Component }">
-      <v-slide-x-transition>
-        <component :is="Component" />
-      </v-slide-x-transition>
-    </RouterView>
+    <v-container> Participant Registration </v-container>
   </div>
 </template>
 
