@@ -5,8 +5,6 @@ import 'vue3-toastify/dist/index.css'
 
 export const useMUNDirectorsStore = defineStore('mun-directors', () => {
     const http = inject('backend_instance');
-    //TODO: Needs to be removed 
-    http.defaults.headers.common['Authorization'] = "Token 8171fd3bc8dccfeb4d49eb48792f44670e695dcb"
     const mun_directors = ref([])
     const mun_director = ref(null)
     const loading = ref(false)
