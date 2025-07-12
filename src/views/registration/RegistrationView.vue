@@ -5,6 +5,7 @@ const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 <template>
   <div class="registration">
     <v-container> Participant Registration </v-container>
+    <router-view></router-view>
   </div>
 </template>
 
