@@ -1,11 +1,161 @@
 <script setup>
+import { ref, inject } from "vue";
+import { toast } from "vue3-toastify";
+
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+
+const showTokenSentDialog = ref(false);
+const participantRegistrationView = ref(null);
+const email = ref("");
+const callback_token = ref("");
+const loading = ref(false);
+const http = inject("backend_instance");
+
+function reloadPage() {
+  window.location.reload();
+}
+
+const showLoginDialog = (response) => {
+  if (response?.status === 403) {
+    if (response.data?.dialog == "token_sent") {
+      showTokenSentDialog.value = true;
+    } else if (response.data?.dialog == "no_email") {
+      toast.error(
+        'You have not provided an email address. Please contact the Conference Management at <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.',
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: false,
+          dangerouslyHTMLString: true,
+        },
+      );
+    } else {
+      toast.error("You are not allowed to access this page.", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: false,
+      });
+    }
+  }
+};
+
+async function login() {
+  loading.value = true;
+  await http
+    .post(http.defaults.baseURL.replace(/api\/$/, "") + "auth/token/", {
+      email: email.value,
+      token: callback_token.value,
+    })
+    .then((response) => {
+      loading.value = false;
+      showTokenSentDialog.value = false;
+      http.defaults.headers.common[
+        "Authorization"
+      ] = `Token ${response.data.token}`;
+      email.value = null; // Reset email after successful login
+      callback_token.value = null; // Reset callback token after successful login
+      participantRegistrationView.value?.retry();
+    })
+    .catch((err) => {
+      loading.value = false;
+      toast.error(
+        err.response?.data?.detail ||
+          "Login failed. Please retry by reloading page.",
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: false,
+        },
+      );
+    });
+}
 </script>
 
 <template>
   <div class="registration">
-    <v-container> Participant Registration </v-container>
-    <router-view></router-view>
+    <v-container> </v-container>
+
+    <v-dialog
+      v-model="showTokenSentDialog"
+      width="500"
+      persistent
+      max-width="90%"
+      transition="slide-y-transition"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          {{ conference_abbr }} Registration
+        </v-card-title>
+        <v-card-text>
+          <p>
+            A token was sent to your email address. Please check your inbox, and
+            if necessary your spam folder. Please enter your email address and
+            the token you received to log in.
+          </p>
+          <br />
+          <v-form @submit.prevent="login">
+            <v-text-field
+              autofocus
+              v-model="email"
+              label="Email address"
+              placeholder="user@domain.com"
+              type="text"
+              required
+              outlined
+              prepend-inner-icon="mdi-email"
+              class="mb-4"
+            ></v-text-field>
+
+            <v-otp-input
+              v-model="callback_token"
+              :loading="loading"
+              length="6"
+              variant="solo"
+              @finish="login"
+            ></v-otp-input>
+
+            <!-- <button type="submit" style="display: none"></button> -->
+          </v-form>
+
+          <br />
+          <div style="display: flex; justify-content: center">
+            <v-btn
+              prepend-icon="mdi-reload"
+              small
+              @click.prevent="reloadPage"
+              variant="tonal"
+            >
+              Resend the token
+            </v-btn>
+          </div>
+
+          <br />
+          <p>
+            If you have any issues with the registration, please contact us at
+            <a href="mailto:conferencemanager@munol.org"
+              >conferencemanager@munol.org</a
+            >
+          </p>
+        </v-card-text>
+        <!-- <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            variant="flat"
+            :loading="loading"
+            :disabled="callback_token?.length < 6 || loading"
+            @click="login"
+          >
+            Login
+          </v-btn>
+        </v-card-actions> -->
+      </v-card>
+    </v-dialog>
+
+    <router-view v-slot="{ Component }">
+      <component
+        :is="Component"
+        ref="participantRegistrationView"
+        @show-login-dialog="showLoginDialog"
+      ></component>
+    </router-view>
   </div>
 </template>
 

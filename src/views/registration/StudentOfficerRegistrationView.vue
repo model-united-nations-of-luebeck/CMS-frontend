@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useStudentOfficersStore } from "../../stores/student_officers";
 import { useRoute } from "vue-router";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
@@ -18,24 +18,38 @@ import ConsentField from "../../components/inputs/ConsentField.vue";
 const { mobile } = useDisplay();
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
-
 const route = useRoute();
-
 const studentOfficersStore = useStudentOfficersStore();
+const valid = ref(true);
+const emit = defineEmits(["show-login-dialog"]);
 
-if (route.params.student_officer_id) {
-  studentOfficersStore.getStudentOfficer(route.params.student_officer_id);
-} else {
-  toast.error("Student Officer not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
+async function loadData() {
+  if (route.params.student_officer_id) {
+    studentOfficersStore
+      .getStudentOfficer(route.params.student_officer_id)
+      .catch((err) => {
+        if (err?.response?.status === 403) {
+          emit("show-login-dialog", err?.response);
+        }
+      });
+  } else {
+    toast.error("Student Officer not found", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
 }
 
-const valid = ref(true);
+onMounted(() => {
+  loadData();
+});
+
+defineExpose({
+  retry: loadData,
+});
 </script>
 
 <template>
-  <div class="student-officer-reg">
+  <div class="student-officer-reg" v-if="studentOfficersStore.student_officer">
     <v-alert>
       <p>Dear student officer,</p>
       <p>

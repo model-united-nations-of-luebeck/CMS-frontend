@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useMUNDirectorsStore } from "../../stores/mun_directors";
 import { useConferenceStore } from "../../stores/conference";
 import { useRoute } from "vue-router";
@@ -21,27 +21,40 @@ import ConsentField from "../../components/inputs/ConsentField.vue";
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 
 const { mobile } = useDisplay();
-
 const route = useRoute();
-
 const munDirectorsStore = useMUNDirectorsStore();
-
-if (route.params.mun_director_id) {
-  munDirectorsStore.getMUNDirector(route.params.mun_director_id);
-} else {
-  toast.error("MUN-Director not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
-}
-
 const conferenceStore = useConferenceStore();
 conferenceStore.getCurrentConference();
-
 const valid = ref(true);
+const emit = defineEmits(["show-login-dialog"]);
+
+async function loadData() {
+  if (route.params.mun_director_id) {
+    munDirectorsStore
+      .getMUNDirector(route.params.mun_director_id)
+      .catch((err) => {
+        if (err?.response?.status === 403) {
+          emit("show-login-dialog", err?.response);
+        }
+      });
+  } else {
+    toast.error("MUN-Director not found", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
+}
+
+onMounted(() => {
+  loadData();
+});
+
+defineExpose({
+  retry: loadData,
+});
 </script>
 
 <template>
-  <div class="mun-director-reg">
+  <div class="mun-director-reg" v-if="munDirectorsStore.mun_director">
     <div id="intro" v-if="munDirectorsStore.loading == false">
       <v-alert>
         <p>

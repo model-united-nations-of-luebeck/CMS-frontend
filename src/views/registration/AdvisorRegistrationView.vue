@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useAdvisorsStore } from "../../stores/advisors";
 import { useRoute } from "vue-router";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
@@ -16,22 +16,34 @@ import ConsentField from "../../components/inputs/ConsentField.vue";
 const { mobile } = useDisplay();
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
-
+const valid = ref(true);
 const route = useRoute();
-
 const advisorsStore = useAdvisorsStore();
+const emit = defineEmits(["show-login-dialog"]);
 
-if (route.params.advisor_id != "add") {
-  advisorsStore.getAdvisor(route.params.advisor_id);
-} else {
-  advisorsStore.initializeAdvisor();
+async function loadData() {
+  if (route.params.advisor_id != "add") {
+    advisorsStore.getAdvisor(route.params.advisor_id).catch((err) => {
+      if (err?.response?.status === 403) {
+        emit("show-login-dialog", err?.response);
+      }
+    });
+  } else {
+    advisorsStore.initializeAdvisor();
+  }
 }
 
-const valid = ref(true);
+onMounted(() => {
+  loadData();
+});
+
+defineExpose({
+  retry: loadData,
+});
 </script>
 
 <template>
-  <div class="advisor-reg">
+  <div class="advisor-reg" v-if="advisorsStore.advisor">
     <v-alert>
       <p>Dear Conference Advisor,</p>
       <p>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useStaffsStore } from "../../stores/staffs";
 import { useRoute } from "vue-router";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
@@ -22,20 +22,34 @@ const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 const route = useRoute();
 
 const staffsStore = useStaffsStore();
+const valid = ref(true);
+const emit = defineEmits(["show-login-dialog"]);
 
-if (route.params.staff_id) {
-  staffsStore.getStaff(route.params.staff_id);
-} else {
-  toast.error("Staff not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
+async function loadData() {
+  if (route.params.staff_id) {
+    staffsStore.getStaff(route.params.staff_id).catch((err) => {
+      if (err?.response?.status === 403) {
+        emit("show-login-dialog", err?.response);
+      }
+    });
+  } else {
+    toast.error("Staff not found", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
 }
 
-const valid = ref(true);
+onMounted(() => {
+  loadData();
+});
+
+defineExpose({
+  retry: loadData,
+});
 </script>
 
 <template>
-  <div class="staff-reg">
+  <div class="staff-reg" v-if="staffsStore.staff">
     <v-alert>
       <p>Dear staff member,</p>
       <p>
