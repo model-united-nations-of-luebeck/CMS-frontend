@@ -28,8 +28,6 @@ studentOfficersStore.getStudentOfficers();
 
 const deleteDialog = ref(null);
 const addNewStudentOfficerDialog = ref(false);
-const newFirstName = ref("");
-const newLastName = ref("");
 const newPositionName = ref("");
 const newSchoolName = ref("");
 const newForumID = ref(null);
@@ -130,24 +128,18 @@ const custom_filter = function (value, query, item) {
 
 const createStudentOfficer = function () {
   if (
-    newFirstName.value !== "" &&
-    newLastName.value !== "" &&
     newPositionName.value !== "" &&
     newSchoolName.value !== "" &&
     newForumID.value !== null
   ) {
     studentOfficersStore
       .createStudentOfficer(
-        newFirstName.value,
-        newLastName.value,
         newPositionName.value,
         newSchoolName.value,
         newForumID.value,
       )
       .then(() => {
         addNewStudentOfficerDialog.value = false;
-        newFirstName.value = "";
-        newLastName.value = "";
         newPositionName.value = "";
         newSchoolName.value = "";
         newForumID.value = null;
@@ -367,17 +359,6 @@ const confirmedDeleteStudentOfficer = function () {
       <template v-slot:default="{ isActive }">
         <v-card title="Add new Student Officer">
           <v-card-text>
-            <v-text-field
-              v-model="newFirstName"
-              label="First name"
-              outlined
-              autofocus="autofocus"
-            ></v-text-field>
-            <v-text-field
-              v-model="newLastName"
-              label="Last name"
-              outlined
-            ></v-text-field>
             <v-text-field
               v-model="newPositionName"
               label="Position"

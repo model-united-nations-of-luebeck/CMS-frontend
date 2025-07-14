@@ -24,8 +24,6 @@ executivesStore.getExecutives();
 
 const deleteDialog = ref(null);
 const addNewExecutiveDialog = ref(false);
-const newFirstName = ref("");
-const newLastName = ref("");
 const newPosition = ref("");
 
 const search = ref("");
@@ -112,19 +110,11 @@ const custom_filter = function (value, query, item) {
 };
 
 const createExecutive = function () {
-  if (
-    newFirstName.value !== "" &&
-    newLastName.value !== "" &&
-    newPosition.value !== ""
-  ) {
-    executivesStore
-      .createExecutive(newFirstName.value, newLastName.value, newPosition.value)
-      .then(() => {
-        addNewExecutiveDialog.value = false;
-        newFirstName.value = "";
-        newLastName.value = "";
-        newPosition.value = "";
-      });
+  if (newPosition.value !== "") {
+    executivesStore.createExecutive(newPosition.value).then(() => {
+      addNewExecutiveDialog.value = false;
+      newPosition.value = "";
+    });
   }
 };
 
@@ -318,17 +308,6 @@ const confirmedDeleteExecutive = function () {
       <template v-slot:default="{ isActive }">
         <v-card title="Add new Executive">
           <v-card-text>
-            <v-text-field
-              v-model="newFirstName"
-              label="First name"
-              outlined
-              autofocus="autofocus"
-            ></v-text-field>
-            <v-text-field
-              v-model="newLastName"
-              label="Last name"
-              outlined
-            ></v-text-field>
             <v-text-field
               v-model="newPosition"
               label="Position"

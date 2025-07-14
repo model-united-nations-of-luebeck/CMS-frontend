@@ -53,9 +53,9 @@ export const useExecutivesStore = defineStore('executives', () => {
         })
     }
 
-    async function createExecutive(first_name, last_name, position_name){
+    async function createExecutive(position_name){
         loading.value = true
-        await http.post("executives/", {first_name: first_name, last_name: last_name, position_name: position_name}).then( (res) => {
+        await http.post("executives/", {position_name: position_name}).then( (res) => {
             executives.value.push(res.data)
             loading.value = false
             toast.success('Executive was added successfully', {

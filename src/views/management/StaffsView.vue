@@ -24,8 +24,6 @@ staffsStore.getStaffs();
 
 const deleteDialog = ref(null);
 const addNewStaffDialog = ref(false);
-const newFirstName = ref("");
-const newLastName = ref("");
 const newPosition = ref("");
 
 const search = ref("");
@@ -98,19 +96,11 @@ const custom_filter = function (value, query, item) {
 };
 
 const createStaff = function () {
-  if (
-    newFirstName.value !== "" &&
-    newLastName.value !== "" &&
-    newPosition.value !== ""
-  ) {
-    staffsStore
-      .createStaff(newFirstName.value, newLastName.value, newPosition.value)
-      .then(() => {
-        addNewStaffDialog.value = false;
-        newFirstName.value = "";
-        newLastName.value = "";
-        newPosition.value = "";
-      });
+  if (newPosition.value !== "") {
+    staffsStore.createStaff(newPosition.value).then(() => {
+      addNewStaffDialog.value = false;
+      newPosition.value = "";
+    });
   }
 };
 
@@ -298,17 +288,6 @@ const confirmedDeleteStaff = function () {
       <template v-slot:default="{ isActive }">
         <v-card title="Add new Staff">
           <v-card-text>
-            <v-text-field
-              v-model="newFirstName"
-              label="First name"
-              outlined
-              autofocus="autofocus"
-            ></v-text-field>
-            <v-text-field
-              v-model="newLastName"
-              label="Last name"
-              outlined
-            ></v-text-field>
             <v-text-field
               v-model="newPosition"
               label="Position"
