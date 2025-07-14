@@ -101,25 +101,6 @@ export const useAdvisorsStore = defineStore('advisors', () => {
         })
     }
 
-    async function createAdvisorWithNameOnly(first_name, last_name){
-        loading.value = true
-        await http.post("advisors/", {first_name: first_name, last_name: last_name, help: ''}).then( (res) => {
-            advisors.value.push(res.data)
-            loading.value = false
-            toast.success('Advisor was added successfully', {
-                position: toast.POSITION.BOTTOM_CENTER,
-                style: 'width: auto'
-              })
-        }).catch((error) => {
-            toast.error('Adding Advisor failed', {
-                position: toast.POSITION.BOTTOM_CENTER
-              })
-            console.log(error)
-            loading.value = false
-            throw error; // rethrow the error to be caught at the point where this function is called
-        })
-    }
-
     async function deleteAdvisor(advisor_id){
         await http.delete(`advisors/${advisor_id}/`).then(() => {
             advisors.value = advisors.value.filter( (advisor) => advisor.id != advisor_id) // keep all advisors that do not have the id of the deleted advisor
@@ -136,7 +117,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
         })    
     }
 
-    return {advisors, advisor, loading, getAdvisors, getAdvisor, updateAdvisor, initializeAdvisor, createAdvisor, createAdvisorWithNameOnly, deleteAdvisor}
+    return {advisors, advisor, loading, getAdvisors, getAdvisor, updateAdvisor, initializeAdvisor, createAdvisor, deleteAdvisor}
 })
 
 export const predefined_help_keywords = [

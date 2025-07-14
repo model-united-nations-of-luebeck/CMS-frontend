@@ -20,10 +20,6 @@ const advisorsStore = useAdvisorsStore();
 advisorsStore.getAdvisors();
 
 const deleteDialog = ref(null);
-const addNewAdvisorDialog = ref(false);
-const newFirstName = ref("");
-const newLastName = ref("");
-
 const search = ref("");
 const expanded = ref([]);
 
@@ -98,18 +94,6 @@ const custom_filter = function (value, query, item) {
   );
 };
 
-const createAdvisor = function () {
-  if (newFirstName.value !== "" && newLastName.value !== "") {
-    advisorsStore
-      .createAdvisorWithNameOnly(newFirstName.value, newLastName.value)
-      .then(() => {
-        addNewAdvisorDialog.value = false;
-        newFirstName.value = "";
-        newLastName.value = "";
-      });
-  }
-};
-
 const deleteAdvisor = function (advisor_id) {
   this.deleteDialog = advisor_id;
 };
@@ -149,14 +133,22 @@ const confirmedDeleteAdvisor = function () {
         </v-breadcrumbs>
       </v-col>
       <v-col cols="2" style="display: flex">
-        <v-fab
-          color="primary"
-          rounded
-          style="justify-content: end"
-          prepend-icon="mdi-plus"
-          text="add new advisor"
-          @click="addNewAdvisorDialog = true"
-        ></v-fab>
+        <router-link
+          :to="{
+            name: 'advisor-registration',
+            params: { advisor_id: 'add' },
+          }"
+          target="_blank"
+        >
+          <v-fab
+            color="primary"
+            rounded
+            style="justify-content: end"
+            prepend-icon="mdi-plus"
+            text="add new advisor"
+          >
+          </v-fab>
+        </router-link>
       </v-col>
     </v-row>
 
@@ -360,33 +352,6 @@ const confirmedDeleteAdvisor = function () {
       "
       @cancel-clicked="deleteDialog = false"
     ></ConfirmDialog>
-
-    <v-dialog max-width="500" v-model="addNewAdvisorDialog">
-      <template v-slot:default="{ isActive }">
-        <v-card title="Add new Advisor">
-          <v-card-text>
-            <v-text-field
-              v-model="newFirstName"
-              label="First name"
-              outlined
-              autofocus="autofocus"
-            ></v-text-field>
-            <v-text-field
-              v-model="newLastName"
-              label="Last name"
-              outlined
-            ></v-text-field>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-
-            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-            <v-btn text="Create" @click="createAdvisor"></v-btn>
-          </v-card-actions>
-        </v-card>
-      </template>
-    </v-dialog>
   </div>
 </template>
 
