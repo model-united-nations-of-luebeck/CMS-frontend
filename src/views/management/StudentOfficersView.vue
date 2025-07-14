@@ -362,11 +362,13 @@ const confirmedDeleteStudentOfficer = function () {
             <v-text-field
               v-model="newPositionName"
               label="Position"
+              hint="Full position name, e.g. 'Vice-Chairman of the First Committee', 'Chairwoman of the Human Rights Council' or 'President of the General Assembly'"
               outlined
             ></v-text-field>
             <v-text-field
               v-model="newSchoolName"
               label="School name"
+              hint="Name of the school the student officer attends."
               outlined
             ></v-text-field>
             <v-select
@@ -375,6 +377,7 @@ const confirmedDeleteStudentOfficer = function () {
               :item-title="(forum) => forum.name"
               :item-value="(forum) => forum.id"
               label="Select Forum"
+              hint="Select which forum this Student Officer is chairing"
               outlined
             ></v-select>
           </v-card-text>

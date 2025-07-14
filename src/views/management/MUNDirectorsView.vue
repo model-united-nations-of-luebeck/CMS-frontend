@@ -316,6 +316,7 @@ const confirmedDeleteMUNDirector = function () {
               :item-title="(school) => school.name"
               :item-value="(school) => school.id"
               label="Select School"
+              hint="Select the school at which this MUN-Director teaches"
               outlined
             ></v-select>
           </v-card-text>

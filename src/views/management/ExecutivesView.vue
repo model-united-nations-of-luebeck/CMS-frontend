@@ -311,6 +311,7 @@ const confirmedDeleteExecutive = function () {
             <v-text-field
               v-model="newPosition"
               label="Position"
+              hint="e.g. 'Assistant Head of School Management'"
               outlined
             ></v-text-field>
           </v-card-text>

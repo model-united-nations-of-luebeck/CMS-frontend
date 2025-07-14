@@ -291,6 +291,7 @@ const confirmedDeleteStaff = function () {
             <v-text-field
               v-model="newPosition"
               label="Position"
+              hint="e.g. 'Ad Staff' or 'IT Staff'"
               outlined
             ></v-text-field>
           </v-card-text>
