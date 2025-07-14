@@ -27,49 +27,33 @@ const disableInvalidDates = (date) => {
 };
 
 const rules = [
-  (v) => !!v || "Please enter your date of birth in the format MM/DD/YYYY.",
+  (v) => !!v || "Please enter your date of birth in the format YYYY-MM-DD.",
 ];
 </script>
 
 <template>
-  <v-date-input
-    label="date of birth"
-    clearable
-    view-mode="month"
-    hide-weekdays
-    :year="new Date().getFullYear() - 18"
-    :allowed-dates="disableInvalidDates"
-    :density="mobile ? 'compact' : 'default'"
-    :model-value="props.birthday ? new Date(props.birthday) : null"
-    :rules="rules"
-    @update:modelValue="updateBirthday"
-  >
-    <template v-slot:append>
-      <v-icon
-        icon="mdi-help-circle"
-        v-tooltip="
-          'We will only use your date of birth to check your age with respect to German law.'
-        "
-      >
-      </v-icon>
-    </template>
-  </v-date-input>
-
-  <!-- <v-text-field
-    label="date of birth"
-    prepend-icon="mdi-calendar-today"
-    placeholder="DD-MM-YYYY"
-    :model-value="props.birthday"
-    @input="updateBirthday"
-  >
-    <template v-slot:append>
-      <v-icon
-        icon="mdi-help-circle"
-        v-tooltip="
-          'We will only use your date of birth to check your age with respect to German law.'
-        "
-      >
-      </v-icon>
-    </template>
-  </v-text-field> -->
+  <v-locale-provider locale="en-CA">
+    <v-date-input
+      label="date of birth"
+      clearable
+      view-mode="month"
+      hide-weekdays
+      :year="new Date().getFullYear() - 18"
+      :allowed-dates="disableInvalidDates"
+      :density="mobile ? 'compact' : 'default'"
+      :model-value="props.birthday ? new Date(props.birthday) : null"
+      :rules="rules"
+      @update:modelValue="updateBirthday"
+    >
+      <template v-slot:append>
+        <v-icon
+          icon="mdi-help-circle"
+          v-tooltip="
+            'We will only use your date of birth to check your age with respect to German law.'
+          "
+        >
+        </v-icon>
+      </template>
+    </v-date-input>
+  </v-locale-provider>
 </template>
