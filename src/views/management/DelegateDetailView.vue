@@ -8,7 +8,7 @@ import GenderSelector from "../../components/inputs/GenderSelector.vue";
 import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
-import DietSelector from "../../components/inputs/DietSelector.vue";
+
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
 import BirthdateField from "../../components/inputs/BirthdateField.vue";
@@ -75,9 +75,6 @@ const valid = ref(true);
             <BirthdateField
               v-model:birthday="delegatesStore.delegate.birthday"
             ></BirthdateField>
-            <DietSelector
-              v-model:diet="delegatesStore.delegate.diet"
-            ></DietSelector>
             <CheckboxField
               v-model:value="delegatesStore.delegate.first_timer"
               :label="`Will ${conference_abbr} be your first MUN conference?`"

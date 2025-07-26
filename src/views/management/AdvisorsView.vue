@@ -196,10 +196,7 @@ const confirmedDeleteAdvisor = function () {
             <v-chip variant="outlined"> Conference Advisor </v-chip>
           </td>
           <td class="center">
-            <MailIcon
-              :email="item.email"
-              :email_verified="item.email_verified"
-            ></MailIcon>
+            <MailIcon :email="item.email"></MailIcon>
           </td>
 
           <td class="center">

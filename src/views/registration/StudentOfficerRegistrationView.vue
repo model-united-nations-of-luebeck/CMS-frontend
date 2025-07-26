@@ -7,7 +7,6 @@ import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
 import NameFields from "../../components/inputs/NameFields.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
-import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
 import { useDisplay } from "vuetify";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
@@ -88,9 +87,6 @@ defineExpose({
             <BirthdateField
               v-model:birthday="studentOfficersStore.student_officer.birthday"
             ></BirthdateField>
-            <DietSelector
-              v-model:diet="studentOfficersStore.student_officer.diet"
-            ></DietSelector>
             <ExtrasField
               v-model:extras="studentOfficersStore.student_officer.extras"
             ></ExtrasField>

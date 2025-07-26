@@ -8,7 +8,6 @@ import GenderSelector from "../../components/inputs/GenderSelector.vue";
 import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
-import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
 import CheckboxField from "../../components/inputs/CheckboxField.vue";
@@ -70,9 +69,6 @@ const valid = ref(true);
               v-model:phone="munDirectorsStore.mun_director.mobile"
             ></PhoneNumberField>
 
-            <DietSelector
-              v-model:diet="munDirectorsStore.mun_director.diet"
-            ></DietSelector>
             <CheckboxField
               v-model:value="munDirectorsStore.mun_director.english_teacher"
               label="Are you an English teacher and able to help checking the grammar of written resolutions?"

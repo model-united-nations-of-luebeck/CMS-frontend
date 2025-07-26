@@ -17,7 +17,6 @@ export const useAdvisorsStore = defineStore('advisors', () => {
             last_name: '',
             mobile: '',
             email: '',
-            diet: 'vegan',
             extras: '',
             picture: '',
             availability: '',

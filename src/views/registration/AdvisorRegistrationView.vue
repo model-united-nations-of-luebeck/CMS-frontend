@@ -7,7 +7,6 @@ import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
 import NameFields from "../../components/inputs/NameFields.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
-import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
 import HelpField from "../../components/inputs/HelpField.vue";
 import { useDisplay } from "vuetify";
@@ -78,9 +77,6 @@ defineExpose({
             <PhoneNumberField
               v-model:phone="advisorsStore.advisor.mobile"
             ></PhoneNumberField>
-            <DietSelector
-              v-model:diet="advisorsStore.advisor.diet"
-            ></DietSelector>
             <ExtrasField
               v-model:extras="advisorsStore.advisor.extras"
             ></ExtrasField>
