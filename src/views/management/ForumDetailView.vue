@@ -1,41 +1,43 @@
 <script setup>
-import { useForumsStore } from '../../stores/forums'
-import { usePlenariesStore } from '../../stores/plenaries'
-import { useRoute, useRouter } from 'vue-router'
+import { ref } from "vue";
+import { useForumsStore } from "../../stores/forums";
+import { usePlenariesStore } from "../../stores/plenaries";
+import { useRoute, useRouter } from "vue-router";
 
-const route = useRoute()
-const router = useRouter()
-const forumsStore = useForumsStore()
-const plenariesStore = usePlenariesStore()
-plenariesStore.getPlenaries()
+const route = useRoute();
+const router = useRouter();
+const forumsStore = useForumsStore();
+const plenariesStore = usePlenariesStore();
+plenariesStore.getPlenaries();
+const valid = ref(true);
 
 // initialize plenary choices
 const plenary_choices = [
-  { title: 'None', value: null },
+  { title: "None", value: null },
   ...plenariesStore.plenaries.map((plenary) => ({
     title: plenary.name,
     subtitle: plenary.abbreviation,
-    value: plenary.id
-  }))
-]
+    value: plenary.id,
+  })),
+];
 
-if (route.params.forum_id != 'add') {
-  forumsStore.getForum(route.params.forum_id)
+if (route.params.forum_id != "add") {
+  forumsStore.getForum(route.params.forum_id);
 } else {
-  forumsStore.initializeForum()
+  forumsStore.initializeForum();
 }
 
 const updateForum = (forum_id) => {
   if (forum_id == undefined) {
     // create new forum
-    forumsStore.createForum()
+    forumsStore.createForum();
   } else {
     // update existing forum
-    forumsStore.updateForum(forum_id)
+    forumsStore.updateForum(forum_id);
   }
   // go back to forums view
-  router.push({ name: 'forums' })
-}
+  router.push({ name: "forums" });
+};
 </script>
 
 <template>
@@ -43,7 +45,7 @@ const updateForum = (forum_id) => {
     <v-breadcrumbs
       :items="[
         { title: 'Forums', to: { name: 'forums' } },
-        { title: forumsStore.forum.abbreviation }
+        { title: forumsStore.forum.abbreviation },
       ]"
     >
       <template v-slot:prepend>
@@ -51,7 +53,7 @@ const updateForum = (forum_id) => {
       </template>
     </v-breadcrumbs>
 
-    <v-form>
+    <v-form v-model="valid">
       <v-container>
         <v-row>
           <v-col cols="6">
@@ -61,6 +63,11 @@ const updateForum = (forum_id) => {
               v-model="forumsStore.forum.name"
               :loading="forumsStore.loading"
               hint="e.g. 'First Committee', 'Economic and Social Council'"
+              :rules="[
+                (v) => !!v || 'Name is required',
+                (v) => (v && v.length <= 50) || '50 characters maximum',
+              ]"
+              required
             >
             </v-text-field>
           </v-col>
@@ -73,6 +80,7 @@ const updateForum = (forum_id) => {
               v-model="forumsStore.forum.subtitle"
               :loading="forumsStore.loading"
               hint="e.g. 'Disarmament and International Security'"
+              :rules="[(v) => v.length <= 75 || '75 characters maximum']"
             >
             </v-text-field>
           </v-col>
@@ -85,6 +93,7 @@ const updateForum = (forum_id) => {
               v-model="forumsStore.forum.abbreviation"
               :loading="forumsStore.loading"
               hint="e.g. 'GA1', 'ECOSOC'"
+              :rules="[(v) => v.length <= 10 || '10 characters maximum']"
             >
             </v-text-field>
           </v-col>
@@ -98,6 +107,7 @@ const updateForum = (forum_id) => {
               v-model="forumsStore.forum.email"
               :loading="forumsStore.loading"
               hint="Email might be displayed on website"
+              :rules="[(v) => /.+@.+\..+/.test(v) || 'E-Mail must be valid']"
             >
             </v-text-field>
           </v-col>
@@ -130,8 +140,12 @@ const updateForum = (forum_id) => {
             id="submit-btn"
             color="primary"
             prepend-icon="mdi-send"
+            :disabled="!valid"
             @click="updateForum(forumsStore.forum.id)"
-            >{{ route.params.forum_id == 'add' ? 'add' : 'update' }} forum</v-btn
+            >{{
+              route.params.forum_id == "add" ? "add" : "update"
+            }}
+            forum</v-btn
           >
         </v-row>
       </v-container>

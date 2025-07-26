@@ -28,6 +28,7 @@ const newPosition = ref("");
 
 const search = ref("");
 const expanded = ref([]);
+const valid = ref(true);
 
 const headers = [
   { title: "", key: "data-table-expand", sortable: false },
@@ -303,23 +304,34 @@ const confirmedDeleteExecutive = function () {
 
     <v-dialog max-width="500" v-model="addNewExecutiveDialog">
       <template v-slot:default="{ isActive }">
-        <v-card title="Add new Executive">
-          <v-card-text>
-            <v-text-field
-              v-model="newPosition"
-              label="Position"
-              hint="e.g. 'Assistant Head of School Management'"
-              outlined
-            ></v-text-field>
-          </v-card-text>
+        <v-form v-model="valid">
+          <v-card title="Add new Executive">
+            <v-card-text>
+              <v-text-field
+                v-model="newPosition"
+                label="Position"
+                hint="e.g. 'Assistant Head of School Management'"
+                :rules="[
+                  (v) => !!v || 'Position is required',
+                  (v) => (v && v.length <= 50) || '50 characters maximum',
+                ]"
+                outlined
+                required
+              ></v-text-field>
+            </v-card-text>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-card-actions>
+              <v-spacer></v-spacer>
 
-            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-            <v-btn text="Create" @click="createExecutive"></v-btn>
-          </v-card-actions>
-        </v-card>
+              <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+              <v-btn
+                text="Create"
+                :disabled="!valid"
+                @click="createExecutive"
+              ></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
       </template>
     </v-dialog>
   </div>

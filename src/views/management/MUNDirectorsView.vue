@@ -29,6 +29,7 @@ const newSchoolID = ref(null);
 
 const search = ref("");
 const expanded = ref([]);
+const valid = ref(true);
 
 const headers = [
   { title: "", key: "data-table-expand", sortable: false },
@@ -300,31 +301,38 @@ const confirmedDeleteMUNDirector = function () {
 
     <v-dialog max-width="500" v-model="addNewMUNDirectorDialog">
       <template v-slot:default="{ isActive }">
-        <v-card title="Add new MUN-Director">
-          <v-card-text>
-            <p>
-              Select the school this new MUN-Director belongs to. Add further
-              information once the MUN-Director is created.
-            </p>
-            <br />
-            <v-select
-              v-model="newSchoolID"
-              :items="schoolsStore.schools"
-              :item-title="(school) => school.name"
-              :item-value="(school) => school.id"
-              label="Select School"
-              hint="Select the school at which this MUN-Director teaches"
-              outlined
-            ></v-select>
-          </v-card-text>
+        <v-form v-model="valid">
+          <v-card title="Add new MUN-Director">
+            <v-card-text>
+              <p>
+                Select the school this new MUN-Director belongs to. Add further
+                information once the MUN-Director is created.
+              </p>
+              <br />
+              <v-select
+                v-model="newSchoolID"
+                :items="schoolsStore.schools"
+                :item-title="(school) => school.name"
+                :item-value="(school) => school.id"
+                label="Select School"
+                hint="Select the school at which this MUN-Director teaches"
+                :rules="[(v) => !!v || 'School is required']"
+                outlined
+              ></v-select>
+            </v-card-text>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-card-actions>
+              <v-spacer></v-spacer>
 
-            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-            <v-btn text="Create" @click="createMUNDirector"></v-btn>
-          </v-card-actions>
-        </v-card>
+              <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+              <v-btn
+                text="Create"
+                :disabled="!valid"
+                @click="createMUNDirector"
+              ></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
       </template>
     </v-dialog>
   </div>
