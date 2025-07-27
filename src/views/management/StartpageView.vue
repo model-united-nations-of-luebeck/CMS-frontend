@@ -56,46 +56,45 @@ conferenceStore.getCurrentConference();
         </template>
         <v-card-text>
           <v-list nav shaped width="100%">
-            <v-list-item-group color="primary">
-              <v-list-item href="https://www.munol.org" target="_blank">
-                <template v-slot:prepend>
-                  <v-icon color="primary"> mdi-earth</v-icon>
-                </template>
-                <v-list-item-content>
-                  <v-list-item-title>Website</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
+            <v-list-item href="https://www.munol.org" target="_blank">
+              <template v-slot:prepend>
+                <v-icon color="primary"> mdi-earth</v-icon>
+              </template>
+              <v-list-item-title>Website</v-list-item-title>
+            </v-list-item>
 
-              <v-list-item href="https://munol.sharepoint.com" target="_blank">
-                <template v-slot:prepend>
-                  <v-icon color="primary"> mdi-microsoft-office</v-icon>
-                </template>
-                <v-list-item-content>
-                  <v-list-item-title>SharePoint / Office 365</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
+            <v-list-item href="https://munol.sharepoint.com" target="_blank">
+              <template v-slot:prepend>
+                <v-icon color="primary"> mdi-microsoft-office</v-icon>
+              </template>
+              <v-list-item-title>SharePoint / Office 365</v-list-item-title>
+            </v-list-item>
 
-              <v-list-item
-                href="http://www.registration.munol.org"
-                target="_blank"
-              >
-                <template v-slot:prepend>
-                  <v-icon color="primary"> mdi-bank</v-icon>
-                </template>
-                <v-list-item-content>
-                  <v-list-item-title>School Registration</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
+            <v-list-item
+              :to="{
+                name: 'school-registration',
+              }"
+              target="_blank"
+            >
+              <template v-slot:prepend>
+                <v-icon color="primary"> mdi-bank</v-icon>
+              </template>
 
-              <v-list-item href="http://www.advisor.munol.org" target="_blank">
-                <template v-slot:prepend>
-                  <v-icon color="primary"> mdi-application</v-icon>
-                </template>
-                <v-list-item-content>
-                  <v-list-item-title>Advisor Registration</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
+              <v-list-item-title>School Registration</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item
+              :to="{
+                name: 'advisor-registration',
+                params: { advisor_id: 'add' },
+              }"
+              target="_blank"
+            >
+              <template v-slot:prepend>
+                <v-icon color="primary"> mdi-application</v-icon>
+              </template>
+              <v-list-item-title>Advisor Registration</v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-card-text>
       </v-card>

@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@azure/msal-browser": "^4.16.0",
     "@mdi/font": "^7.2.96",
     "@vueuse/core": "^10.6.0",
     "axios": "^1.8.2",

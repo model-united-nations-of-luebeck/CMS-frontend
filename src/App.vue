@@ -30,7 +30,7 @@ const logout = function () {
       <RouterLink to="/">
         <v-app-bar-nav-icon icon="mdi-bank" color="white"></v-app-bar-nav-icon>
       </RouterLink>
-      <v-app-bar-title>{{ this.$route.meta.title }} </v-app-bar-title>
+      <v-app-bar-title>{{ $route.meta.title }} </v-app-bar-title>
 
       <template v-slot:append>
         <v-btn v-if="showLogout" @click="logout()">
