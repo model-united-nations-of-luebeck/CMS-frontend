@@ -53,9 +53,9 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
         })
     }
 
-    async function createStudentOfficer(first_name, last_name, position_name, school_name, forum){
+    async function createStudentOfficer(position_name, school_name, forum){
         loading.value = true
-        await http.post("student-officers/", {first_name: first_name, last_name: last_name, position_name: position_name, school_name: school_name, forum: forum }).then( (res) => {
+        await http.post("student-officers/", {position_name: position_name, school_name: school_name, forum: forum }).then( (res) => {
             student_officers.value.push(res.data)
             loading.value = false
             toast.success('Student Officer was added successfully', {

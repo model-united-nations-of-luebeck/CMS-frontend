@@ -3,8 +3,6 @@ import {inject, ref} from 'vue'
 
 export const useMemberOrganizationsStore = defineStore('member_organizations', () => {
     const http = inject('backend_instance');
-    //TODO: Needs to be removed 
-    http.defaults.headers.common['Authorization'] = "Token 8171fd3bc8dccfeb4d49eb48792f44670e695dcb"
     const member_organizations = ref([])
     const member_organization = ref(null)
     const loading = ref(false)

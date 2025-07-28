@@ -108,8 +108,49 @@ export const useDelegatesStore = defineStore('delegates', () => {
             throw error; // rethrow the error to be caught at the point where this function is called
         })
     }
+
+    async function changeAmbassador(delegate_id){
+        loading.value = true
+
+        // turn ambassador role off for all delegates from this delegation
+        let org_id = delegates.value.find( (delegate) => delegate.id == delegate_id).represents
+        let ambassadors_from_org = delegates.value.filter( (delegate) => delegate.represents == org_id && delegate.ambassador)
+        for (let ambassador of ambassadors_from_org) {
+            if (ambassador.id != delegate_id) {
+                await http.patch(`delegates/${ambassador.id}/`, {ambassador: false}).then( () => {
+                    let index = delegates.value.findIndex( (delegate) => delegate.id == ambassador.id)
+                    delegates.value[index].ambassador = false
+                }).catch((error) => {
+                    console.log(error)
+                    toast.error('Unsetting Delegate as Ambassador failed', {
+                        position: toast.POSITION.BOTTOM_CENTER
+                      })
+                    throw error; // rethrow the error to be caught at the point where this function is called
+                })
+            }
+        }
+        
+        // turn ambassador role on for the selected delegate
+        await http.patch(`delegates/${delegate_id}/`, {ambassador: true}).then( () => {
+            let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
+            delegates.value[index].ambassador = true
+            loading.value = false
+            toast.success('Delegate was successfully set as Ambassador', {
+                position: toast.POSITION.BOTTOM_CENTER,
+                style: 'width: auto'
+              })
+        }).catch((error) => {
+            toast.error('Setting Delegate as Ambassador failed', {
+                position: toast.POSITION.BOTTOM_CENTER
+              })
+              loading.value = false
+            console.log(error)
+            throw error; // rethrow the error to be caught at the point where this function is called
+        })
+        
+    }
     
     
-    return {delegates, delegate, loading, getDelegates, getDelegate, updateDelegate, createDelegate, deleteDelegate, assignSchool}
+    return {delegates, delegate, loading, getDelegates, getDelegate, updateDelegate, createDelegate, deleteDelegate, assignSchool, changeAmbassador}
 
 })

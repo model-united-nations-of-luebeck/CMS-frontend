@@ -28,14 +28,13 @@ studentOfficersStore.getStudentOfficers();
 
 const deleteDialog = ref(null);
 const addNewStudentOfficerDialog = ref(false);
-const newFirstName = ref("");
-const newLastName = ref("");
 const newPositionName = ref("");
 const newSchoolName = ref("");
 const newForumID = ref(null);
 
 const search = ref("");
 const expanded = ref([]);
+const valid = ref(true);
 
 const headers = [
   { title: "", key: "data-table-expand", sortable: false },
@@ -130,24 +129,18 @@ const custom_filter = function (value, query, item) {
 
 const createStudentOfficer = function () {
   if (
-    newFirstName.value !== "" &&
-    newLastName.value !== "" &&
     newPositionName.value !== "" &&
     newSchoolName.value !== "" &&
     newForumID.value !== null
   ) {
     studentOfficersStore
       .createStudentOfficer(
-        newFirstName.value,
-        newLastName.value,
         newPositionName.value,
         newSchoolName.value,
         newForumID.value,
       )
       .then(() => {
         addNewStudentOfficerDialog.value = false;
-        newFirstName.value = "";
-        newLastName.value = "";
         newPositionName.value = "";
         newSchoolName.value = "";
         newForumID.value = null;
@@ -279,10 +272,7 @@ const confirmedDeleteStudentOfficer = function () {
           </td>
 
           <td class="center">
-            <MailIcon
-              :email="item.email"
-              :email_verified="item.email_verified"
-            ></MailIcon>
+            <MailIcon :email="item.email"></MailIcon>
           </td>
           <td class="center">
             <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>
@@ -365,46 +355,56 @@ const confirmedDeleteStudentOfficer = function () {
 
     <v-dialog max-width="500" v-model="addNewStudentOfficerDialog">
       <template v-slot:default="{ isActive }">
-        <v-card title="Add new Student Officer">
-          <v-card-text>
-            <v-text-field
-              v-model="newFirstName"
-              label="First name"
-              outlined
-              autofocus="autofocus"
-            ></v-text-field>
-            <v-text-field
-              v-model="newLastName"
-              label="Last name"
-              outlined
-            ></v-text-field>
-            <v-text-field
-              v-model="newPositionName"
-              label="Position"
-              outlined
-            ></v-text-field>
-            <v-text-field
-              v-model="newSchoolName"
-              label="School name"
-              outlined
-            ></v-text-field>
-            <v-select
-              v-model="newForumID"
-              :items="forumsStore.forums"
-              :item-title="(forum) => forum.name"
-              :item-value="(forum) => forum.id"
-              label="Select Forum"
-              outlined
-            ></v-select>
-          </v-card-text>
+        <v-form v-model="valid">
+          <v-card title="Add new Student Officer">
+            <v-card-text>
+              <v-text-field
+                v-model="newPositionName"
+                label="Position"
+                hint="Full position name, e.g. 'Vice-Chairman of the First Committee', 'Chairwoman of the Human Rights Council' or 'President of the General Assembly'"
+                :rules="[
+                  (v) => !!v || 'Position is required',
+                  (v) => (v && v.length <= 100) || '100 characters maximum',
+                ]"
+                outlined
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="newSchoolName"
+                label="School name"
+                hint="Name of the school the student officer attends."
+                :rules="[
+                  (v) => !!v || 'School name is required',
+                  (v) => (v && v.length <= 50) || '50 characters maximum',
+                ]"
+                outlined
+                required
+              ></v-text-field>
+              <v-select
+                v-model="newForumID"
+                :items="forumsStore.forums"
+                :item-title="(forum) => forum.name"
+                :item-value="(forum) => forum.id"
+                :rules="[(v) => !!v || 'Forum is required']"
+                label="Select Forum"
+                hint="Select which forum this Student Officer is chairing"
+                outlined
+                required
+              ></v-select>
+            </v-card-text>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-card-actions>
+              <v-spacer></v-spacer>
 
-            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-            <v-btn text="Create" @click="createStudentOfficer"></v-btn>
-          </v-card-actions>
-        </v-card>
+              <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+              <v-btn
+                text="Create"
+                :disabled="!valid"
+                @click="createStudentOfficer"
+              ></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
       </template>
     </v-dialog>
   </div>

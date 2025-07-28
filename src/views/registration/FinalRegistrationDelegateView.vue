@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useDelegatesStore } from "../../stores/delegates";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
 import { useForumsStore } from "../../stores/forums";
@@ -14,7 +14,6 @@ import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
 
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
-import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
 import BirthdateField from "../../components/inputs/BirthdateField.vue";
@@ -34,20 +33,34 @@ const forumsStore = useForumsStore();
 forumsStore.getForums();
 const conferenceStore = useConferenceStore();
 conferenceStore.getCurrentConference();
+const valid = ref(true);
+const emit = defineEmits(["show-login-dialog"]);
 
-if (route.params.delegate_id) {
-  delegatesStore.getDelegate(route.params.delegate_id);
-} else {
-  toast.error("Delegate not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
+async function loadData() {
+  if (route.params.delegate_id) {
+    delegatesStore.getDelegate(route.params.delegate_id).catch((err) => {
+      if (err?.response?.status === 403) {
+        emit("show-login-dialog", err?.response);
+      }
+    });
+  } else {
+    toast.error("Delegate not found", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
 }
 
-const valid = ref(true);
+onMounted(() => {
+  loadData();
+});
+
+defineExpose({
+  retry: loadData,
+});
 </script>
 
 <template>
-  <div class="delegate-reg">
+  <div class="delegate-reg" v-if="delegatesStore.delegate">
     <div
       id="intro"
       v-if="
@@ -137,9 +150,6 @@ const valid = ref(true);
             <BirthdateField
               v-model:birthday="delegatesStore.delegate.birthday"
             ></BirthdateField>
-            <DietSelector
-              v-model:diet="delegatesStore.delegate.diet"
-            ></DietSelector>
             <CheckboxField
               v-model:value="delegatesStore.delegate.first_timer"
               :label="`Will ${conference_abbr} be your first MUN conference?`"

@@ -262,10 +262,7 @@ const custom_filter = function (value, query, item) {
           </td>
 
           <td class="center">
-            <MailIcon
-              :email="item.email"
-              :email_verified="item.email_verified"
-            ></MailIcon>
+            <MailIcon :email="item.email"></MailIcon>
           </td>
           <td class="center">
             <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>

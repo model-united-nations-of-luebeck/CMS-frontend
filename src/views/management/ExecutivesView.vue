@@ -24,12 +24,11 @@ executivesStore.getExecutives();
 
 const deleteDialog = ref(null);
 const addNewExecutiveDialog = ref(false);
-const newFirstName = ref("");
-const newLastName = ref("");
 const newPosition = ref("");
 
 const search = ref("");
 const expanded = ref([]);
+const valid = ref(true);
 
 const headers = [
   { title: "", key: "data-table-expand", sortable: false },
@@ -112,19 +111,11 @@ const custom_filter = function (value, query, item) {
 };
 
 const createExecutive = function () {
-  if (
-    newFirstName.value !== "" &&
-    newLastName.value !== "" &&
-    newPosition.value !== ""
-  ) {
-    executivesStore
-      .createExecutive(newFirstName.value, newLastName.value, newPosition.value)
-      .then(() => {
-        addNewExecutiveDialog.value = false;
-        newFirstName.value = "";
-        newLastName.value = "";
-        newPosition.value = "";
-      });
+  if (newPosition.value !== "") {
+    executivesStore.createExecutive(newPosition.value).then(() => {
+      addNewExecutiveDialog.value = false;
+      newPosition.value = "";
+    });
   }
 };
 
@@ -230,10 +221,7 @@ const confirmedDeleteExecutive = function () {
           </td>
 
           <td class="center">
-            <MailIcon
-              :email="item.email"
-              :email_verified="item.email_verified"
-            ></MailIcon>
+            <MailIcon :email="item.email"></MailIcon>
           </td>
           <td class="center">
             <MobilePhoneIcon :mobile="item.mobile"></MobilePhoneIcon>
@@ -316,33 +304,34 @@ const confirmedDeleteExecutive = function () {
 
     <v-dialog max-width="500" v-model="addNewExecutiveDialog">
       <template v-slot:default="{ isActive }">
-        <v-card title="Add new Executive">
-          <v-card-text>
-            <v-text-field
-              v-model="newFirstName"
-              label="First name"
-              outlined
-              autofocus="autofocus"
-            ></v-text-field>
-            <v-text-field
-              v-model="newLastName"
-              label="Last name"
-              outlined
-            ></v-text-field>
-            <v-text-field
-              v-model="newPosition"
-              label="Position"
-              outlined
-            ></v-text-field>
-          </v-card-text>
+        <v-form v-model="valid">
+          <v-card title="Add new Executive">
+            <v-card-text>
+              <v-text-field
+                v-model="newPosition"
+                label="Position"
+                hint="e.g. 'Assistant Head of School Management'"
+                :rules="[
+                  (v) => !!v || 'Position is required',
+                  (v) => (v && v.length <= 50) || '50 characters maximum',
+                ]"
+                outlined
+                required
+              ></v-text-field>
+            </v-card-text>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
+            <v-card-actions>
+              <v-spacer></v-spacer>
 
-            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-            <v-btn text="Create" @click="createExecutive"></v-btn>
-          </v-card-actions>
-        </v-card>
+              <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+              <v-btn
+                text="Create"
+                :disabled="!valid"
+                @click="createExecutive"
+              ></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-form>
       </template>
     </v-dialog>
   </div>

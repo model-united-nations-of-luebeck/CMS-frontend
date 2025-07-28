@@ -35,9 +35,12 @@ export const useSchoolsStore = defineStore('schools', () => {
         }) 
     } 
 
-    async function createSchool(school_name){
-        await http.post("schools/", {name: school_name}).then((res) => {
+    async function createSchool(school_name, username, password){
+        // create user first, then create school with user id
+        loading.value = true
+        await http.post("schools/register/", {name: school_name, username: username, password: password}).then((res) => {
             schools.value.push(res.data)
+            loading.value = false
             toast.success('School was added successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
@@ -47,8 +50,11 @@ export const useSchoolsStore = defineStore('schools', () => {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.log(error)
+            loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
+
+      
     }
 
     async function updateSchool(school_id){

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useExecutivesStore } from "../../stores/executives";
 import { useRoute } from "vue-router";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
@@ -7,7 +7,6 @@ import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
 import NameFields from "../../components/inputs/NameFields.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
-import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
 import { useDisplay } from "vuetify";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
@@ -18,24 +17,36 @@ import ConsentField from "../../components/inputs/ConsentField.vue";
 const { mobile } = useDisplay();
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
-
+const valid = ref(true);
 const route = useRoute();
-
 const executivesStore = useExecutivesStore();
+const emit = defineEmits(["show-login-dialog"]);
 
-if (route.params.executive_id) {
-  executivesStore.getExecutive(route.params.executive_id);
-} else {
-  toast.error("Executive not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
+async function loadData() {
+  if (route.params.executive_id) {
+    executivesStore.getExecutive(route.params.executive_id).catch((err) => {
+      if (err?.response?.status === 403) {
+        emit("show-login-dialog", err?.response);
+      }
+    });
+  } else {
+    toast.error("Executive not found", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
 }
 
-const valid = ref(true);
+onMounted(() => {
+  loadData();
+});
+
+defineExpose({
+  retry: loadData,
+});
 </script>
 
 <template>
-  <div class="executive-reg">
+  <div class="executive-reg" v-if="executivesStore.executive">
     <v-alert>
       <p>Dear executive team member,</p>
       <p>
@@ -72,9 +83,6 @@ const valid = ref(true);
             <BirthdateField
               v-model:birthday="executivesStore.executive.birthday"
             ></BirthdateField>
-            <DietSelector
-              v-model:diet="executivesStore.executive.diet"
-            ></DietSelector>
             <ExtrasField
               v-model:extras="executivesStore.executive.extras"
             ></ExtrasField>

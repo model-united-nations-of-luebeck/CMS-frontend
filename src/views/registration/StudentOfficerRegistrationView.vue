@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useStudentOfficersStore } from "../../stores/student_officers";
 import { useRoute } from "vue-router";
 import GenderSelector from "../../components/inputs/GenderSelector.vue";
@@ -7,7 +7,6 @@ import PronounsSelector from "../../components/inputs/PronounsSelector.vue";
 import NameFields from "../../components/inputs/NameFields.vue";
 import EmailAddressField from "../../components/inputs/EmailAddressField.vue";
 import PhoneNumberField from "../../components/inputs/PhoneNumberField.vue";
-import DietSelector from "../../components/inputs/DietSelector.vue";
 import ExtrasField from "../../components/inputs/ExtrasField.vue";
 import { useDisplay } from "vuetify";
 import BadgePhotoCropper from "../../components/BadgePhotoCropper.vue";
@@ -18,24 +17,38 @@ import ConsentField from "../../components/inputs/ConsentField.vue";
 const { mobile } = useDisplay();
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
-
 const route = useRoute();
-
 const studentOfficersStore = useStudentOfficersStore();
+const valid = ref(true);
+const emit = defineEmits(["show-login-dialog"]);
 
-if (route.params.student_officer_id) {
-  studentOfficersStore.getStudentOfficer(route.params.student_officer_id);
-} else {
-  toast.error("Student Officer not found", {
-    position: toast.POSITION.BOTTOM_CENTER,
-  });
+async function loadData() {
+  if (route.params.student_officer_id) {
+    studentOfficersStore
+      .getStudentOfficer(route.params.student_officer_id)
+      .catch((err) => {
+        if (err?.response?.status === 403) {
+          emit("show-login-dialog", err?.response);
+        }
+      });
+  } else {
+    toast.error("Student Officer not found", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
 }
 
-const valid = ref(true);
+onMounted(() => {
+  loadData();
+});
+
+defineExpose({
+  retry: loadData,
+});
 </script>
 
 <template>
-  <div class="student-officer-reg">
+  <div class="student-officer-reg" v-if="studentOfficersStore.student_officer">
     <v-alert>
       <p>Dear student officer,</p>
       <p>
@@ -74,9 +87,6 @@ const valid = ref(true);
             <BirthdateField
               v-model:birthday="studentOfficersStore.student_officer.birthday"
             ></BirthdateField>
-            <DietSelector
-              v-model:diet="studentOfficersStore.student_officer.diet"
-            ></DietSelector>
             <ExtrasField
               v-model:extras="studentOfficersStore.student_officer.extras"
             ></ExtrasField>

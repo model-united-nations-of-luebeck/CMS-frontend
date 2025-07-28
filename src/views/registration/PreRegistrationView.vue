@@ -38,7 +38,10 @@ const ordinal = (n) => {
       <v-btn
         variant="plain"
         prepend-icon="mdi-arrow-left"
-        :to="`/registration/${route.params.school_id}`"
+        :to="{
+          name: 'registration-startpage',
+          params: { school_id: route.params.school_id },
+        }"
         >Back to registration overview</v-btn
       >
 

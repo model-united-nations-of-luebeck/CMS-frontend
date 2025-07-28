@@ -4,7 +4,6 @@ import "vue3-toastify/dist/index.css";
 
 const props = defineProps({
   email: String,
-  email_verified: Boolean,
 });
 </script>
 
@@ -29,7 +28,7 @@ const props = defineProps({
           position: toast.POSITION.BOTTOM_CENTER,
         })
     "
-    :color="props.email_verified ? 'success' : 'error'"
-    >{{ props.email_verified ? "mdi-email-check" : "mdi-email" }}</v-icon
+    color="primary"
+    >mdi-email</v-icon
   >
 </template>

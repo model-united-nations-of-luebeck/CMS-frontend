@@ -110,7 +110,10 @@ const route = useRoute();
                   prepend-icon="mdi-account-edit"
                   variant="tonal"
                   color="primary"
-                  :to="`/registration/${route.params.school_id}/pre-registration`"
+                  :to="{
+                    name: 'pre-registration',
+                    params: { school_id: route.params.school_id },
+                  }"
                   >Enter pre-registration data</v-btn
                 >
               </v-card-actions>
@@ -185,7 +188,10 @@ const route = useRoute();
               </v-card-text>
               <v-card-actions class="justify-center">
                 <v-btn
-                  :to="`/registration/${route.params.school_id}/final-registration`"
+                  :to="{
+                    name: 'final-registration',
+                    params: { school_id: route.params.school_id },
+                  }"
                   prepend-icon="mdi-account-check"
                   variant="tonal"
                   color="primary"
