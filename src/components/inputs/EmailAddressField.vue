@@ -15,7 +15,7 @@ const updateEmail = (event) => {
 const rules = [
   (v) => !!v || 'Please enter your e-mail address.',
   (v) =>
-    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Please enter a valid e-mail address.'
+    /^[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,3}$/.test(v) || 'Please enter a valid e-mail address.'
 ]
 </script>
 
