@@ -1,22 +1,23 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  email: String
-})
+  email: String,
+});
 
-const emit = defineEmits(['update:email'])
+const emit = defineEmits(["update:email"]);
 
 const updateEmail = (event) => {
-  emit('update:email', event.target.value)
-}
+  emit("update:email", event.target.value);
+};
 
 const rules = [
-  (v) => !!v || 'Please enter your e-mail address.',
+  (v) => !!v || "Please enter your e-mail address.",
   (v) =>
-    /^[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,3}$/.test(v) || 'Please enter a valid e-mail address.'
-]
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v) ||
+    "Please enter a valid e-mail address.",
+];
 </script>
 
 <template>
