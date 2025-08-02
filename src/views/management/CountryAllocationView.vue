@@ -154,7 +154,7 @@ const getTooltip = (forum_id, org_id) => {
       <thead>
         <tr>
           <th class="text-left">
-            {{ delegatesStore.delegates.length }} from
+            {{ delegatesStore.delegates.length }} Delegates from
             {{ schoolsStore.schools.length }} Schools representing <br />
             {{
               memberOrganizationsStore.member_organizations.filter(
@@ -184,8 +184,8 @@ const getTooltip = (forum_id, org_id) => {
           )"
           :key="org.id"
         >
-          <td v-tooltip:top-start="org.official_name">
-            <b>{{ org.name }}</b> ({{
+          <td>
+            <b v-tooltip:end="org.official_name">{{ org.name }}</b> ({{
               getDelegatesCountPerMemberOrganization(org.id)
             }})
           </td>
