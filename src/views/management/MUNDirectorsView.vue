@@ -167,6 +167,7 @@ const confirmedDeleteMUNDirector = function () {
     </v-row>
 
     <v-data-table-virtual
+      v-if="munDirectorsStore.mun_directors"
       :headers="headers"
       :items="munDirectorsStore.mun_directors"
       item-key="id"

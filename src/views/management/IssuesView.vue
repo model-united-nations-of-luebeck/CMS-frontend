@@ -72,6 +72,7 @@ const confirmedDeleteIssue = function () {
     </v-breadcrumbs>
 
     <v-data-table-virtual
+      v-if="issuesStore.issues"
       :headers="headers"
       :items="issuesStore.issues"
       item-key="id"

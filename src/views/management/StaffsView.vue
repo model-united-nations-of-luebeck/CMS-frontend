@@ -151,6 +151,7 @@ const confirmedDeleteStaff = function () {
     </v-row>
 
     <v-data-table-virtual
+      v-if="staffsStore.staffs"
       :headers="headers"
       :items="staffsStore.staffs"
       item-key="id"

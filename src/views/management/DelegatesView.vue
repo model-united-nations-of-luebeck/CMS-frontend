@@ -193,6 +193,7 @@ const custom_filter = function (value, query, item) {
     </v-row>
 
     <v-data-table-virtual
+      v-if="delegatesStore.delegates"
       :headers="headers"
       :items="delegatesStore.delegates"
       item-key="id"

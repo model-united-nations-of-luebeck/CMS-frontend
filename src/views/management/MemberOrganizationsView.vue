@@ -88,6 +88,7 @@ const confirmedDeleteMemberOrganization = function () {
     </v-breadcrumbs>
 
     <v-data-table-virtual
+      v-if="memberOrganizationsStore.member_organizations"
       :headers="headers"
       :items="memberOrganizationsStore.member_organizations"
       item-key="id"

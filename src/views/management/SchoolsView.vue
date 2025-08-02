@@ -158,6 +158,7 @@ const confirmedDeleteSchool = function () {
     </v-row>
 
     <v-data-table-virtual
+      v-if="schoolsStore.schools"
       :headers="headers"
       :items="schoolsStore.schools"
       item-key="id"

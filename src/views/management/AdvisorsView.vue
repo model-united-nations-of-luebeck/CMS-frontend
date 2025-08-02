@@ -153,6 +153,7 @@ const confirmedDeleteAdvisor = function () {
     </v-row>
 
     <v-data-table-virtual
+      v-if="advisorsStore.advisors"
       :headers="headers"
       :items="advisorsStore.advisors"
       item-key="id"

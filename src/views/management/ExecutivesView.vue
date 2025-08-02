@@ -170,6 +170,7 @@ const confirmedDeleteExecutive = function () {
     </v-row>
 
     <v-data-table-virtual
+      v-if="executivesStore.executives"
       :headers="headers"
       :items="executivesStore.executives"
       item-key="id"

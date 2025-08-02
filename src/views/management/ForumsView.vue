@@ -89,6 +89,7 @@ const confirmedDeletePlenary = function () {
     </v-breadcrumbs>
 
     <v-data-table-virtual
+      v-if="forumsStore.forums"
       :headers="headers"
       :items="forumsStore.forums"
       item-key="id"
