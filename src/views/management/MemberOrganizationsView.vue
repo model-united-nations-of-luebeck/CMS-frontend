@@ -97,11 +97,12 @@ const confirmedDeleteMemberOrganization = function () {
       hover
       :loading="memberOrganizationsStore.loading ? 'primary' : false"
       height="80vh"
-      sticky
+      fixed-header
       :search="search"
+      item-height="56"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item }">
         <!--
