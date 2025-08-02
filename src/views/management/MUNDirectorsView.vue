@@ -175,7 +175,7 @@ const confirmedDeleteMUNDirector = function () {
       items-per-page-text="MUN-Directors per page"
       hover
       :loading="munDirectorsStore.loading ? 'primary' : false"
-      sticky
+      fixed-header
       :search="search"
       :sort-by="[
         { key: 'school', order: 'desc' },
@@ -185,9 +185,11 @@ const confirmedDeleteMUNDirector = function () {
       v-model:expanded="expanded"
       hide-default-footer
       :custom-filter="custom_filter"
+      item-height="56"
+      height="calc(100vh - 160px)"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item, internalItem, toggleExpand, isExpanded }">
         <tr>

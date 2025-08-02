@@ -80,15 +80,17 @@ const confirmedDeleteIssue = function () {
       items-per-page-text="Issues per page"
       hover
       :loading="forumsStore.loading ? 'primary' : false"
-      sticky
+      fixed-header
       :search="search"
       :sort-by="[
         { key: 'forum', order: 'asc' },
         { key: 'id', order: 'asc' },
       ]"
+      item-height="56"
+      height="calc(100vh - 160px)"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item }">
         <tr>

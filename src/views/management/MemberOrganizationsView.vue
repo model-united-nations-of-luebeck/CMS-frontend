@@ -96,7 +96,7 @@ const confirmedDeleteMemberOrganization = function () {
       items-per-page-text="Member organizations per page"
       hover
       :loading="memberOrganizationsStore.loading ? 'primary' : false"
-      height="80vh"
+      height="calc(100vh - 160px)"
       fixed-header
       :search="search"
       item-height="56"

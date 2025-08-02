@@ -97,15 +97,17 @@ const confirmedDeletePlenary = function () {
       items-per-page-text="Forums per page"
       hover
       :loading="forumsStore.loading ? 'primary' : false"
-      sticky
+      fixed-header
       :search="search"
       :sort-by="[
         { key: 'plenary', order: 'asc' },
         { key: 'abbreviation', order: 'asc' },
       ]"
+      item-height="56"
+      height="calc(100vh - 160px)"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item }">
         <tr>
@@ -196,11 +198,11 @@ const confirmedDeletePlenary = function () {
       items-per-page-text="Plenaries per page"
       hover
       :loading="plenariesStore.loading ? 'primary' : false"
-      sticky
+      fixed-header
       :search="search"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item }">
         <tr>
