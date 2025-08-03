@@ -12,6 +12,7 @@ const props = defineProps({
   model: Boolean,
   title: String,
   text: String,
+  candidateDelegate: Object,
 });
 const emits = defineEmits(["ok-clicked", "cancel-clicked"]);
 
@@ -35,7 +36,32 @@ const school = ref(null);
   <v-dialog max-width="500" :model-value="props.model">
     <v-card :title="props.title">
       <v-card-text>
-        {{ props.text }}
+        <div v-if="props.candidateDelegate?.school">
+          <h4>Current assignment</h4>
+          <div style="display: flex; align-items: center">
+            <v-chip
+              >{{
+                schoolsStore.schools.find(
+                  (school) => school.id === props.candidateDelegate?.school,
+                )?.name || "No school assigned"
+              }}
+            </v-chip>
+            <v-spacer></v-spacer>
+            <v-btn
+              prepend-icon="mdi-cancel"
+              color="error"
+              variant="outlined"
+              @click="
+                () => {
+                  emits('ok-clicked', $event, null);
+                }
+              "
+              >Unassign</v-btn
+            >
+          </div>
+        </div>
+        <br />
+        <p>{{ props.text }}</p>
 
         <v-select
           v-model="school"
