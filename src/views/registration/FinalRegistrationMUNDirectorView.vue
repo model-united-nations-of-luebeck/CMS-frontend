@@ -159,17 +159,6 @@ defineExpose({
         </v-row>
       </v-container>
     </v-form>
-
-    <v-alert style="margin-top: 20px" title="TODOs" color="info">
-      <ul>
-        <li>refactor consent field and its handling to component</li>
-        <li>
-          Possibility to withdraw consent to data processing (confirmation
-          dialog => deleting all data and closing tab) and media publication
-        </li>
-        <li>Polish legal texts</li>
-      </ul>
-    </v-alert>
   </div>
 </template>
 

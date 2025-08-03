@@ -1,17 +1,24 @@
 <script setup>
 import { useForumsStore } from "../../stores/forums";
 import { usePlenariesStore } from "../../stores/plenaries";
+import { useDelegatesStore } from "../../stores/delegates";
+import { useIssuesStore } from "../../stores/issues";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
+// import RoomChip from "../../components/chips/RoomChip.vue";
 
 const forumsStore = useForumsStore();
 forumsStore.getForums();
 const plenariesStore = usePlenariesStore();
 plenariesStore.getPlenaries();
 const router = useRouter();
+const delegatesStore = useDelegatesStore();
+delegatesStore.getDelegates();
+const issuesStore = useIssuesStore();
+issuesStore.getIssues();
 
 const deleteDialog = ref(null);
 const deleteDialogPlenary = ref(null);
@@ -23,14 +30,14 @@ const headers = [
   { title: "Subtitle", key: "subtitle" },
   { title: "Plenary", key: "plenary" },
   { title: "Email", key: "email" },
-  { title: "Room", key: "" },
+  // { title: "Room", key: "" },
   { title: "Actions", key: "actions" },
 ];
 
 const plenary_headers = [
   { title: "Abbreviation", key: "abbreviation" },
   { title: "Name", key: "name" },
-  { title: "Location", key: "" },
+  // { title: "Location", key: "" },
   { title: "Size", key: "" },
   { title: "Actions", key: "actions" },
 ];
@@ -88,7 +95,7 @@ const confirmedDeletePlenary = function () {
       ></v-fab>
     </v-breadcrumbs>
 
-    <v-data-table-virtual
+    <v-data-table
       v-if="forumsStore.forums"
       :headers="headers"
       :items="forumsStore.forums"
@@ -98,13 +105,10 @@ const confirmedDeletePlenary = function () {
       hover
       :loading="forumsStore.loading ? 'primary' : false"
       fixed-header
+      hide-default-footer=""
       :search="search"
-      :sort-by="[
-        { key: 'plenary', order: 'asc' },
-        { key: 'abbreviation', order: 'asc' },
-      ]"
+      :sort-by="[{ key: 'id', order: 'asc' }]"
       item-height="56"
-      height="calc(100vh - 160px)"
     >
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
@@ -112,7 +116,9 @@ const confirmedDeletePlenary = function () {
       <template v-slot:item="{ item }">
         <tr>
           <td>
-            <v-chip>{{ item.abbreviation }} </v-chip>
+            <v-chip v-if="item.abbreviation" prepend-icon="mdi-forum"
+              >{{ item.abbreviation }}
+            </v-chip>
           </td>
           <td>{{ item.name }}</td>
           <td>
@@ -122,7 +128,7 @@ const confirmedDeletePlenary = function () {
             <v-chip v-if="item.plenary" prepend-icon="mdi-account-group">{{
               plenariesStore.plenaries.find(
                 (plenary) => plenary.id == item.plenary,
-              )?.name
+              )?.abbreviation
             }}</v-chip>
           </td>
           <td>
@@ -149,7 +155,9 @@ const confirmedDeletePlenary = function () {
               >mdi-email</v-icon
             >
           </td>
-          <td><a href="">Room 1.29</a></td>
+          <!-- <td>
+            <RoomChip v-if="item.room" :room="item.room" />
+          </td> -->
 
           <td>
             <v-btn
@@ -161,16 +169,35 @@ const confirmedDeletePlenary = function () {
               }"
             >
             </v-btn>
-            <v-btn
-              variant="plain"
-              icon="mdi-delete"
-              @click.stop="deleteForum(item.id)"
+            <span
+              v-tooltip="{
+                text: 'Only forums without assigned delegates and issues can be deleted.',
+                location: 'start',
+                disabled: !(
+                  delegatesStore.delegates.some(
+                    (delegate) => delegate.forum === item.id,
+                  ) ||
+                  issuesStore.issues.some((issue) => issue.forum === item.id)
+                ),
+              }"
             >
-            </v-btn>
+              <v-btn
+                variant="plain"
+                icon="mdi-delete"
+                :disabled="
+                  delegatesStore.delegates.some(
+                    (delegate) => delegate.forum === item.id,
+                  ) ||
+                  issuesStore.issues.some((issue) => issue.forum === item.id)
+                "
+                @click.stop="deleteForum(item.id)"
+              >
+              </v-btn>
+            </span>
           </td>
         </tr>
       </template>
-    </v-data-table-virtual>
+    </v-data-table>
 
     <h2 style="display: flex; margin-top: 50px">
       <v-icon start size="small">mdi-account-group</v-icon>Plenary Sessions
@@ -190,7 +217,7 @@ const confirmedDeletePlenary = function () {
     </h2>
 
     <!-- Plenary Sessions -->
-    <v-data-table-virtual
+    <v-data-table
       :headers="plenary_headers"
       :items="plenariesStore.plenaries"
       item-key="id"
@@ -199,6 +226,7 @@ const confirmedDeletePlenary = function () {
       hover
       :loading="plenariesStore.loading ? 'primary' : false"
       fixed-header
+      hide-default-footer
       :search="search"
     >
       <template v-slot:loading>
@@ -207,11 +235,23 @@ const confirmedDeletePlenary = function () {
       <template v-slot:item="{ item }">
         <tr>
           <td>
-            <v-chip v-if="item.abbreviation">{{ item.abbreviation }} </v-chip>
+            <v-chip v-if="item.abbreviation" prepend-icon="mdi-account-group"
+              >{{ item.abbreviation }}
+            </v-chip>
           </td>
           <td>{{ item.name }}</td>
-          <td>{{ item.location }}</td>
-          <td>132 Delegates</td>
+          <!-- <td>{{ item.location }}</td> -->
+          <td>
+            {{
+              delegatesStore.delegates.filter((delegate) =>
+                forumsStore.forums.some(
+                  (forum) =>
+                    forum.plenary === item.id && forum.id === delegate.forum,
+                ),
+              ).length
+            }}
+            Delegates
+          </td>
           <td>
             <v-btn
               variant="plain"
@@ -245,7 +285,7 @@ const confirmedDeletePlenary = function () {
           </td>
         </tr>
       </template>
-    </v-data-table-virtual>
+    </v-data-table>
 
     <!-- Forums Delete Dialog -->
     <ConfirmDialog
@@ -275,19 +315,6 @@ const confirmedDeletePlenary = function () {
       "
       @cancel-clicked="deleteDialogPlenary = false"
     ></ConfirmDialog>
-
-    <v-alert style="margin-top: 20px" title="TODOs" color="info">
-      <ul>
-        <li>Link rooms</li>
-        <li>Add abbreviation to plenary</li>
-        <li>Make lunches not required for plenaries</li>
-        <li>Add rules to detail forms, e.g. email, lengths</li>
-        <li>
-          Grayout delete button of forums which have assigned delegates or
-          issues as they would also be deleted. Explain this in a tooltip
-        </li>
-      </ul>
-    </v-alert>
   </div>
 </template>
 

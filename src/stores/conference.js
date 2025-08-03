@@ -26,7 +26,6 @@ export const useConferenceStore = defineStore('conference', () => {
         
         await http.get("conferences/").then( (res) => {
             [conference.value] = res.data
-            //TODO: maybe convert the dates to Date objects here
             loading.value = false
         })
     }

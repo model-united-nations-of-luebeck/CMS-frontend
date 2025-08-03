@@ -357,7 +357,3 @@ h3 {
   padding: 0 4px;
 }
 </style>
-
-<!-- TODO:
- - add selectable rows to export selected data as JSON, CSV, or EXCEL
--->

@@ -207,28 +207,6 @@ defineExpose({
         </v-row>
       </v-container>
     </v-form>
-
-    <v-alert style="margin-top: 20px" title="TODOs" color="info">
-      <ul>
-        <li>
-          Possibility to withdraw consent to data processing (confirmation
-          dialog => deleting all data and closing tab) and media publication.
-          For now, contact CMs for deleting already submitted data.
-        </li>
-        <li>Polish legal texts:</li>
-        <ul>
-          <li>
-            I/my guardian have/has read the data processing declaration and
-            accept it.
-          </li>
-          <li>
-            I/my guardian have/has read accepts the processing of image and
-            audio material
-          </li>
-          <li>Link terms and conditions</li>
-        </ul>
-      </ul>
-    </v-alert>
   </div>
 </template>
 
