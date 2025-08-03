@@ -71,7 +71,8 @@ const confirmedDeleteIssue = function () {
       ></v-fab>
     </v-breadcrumbs>
 
-    <v-data-table-virtual
+    <v-data-table
+      v-if="issuesStore.issues"
       :headers="headers"
       :items="issuesStore.issues"
       item-key="id"
@@ -79,15 +80,17 @@ const confirmedDeleteIssue = function () {
       items-per-page-text="Issues per page"
       hover
       :loading="forumsStore.loading ? 'primary' : false"
-      sticky
+      fixed-header
+      hide-default-footer
       :search="search"
       :sort-by="[
         { key: 'forum', order: 'asc' },
         { key: 'id', order: 'asc' },
       ]"
+      item-height="56"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item }">
         <tr>
@@ -118,7 +121,7 @@ const confirmedDeleteIssue = function () {
           </td>
         </tr>
       </template>
-    </v-data-table-virtual>
+    </v-data-table>
 
     <ConfirmDialog
       :model="deleteDialog"
@@ -132,12 +135,6 @@ const confirmedDeleteIssue = function () {
       "
       @cancel-clicked="deleteDialog = false"
     />
-
-    <v-alert style="margin-top: 20px" title="TODOs" color="info">
-      <ul>
-        <li>Use nested forum information of issues</li>
-      </ul>
-    </v-alert>
   </div>
 </template>
 

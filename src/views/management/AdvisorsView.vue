@@ -153,6 +153,7 @@ const confirmedDeleteAdvisor = function () {
     </v-row>
 
     <v-data-table-virtual
+      v-if="advisorsStore.advisors"
       :headers="headers"
       :items="advisorsStore.advisors"
       item-key="id"
@@ -160,16 +161,18 @@ const confirmedDeleteAdvisor = function () {
       items-per-page-text="Advisors per page"
       hover
       :loading="advisorsStore.loading ? 'primary' : false"
-      sticky
+      fixed-header
       :search="search"
       :sort-by="[{ key: 'name', order: 'desc' }]"
       :multi-sort="true"
       v-model:expanded="expanded"
       hide-default-footer
       :custom-filter="custom_filter"
+      item-height="56"
+      height="calc(100vh - 160px)"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item, internalItem, toggleExpand, isExpanded }">
         <tr>
@@ -369,7 +372,3 @@ h3 {
   padding: 0 4px;
 }
 </style>
-
-<!-- TODO:
- - add selectable rows to export selected data as JSON, CSV, or EXCEL
--->

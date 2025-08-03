@@ -352,17 +352,6 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             </td>
           </tr></tbody
       ></v-table>
-
-      <v-alert style="margin-top: 20px" title="TODOs" color="info">
-        <ul>
-          <li>export to spreadsheet button</li>
-
-          <li>
-            Questions for testers: Is highlighting of ambassador enough or
-            should entire row be highlighted?
-          </li>
-        </ul>
-      </v-alert>
     </v-sheet>
   </div>
 </template>

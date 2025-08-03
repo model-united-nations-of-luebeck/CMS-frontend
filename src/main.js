@@ -33,6 +33,9 @@ const vuetify = createVuetify({
   font: {
     family: 'Roboto'
   },
+  theme: {
+    degfaultTheme: 'system',
+  }
 })
 
 const app = createApp(App)

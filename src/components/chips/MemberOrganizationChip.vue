@@ -14,6 +14,7 @@ const props = defineProps({
   >
     <template v-slot:prepend>
       <v-avatar
+        lazy
         start
         v-if="props?.org?.flag"
         :image="props?.org?.flag"

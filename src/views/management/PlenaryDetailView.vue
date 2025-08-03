@@ -1,28 +1,30 @@
 <script setup>
-import { usePlenariesStore } from '../../stores/plenaries'
-import { useRoute, useRouter } from 'vue-router'
+import { ref } from "vue";
+import { usePlenariesStore } from "../../stores/plenaries";
+import { useRoute, useRouter } from "vue-router";
 
-const route = useRoute()
-const router = useRouter()
-const plenariesStore = usePlenariesStore()
+const route = useRoute();
+const router = useRouter();
+const plenariesStore = usePlenariesStore();
+const valid = ref(true);
 
-if (route.params.plenary_id != 'add') {
-  plenariesStore.getPlenary(route.params.plenary_id)
+if (route.params.plenary_id != "add") {
+  plenariesStore.getPlenary(route.params.plenary_id);
 } else {
-  plenariesStore.initializePlenary()
+  plenariesStore.initializePlenary();
 }
 
 const updatePlenary = (plenary_id) => {
   if (plenary_id == undefined) {
     // create new plenary
-    plenariesStore.createPlenary()
+    plenariesStore.createPlenary();
   } else {
     // update existing plenary
-    plenariesStore.updatePlenary(plenary_id)
+    plenariesStore.updatePlenary(plenary_id);
   }
   // go back to forums view
-  router.push({ name: 'forums' })
-}
+  router.push({ name: "forums" });
+};
 </script>
 
 <template>
@@ -30,7 +32,7 @@ const updatePlenary = (plenary_id) => {
     <v-breadcrumbs
       :items="[
         { title: 'Plenaries', to: { name: 'forums' } },
-        { title: plenariesStore.plenary.name }
+        { title: plenariesStore.plenary.name },
       ]"
     >
       <template v-slot:prepend>
@@ -38,7 +40,7 @@ const updatePlenary = (plenary_id) => {
       </template>
     </v-breadcrumbs>
 
-    <v-form>
+    <v-form v-model="valid">
       <v-container>
         <v-row>
           <v-col cols="6">
@@ -47,6 +49,11 @@ const updatePlenary = (plenary_id) => {
               prepend-icon="mdi-label"
               v-model="plenariesStore.plenary.name"
               :loading="plenariesStore.loading"
+              :rules="[
+                (v) => !!v || 'Name is required',
+                (v) => v.length <= 50 || 'Name must be less than 50 characters',
+              ]"
+              required
               hint="e.g. 'General Assembly' or 'Economic and Social Council'"
             >
             </v-text-field>
@@ -60,11 +67,16 @@ const updatePlenary = (plenary_id) => {
               v-model="plenariesStore.plenary.abbreviation"
               :loading="plenariesStore.loading"
               hint="e.g. 'GA' or 'ECOSOC'"
+              :rules="[
+                (v) =>
+                  v.length <= 10 ||
+                  'Abbreviation must be less than 10 characters',
+              ]"
             >
             </v-text-field>
           </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
           <v-col cols="6">
             <v-text-field
               label="Location"
@@ -75,14 +87,18 @@ const updatePlenary = (plenary_id) => {
             >
             </v-text-field>
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row class="justify-center">
           <v-btn
             id="submit-btn"
             color="primary"
+            :disabled="!valid"
             prepend-icon="mdi-send"
             @click="updatePlenary(plenariesStore.plenary.id)"
-            >{{ route.params.plenary_id == 'add' ? 'add' : 'update' }} plenary</v-btn
+            >{{
+              route.params.plenary_id == "add" ? "add" : "update"
+            }}
+            plenary</v-btn
           >
         </v-row>
       </v-container>

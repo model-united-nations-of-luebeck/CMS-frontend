@@ -88,6 +88,7 @@ const confirmedDeleteMemberOrganization = function () {
     </v-breadcrumbs>
 
     <v-data-table-virtual
+      v-if="memberOrganizationsStore.member_organizations"
       :headers="headers"
       :items="memberOrganizationsStore.member_organizations"
       item-key="id"
@@ -95,12 +96,13 @@ const confirmedDeleteMemberOrganization = function () {
       items-per-page-text="Member organizations per page"
       hover
       :loading="memberOrganizationsStore.loading ? 'primary' : false"
-      height="80vh"
-      sticky
+      height="calc(100vh - 160px)"
+      fixed-header
       :search="search"
+      item-height="56"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item }">
         <!--

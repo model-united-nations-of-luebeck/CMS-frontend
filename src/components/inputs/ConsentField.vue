@@ -24,7 +24,6 @@ const emit = defineEmits([
 const updateDataProtectionConsent = (value) => {
   if (value) {
     //consent given
-    //TODO: use CORS proxy server in between to avoid CORS issues arising from API call or do this on server side
     fetch("https://api.ipify.org?format=json")
       .then((response) => response.json())
       .then((data) => {
@@ -46,7 +45,6 @@ const updateDataProtectionConsent = (value) => {
 const updateMediaConsent = (value) => {
   if (value) {
     //consent given
-    //TODO: use CORS proxy server in between to avoid CORS issues arising from API call or do this on server side
     fetch("https://api.ipify.org?format=json")
       .then((response) => response.json())
       .then((data) => {

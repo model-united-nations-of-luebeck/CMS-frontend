@@ -107,12 +107,16 @@ const updateForum = (forum_id) => {
               v-model="forumsStore.forum.email"
               :loading="forumsStore.loading"
               hint="Email might be displayed on website"
-              :rules="[(v) => /.+@.+\..+/.test(v) || 'E-Mail must be valid']"
+              :rules="[
+                (v) =>
+                  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v) ||
+                  'E-Mail must be valid',
+              ]"
             >
             </v-text-field>
           </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
           <v-col cols="6">
             <v-text-field
               label="Room"
@@ -123,7 +127,7 @@ const updateForum = (forum_id) => {
             >
             </v-text-field>
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row>
           <v-col cols="6">
             <v-select

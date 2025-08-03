@@ -199,6 +199,7 @@ const confirmedDeleteStudentOfficer = function () {
     </v-row>
 
     <v-data-table-virtual
+      v-if="studentOfficersStore.student_officers"
       :headers="headers"
       :items="studentOfficersStore.student_officers"
       item-key="id"
@@ -206,7 +207,7 @@ const confirmedDeleteStudentOfficer = function () {
       items-per-page-text="Student Officers per page"
       hover
       :loading="studentOfficersStore.loading ? 'primary' : false"
-      sticky
+      fixed-header
       :search="search"
       :sort-by="[
         { key: 'forum', order: 'asc' },
@@ -216,9 +217,11 @@ const confirmedDeleteStudentOfficer = function () {
       v-model:expanded="expanded"
       hide-default-footer
       :custom-filter="custom_filter"
+      item-height="56"
+      height="calc(100vh - 160px)"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item, internalItem, toggleExpand, isExpanded }">
         <tr>
@@ -427,7 +430,3 @@ h3 {
   padding: 0 4px;
 }
 </style>
-
-<!-- TODO:
- - add selectable rows to export selected data as JSON, CSV, or EXCEL
--->

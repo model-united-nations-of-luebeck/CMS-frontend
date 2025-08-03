@@ -193,6 +193,7 @@ const custom_filter = function (value, query, item) {
     </v-row>
 
     <v-data-table-virtual
+      v-if="delegatesStore.delegates"
       :headers="headers"
       :items="delegatesStore.delegates"
       item-key="id"
@@ -200,7 +201,7 @@ const custom_filter = function (value, query, item) {
       items-per-page-text="Delegates per page"
       hover
       :loading="delegatesStore.loading ? 'primary' : false"
-      sticky
+      fixed-header
       :search="search"
       :sort-by="[
         { key: 'member_organization', order: 'desc' },
@@ -210,9 +211,11 @@ const custom_filter = function (value, query, item) {
       v-model:expanded="expanded"
       hide-default-footer
       :custom-filter="custom_filter"
+      item-height="56"
+      height="calc(100vh - 160px)"
     >
       <template v-slot:loading>
-        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+        <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item, internalItem, toggleExpand, isExpanded }">
         <tr>
@@ -345,7 +348,3 @@ h3 {
   padding: 0 4px;
 }
 </style>
-
-<!-- TODO:
- - add selectable rows to export selected data as JSON, CSV, or EXCEL
--->

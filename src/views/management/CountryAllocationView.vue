@@ -1,6 +1,5 @@
 <script setup>
 import { useForumsStore } from "../../stores/forums";
-import { usePlenariesStore } from "../../stores/plenaries";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
 import { useDelegatesStore } from "../../stores/delegates";
 import { useSchoolsStore } from "../../stores/schools";
@@ -11,8 +10,6 @@ import { ref } from "vue";
 
 const forumsStore = useForumsStore();
 forumsStore.getForums();
-const plenariesStore = usePlenariesStore();
-plenariesStore.getPlenaries();
 const memberOrganizationsStore = useMemberOrganizationsStore();
 memberOrganizationsStore.getMemberOrganizations();
 const delegatesStore = useDelegatesStore();
@@ -24,7 +21,7 @@ const assignSchoolDialog = ref(false);
 const candidateDelegate = ref(null);
 
 const getDelegates = (forum_id, org_id) => {
-  return delegatesStore.delegates.filter(
+  return delegatesStore.delegates.find(
     (delegate) => delegate.forum == forum_id && delegate.represents == org_id,
   );
 };
@@ -133,28 +130,38 @@ const unassignAllDelegates = function (org_id) {
       delegatesStore.assignSchool(delegate.id, null);
     });
 };
-
-const getTooltip = (forum_id, org_id) => {
-  const delegate = delegatesStore.delegates.find(
-    (delegate) => delegate.forum == forum_id && delegate.represents == org_id,
-  );
-  if (delegate && delegate.school) {
-    return `Assigned to ${
-      schoolsStore.schools.find((school) => school.id == delegate.school).name
-    }`;
-  } else {
-    return "Not assigned yet, right-click to assign a school";
-  }
-};
 </script>
 
 <template>
   <div class="">
-    <v-table density="comfortable" fixed-header height="90vh" hover>
+    <v-progress-linear
+      v-if="
+        forumsStore.loading ||
+        memberOrganizationsStore.loading ||
+        delegatesStore.loading ||
+        schoolsStore.loading
+      "
+      indeterminate
+      color="primary"
+      height="4"
+    ></v-progress-linear>
+
+    <v-table
+      v-if="
+        forumsStore.forums &&
+        memberOrganizationsStore.member_organizations &&
+        delegatesStore.delegates &&
+        schoolsStore.schools
+      "
+      density="comfortable"
+      fixed-header
+      height="90vh"
+      hover
+    >
       <thead>
         <tr>
           <th class="text-left">
-            {{ delegatesStore.delegates.length }} from
+            {{ delegatesStore.delegates.length }} Delegates from
             {{ schoolsStore.schools.length }} Schools representing <br />
             {{
               memberOrganizationsStore.member_organizations.filter(
@@ -184,7 +191,7 @@ const getTooltip = (forum_id, org_id) => {
           )"
           :key="org.id"
         >
-          <td v-tooltip:top-start="org.official_name">
+          <td>
             <b>{{ org.name }}</b> ({{
               getDelegatesCountPerMemberOrganization(org.id)
             }})
@@ -194,29 +201,26 @@ const getTooltip = (forum_id, org_id) => {
             :key="forum.id"
             class="text-center"
           >
-            <v-btn
-              density="compact"
-              icon
-              :variant="
-                getDelegates(forum.id, org.id)[0]?.school ? 'outlined' : 'tonal'
-              "
-              v-tooltip:bottom="getTooltip(forum.id, org.id)"
-              :color="
-                getDelegates(forum.id, org.id).length > 0
-                  ? 'primary'
-                  : 'secondary'
-              "
-              @click.prevent="toggleDelegate(forum.id, org.id)"
-              @click.right.prevent="openAssignSchoolDialog(forum.id, org.id)"
-              >{{ getDelegates(forum.id, org.id).length }}</v-btn
+            <template
+              v-for="delegate in [getDelegates(forum.id, org.id)]"
+              :key="delegate?.id"
             >
+              <v-btn
+                density="compact"
+                icon
+                :variant="delegate?.school ? 'outlined' : 'tonal'"
+                :color="delegate ? 'primary' : 'secondary'"
+                @click.prevent="toggleDelegate(forum.id, org.id)"
+                @click.right.prevent="openAssignSchoolDialog(forum.id, org.id)"
+                >{{ delegate ? 1 : 0 }}</v-btn
+              >
+            </template>
           </td>
           <td class="text-center">
             <v-btn
               density="compact"
               variant="tonal"
               color="primary"
-              v-tooltip="'Check all forums'"
               @click="createDelegatesInAllForums(org.id)"
               @click.right.prevent="openAssignSchoolDialog('all', org.id)"
             >
@@ -227,7 +231,6 @@ const getTooltip = (forum_id, org_id) => {
               density="compact"
               variant="tonal"
               color="primary"
-              v-tooltip="'Uncheck all forums'"
               @click="deleteDelegatesInAllForums(org.id)"
               @click.right.prevent="unassignAllDelegates(org.id)"
             >
@@ -251,6 +254,7 @@ const getTooltip = (forum_id, org_id) => {
       :model="assignSchoolDialog"
       title="Assign School to Delegate(s)"
       text="Please select a school to assign to the selected delegate(s)"
+      :candidate-delegate="candidateDelegate"
       @ok-clicked="($event, school_id) => assignSchool($event, school_id)"
       @cancel-clicked="assignSchoolDialog = false"
     ></AssignSchoolDialog>
