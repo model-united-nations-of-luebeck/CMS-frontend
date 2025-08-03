@@ -5,6 +5,8 @@ import { msalInstance, state } from "../../msalConfig";
 const { login, logout, handleRedirect } = msalService();
 const emit = defineEmits(["show-logout"]);
 const http = inject("backend_instance");
+import { useTheme } from "vuetify";
+const theme = useTheme();
 
 defineExpose({
   logout,
@@ -168,7 +170,7 @@ const drawer = ref(null);
       </v-list>
 
       <template v-slot:append>
-        <v-list>
+        <v-list density="compact" nav>
           <v-divider></v-divider>
           <v-list-item
             v-if="state.isAuthenticated"
@@ -176,6 +178,14 @@ const drawer = ref(null);
             subtitle="Current user"
             prepend-icon="mdi-account"
           >
+          </v-list-item>
+          <v-list-item
+            prepend-icon="mdi-theme-light-dark"
+            :title="`${theme.name.value} mode`"
+          >
+            <template v-slot:append>
+              <v-switch @click="theme.toggle()" hide-details></v-switch>
+            </template>
           </v-list-item>
           <v-list-item
             :title="conference_abbr"
