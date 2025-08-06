@@ -7,6 +7,9 @@ import "vue3-toastify/dist/index.css";
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 
+const data_consent_statement = `I hereby consent to the collection, processing and use of my personal data as it is described in the privacy policy.`;
+const media_consent_statement = `I hereby consent to the timely unlimited publication and display of images and sound recordings of myself as it is described in the privacy policy.`;
+
 const props = defineProps({
   data_consent_time: String,
   data_consent_ip: String,
@@ -72,7 +75,7 @@ const submitConsentDialog = () => {
   } else {
     // Show extra toast that explains that asking the conference managers is an option or accepting the data protection.
     toast(
-      `<p>While giving consent to data processing is voluntary and thus not necessary for participating in ${conference_abbr}, it makes organizing the conference much easier. So please reconsider accepting the data processing regulation.</p><br><p>In case you do not want to accept the regulations, please contact the conference managers to figure out a way to participate in ${conference_abbr}.</p>`,
+      `<p>While giving consent to data processing is voluntary and thus not necessary for participating in ${conference_abbr}, it makes organizing the conference much easier. So please reconsider accepting the data processing regulation.</p><br><p>In case you do not want to accept the regulations or revoke your consent, please contact the conference managers to figure out a way to participate in ${conference_abbr}.</p>`,
       {
         autoClose: false,
         type: "info",
@@ -108,7 +111,7 @@ watch(
       v-if="props.data_consent_time"
       :model-value="props.data_consent_time != null"
       @update:modelValue="updateDataProtectionConsent"
-      :label="`Data Protection Consent (given on ${new Date(
+      :label="`${data_consent_statement} (Consent given on ${new Date(
         props.data_consent_time,
       ).toLocaleDateString('en-GB', {
         weekday: 'long',
@@ -127,7 +130,7 @@ watch(
       v-else
       :model-value="props.data_consent_time != null"
       @update:modelValue="updateDataProtectionConsent"
-      label="Data Protection Consent not given"
+      :label="`${data_consent_statement} (Consent not given)`"
       :density="mobile ? 'compact' : 'default'"
       prepend-icon="mdi-shield-check"
       color="primary"
@@ -136,7 +139,7 @@ watch(
       v-if="props.media_consent_time"
       :model-value="props.media_consent_time != null"
       @update:modelValue="updateMediaConsent"
-      :label="`Media Consent (given on ${new Date(
+      :label="`${media_consent_statement} (Consent given on ${new Date(
         props.media_consent_time,
       ).toLocaleDateString('en-GB', {
         weekday: 'long',
@@ -155,11 +158,23 @@ watch(
       v-else
       :model-value="props.media_consent_time != null"
       @update:modelValue="updateMediaConsent"
-      label="Media Consent not given"
+      :label="`${media_consent_statement} (Consent not given)`"
       :density="mobile ? 'compact' : 'default'"
       prepend-icon="mdi-multimedia"
       color="primary"
     ></v-checkbox>
+    <v-input
+      prepend-icon="mdi-white"
+      direction="horizontal"
+      style="margin-bottom: -20px !important"
+    >
+      <p>
+        Here is our
+        <a href="/registration/privacy-policy" target="_blank">
+          privacy policy</a
+        ><v-icon size="x-small">mdi-open-in-new</v-icon>
+      </p>
+    </v-input>
   </div>
   <!-- Consent dialog -->
 
@@ -170,16 +185,20 @@ watch(
         <p>
           Dear participant, based on GDPR we need to inform you about our data
           processing procedures prior to letting you enter your data for the
-          registration purposes. Here is our declaration of data usage which
-          describes the processing of data and your rights and our
+          registration purposes. Here is our
+          <a href="/registration/privacy-policy" target="_blank"
+            >privacy policy</a
+          ><v-icon size="x-small">mdi-open-in-new</v-icon>
+          which describes the processing of data and your rights and our
           responsibilities. Please read through them and if you agree, please
           give your consent.
         </p>
+        <br />
         <v-checkbox
           v-if="props.data_consent_time"
           :model-value="props.data_consent_time != null"
           @update:modelValue="updateDataProtectionConsent"
-          :label="`Data Protection Consent (given on ${new Date(
+          :label="`${data_consent_statement} (Consent given on ${new Date(
             props.data_consent_time,
           ).toLocaleDateString('en-GB', {
             weekday: 'long',
@@ -198,7 +217,7 @@ watch(
           v-else
           :model-value="props.data_consent_time != null"
           @update:modelValue="updateDataProtectionConsent"
-          label="Data Protection Consent not given"
+          :label="`${data_consent_statement} (Consent not given)`"
           :density="mobile ? 'compact' : 'default'"
           prepend-icon="mdi-shield-check"
           color="primary"
@@ -207,7 +226,7 @@ watch(
           v-if="props.media_consent_time"
           :model-value="props.media_consent_time != null"
           @update:modelValue="updateMediaConsent"
-          :label="`Media Consent (given on ${new Date(
+          :label="`${media_consent_statement} (Consent given on ${new Date(
             props.media_consent_time,
           ).toLocaleDateString('en-GB', {
             weekday: 'long',
@@ -226,7 +245,7 @@ watch(
           v-else
           :model-value="props.media_consent_time != null"
           @update:modelValue="updateMediaConsent"
-          label="Media Consent not given"
+          :label="`${media_consent_statement} (Consent not given)`"
           :density="mobile ? 'compact' : 'default'"
           prepend-icon="mdi-multimedia"
           color="primary"
