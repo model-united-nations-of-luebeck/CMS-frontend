@@ -134,12 +134,25 @@ const items = ref([
         icon: "mdi-gesture-double-tap",
         action: "country-allocation",
       },
-      { title: "Locations", icon: "mdi-map-marker", action: "locations" },
+      { title: "Locations", icon: "mdi-map-marker" },
       { title: "Events", icon: "mdi-calendar" },
       { title: "Conference Settings", icon: "mdi-web", action: "conference" },
     ],
   },
-  { title: "SECRETARIAT", icon: "mdi-printer" },
+  {
+    title: "SECRETARIAT",
+    icon: "mdi-printer",
+    items: [
+      {
+        title: "Printing",
+        icon: "mdi-printer",
+      },
+      {
+        title: "Insights",
+        icon: "mdi-lightbulb-on",
+      },
+    ],
+  },
 ]);
 
 const drawer = ref(null);
@@ -162,6 +175,7 @@ const drawer = ref(null);
             :key="subItem.title"
             link
             :to="'/management/' + subItem.action"
+            :disabled="!subItem.action"
             :prepend-icon="subItem.icon"
             :title="subItem.title"
           ></v-list-item>
@@ -169,30 +183,29 @@ const drawer = ref(null);
         </div>
       </v-list>
 
-      <template v-slot:append>
-        <v-list density="compact" nav>
-          <v-divider></v-divider>
-          <v-list-item
-            v-if="state.isAuthenticated"
-            :title="state.user?.username"
-            subtitle="Current user"
-            prepend-icon="mdi-account"
-          >
-          </v-list-item>
-          <v-list-item
-            prepend-icon="mdi-theme-light-dark"
-            :title="`${theme.name.value} mode`"
-          >
-            <template v-slot:append>
-              <v-switch @click="theme.toggle()" hide-details></v-switch>
-            </template>
-          </v-list-item>
-          <v-list-item
-            :title="conference_abbr"
-            prepend-icon="mdi-copyright"
-          ></v-list-item>
-        </v-list>
-      </template>
+      <v-list density="compact" nav>
+        <v-list-item disabled title="SETTINGS" prepend-icon="mdi-white">
+        </v-list-item>
+        <v-list-item
+          v-if="state.isAuthenticated"
+          :title="state.user?.username"
+          subtitle="Current user"
+          prepend-icon="mdi-account"
+        >
+        </v-list-item>
+        <v-list-item
+          prepend-icon="mdi-theme-light-dark"
+          :title="`${theme.name.value} mode`"
+        >
+          <template v-slot:append>
+            <v-switch @click="theme.toggle()" hide-details></v-switch>
+          </template>
+        </v-list-item>
+        <v-list-item
+          :title="conference_abbr"
+          prepend-icon="mdi-copyright"
+        ></v-list-item>
+      </v-list>
     </v-navigation-drawer>
 
     <RouterView v-slot="{ Component }">
