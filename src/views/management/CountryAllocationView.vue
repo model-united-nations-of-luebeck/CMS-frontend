@@ -112,28 +112,6 @@ const openAssignSchoolDialog = (org_id) => {
     );
   }
 };
-
-// const assignSchool = function (event, school_id) {
-//   if (candidateDelegate.value) {
-//     if (Array.isArray(candidateDelegate.value)) {
-//       candidateDelegate.value.forEach((delegate) => {
-//         delegatesStore.assignSchool(delegate.id, school_id);
-//       });
-//     } else {
-//       delegatesStore.assignSchool(candidateDelegate.value.id, school_id);
-//     }
-//   }
-//   assignSchoolDialog.value = false;
-//   candidateDelegate.value = null;
-// };
-
-// const unassignAllDelegates = function (org_id) {
-//   delegatesStore.delegates
-//     .filter((delegate) => delegate.represents == org_id)
-//     .forEach((delegate) => {
-//       delegatesStore.assignSchool(delegate.id, null);
-//     });
-// };
 </script>
 
 <template>
@@ -197,9 +175,23 @@ const openAssignSchoolDialog = (org_id) => {
           :key="org.id"
         >
           <td @click.right.prevent="openAssignSchoolDialog(org.id)">
-            <b>{{ org.name }}</b> ({{
-              getDelegatesCountPerMemberOrganization(org.id)
-            }})
+            <span
+              :style="{
+                fontWeight:
+                  getDelegatesCountPerMemberOrganization(org.id) > 0
+                    ? 'bold'
+                    : 'normal',
+                color: delegatesStore.delegates.some(
+                  (delegate) =>
+                    delegate.represents == org.id && delegate.school == null,
+                )
+                  ? 'red'
+                  : 'black',
+              }"
+            >
+              {{ org.name }}
+            </span>
+            ({{ getDelegatesCountPerMemberOrganization(org.id) }})
           </td>
 
           <td class="text-center">
