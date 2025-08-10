@@ -174,7 +174,7 @@ const drawer = ref(null);
             v-for="subItem in item.items"
             :key="subItem.title"
             link
-            :to="'/management/' + subItem.action"
+            :to="subItem.action ? '/management/' + subItem.action : null"
             :disabled="!subItem.action"
             :prepend-icon="subItem.icon"
             :title="subItem.title"
