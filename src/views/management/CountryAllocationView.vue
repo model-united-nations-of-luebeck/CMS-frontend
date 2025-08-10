@@ -19,7 +19,7 @@ schoolsStore.getSchools();
 
 const assignSchoolDialog = ref(false);
 const candidateOrgId = ref(null);
-const rightDrawer = ref(true);
+const rightDrawer = ref(false);
 
 const getDelegateInstances = (forum_id, org_id) => {
   return delegatesStore.delegates.find(
@@ -134,6 +134,7 @@ const openAssignSchoolDialog = (org_id) => {
       width="400"
       app
       location="right"
+      temporary
       style="padding: 20px"
     >
       <h1>Statistics</h1>
