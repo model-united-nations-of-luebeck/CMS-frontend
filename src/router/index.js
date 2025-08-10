@@ -242,6 +242,15 @@ const router = createRouter({
           component: () =>
             import("../views/registration/FinalRegistrationMUNDirectorView.vue"),
         },
+        {
+          path: "privacy-policy",
+          name: "privacy-policy",
+          meta: {
+            title: "Privacy Policy",
+          },
+          component: () =>
+            import("../views/registration/PrivacyPolicyView.vue"),
+        }
       ],
     },
     {
