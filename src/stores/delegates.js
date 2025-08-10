@@ -70,6 +70,47 @@ export const useDelegatesStore = defineStore('delegates', () => {
             })
         }
 
+    async function resetDelegate(delegate_id) {
+        loading.value = true
+
+        // Reset the delegate object to its initial state, except for the id, represents, forum, role, school and ambassador fields
+        delegate.value = {
+            id: delegate_id,
+            first_name: "",
+            last_name: "",
+            gender: "f",
+            pronouns: null,
+            email: null,
+            mobile: null,
+            picture: null,
+            birthday: null,
+            extras: null,
+            data_consent_time: null,
+            data_consent_ip: null,
+            media_consent_time: null,
+            media_consent_ip: null,
+            first_timer: true,
+        }
+
+        await http.patch(`delegates/${delegate_id}/`, delegate.value).then(() => {
+            let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
+            delegates.value[index] = {...delegates.value[index], ...delegate.value} // update the delegate in the delegates array with the reset values
+            
+            loading.value = false
+            toast.success('Delegate was reset successfully', {
+                position: toast.POSITION.BOTTOM_CENTER,
+                style: 'width: auto'
+              })
+        }).catch((error) => {
+            toast.error('Resetting Delegate failed', {
+                position: toast.POSITION.BOTTOM_CENTER
+              })
+            console.log(error)
+            loading.value = false
+            throw error; // rethrow the error to be caught at the point where this function is called
+        })
+    }
+
     async function deleteDelegate(delegate_id) {
         loading.value = true
         await http.delete(`delegates/${delegate_id}/`).then(() => {
@@ -151,6 +192,6 @@ export const useDelegatesStore = defineStore('delegates', () => {
     }
     
     
-    return {delegates, delegate, loading, getDelegates, getDelegate, updateDelegate, createDelegate, deleteDelegate, assignSchool, changeAmbassador}
+    return {delegates, delegate, loading, getDelegates, getDelegate, updateDelegate, createDelegate, resetDelegate, deleteDelegate, assignSchool, changeAmbassador}
 
 })
