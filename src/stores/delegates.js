@@ -111,11 +111,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
         loading.value = true
         await http.delete(`delegates/${delegate_id}/`).then(() => {
             delegates.value = delegates.value.filter( (delegate) => delegate.id != delegate_id) // keep all delegates that do not have the id of the deleted delegate
-            loading.value = false
-            toast.success('Delegate was deleted successfully', {
-                position: toast.POSITION.BOTTOM_CENTER,
-                style: 'width: auto'
-              })
+            loading.value = false 
         }).catch((error) => {
             toast.error('Deleting Delegate failed', {
                 position: toast.POSITION.BOTTOM_CENTER
@@ -127,23 +123,27 @@ export const useDelegatesStore = defineStore('delegates', () => {
     }
 
     async function assignSchool(delegate_id, school_id) {
-        loading.value = true
-        await http.patch(`delegates/${delegate_id}/`, {school: school_id}).then( (res) => {
-            let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
-            delegates.value[index] = res.data
-            loading.value = false
-            toast.success('School was selected successfully', {
-                position: toast.POSITION.BOTTOM_CENTER,
-                style: 'width: auto'
-              })
-        }).catch((error) => {
-            toast.error('Selecting School failed', {
+        // check delegates can only be unassigned from a school if no data is filled in yet (checked by data consent time given)
+        if (delegates.value.find( (delegate) => delegate.id == delegate_id).data_consent_time) {
+            toast.error('Delegate has already filled in data, cannot unassign from school. Please reset delegate first', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
-            loading.value = false
-            throw error; // rethrow the error to be caught at the point where this function is called
-        })
+            
+        } else {
+            loading.value = true
+            await http.patch(`delegates/${delegate_id}/`, {school: school_id}).then( (res) => {
+                let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
+                delegates.value[index] = res.data
+                loading.value = false
+            }).catch((error) => {
+                toast.error(`${school_id ? 'Assigning' : 'Unassigning'} School failed`, {
+                    position: toast.POSITION.BOTTOM_CENTER
+                })
+                console.log(error)
+                loading.value = false
+                throw error; // rethrow the error to be caught at the point where this function is called
+            })
+        }
     }
 
     async function changeAmbassador(delegate_id){

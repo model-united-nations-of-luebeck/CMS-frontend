@@ -18,9 +18,9 @@ const schoolsStore = useSchoolsStore();
 schoolsStore.getSchools();
 
 const assignSchoolDialog = ref(false);
-const candidateDelegate = ref(null);
+const candidateOrgId = ref(null);
 
-const getDelegates = (forum_id, org_id) => {
+const getDelegateInstances = (forum_id, org_id) => {
   return delegatesStore.delegates.find(
     (delegate) => delegate.forum == forum_id && delegate.represents == org_id,
   );
@@ -54,7 +54,17 @@ const toggleDelegate = (forum_id, org_id) => {
     (delegate) => delegate.forum == forum_id && delegate.represents == org_id,
   );
   if (delegate) {
-    delegatesStore.deleteDelegate(delegate.id);
+    if (delegate.school) {
+      toast.error(
+        "You cannot delete a delegate that has an assigned school. Please unassign the school first.",
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+          timeout: 5000,
+        },
+      );
+    } else {
+      delegatesStore.deleteDelegate(delegate.id);
+    }
   } else {
     delegatesStore.createDelegate(forum_id, org_id);
   }
@@ -86,22 +96,16 @@ const deleteDelegatesInAllForums = (org_id) => {
   });
 };
 
-const openAssignSchoolDialog = (forum_id, org_id) => {
-  if (forum_id === "all") {
-    candidateDelegate.value = delegatesStore.delegates.filter(
-      (delegate) => delegate.represents == org_id,
-    );
-  } else {
-    candidateDelegate.value = delegatesStore.delegates.find(
-      (delegate) => delegate.forum == forum_id && delegate.represents == org_id,
-    );
-  }
-
-  if (candidateDelegate.value) {
+const openAssignSchoolDialog = (org_id) => {
+  // if there is at least one delegate from this organization, open the assign school dialog
+  if (
+    delegatesStore.delegates.some((delegate) => delegate.represents == org_id)
+  ) {
+    candidateOrgId.value = org_id;
     assignSchoolDialog.value = true;
   } else {
     toast.error(
-      "This delegate does not exist (yet). Please create it first before assigning a school.",
+      "There is no delegate from this organization (yet). Please create one first before assigning a school.",
       {
         position: toast.POSITION.BOTTOM_CENTER,
       },
@@ -109,27 +113,27 @@ const openAssignSchoolDialog = (forum_id, org_id) => {
   }
 };
 
-const assignSchool = function (event, school_id) {
-  if (candidateDelegate.value) {
-    if (Array.isArray(candidateDelegate.value)) {
-      candidateDelegate.value.forEach((delegate) => {
-        delegatesStore.assignSchool(delegate.id, school_id);
-      });
-    } else {
-      delegatesStore.assignSchool(candidateDelegate.value.id, school_id);
-    }
-  }
-  assignSchoolDialog.value = false;
-  candidateDelegate.value = null;
-};
+// const assignSchool = function (event, school_id) {
+//   if (candidateDelegate.value) {
+//     if (Array.isArray(candidateDelegate.value)) {
+//       candidateDelegate.value.forEach((delegate) => {
+//         delegatesStore.assignSchool(delegate.id, school_id);
+//       });
+//     } else {
+//       delegatesStore.assignSchool(candidateDelegate.value.id, school_id);
+//     }
+//   }
+//   assignSchoolDialog.value = false;
+//   candidateDelegate.value = null;
+// };
 
-const unassignAllDelegates = function (org_id) {
-  delegatesStore.delegates
-    .filter((delegate) => delegate.represents == org_id)
-    .forEach((delegate) => {
-      delegatesStore.assignSchool(delegate.id, null);
-    });
-};
+// const unassignAllDelegates = function (org_id) {
+//   delegatesStore.delegates
+//     .filter((delegate) => delegate.represents == org_id)
+//     .forEach((delegate) => {
+//       delegatesStore.assignSchool(delegate.id, null);
+//     });
+// };
 </script>
 
 <template>
@@ -170,6 +174,7 @@ const unassignAllDelegates = function (org_id) {
             }}
             Member Organizations in {{ forumsStore.forums.length }} Forums
           </th>
+          <th class="text-center">TOGGLE ALL</th>
           <th
             v-for="forum in forumsStore.forums"
             :key="forum.id"
@@ -180,7 +185,7 @@ const unassignAllDelegates = function (org_id) {
               getDelegatesCountPerForum(forum.id)
             }})
           </th>
-          <th class="text-center">TOGGLE ALL</th>
+
           <th class="text-center">Schools</th>
         </tr>
       </thead>
@@ -191,18 +196,41 @@ const unassignAllDelegates = function (org_id) {
             .sort((a, b) => a.name.localeCompare(b.name))"
           :key="org.id"
         >
-          <td>
+          <td @click.right.prevent="openAssignSchoolDialog(org.id)">
             <b>{{ org.name }}</b> ({{
               getDelegatesCountPerMemberOrganization(org.id)
             }})
           </td>
+
+          <td class="text-center">
+            <v-btn
+              density="compact"
+              icon
+              variant="plain"
+              color="primary"
+              @click="createDelegatesInAllForums(org.id)"
+            >
+              <v-icon size="small">mdi-plus-circle-multiple</v-icon>
+            </v-btn>
+            |
+            <v-btn
+              density="compact"
+              icon
+              variant="plain"
+              color="primary"
+              @click="deleteDelegatesInAllForums(org.id)"
+            >
+              <v-icon size="small">mdi-minus-circle-multiple</v-icon>
+            </v-btn>
+          </td>
+
           <td
             v-for="forum in forumsStore.forums"
             :key="forum.id"
             class="text-center"
           >
             <template
-              v-for="delegate in [getDelegates(forum.id, org.id)]"
+              v-for="delegate in [getDelegateInstances(forum.id, org.id)]"
               :key="delegate?.id"
             >
               <v-btn
@@ -211,31 +239,9 @@ const unassignAllDelegates = function (org_id) {
                 :variant="delegate?.school ? 'outlined' : 'tonal'"
                 :color="delegate ? 'primary' : 'secondary'"
                 @click.prevent="toggleDelegate(forum.id, org.id)"
-                @click.right.prevent="openAssignSchoolDialog(forum.id, org.id)"
                 >{{ delegate ? 1 : 0 }}</v-btn
               >
             </template>
-          </td>
-          <td class="text-center">
-            <v-btn
-              density="compact"
-              variant="tonal"
-              color="primary"
-              @click="createDelegatesInAllForums(org.id)"
-              @click.right.prevent="openAssignSchoolDialog('all', org.id)"
-            >
-              <v-icon>mdi-checkbox-multiple-marked-outline</v-icon>
-            </v-btn>
-            /
-            <v-btn
-              density="compact"
-              variant="tonal"
-              color="primary"
-              @click="deleteDelegatesInAllForums(org.id)"
-              @click.right.prevent="unassignAllDelegates(org.id)"
-            >
-              <v-icon>mdi-checkbox-multiple-blank-outline</v-icon>
-            </v-btn>
           </td>
 
           <td>
@@ -251,12 +257,8 @@ const unassignAllDelegates = function (org_id) {
     </v-table>
 
     <AssignSchoolDialog
-      :model="assignSchoolDialog"
-      title="Assign School to Delegate(s)"
-      text="Please select a school to assign to the selected delegate(s)"
-      :candidate-delegate="candidateDelegate"
-      @ok-clicked="($event, school_id) => assignSchool($event, school_id)"
-      @cancel-clicked="assignSchoolDialog = false"
+      v-model="assignSchoolDialog"
+      :organization="candidateOrgId"
     ></AssignSchoolDialog>
   </div>
 </template>
