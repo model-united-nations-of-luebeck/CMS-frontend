@@ -186,9 +186,9 @@ const unassignAllDelegates = function (org_id) {
       </thead>
       <tbody>
         <tr
-          v-for="org in memberOrganizationsStore.member_organizations.filter(
-            (org) => org.active,
-          )"
+          v-for="org in memberOrganizationsStore.member_organizations
+            .filter((org) => org.active)
+            .sort((a, b) => a.name.localeCompare(b.name))"
           :key="org.id"
         >
           <td>

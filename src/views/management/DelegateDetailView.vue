@@ -36,6 +36,24 @@ const valid = ref(true);
 
 <template>
   <div class="">
+    <div style="float: right">
+      <v-btn
+        variant="outlined"
+        prepend-icon="mdi-restart"
+        color="error"
+        v-tooltip:bottom="
+          `Clears all data from this delegate and reset to default values, except for the id, represented organization, forum, role, assigned school and ambassador fields. Warning: This action cannot be undone.`
+        "
+        @click="
+          delegatesStore.resetDelegate(delegatesStore.delegate.id).then(() => {
+            router.push({ name: 'delegates' });
+          })
+        "
+      >
+        Reset Delegate
+      </v-btn>
+    </div>
+
     <v-breadcrumbs
       :items="[
         { title: 'Delegates', to: { name: 'delegates' } },
