@@ -215,6 +215,10 @@ conferenceStore.getCurrentConference();
   line-height: 140px;
   cursor: pointer;
 
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+
   background-color: #ee432e;
   background-image: -webkit-gradient(
     linear,
