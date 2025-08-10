@@ -56,12 +56,8 @@ export const useDelegatesStore = defineStore('delegates', () => {
         await http.post("delegates/", {forum: forum_id, represents: org_id}).then( (res) => {
                 delegates.value.push(res.data)
                 loading.value = false
-                toast.success('Delegate was added successfully', {
-                    position: toast.POSITION.BOTTOM_CENTER,
-                    style: 'width: auto'
-                  })
             }).catch((error) => {
-                toast.error('Adding Delegate failed', {
+                toast.error('Creating Delegate failed', {
                     position: toast.POSITION.BOTTOM_CENTER
                   })
                 console.log(error)
