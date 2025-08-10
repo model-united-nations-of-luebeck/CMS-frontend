@@ -19,6 +19,7 @@ schoolsStore.getSchools();
 
 const assignSchoolDialog = ref(false);
 const candidateOrgId = ref(null);
+const rightDrawer = ref(true);
 
 const getDelegateInstances = (forum_id, org_id) => {
   return delegatesStore.delegates.find(
@@ -128,6 +129,153 @@ const openAssignSchoolDialog = (org_id) => {
       height="4"
     ></v-progress-linear>
 
+    <v-navigation-drawer
+      v-model="rightDrawer"
+      width="400"
+      app
+      location="right"
+      style="padding: 20px"
+    >
+      <h1>Statistics</h1>
+
+      These stats might help you when assigning delegates to schools and forums.
+
+      <h3>Delegates</h3>
+      Total: {{ delegatesStore.delegates.length }}<br />
+      - Assigned:
+      {{ delegatesStore.delegates.filter((delegate) => delegate.school).length
+      }}<br />
+      - Unassigned:
+      {{ delegatesStore.delegates.filter((delegate) => !delegate.school).length
+      }}<br />
+      Requested by schools:
+      {{
+        schoolsStore.schools.reduce((acc, school) => acc + school.requested, 0)
+      }}<br />
+
+      <h3>Member Organizations</h3>
+      Total: {{ memberOrganizationsStore.member_organizations.length }}<br />
+      - Active:
+      {{
+        memberOrganizationsStore.member_organizations.filter(
+          (org) => org.active,
+        ).length
+      }}<br />
+      - Inactive:
+      {{
+        memberOrganizationsStore.member_organizations.filter(
+          (org) => !org.active,
+        ).length
+      }}<br />
+      - Without delegates:
+      {{
+        memberOrganizationsStore.member_organizations.filter((org) =>
+          delegatesStore.delegates.every(
+            (delegate) => delegate.represents != org.id,
+          ),
+        ).length
+      }}<br />
+      - With delegates:
+      {{
+        memberOrganizationsStore.member_organizations.filter((org) =>
+          delegatesStore.delegates.some(
+            (delegate) => delegate.represents == org.id,
+          ),
+        ).length
+      }}<br />
+      - - With unassigned delegates:
+      {{
+        memberOrganizationsStore.member_organizations.filter((org) =>
+          delegatesStore.delegates.some(
+            (delegate) => delegate.represents == org.id && !delegate.school,
+          ),
+        ).length
+      }}
+
+      <br />
+      - - With assigned delegates:
+      {{
+        memberOrganizationsStore.member_organizations.filter((org) =>
+          delegatesStore.delegates.some(
+            (delegate) => delegate.represents == org.id && delegate.school,
+          ),
+        ).length
+      }}<br />
+
+      <details>
+        <summary>Unassigned Member Organizations</summary>
+        <ul>
+          <li
+            v-for="org in memberOrganizationsStore.member_organizations.filter(
+              (org) =>
+                delegatesStore.delegates.some(
+                  (delegate) =>
+                    delegate.represents == org.id && !delegate.school,
+                ),
+            )"
+            :key="org.id"
+          >
+            {{ org.name }}
+          </li>
+        </ul>
+      </details>
+
+      <h3>Schools</h3>
+      Total: {{ schoolsStore.schools.length }}<br />
+      - With delegates:
+      {{
+        schoolsStore.schools.filter((school) =>
+          delegatesStore.delegates.some(
+            (delegate) => delegate.school == school.id,
+          ),
+        ).length
+      }}<br />
+      - Without delegates:
+      {{
+        schoolsStore.schools.filter((school) =>
+          delegatesStore.delegates.every(
+            (delegate) => delegate.school != school.id,
+          ),
+        ).length
+      }}
+      <br />
+
+      <h3>Averages</h3>
+      Average number of delegates per forum:
+      {{
+        (delegatesStore.delegates.length / forumsStore.forums.length).toFixed(
+          1,
+        )
+      }}<br />
+      Average number of delegates per member organization:
+      {{
+        (
+          delegatesStore.delegates.length /
+          memberOrganizationsStore.member_organizations.length
+        ).toFixed(1)
+      }}<br />
+      Average number of delegates per school:
+      {{
+        (
+          delegatesStore.delegates.filter((d) => d.school).length /
+          schoolsStore.schools.length
+        ).toFixed(1)
+      }}<br />
+      Average number or member organizations per school:
+      {{
+        (
+          memberOrganizationsStore.member_organizations.filter((org) =>
+            schoolsStore.schools.some((school) =>
+              delegatesStore.delegates.some(
+                (delegate) =>
+                  delegate.school == school.id && delegate.represents == org.id,
+              ),
+            ),
+          ).length / schoolsStore.schools.length
+        ).toFixed(1)
+      }}<br />
+    </v-navigation-drawer>
+
     <v-table
       v-if="
         forumsStore.forums &&
@@ -143,14 +291,13 @@ const openAssignSchoolDialog = (org_id) => {
       <thead>
         <tr>
           <th class="text-left">
-            {{ delegatesStore.delegates.length }} Delegates from
-            {{ schoolsStore.schools.length }} Schools representing <br />
-            {{
-              memberOrganizationsStore.member_organizations.filter(
-                (org) => org.active,
-              ).length
-            }}
-            Member Organizations in {{ forumsStore.forums.length }} Forums
+            <v-btn
+              variant="outlined"
+              size="small"
+              append-icon="mdi-chart-bar"
+              @click="rightDrawer = !rightDrawer"
+              >Statistics</v-btn
+            >
           </th>
           <th class="text-center">TOGGLE ALL</th>
           <th
@@ -258,5 +405,34 @@ const openAssignSchoolDialog = (org_id) => {
 <style scoped>
 .school-names {
   display: block;
+}
+
+details {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 0.5em 0.5em 0;
+}
+
+summary {
+  font-weight: bold;
+  margin: -0.5em -0.5em 0;
+  padding: 0.5em;
+}
+
+details[open] {
+  padding: 0.5em;
+}
+
+details[open] ul {
+  padding: 0em 1.5em;
+}
+
+details[open] summary {
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 0.5em;
+}
+
+h3 {
+  margin-top: 1em;
 }
 </style>
