@@ -5,9 +5,12 @@ import { ref } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
+import { useDelegatesStore } from "../../stores/delegates";
 
 const memberOrganizationsStore = useMemberOrganizationsStore();
 memberOrganizationsStore.getMemberOrganizations();
+const delegatesStore = useDelegatesStore();
+delegatesStore.getDelegates();
 const router = useRouter();
 
 const deleteDialog = ref(null);
@@ -105,18 +108,6 @@ const confirmedDeleteMemberOrganization = function () {
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
       <template v-slot:item="{ item }">
-        <!--
-          Work around for making rows clickable, but interferes with switch clicks
-          <tr
-          @click="
-            router.push({
-              name: 'member-organization-detail',
-              params: { member_organization_id: item.id }
-            })
-          "
-          style="cursor: pointer"
-        > -->
-
         <tr>
           <td>
             <v-avatar
@@ -124,7 +115,6 @@ const confirmedDeleteMemberOrganization = function () {
               :class="{ grayscale: !item.active }"
               :image="item.flag"
             ></v-avatar>
-            <!-- <v-skeleton-loader type="avatar"></v-skeleton-loader> -->
           </td>
           <td>
             <span v-if="item.name.length > 30" v-tooltip:bottom="item.name"
@@ -161,12 +151,27 @@ const confirmedDeleteMemberOrganization = function () {
         (UN_SUB_BODY, 'UN sub-body'), -->
           </td>
           <td>
-            <v-switch
-              v-model="item.active"
-              style="display: flex"
-              color="primary"
-              @update:modelValue="toggleActive(item.id)"
-            ></v-switch>
+            <span
+              v-tooltip="{
+                text: 'Only member organizations without assigned delegates can be set inactive.',
+                location: 'start',
+                disabled: !delegatesStore.delegates.some(
+                  (delegate) => delegate.represents === item.id,
+                ),
+              }"
+            >
+              <v-switch
+                v-model="item.active"
+                style="display: flex"
+                color="primary"
+                :disabled="
+                  delegatesStore.delegates.some(
+                    (delegate) => delegate.represents === item.id,
+                  )
+                "
+                @update:modelValue="toggleActive(item.id)"
+              ></v-switch>
+            </span>
           </td>
           <td>
             <v-btn
@@ -178,12 +183,27 @@ const confirmedDeleteMemberOrganization = function () {
               }"
             >
             </v-btn>
-            <v-btn
-              variant="plain"
-              icon="mdi-delete"
-              @click.stop="deleteMemberOrganization(item.id)"
+            <span
+              v-tooltip="{
+                text: 'Only member organizations without assigned delegates can be deleted.',
+                location: 'start',
+                disabled: !delegatesStore.delegates.some(
+                  (delegate) => delegate.represents === item.id,
+                ),
+              }"
             >
-            </v-btn>
+              <v-btn
+                variant="plain"
+                icon="mdi-delete"
+                :disabled="
+                  delegatesStore.delegates.some(
+                    (delegate) => delegate.represents === item.id,
+                  )
+                "
+                @click.stop="deleteMemberOrganization(item.id)"
+              >
+              </v-btn>
+            </span>
           </td>
         </tr>
       </template>
