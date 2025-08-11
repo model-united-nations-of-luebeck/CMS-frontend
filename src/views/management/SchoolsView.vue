@@ -66,7 +66,11 @@ const headers = [
       { title: "MUN Directors", key: "housing_mun_directors", align: "center" },
     ],
   },
-  { title: "Status", key: "registration_status" },
+  {
+    title: "Status",
+    key: "registration_status",
+    sortable: true,
+  },
   {
     title: "Actions",
     key: "actions",
@@ -168,7 +172,10 @@ const confirmedDeleteSchool = function () {
       :loading="schoolsStore.loading ? 'primary' : false"
       fixed-header
       :search="search"
-      :sort-by="[{ key: 'name', order: 'asc' }]"
+      :sort-by="[
+        { key: 'registration_status', order: 'desc' },
+        { key: 'name', order: 'asc' },
+      ]"
       v-model:expanded="expanded"
       hide-default-footer
       :custom-filter="custom_filter"
