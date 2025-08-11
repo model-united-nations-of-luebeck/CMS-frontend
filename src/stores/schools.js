@@ -111,7 +111,7 @@ export const registration_status_options = [
     {
       value: "WAITING_FOR_FINAL_REGISTRATION",
       text: "waiting for final registration",
-      color: "red",
+      color: "purple",
     },
     { value: "FINAL_REGISTRATION_DONE", text: "final registration done", color: "green"},
     { value: "CANCELED", text: "canceled", color: "grey"},
