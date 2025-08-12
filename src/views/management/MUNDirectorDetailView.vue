@@ -141,4 +141,7 @@ const valid = ref(true);
 #search {
   width: 300px;
 }
+.badge-photo {
+  position: absolute;
+}
 </style>
