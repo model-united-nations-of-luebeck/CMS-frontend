@@ -22,7 +22,7 @@ export const useIssuesStore = defineStore('issues', () => {
             issues.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error;
         })
@@ -34,7 +34,7 @@ export const useIssuesStore = defineStore('issues', () => {
             issue.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error;
         })
@@ -43,16 +43,20 @@ export const useIssuesStore = defineStore('issues', () => {
     async function updateIssue(issue_id) {
         loading.value = true
         await http.patch(`issues/${issue_id}/`, issue.value).then(() => {
+            let index = issues.value.findIndex((issue) => issue.id == issue_id)
+            if (index !== -1) {
+                issues.value[index] = { ...issues.value[index], ...issue.value }
+            }
             loading.value = false
             toast.success('Issue was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
             })
         }).catch((error) => {
-            toast.error('Updating Issue failed', {
+            toast.error('Updating Issue failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
             })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error;
         })
@@ -68,10 +72,10 @@ export const useIssuesStore = defineStore('issues', () => {
                 style: 'width: auto'
             })
         }).catch((error) => {
-            toast.error('Adding Issue failed', {
+            toast.error('Adding Issue failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
             })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error;
         })
@@ -85,10 +89,10 @@ export const useIssuesStore = defineStore('issues', () => {
                 style: 'width: auto'
             })
         }).catch((error) => {
-            toast.error('Deleting Issue failed', {
+            toast.error('Deleting Issue failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
             })
-            console.log(error)
+            console.error(error)
             throw error;
         })
     }

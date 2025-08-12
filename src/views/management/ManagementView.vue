@@ -24,7 +24,7 @@ const initialize = async () => {
   try {
     await msalInstance.initialize();
   } catch (error) {
-    console.log("Initialization error", error);
+    console.error("Initialization error", error);
   }
 };
 

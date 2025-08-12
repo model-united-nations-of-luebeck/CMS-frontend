@@ -23,7 +23,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
                 plenaries.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -35,7 +35,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
             plenary.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -45,16 +45,20 @@ export const usePlenariesStore = defineStore('plenaries', () => {
     async function updatePlenary(plenary_id){
         loading.value = true
         await http.patch(`plenaries/${plenary_id}/`, plenary.value).then(() => {
+            let index = plenaries.value.findIndex( (plenary) => plenary.id == plenary_id)
+            if (index !== -1) {
+                plenaries.value[index] = {...plenaries.value[index], ...plenary.value}
+            }
             loading.value = false
             toast.success('Plenary was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Plenary failed', {
+            toast.error('Updating Plenary failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -70,10 +74,10 @@ export const usePlenariesStore = defineStore('plenaries', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding Plenary failed', {
+            toast.error('Adding Plenary failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -87,10 +91,10 @@ export const usePlenariesStore = defineStore('plenaries', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Plenary failed', {
+            toast.error('Deleting Plenary failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

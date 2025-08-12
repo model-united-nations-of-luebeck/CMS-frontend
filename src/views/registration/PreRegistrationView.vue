@@ -241,7 +241,7 @@ const ordinal = (n) => {
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
-              :loading="schoolsStore.button_loading"
+              :loading="schoolsStore.loading"
               :disabled="schoolsStore.loading"
               @click="schoolsStore.updateSchool(route.params.school_id)"
               >Submit pre-registration data</v-btn

@@ -32,7 +32,7 @@ async function loadData() {
       }
     });
   } else {
-    toast.error("Staff not found", {
+    toast.error("Staff not found. Please ask admin for help.", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   }

@@ -44,7 +44,7 @@ async function loadData() {
       }
     });
   } else {
-    toast.error("Delegate not found", {
+    toast.error("Delegate not found. Please ask admin for help.", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   }

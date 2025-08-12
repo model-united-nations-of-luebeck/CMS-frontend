@@ -8,7 +8,6 @@ export const useSchoolsStore = defineStore('schools', () => {
     const schools = ref([])
     const school = ref(null)
     const loading = ref(false)
-    const button_loading = ref(false)
     
     async function getSchools() {
         loading.value = true
@@ -16,7 +15,7 @@ export const useSchoolsStore = defineStore('schools', () => {
                 schools.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error;
             })
@@ -29,7 +28,7 @@ export const useSchoolsStore = defineStore('schools', () => {
             loading.value = false
         })
         .catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error;
         }) 
@@ -46,10 +45,10 @@ export const useSchoolsStore = defineStore('schools', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding School failed', {
+            toast.error('Adding School failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -58,19 +57,23 @@ export const useSchoolsStore = defineStore('schools', () => {
     }
 
     async function updateSchool(school_id){
-        button_loading.value = true
+        loading.value = true
         await http.patch(`schools/${school_id}/`, school.value).then(() => {
-            button_loading.value = false
+            let index = schools.value.findIndex( (school) => school.id == school_id)
+            if (index !== -1) {
+                schools.value[index] = {...schools.value[index], ...school.value}
+            }
+            loading.value = false
             toast.success('School was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Forum failed', {
+            toast.error('Updating School failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
-            button_loading.value = false
+            console.error(error)
+            loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
     }
@@ -83,15 +86,15 @@ export const useSchoolsStore = defineStore('schools', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting School failed', {
+            toast.error('Deleting School failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })
     }
 
-    return {schools, school, loading, button_loading, getSchools, getSchool, createSchool, updateSchool, deleteSchool}
+    return {schools, school, loading, getSchools, getSchool, createSchool, updateSchool, deleteSchool}
 })
 
 export const housing_options = [
@@ -111,7 +114,7 @@ export const registration_status_options = [
     {
       value: "WAITING_FOR_FINAL_REGISTRATION",
       text: "waiting for final registration",
-      color: "red",
+      color: "purple",
     },
     { value: "FINAL_REGISTRATION_DONE", text: "final registration done", color: "green"},
     { value: "CANCELED", text: "canceled", color: "grey"},

@@ -16,7 +16,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
                 student_officers.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -28,7 +28,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
             student_officer.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -38,16 +38,20 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
     async function updateStudentOfficer(student_officer_id){
         loading.value = true
         await http.patch(`student-officers/${student_officer_id}/`, student_officer.value).then(() => {
+            let index = student_officers.value.findIndex( (student_officer) => student_officer.id == student_officer_id)
+            if (index !== -1) {
+                student_officers.value[index] = {...student_officers.value[index], ...student_officer.value}
+            }
             loading.value = false
             toast.success('Student Officer was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Student Officer failed', {
+            toast.error('Updating Student Officer failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -63,10 +67,10 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Creating Student Officer failed', {
+            toast.error('Creating Student Officer failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -82,10 +86,10 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Student Officer failed', {
+            toast.error('Deleting Student Officer failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

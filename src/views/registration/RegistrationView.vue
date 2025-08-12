@@ -21,7 +21,7 @@ const showLoginDialog = (response) => {
       showTokenSentDialog.value = true;
     } else if (response.data?.dialog == "no_email") {
       toast.error(
-        'You have not provided an email address. Please contact the Conference Management at <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.',
+        'You have not provided an email address yet, therefore you cannot log in. Please contact the Conference Management at <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.',
         {
           position: toast.POSITION.BOTTOM_CENTER,
           autoClose: false,

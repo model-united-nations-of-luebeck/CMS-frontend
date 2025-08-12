@@ -26,7 +26,7 @@ export const useForumsStore = defineStore('forums', () => {
             forums.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -38,7 +38,7 @@ export const useForumsStore = defineStore('forums', () => {
             forum.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -48,16 +48,20 @@ export const useForumsStore = defineStore('forums', () => {
     async function updateForum(forum_id){
         loading.value = true
         await http.patch(`forums/${forum_id}/`, forum.value).then(() => {
+            let index = forums.value.findIndex( (forum) => forum.id == forum_id)
+            if (index !== -1) {
+                forums.value[index] = {...forums.value[index], ...forum.value}
+            }
             loading.value = false
             toast.success('Forum was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Forum failed', {
+            toast.error('Updating Forum failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -73,10 +77,10 @@ export const useForumsStore = defineStore('forums', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding Forum failed', {
+            toast.error('Adding Forum failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -90,10 +94,10 @@ export const useForumsStore = defineStore('forums', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Forum failed', {
+            toast.error('Deleting Forum failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

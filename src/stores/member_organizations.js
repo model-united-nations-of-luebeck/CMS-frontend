@@ -24,7 +24,7 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
                 member_organizations.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -36,19 +36,23 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
             member_organization.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
     }
 
     async function toggleActive(member_organization_id){
-        // loading.value = true
+        loading.value = true
         await http.patch(`member-organizations/${member_organization_id}/`, {'active': member_organizations.value.find( (org) => org.id == member_organization_id)?.active}).then(() => {
-            // loading.value = false
+            let index = member_organizations.value.findIndex( (org) => org.id == member_organization_id)
+            if (index !== -1) {
+                member_organizations.value[index].active = !member_organizations.value[index].active
+            }
+            loading.value = false
         }).catch((error) => {
-            console.log(error)
-            // loading.value = false
+            console.error(error)
+            loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
         
@@ -57,10 +61,14 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
     async function updateMemberOrganization(member_organization_id){
         loading.value = true
         await http.patch(`member-organizations/${member_organization_id}/`, member_organization.value).then(() => {
+            let index = member_organizations.value.findIndex( (org) => org.id == member_organization_id)
+            if (index !== -1) {
+                member_organizations.value[index] = {...member_organizations.value[index], ...member_organization.value}
+            }
             loading.value = false
             
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -72,7 +80,7 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
             member_organizations.value.push(res.data)
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -82,7 +90,7 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
         await http.delete(`member-organizations/${member_organization_id}/`).then(() => {
             member_organizations.value = member_organizations.value.filter( (org) => org.id != member_organization_id) // keep all member_organizations that do not have the id of the deleted member_organization
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

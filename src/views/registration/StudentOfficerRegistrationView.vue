@@ -32,7 +32,7 @@ async function loadData() {
         }
       });
   } else {
-    toast.error("Student Officer not found", {
+    toast.error("Student Officer not found. Please ask admin for help.", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   }

@@ -39,7 +39,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 });
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -54,7 +54,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 : [];
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -65,16 +65,20 @@ export const useAdvisorsStore = defineStore('advisors', () => {
         loading.value = true
         advisor.value.help = advisor.value.help.filter(item => item.trim() !== '').join(', ');
         await http.patch(`advisors/${advisor_id}/`, advisor.value).then(() => {
+            const index = advisors.value.findIndex(a => a.id === advisor_id);
+            if (index !== -1) {
+                advisors.value[index] = {...advisors.value[index], ...advisor.value};
+            }
             loading.value = false
             toast.success('Advisor was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Advisor failed', {
+            toast.error('Updating Advisor failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -91,10 +95,10 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding Advisor failed', {
+            toast.error('Adding Advisor failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -108,10 +112,10 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Advisor failed', {
+            toast.error('Deleting Advisor failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

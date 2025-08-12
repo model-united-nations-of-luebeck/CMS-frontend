@@ -16,7 +16,7 @@ export const useExecutivesStore = defineStore('executives', () => {
                 executives.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -28,7 +28,7 @@ export const useExecutivesStore = defineStore('executives', () => {
             executive.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -38,16 +38,20 @@ export const useExecutivesStore = defineStore('executives', () => {
     async function updateExecutive(executive_id){
         loading.value = true
         await http.patch(`executives/${executive_id}/`, executive.value).then(() => {
+            let index = executives.value.findIndex( (executive) => executive.id == executive_id)
+            if (index !== -1) {
+                executives.value[index] = {...executives.value[index], ...executive.value}
+            }
             loading.value = false
             toast.success('Executive was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Executive failed', {
+            toast.error('Updating Executive failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -63,10 +67,10 @@ export const useExecutivesStore = defineStore('executives', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Creating Executive failed', {
+            toast.error('Creating Executive failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -80,10 +84,10 @@ export const useExecutivesStore = defineStore('executives', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Executive failed', {
+            toast.error('Deleting Executive failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

@@ -15,7 +15,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 delegates.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -27,7 +27,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
             delegate.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -36,16 +36,20 @@ export const useDelegatesStore = defineStore('delegates', () => {
     async function updateDelegate(delegate_id){
         loading.value = true
         await http.patch(`delegates/${delegate_id}/`, delegate.value).then(() => {
+            let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
+            if (index !== -1) {
+                delegates.value[index] = {...delegates.value[index], ...delegate.value}
+            }
             loading.value = false
             toast.success('Delegate was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Delegate failed', {
+            toast.error('Updating Delegate failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -57,10 +61,10 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 delegates.value.push(res.data)
                 loading.value = false
             }).catch((error) => {
-                toast.error('Creating Delegate failed', {
+                toast.error('Creating Delegate failed. Please ask admin for help.', {
                     position: toast.POSITION.BOTTOM_CENTER
                   })
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -90,18 +94,19 @@ export const useDelegatesStore = defineStore('delegates', () => {
 
         await http.patch(`delegates/${delegate_id}/`, delegate.value).then(() => {
             let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
-            delegates.value[index] = {...delegates.value[index], ...delegate.value} // update the delegate in the delegates array with the reset values
-            
+            if (index !== -1) {
+                delegates.value[index] = {...delegates.value[index], ...delegate.value} 
+            }
             loading.value = false
             toast.success('Delegate was reset successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Resetting Delegate failed', {
+            toast.error('Resetting Delegate failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -113,10 +118,10 @@ export const useDelegatesStore = defineStore('delegates', () => {
             delegates.value = delegates.value.filter( (delegate) => delegate.id != delegate_id) // keep all delegates that do not have the id of the deleted delegate
             loading.value = false 
         }).catch((error) => {
-            toast.error('Deleting Delegate failed', {
+            toast.error('Deleting Delegate failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -125,21 +130,23 @@ export const useDelegatesStore = defineStore('delegates', () => {
     async function assignSchool(delegate_id, school_id) {
         // check delegates can only be unassigned from a school if no data is filled in yet (checked by data consent time given)
         if (delegates.value.find( (delegate) => delegate.id == delegate_id).data_consent_time) {
-            toast.error('Delegate has already filled in data, cannot unassign from school. Please reset delegate first', {
+            toast.error('Delegate has already filled in data, cannot unassign from school. Please reset delegate first.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             
         } else {
             loading.value = true
-            await http.patch(`delegates/${delegate_id}/`, {school: school_id}).then( (res) => {
+            await http.patch(`delegates/${delegate_id}/`, {school: school_id}).then( () => {
                 let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
-                delegates.value[index] = res.data
+                if (index !== -1) {
+                    delegates.value[index].school = school_id
+                }
                 loading.value = false
             }).catch((error) => {
-                toast.error(`${school_id ? 'Assigning' : 'Unassigning'} School failed`, {
+                toast.error(`${school_id ? 'Assigning' : 'Unassigning'} School failed. Please ask admin for help.`, {
                     position: toast.POSITION.BOTTOM_CENTER
                 })
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -156,10 +163,12 @@ export const useDelegatesStore = defineStore('delegates', () => {
             if (ambassador.id != delegate_id) {
                 await http.patch(`delegates/${ambassador.id}/`, {ambassador: false}).then( () => {
                     let index = delegates.value.findIndex( (delegate) => delegate.id == ambassador.id)
-                    delegates.value[index].ambassador = false
+                    if (index !== -1) {
+                        delegates.value[index].ambassador = false
+                    }
                 }).catch((error) => {
-                    console.log(error)
-                    toast.error('Unsetting Delegate as Ambassador failed', {
+                    console.error(error)
+                    toast.error('Unsetting Delegate as Ambassador failed. Please ask admin for help.', {
                         position: toast.POSITION.BOTTOM_CENTER
                       })
                     throw error; // rethrow the error to be caught at the point where this function is called
@@ -170,18 +179,20 @@ export const useDelegatesStore = defineStore('delegates', () => {
         // turn ambassador role on for the selected delegate
         await http.patch(`delegates/${delegate_id}/`, {ambassador: true}).then( () => {
             let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
-            delegates.value[index].ambassador = true
+            if (index !== -1) {
+                delegates.value[index].ambassador = true
+            }
             loading.value = false
             toast.success('Delegate was successfully set as Ambassador', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Setting Delegate as Ambassador failed', {
+            toast.error('Setting Delegate as Ambassador failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
               loading.value = false
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })
         

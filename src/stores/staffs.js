@@ -16,7 +16,7 @@ export const useStaffsStore = defineStore('staffs', () => {
                 staffs.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -28,7 +28,7 @@ export const useStaffsStore = defineStore('staffs', () => {
             staff.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -38,16 +38,20 @@ export const useStaffsStore = defineStore('staffs', () => {
     async function updateStaff(staff_id){
         loading.value = true
         await http.patch(`staffs/${staff_id}/`, staff.value).then(() => {
+            let index = staffs.value.findIndex( (staff) => staff.id == staff_id)
+            if (index !== -1) {
+                staffs.value[index] = {...staffs.value[index], ...staff.value}
+            }
             loading.value = false
             toast.success('Staff was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Staff failed', {
+            toast.error('Updating Staff failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -63,10 +67,10 @@ export const useStaffsStore = defineStore('staffs', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Creating Staff failed', {
+            toast.error('Creating Staff failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -80,10 +84,10 @@ export const useStaffsStore = defineStore('staffs', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Staff failed', {
+            toast.error('Deleting Staff failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

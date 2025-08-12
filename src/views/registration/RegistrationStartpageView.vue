@@ -2,14 +2,17 @@
 import { useRoute } from "vue-router";
 import { useConferenceStore } from "../../stores/conference";
 import { useDisplay } from "vuetify";
+import { useSchoolsStore } from "../../stores/schools";
 const { mobile } = useDisplay();
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 
+const route = useRoute();
+
 const conferenceStore = useConferenceStore();
 conferenceStore.getCurrentConference();
-
-const route = useRoute();
+const schoolsStore = useSchoolsStore();
+schoolsStore.getSchool(route.params.school_id);
 </script>
 
 <template>
@@ -187,16 +190,33 @@ const route = useRoute();
                 successfully.
               </v-card-text>
               <v-card-actions class="justify-center">
-                <v-btn
-                  :to="{
-                    name: 'final-registration',
-                    params: { school_id: route.params.school_id },
+                <span
+                  v-tooltip="{
+                    text: 'Pre-registration needs to be completed first, before entering final registration data.',
+                    location: 'bottom',
+                    disabled: [
+                      'WAITING_FOR_FINAL_REGISTRATION',
+                      'FINAL_REGISTRATION_DONE',
+                    ].includes(schoolsStore.school?.registration_status),
                   }"
-                  prepend-icon="mdi-account-check"
-                  variant="tonal"
-                  color="primary"
-                  >Enter final registration data</v-btn
                 >
+                  <v-btn
+                    :to="{
+                      name: 'final-registration',
+                      params: { school_id: route.params.school_id },
+                    }"
+                    prepend-icon="mdi-account-check"
+                    :disabled="
+                      ![
+                        'WAITING_FOR_FINAL_REGISTRATION',
+                        'FINAL_REGISTRATION_DONE',
+                      ].includes(schoolsStore.school?.registration_status)
+                    "
+                    variant="tonal"
+                    color="primary"
+                    >Enter final registration data</v-btn
+                  >
+                </span>
               </v-card-actions>
             </v-card>
           </v-timeline-item>
