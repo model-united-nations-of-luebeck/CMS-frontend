@@ -27,17 +27,14 @@ const headers = [
 ];
 
 const toggleActive = function (member_organization_id) {
-  console.log("toggleActive" + member_organization_id);
   memberOrganizationsStore.toggleActive(member_organization_id);
 };
 
 const deleteMemberOrganization = function (member_organization_id) {
-  console.log("deleteMemberOrganization" + member_organization_id);
   this.deleteDialog = member_organization_id;
 };
 
 const confirmedDeleteMemberOrganization = function () {
-  console.log("confirmedDeleteMemberOrganization" + this.deleteDialog);
   memberOrganizationsStore
     .deleteMemberOrganization(this.deleteDialog)
     .then(() => {

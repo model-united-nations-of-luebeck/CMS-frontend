@@ -53,8 +53,6 @@ const updateMemberOrganization = (member_organization_id) => {
       });
   } else {
     // update existing member organization
-    console.log("update member org" + member_organization_id);
-
     memberOrganizationsStore
       .updateMemberOrganization(member_organization_id)
       .then(() => {

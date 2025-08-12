@@ -16,7 +16,7 @@ const disableInvalidDates = (date) => {
   const now = new Date();
   // if the date is younger than 10 years or in the future, disable it
   if (date > now.setFullYear(now.getFullYear() - 10)) {
-    console.log("date is in the future", date, new Date().getFullYear() - 10);
+    console.debug("date is in the future", date, new Date().getFullYear() - 10);
     return false;
   }
   // if the date is older than 100 years, disable it

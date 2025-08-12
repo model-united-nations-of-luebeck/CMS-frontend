@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 // import { useDate } from 'vuetify' //required to parse dates correctly regardless on the user's timezone
 // const dateAdapter = useDate()
 
@@ -9,19 +9,19 @@ const prop = defineProps({
   hint: String,
   prepend_inner_icon: String,
   rules: Array,
-  type: String
-})
-const show_date_picker = ref(false)
+  type: String,
+});
+const show_date_picker = ref(false);
 
-const emit = defineEmits(['update:date'])
+const emit = defineEmits(["update:date"]);
 const updateDate = (date) => {
-  console.log('updateDate', date.toISOString())
+  console.debug("updateDate", date.toISOString());
 
-  const formattedDate = date.toUTCString()
-  console.log('formattedDate', formattedDate)
-  emit('update:date', formattedDate)
-  show_date_picker.value = false
-}
+  const formattedDate = date.toUTCString();
+  console.debug("formattedDate", formattedDate);
+  emit("update:date", formattedDate);
+  show_date_picker.value = false;
+};
 </script>
 
 <template>

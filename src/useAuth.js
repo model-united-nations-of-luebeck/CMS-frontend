@@ -5,7 +5,7 @@ export function msalService() {
     try {
       await msalInstance.initialize() // Call the initialize function
     } catch (error) {
-      console.log('Initialization error', error)
+      console.error('Initialization error', error)
     }
   }
 
