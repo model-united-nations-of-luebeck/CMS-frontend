@@ -30,7 +30,7 @@ async function loadData() {
       }
     });
   } else {
-    toast.error("Executive not found", {
+    toast.error("Executive not found. Please ask admin for help.", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   }

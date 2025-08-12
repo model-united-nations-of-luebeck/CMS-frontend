@@ -37,7 +37,7 @@ async function loadData() {
         }
       });
   } else {
-    toast.error("MUN-Director not found", {
+    toast.error("MUN-Director not found. Please ask admin for help.", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   }

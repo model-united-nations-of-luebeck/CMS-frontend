@@ -58,7 +58,7 @@ export const useForumsStore = defineStore('forums', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Forum failed', {
+            toast.error('Updating Forum failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -77,7 +77,7 @@ export const useForumsStore = defineStore('forums', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding Forum failed', {
+            toast.error('Adding Forum failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -94,7 +94,7 @@ export const useForumsStore = defineStore('forums', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Forum failed', {
+            toast.error('Deleting Forum failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)

@@ -42,7 +42,7 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating MUN-Director failed', { position: toast.POSITION.BOTTOM_CENTER })
+            toast.error('Updating MUN-Director failed. Please ask admin for help.', { position: toast.POSITION.BOTTOM_CENTER })
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
@@ -61,7 +61,7 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting MUN-Director failed', { position: toast.POSITION.BOTTOM_CENTER })
+            toast.error('Deleting MUN-Director failed. Please ask admin for help.', { position: toast.POSITION.BOTTOM_CENTER })
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
@@ -78,7 +78,7 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding MUN-Director failed', { position: toast.POSITION.BOTTOM_CENTER })
+            toast.error('Adding MUN-Director failed. Please ask admin for help.', { position: toast.POSITION.BOTTOM_CENTER })
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called

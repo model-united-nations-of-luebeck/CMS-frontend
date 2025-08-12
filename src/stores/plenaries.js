@@ -55,7 +55,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Plenary failed', {
+            toast.error('Updating Plenary failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -74,7 +74,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding Plenary failed', {
+            toast.error('Adding Plenary failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -91,7 +91,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Plenary failed', {
+            toast.error('Deleting Plenary failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)

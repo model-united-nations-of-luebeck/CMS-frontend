@@ -46,7 +46,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Delegate failed', {
+            toast.error('Updating Delegate failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -61,7 +61,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 delegates.value.push(res.data)
                 loading.value = false
             }).catch((error) => {
-                toast.error('Creating Delegate failed', {
+                toast.error('Creating Delegate failed. Please ask admin for help.', {
                     position: toast.POSITION.BOTTOM_CENTER
                   })
                 console.error(error)
@@ -103,7 +103,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Resetting Delegate failed', {
+            toast.error('Resetting Delegate failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -118,7 +118,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
             delegates.value = delegates.value.filter( (delegate) => delegate.id != delegate_id) // keep all delegates that do not have the id of the deleted delegate
             loading.value = false 
         }).catch((error) => {
-            toast.error('Deleting Delegate failed', {
+            toast.error('Deleting Delegate failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -130,7 +130,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
     async function assignSchool(delegate_id, school_id) {
         // check delegates can only be unassigned from a school if no data is filled in yet (checked by data consent time given)
         if (delegates.value.find( (delegate) => delegate.id == delegate_id).data_consent_time) {
-            toast.error('Delegate has already filled in data, cannot unassign from school. Please reset delegate first', {
+            toast.error('Delegate has already filled in data, cannot unassign from school. Please reset delegate first.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             
@@ -143,7 +143,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 }
                 loading.value = false
             }).catch((error) => {
-                toast.error(`${school_id ? 'Assigning' : 'Unassigning'} School failed`, {
+                toast.error(`${school_id ? 'Assigning' : 'Unassigning'} School failed. Please ask admin for help.`, {
                     position: toast.POSITION.BOTTOM_CENTER
                 })
                 console.error(error)
@@ -168,7 +168,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                     }
                 }).catch((error) => {
                     console.error(error)
-                    toast.error('Unsetting Delegate as Ambassador failed', {
+                    toast.error('Unsetting Delegate as Ambassador failed. Please ask admin for help.', {
                         position: toast.POSITION.BOTTOM_CENTER
                       })
                     throw error; // rethrow the error to be caught at the point where this function is called
@@ -188,7 +188,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Setting Delegate as Ambassador failed', {
+            toast.error('Setting Delegate as Ambassador failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
               loading.value = false

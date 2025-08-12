@@ -53,7 +53,7 @@ export const useIssuesStore = defineStore('issues', () => {
                 style: 'width: auto'
             })
         }).catch((error) => {
-            toast.error('Updating Issue failed', {
+            toast.error('Updating Issue failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
             })
             console.error(error)
@@ -72,7 +72,7 @@ export const useIssuesStore = defineStore('issues', () => {
                 style: 'width: auto'
             })
         }).catch((error) => {
-            toast.error('Adding Issue failed', {
+            toast.error('Adding Issue failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
             })
             console.error(error)
@@ -89,7 +89,7 @@ export const useIssuesStore = defineStore('issues', () => {
                 style: 'width: auto'
             })
         }).catch((error) => {
-            toast.error('Deleting Issue failed', {
+            toast.error('Deleting Issue failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
             })
             console.error(error)

@@ -47,9 +47,12 @@ const updateMemberOrganization = (member_organization_id) => {
         router.push({ name: "member-organizations" });
       })
       .catch(() => {
-        toast.error("Adding Member Organization failed", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
+        toast.error(
+          "Adding Member Organization failed. Please ask admin for help.",
+          {
+            position: toast.POSITION.BOTTOM_CENTER,
+          },
+        );
       });
   } else {
     // update existing member organization
@@ -63,9 +66,12 @@ const updateMemberOrganization = (member_organization_id) => {
         router.push({ name: "member-organizations" });
       })
       .catch(() => {
-        toast.error("Updating Member Organization failed", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
+        toast.error(
+          "Updating Member Organization failed. Please ask admin for help.",
+          {
+            position: toast.POSITION.BOTTOM_CENTER,
+          },
+        );
       });
   }
 };

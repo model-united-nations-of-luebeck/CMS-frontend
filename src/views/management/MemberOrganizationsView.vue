@@ -46,9 +46,12 @@ const confirmedDeleteMemberOrganization = function () {
     })
     .catch(() => {
       this.deleteDialog = false;
-      toast.error("Deleting Member Organization failed", {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
+      toast.error(
+        "Deleting Member Organization failed. Please ask admin for help.",
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+        },
+      );
     });
 };
 </script>

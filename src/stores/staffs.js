@@ -48,7 +48,7 @@ export const useStaffsStore = defineStore('staffs', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Staff failed', {
+            toast.error('Updating Staff failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -67,7 +67,7 @@ export const useStaffsStore = defineStore('staffs', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Creating Staff failed', {
+            toast.error('Creating Staff failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -84,7 +84,7 @@ export const useStaffsStore = defineStore('staffs', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Staff failed', {
+            toast.error('Deleting Staff failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)

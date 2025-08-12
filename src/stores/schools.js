@@ -45,7 +45,7 @@ export const useSchoolsStore = defineStore('schools', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding School failed', {
+            toast.error('Adding School failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -69,7 +69,7 @@ export const useSchoolsStore = defineStore('schools', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Forum failed', {
+            toast.error('Updating School failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -86,7 +86,7 @@ export const useSchoolsStore = defineStore('schools', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting School failed', {
+            toast.error('Deleting School failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)

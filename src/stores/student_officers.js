@@ -48,7 +48,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Student Officer failed', {
+            toast.error('Updating Student Officer failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -67,7 +67,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Creating Student Officer failed', {
+            toast.error('Creating Student Officer failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -86,7 +86,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Student Officer failed', {
+            toast.error('Deleting Student Officer failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)

@@ -75,7 +75,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Advisor failed', {
+            toast.error('Updating Advisor failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -95,7 +95,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding Advisor failed', {
+            toast.error('Adding Advisor failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -112,7 +112,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Advisor failed', {
+            toast.error('Deleting Advisor failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)

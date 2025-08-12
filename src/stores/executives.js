@@ -48,7 +48,7 @@ export const useExecutivesStore = defineStore('executives', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Executive failed', {
+            toast.error('Updating Executive failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -67,7 +67,7 @@ export const useExecutivesStore = defineStore('executives', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Creating Executive failed', {
+            toast.error('Creating Executive failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
@@ -84,7 +84,7 @@ export const useExecutivesStore = defineStore('executives', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Deleting Executive failed', {
+            toast.error('Deleting Executive failed. Please ask admin for help.', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.error(error)
