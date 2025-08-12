@@ -43,12 +43,16 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
     }
 
     async function toggleActive(member_organization_id){
-        // loading.value = true
+        loading.value = true
         await http.patch(`member-organizations/${member_organization_id}/`, {'active': member_organizations.value.find( (org) => org.id == member_organization_id)?.active}).then(() => {
-            // loading.value = false
+            let index = member_organizations.value.findIndex( (org) => org.id == member_organization_id)
+            if (index !== -1) {
+                member_organizations.value[index].active = !member_organizations.value[index].active
+            }
+            loading.value = false
         }).catch((error) => {
             console.log(error)
-            // loading.value = false
+            loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
         
@@ -57,6 +61,10 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
     async function updateMemberOrganization(member_organization_id){
         loading.value = true
         await http.patch(`member-organizations/${member_organization_id}/`, member_organization.value).then(() => {
+            let index = member_organizations.value.findIndex( (org) => org.id == member_organization_id)
+            if (index !== -1) {
+                member_organizations.value[index] = {...member_organizations.value[index], ...member_organization.value}
+            }
             loading.value = false
             
         }).catch((error) => {

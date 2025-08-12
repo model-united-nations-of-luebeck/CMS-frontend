@@ -48,6 +48,10 @@ export const useForumsStore = defineStore('forums', () => {
     async function updateForum(forum_id){
         loading.value = true
         await http.patch(`forums/${forum_id}/`, forum.value).then(() => {
+            let index = forums.value.findIndex( (forum) => forum.id == forum_id)
+            if (index !== -1) {
+                forums.value[index] = {...forums.value[index], ...forum.value}
+            }
             loading.value = false
             toast.success('Forum was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,

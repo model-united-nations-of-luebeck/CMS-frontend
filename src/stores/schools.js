@@ -8,7 +8,6 @@ export const useSchoolsStore = defineStore('schools', () => {
     const schools = ref([])
     const school = ref(null)
     const loading = ref(false)
-    const button_loading = ref(false)
     
     async function getSchools() {
         loading.value = true
@@ -58,9 +57,13 @@ export const useSchoolsStore = defineStore('schools', () => {
     }
 
     async function updateSchool(school_id){
-        button_loading.value = true
+        loading.value = true
         await http.patch(`schools/${school_id}/`, school.value).then(() => {
-            button_loading.value = false
+            let index = schools.value.findIndex( (school) => school.id == school_id)
+            if (index !== -1) {
+                schools.value[index] = {...schools.value[index], ...school.value}
+            }
+            loading.value = false
             toast.success('School was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
                 style: 'width: auto'
@@ -70,7 +73,7 @@ export const useSchoolsStore = defineStore('schools', () => {
                 position: toast.POSITION.BOTTOM_CENTER
               })
             console.log(error)
-            button_loading.value = false
+            loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
     }
@@ -91,7 +94,7 @@ export const useSchoolsStore = defineStore('schools', () => {
         })
     }
 
-    return {schools, school, loading, button_loading, getSchools, getSchool, createSchool, updateSchool, deleteSchool}
+    return {schools, school, loading, getSchools, getSchool, createSchool, updateSchool, deleteSchool}
 })
 
 export const housing_options = [

@@ -36,6 +36,10 @@ export const useDelegatesStore = defineStore('delegates', () => {
     async function updateDelegate(delegate_id){
         loading.value = true
         await http.patch(`delegates/${delegate_id}/`, delegate.value).then(() => {
+            let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
+            if (index !== -1) {
+                delegates.value[index] = {...delegates.value[index], ...delegate.value}
+            }
             loading.value = false
             toast.success('Delegate was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
@@ -90,8 +94,9 @@ export const useDelegatesStore = defineStore('delegates', () => {
 
         await http.patch(`delegates/${delegate_id}/`, delegate.value).then(() => {
             let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
-            delegates.value[index] = {...delegates.value[index], ...delegate.value} // update the delegate in the delegates array with the reset values
-            
+            if (index !== -1) {
+                delegates.value[index] = {...delegates.value[index], ...delegate.value} 
+            }
             loading.value = false
             toast.success('Delegate was reset successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
@@ -131,9 +136,11 @@ export const useDelegatesStore = defineStore('delegates', () => {
             
         } else {
             loading.value = true
-            await http.patch(`delegates/${delegate_id}/`, {school: school_id}).then( (res) => {
+            await http.patch(`delegates/${delegate_id}/`, {school: school_id}).then( () => {
                 let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
-                delegates.value[index] = res.data
+                if (index !== -1) {
+                    delegates.value[index].school = school_id
+                }
                 loading.value = false
             }).catch((error) => {
                 toast.error(`${school_id ? 'Assigning' : 'Unassigning'} School failed`, {
@@ -156,7 +163,9 @@ export const useDelegatesStore = defineStore('delegates', () => {
             if (ambassador.id != delegate_id) {
                 await http.patch(`delegates/${ambassador.id}/`, {ambassador: false}).then( () => {
                     let index = delegates.value.findIndex( (delegate) => delegate.id == ambassador.id)
-                    delegates.value[index].ambassador = false
+                    if (index !== -1) {
+                        delegates.value[index].ambassador = false
+                    }
                 }).catch((error) => {
                     console.log(error)
                     toast.error('Unsetting Delegate as Ambassador failed', {
@@ -170,7 +179,9 @@ export const useDelegatesStore = defineStore('delegates', () => {
         // turn ambassador role on for the selected delegate
         await http.patch(`delegates/${delegate_id}/`, {ambassador: true}).then( () => {
             let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
-            delegates.value[index].ambassador = true
+            if (index !== -1) {
+                delegates.value[index].ambassador = true
+            }
             loading.value = false
             toast.success('Delegate was successfully set as Ambassador', {
                 position: toast.POSITION.BOTTOM_CENTER,

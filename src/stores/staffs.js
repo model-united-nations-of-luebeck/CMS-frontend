@@ -38,6 +38,10 @@ export const useStaffsStore = defineStore('staffs', () => {
     async function updateStaff(staff_id){
         loading.value = true
         await http.patch(`staffs/${staff_id}/`, staff.value).then(() => {
+            let index = staffs.value.findIndex( (staff) => staff.id == staff_id)
+            if (index !== -1) {
+                staffs.value[index] = {...staffs.value[index], ...staff.value}
+            }
             loading.value = false
             toast.success('Staff was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,

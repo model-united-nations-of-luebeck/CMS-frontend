@@ -43,6 +43,10 @@ export const useIssuesStore = defineStore('issues', () => {
     async function updateIssue(issue_id) {
         loading.value = true
         await http.patch(`issues/${issue_id}/`, issue.value).then(() => {
+            let index = issues.value.findIndex((issue) => issue.id == issue_id)
+            if (index !== -1) {
+                issues.value[index] = { ...issues.value[index], ...issue.value }
+            }
             loading.value = false
             toast.success('Issue was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,

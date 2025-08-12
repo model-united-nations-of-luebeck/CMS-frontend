@@ -38,6 +38,10 @@ export const useExecutivesStore = defineStore('executives', () => {
     async function updateExecutive(executive_id){
         loading.value = true
         await http.patch(`executives/${executive_id}/`, executive.value).then(() => {
+            let index = executives.value.findIndex( (executive) => executive.id == executive_id)
+            if (index !== -1) {
+                executives.value[index] = {...executives.value[index], ...executive.value}
+            }
             loading.value = false
             toast.success('Executive was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,

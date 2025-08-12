@@ -65,6 +65,10 @@ export const useAdvisorsStore = defineStore('advisors', () => {
         loading.value = true
         advisor.value.help = advisor.value.help.filter(item => item.trim() !== '').join(', ');
         await http.patch(`advisors/${advisor_id}/`, advisor.value).then(() => {
+            const index = advisors.value.findIndex(a => a.id === advisor_id);
+            if (index !== -1) {
+                advisors.value[index] = {...advisors.value[index], ...advisor.value};
+            }
             loading.value = false
             toast.success('Advisor was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,

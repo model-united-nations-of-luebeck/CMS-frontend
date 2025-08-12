@@ -1,37 +1,45 @@
 <script setup>
-import { useSchoolsStore, housing_options, registration_status_options } from '../../stores/schools'
+import {
+  useSchoolsStore,
+  housing_options,
+  registration_status_options,
+} from "../../stores/schools";
 
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter } from "vue-router";
 
-const route = useRoute()
-const router = useRouter()
-const schoolsStore = useSchoolsStore()
-schoolsStore.getSchool(route.params.school_id)
+const route = useRoute();
+const router = useRouter();
+const schoolsStore = useSchoolsStore();
+schoolsStore.getSchool(route.params.school_id);
 
 const updateSchool = (school_id) => {
   // update school
-  schoolsStore.updateSchool(school_id)
+  schoolsStore.updateSchool(school_id);
 
   // go back to schools view
-  router.push({ name: 'schools' })
-}
+  router.push({ name: "schools" });
+};
 
 const validationRules = {
   nameRules: [
-    (v) => !!v || 'School name is required',
-    (v) => v.length <= 50 || 'Name must be less than 50 characters'
+    (v) => !!v || "School name is required",
+    (v) => v.length <= 50 || "Name must be less than 50 characters",
   ],
   countryRules: [
-    (v) => !!v || 'Country of origin is required',
-    (v) => v.length <= 50 || 'Country of origin must be less than 50 characters'
-  ]
-}
+    (v) => !!v || "Country of origin is required",
+    (v) =>
+      v.length <= 50 || "Country of origin must be less than 50 characters",
+  ],
+};
 </script>
 
 <template>
   <div class="">
     <v-breadcrumbs
-      :items="[{ title: 'Schools', to: { name: 'schools' } }, { title: schoolsStore.school.name }]"
+      :items="[
+        { title: 'Schools', to: { name: 'schools' } },
+        { title: schoolsStore.school.name },
+      ]"
     >
       <template v-slot:prepend>
         <v-icon icon="mdi-bank" size="small" start></v-icon>
@@ -172,7 +180,7 @@ const validationRules = {
             id="submit-btn"
             color="primary"
             prepend-icon="mdi-send"
-            :loading="schoolsStore.button_loading"
+            :loading="schoolsStore.loading"
             @click="updateSchool(schoolsStore.school.id)"
             >update school</v-btn
           >

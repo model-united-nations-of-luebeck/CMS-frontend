@@ -45,6 +45,10 @@ export const usePlenariesStore = defineStore('plenaries', () => {
     async function updatePlenary(plenary_id){
         loading.value = true
         await http.patch(`plenaries/${plenary_id}/`, plenary.value).then(() => {
+            let index = plenaries.value.findIndex( (plenary) => plenary.id == plenary_id)
+            if (index !== -1) {
+                plenaries.value[index] = {...plenaries.value[index], ...plenary.value}
+            }
             loading.value = false
             toast.success('Plenary was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,

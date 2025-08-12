@@ -32,6 +32,10 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
     async function updateMUNDirector(mun_director_id){
         loading.value = true
         await http.patch(`mun-directors/${mun_director_id}/`, mun_director.value).then(() => {
+            let index = mun_directors.value.findIndex( (mun_dir) => mun_dir.id == mun_director_id)
+            if (index !== -1) {
+                mun_directors.value[index] = {...mun_directors.value[index], ...mun_director.value}
+            }
             loading.value = false
             toast.success('MUN-Director was updated successfully', {
                 position: toast.POSITION.BOTTOM_CENTER,
