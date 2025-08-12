@@ -15,7 +15,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 delegates.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -27,7 +27,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
             delegate.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -49,7 +49,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
             toast.error('Updating Delegate failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -64,7 +64,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 toast.error('Creating Delegate failed', {
                     position: toast.POSITION.BOTTOM_CENTER
                   })
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -106,7 +106,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
             toast.error('Resetting Delegate failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -121,7 +121,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
             toast.error('Deleting Delegate failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -146,7 +146,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 toast.error(`${school_id ? 'Assigning' : 'Unassigning'} School failed`, {
                     position: toast.POSITION.BOTTOM_CENTER
                 })
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -167,7 +167,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                         delegates.value[index].ambassador = false
                     }
                 }).catch((error) => {
-                    console.log(error)
+                    console.error(error)
                     toast.error('Unsetting Delegate as Ambassador failed', {
                         position: toast.POSITION.BOTTOM_CENTER
                       })
@@ -192,7 +192,7 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 position: toast.POSITION.BOTTOM_CENTER
               })
               loading.value = false
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })
         

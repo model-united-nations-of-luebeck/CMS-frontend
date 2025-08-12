@@ -23,7 +23,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
                 plenaries.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -35,7 +35,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
             plenary.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -58,7 +58,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
             toast.error('Updating Plenary failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -77,7 +77,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
             toast.error('Adding Plenary failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -94,7 +94,7 @@ export const usePlenariesStore = defineStore('plenaries', () => {
             toast.error('Deleting Plenary failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

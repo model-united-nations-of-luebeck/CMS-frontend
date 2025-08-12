@@ -16,7 +16,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
                 student_officers.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -28,7 +28,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
             student_officer.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -51,7 +51,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
             toast.error('Updating Student Officer failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -70,7 +70,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
             toast.error('Creating Student Officer failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -89,7 +89,7 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
             toast.error('Deleting Student Officer failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

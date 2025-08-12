@@ -16,7 +16,7 @@ export const useStaffsStore = defineStore('staffs', () => {
                 staffs.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -28,7 +28,7 @@ export const useStaffsStore = defineStore('staffs', () => {
             staff.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -51,7 +51,7 @@ export const useStaffsStore = defineStore('staffs', () => {
             toast.error('Updating Staff failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -70,7 +70,7 @@ export const useStaffsStore = defineStore('staffs', () => {
             toast.error('Creating Staff failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -87,7 +87,7 @@ export const useStaffsStore = defineStore('staffs', () => {
             toast.error('Deleting Staff failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

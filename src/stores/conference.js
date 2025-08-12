@@ -40,7 +40,7 @@ export const useConferenceStore = defineStore('conference', () => {
                 style: 'width: auto'
               })
         }).catch( (error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             toast.error('Updating conference settings failed', {
                 position: toast.POSITION.BOTTOM_CENTER

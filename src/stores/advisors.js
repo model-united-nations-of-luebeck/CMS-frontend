@@ -39,7 +39,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 });
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -54,7 +54,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 : [];
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -78,7 +78,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
             toast.error('Updating Advisor failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -98,7 +98,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
             toast.error('Adding Advisor failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -115,7 +115,7 @@ export const useAdvisorsStore = defineStore('advisors', () => {
             toast.error('Deleting Advisor failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

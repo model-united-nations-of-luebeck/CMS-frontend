@@ -24,7 +24,7 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
                 member_organizations.value = res.data
                 loading.value = false
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
                 loading.value = false
                 throw error; // rethrow the error to be caught at the point where this function is called
             })
@@ -36,7 +36,7 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
             member_organization.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -51,7 +51,7 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
             }
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -68,7 +68,7 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
             loading.value = false
             
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -80,7 +80,7 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
             member_organizations.value.push(res.data)
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -90,7 +90,7 @@ export const useMemberOrganizationsStore = defineStore('member_organizations', (
         await http.delete(`member-organizations/${member_organization_id}/`).then(() => {
             member_organizations.value = member_organizations.value.filter( (org) => org.id != member_organization_id) // keep all member_organizations that do not have the id of the deleted member_organization
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

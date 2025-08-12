@@ -26,7 +26,7 @@ export const useForumsStore = defineStore('forums', () => {
             forums.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -38,7 +38,7 @@ export const useForumsStore = defineStore('forums', () => {
             forum.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -61,7 +61,7 @@ export const useForumsStore = defineStore('forums', () => {
             toast.error('Updating Forum failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -80,7 +80,7 @@ export const useForumsStore = defineStore('forums', () => {
             toast.error('Adding Forum failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -97,7 +97,7 @@ export const useForumsStore = defineStore('forums', () => {
             toast.error('Deleting Forum failed', {
                 position: toast.POSITION.BOTTOM_CENTER
               })
-            console.log(error)
+            console.error(error)
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
     }

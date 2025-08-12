@@ -23,7 +23,7 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
             mun_director.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -43,7 +43,7 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
               })
         }).catch((error) => {
             toast.error('Updating MUN-Director failed', { position: toast.POSITION.BOTTOM_CENTER })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
@@ -62,7 +62,7 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
               })
         }).catch((error) => {
             toast.error('Deleting MUN-Director failed', { position: toast.POSITION.BOTTOM_CENTER })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })    
@@ -79,7 +79,7 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
               })
         }).catch((error) => {
             toast.error('Adding MUN-Director failed', { position: toast.POSITION.BOTTOM_CENTER })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })

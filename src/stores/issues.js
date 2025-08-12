@@ -22,7 +22,7 @@ export const useIssuesStore = defineStore('issues', () => {
             issues.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error;
         })
@@ -34,7 +34,7 @@ export const useIssuesStore = defineStore('issues', () => {
             issue.value = res.data
             loading.value = false
         }).catch((error) => {
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error;
         })
@@ -56,7 +56,7 @@ export const useIssuesStore = defineStore('issues', () => {
             toast.error('Updating Issue failed', {
                 position: toast.POSITION.BOTTOM_CENTER
             })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error;
         })
@@ -75,7 +75,7 @@ export const useIssuesStore = defineStore('issues', () => {
             toast.error('Adding Issue failed', {
                 position: toast.POSITION.BOTTOM_CENTER
             })
-            console.log(error)
+            console.error(error)
             loading.value = false
             throw error;
         })
@@ -92,7 +92,7 @@ export const useIssuesStore = defineStore('issues', () => {
             toast.error('Deleting Issue failed', {
                 position: toast.POSITION.BOTTOM_CENTER
             })
-            console.log(error)
+            console.error(error)
             throw error;
         })
     }
