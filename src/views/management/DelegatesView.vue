@@ -193,14 +193,26 @@ const custom_filter = function (value, query, item) {
     </v-row>
 
     <v-data-table-virtual
-      v-if="delegatesStore.delegates"
+      v-if="
+        delegatesStore.delegates &&
+        forumsStore.forums &&
+        memberOrganizationsStore.member_organizations &&
+        schoolsStore.schools
+      "
       :headers="headers"
       :items="delegatesStore.delegates"
       item-key="id"
       items-per-page="-1"
       items-per-page-text="Delegates per page"
       hover
-      :loading="delegatesStore.loading ? 'primary' : false"
+      :loading="
+        delegatesStore.loading ||
+        forumsStore.loading ||
+        memberOrganizationsStore.loading ||
+        schoolsStore.loading
+          ? 'primary'
+          : false
+      "
       fixed-header
       :search="search"
       :sort-by="[
