@@ -159,7 +159,7 @@ defineExpose({
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
-              :disabled="!valid"
+              :disabled="!valid || !advisorsStore.advisor.picture"
               @click="advisorsStore.updateAdvisor(advisorsStore.advisor.id)"
               >Update information</v-btn
             >
@@ -169,7 +169,7 @@ defineExpose({
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
-              :disabled="!valid"
+              :disabled="!valid || !advisorsStore.advisor.picture"
               @click="advisorsStore.createAdvisor()"
               >Submit registration form</v-btn
             >

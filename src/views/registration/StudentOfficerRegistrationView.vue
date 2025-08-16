@@ -149,7 +149,9 @@ defineExpose({
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
-              :disabled="!valid"
+              :disabled="
+                !valid || !studentOfficersStore.student_officer.picture
+              "
               @click="
                 studentOfficersStore.updateStudentOfficer(
                   studentOfficersStore.student_officer.id,
