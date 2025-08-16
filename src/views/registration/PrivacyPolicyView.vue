@@ -43,7 +43,10 @@ const language = ref("en");
 
           <p>
             Der MUNOL e.V. betreibt dieses Conference Management System unter
-            <a href="https://www.lebinphy.uber.space/cms/" target="_blank"
+            <a
+              href="https://www.lebinphy.uber.space/cms/"
+              target="_blank"
+              rel="noopener noreferrer"
               >www.lebinphy.uber.space/cms/</a
             >
             unter Beachtung der einschlägigen Datenschutzbestimmungen.
@@ -373,13 +376,17 @@ const language = ref("en");
           <p class="text-caption">
             Diese Datenschutzerklärung wurde auf Grundlage der
             Datenschutzerklärung unter
-            <a href="https://irights.info/datenschutzerklaerung" target="_blank"
+            <a
+              href="https://irights.info/datenschutzerklaerung"
+              target="_blank"
+              rel="noopener noreferrer"
               >https://irights.info/datenschutzerklaerung</a
             >
             erstellt, welche unter
             <a
               href="https://creativecommons.org/licenses/by/4.0/"
               target="_blank"
+              rel="noopener noreferrer"
               >CC 4.0 BY</a
             >
             lizensiert ist und von iRights erstellt wurde.
@@ -395,7 +402,10 @@ const language = ref("en");
 
           <p>
             MUNOL e.V. operates this Conference Management System at
-            <a href="https://www.lebinphy.uber.space/cms/" target="_blank"
+            <a
+              href="https://www.lebinphy.uber.space/cms/"
+              target="_blank"
+              rel="noopener noreferrer"
               >www.lebinphy.uber.space/cms/</a
             >
             in compliance with applicable data protection regulations.
@@ -717,13 +727,17 @@ const language = ref("en");
 
           <p class="text-caption">
             This privacy policy is based on the privacy policy at
-            <a href="https://irights.info/datenschutzerklaerung" target="_blank"
+            <a
+              href="https://irights.info/datenschutzerklaerung"
+              target="_blank"
+              rel="noopener noreferrer"
               >https://irights.info/datenschutzerklaerung</a
             >
             which is licensed under
             <a
               href="https://creativecommons.org/licenses/by/4.0/"
               target="_blank"
+              rel="noopener noreferrer"
               >CC 4.0 BY</a
             >
             and was created by iRights.

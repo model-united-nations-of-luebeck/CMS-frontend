@@ -75,6 +75,7 @@ conferenceStore.getCurrentConference();
                 name: 'school-registration',
               }"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <template v-slot:prepend>
                 <v-icon color="primary"> mdi-bank</v-icon>
@@ -89,6 +90,7 @@ conferenceStore.getCurrentConference();
                 params: { advisor_id: 'add' },
               }"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <template v-slot:prepend>
                 <v-icon color="primary"> mdi-application</v-icon>

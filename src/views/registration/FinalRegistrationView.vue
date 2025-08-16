@@ -152,6 +152,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
               <Router-Link
                 class="link"
                 target="_blank"
+                rel="noopener noreferrer"
                 :to="{
                   name: 'final-registration-mun-director',
                   params: { mun_director_id: director.id },
@@ -284,6 +285,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
               <Router-Link
                 class="link"
                 target="_blank"
+                rel="noopener noreferrer"
                 :to="{
                   name: 'final-registration-delegate',
                   params: { delegate_id: delegate.id },

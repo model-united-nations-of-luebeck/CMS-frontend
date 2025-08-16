@@ -139,6 +139,7 @@ const confirmedDeleteAdvisor = function () {
             params: { advisor_id: 'add' },
           }"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <v-fab
             color="primary"

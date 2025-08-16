@@ -4,6 +4,8 @@ const { mobile } = useDisplay();
 import { ref, onMounted, watch } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 
@@ -171,8 +173,9 @@ watch(
       <p>
         Here is our
         <a
-          :href="`${import.meta.env.BASE_URL}/registration/privacy-policy`"
+          :href="router.resolve({ name: 'privacy-policy' }).href"
           target="_blank"
+          rel="noopener noreferrer"
         >
           privacy policy</a
         ><v-icon size="x-small">mdi-open-in-new</v-icon>
@@ -190,8 +193,9 @@ watch(
           processing procedures prior to letting you enter your data for the
           registration purposes. Here is our
           <a
-            :href="`${import.meta.env.BASE_URL}/registration/privacy-policy`"
+            :href="router.resolve({ name: 'privacy-policy' }).href"
             target="_blank"
+            rel="noopener noreferrer"
             >privacy policy</a
           >
           ><v-icon size="x-small">mdi-open-in-new</v-icon>
