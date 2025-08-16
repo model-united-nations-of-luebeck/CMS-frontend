@@ -33,7 +33,7 @@ const vuetify = createVuetify({
     family: 'Roboto'
   },
   theme: {
-    defaultTheme: 'system',
+    defaultTheme: 'light',
   }
 })
 
