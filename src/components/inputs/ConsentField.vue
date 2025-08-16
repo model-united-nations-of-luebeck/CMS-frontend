@@ -197,7 +197,6 @@ watch(
             target="_blank"
             rel="noopener noreferrer"
             >privacy policy</a
-          >
           ><v-icon size="x-small">mdi-open-in-new</v-icon>
           which describes the processing of data and your rights and our
           responsibilities. Please read through them and if you agree, please
