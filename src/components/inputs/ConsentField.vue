@@ -170,7 +170,10 @@ watch(
     >
       <p>
         Here is our
-        <a href="/registration/privacy-policy" target="_blank">
+        <a
+          :href="`${import.meta.env.BASE_URL}/registration/privacy-policy`"
+          target="_blank"
+        >
           privacy policy</a
         ><v-icon size="x-small">mdi-open-in-new</v-icon>
       </p>
@@ -186,8 +189,11 @@ watch(
           Dear participant, based on GDPR we need to inform you about our data
           processing procedures prior to letting you enter your data for the
           registration purposes. Here is our
-          <a href="/registration/privacy-policy" target="_blank"
+          <a
+            :href="`${import.meta.env.BASE_URL}/registration/privacy-policy`"
+            target="_blank"
             >privacy policy</a
+          >
           ><v-icon size="x-small">mdi-open-in-new</v-icon>
           which describes the processing of data and your rights and our
           responsibilities. Please read through them and if you agree, please
