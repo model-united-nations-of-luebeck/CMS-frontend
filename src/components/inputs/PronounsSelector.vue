@@ -46,6 +46,9 @@ const rules = ref([
   (v) =>
     v.split("/").length === 2 ||
     "Please enter your subject and possessive pronouns separated by /",
+  (v) =>
+    v.length <= 50 ||
+    "Please select shorter pronouns, which are 50 characters or less together.",
 ]);
 </script>
 
