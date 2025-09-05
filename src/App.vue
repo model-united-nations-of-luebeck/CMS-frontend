@@ -1,5 +1,8 @@
 <script setup>
 import { inject, ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const showLogout = ref(false);
 const routedComponent = ref(null);
@@ -27,7 +30,7 @@ const logout = function () {
 <template>
   <v-app>
     <v-app-bar density="compact" color="primary">
-      <RouterLink to="/">
+      <RouterLink :to="route.matched[0]?.path || '/'">
         <v-app-bar-nav-icon icon="mdi-bank" color="white"></v-app-bar-nav-icon>
       </RouterLink>
       <v-app-bar-title>{{ $route.meta.title }} </v-app-bar-title>
