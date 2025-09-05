@@ -120,6 +120,18 @@ defineExpose({
         <v-btn color="primary" block class="mt-4" type="submit" @click="login">
           Login
         </v-btn>
+
+        <a
+          href="mailto:conferencemanager@munol.org?subject=Forgot Password"
+          style="
+            color: gray;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+          "
+        >
+          Forgot your password?
+        </a>
       </v-form>
 
       <v-alert
