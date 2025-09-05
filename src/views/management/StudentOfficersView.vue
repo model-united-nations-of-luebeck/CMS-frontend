@@ -149,12 +149,12 @@ const createStudentOfficer = function () {
 };
 
 const deleteStudentOfficer = function (student_officer_id) {
-  this.deleteDialog = student_officer_id;
+  deleteDialog.value = student_officer_id;
 };
 
 const confirmedDeleteStudentOfficer = function () {
-  studentOfficersStore.deleteStudentOfficer(this.deleteDialog);
-  this.deleteDialog = false;
+  studentOfficersStore.deleteStudentOfficer(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -349,11 +349,11 @@ const confirmedDeleteStudentOfficer = function () {
       @ok-clicked="
         confirmedDeleteStudentOfficer(
           studentOfficersStore.student_officers.filter(
-            (student_officer) => student_officer.id == this.deleteDialog,
+            (student_officer) => student_officer.id == deleteDialog.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
 
     <v-dialog max-width="500" v-model="addNewStudentOfficerDialog">
