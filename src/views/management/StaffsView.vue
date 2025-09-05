@@ -106,12 +106,12 @@ const createStaff = function () {
 };
 
 const deleteStaff = function (staff_id) {
-  this.deleteDialog = staff_id;
+  deleteDialog.value = staff_id;
 };
 
 const confirmedDeleteStaff = function () {
-  staffsStore.deleteStaff(this.deleteDialog);
-  this.deleteDialog = false;
+  staffsStore.deleteStaff(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -278,11 +278,11 @@ const confirmedDeleteStaff = function () {
       text="Are you sure you want to delete this Staff?"
       @ok-clicked="
         confirmedDeleteStaff(
-          staffsStore.staffs.filter((staff) => staff.id == this.deleteDialog)
+          staffsStore.staffs.filter((staff) => staff.id == deleteDialog.value)
             .id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
 
     <v-dialog max-width="500" v-model="addNewStaffDialog">

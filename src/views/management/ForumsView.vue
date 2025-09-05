@@ -43,21 +43,21 @@ const plenary_headers = [
 ];
 
 const deleteForum = function (forum_id) {
-  this.deleteDialog = forum_id;
+  deleteDialog.value = forum_id;
 };
 
 const confirmedDeleteForum = function () {
-  forumsStore.deleteForum(this.deleteDialog);
-  this.deleteDialog = false;
+  forumsStore.deleteForum(deleteDialog.value);
+  deleteDialog.value = false;
 };
 
 const deletePlenary = function (plenary_id) {
-  this.deleteDialogPlenary = plenary_id;
+  deleteDialogPlenary.value = plenary_id;
 };
 
 const confirmedDeletePlenary = function () {
-  plenariesStore.deletePlenary(this.deleteDialogPlenary);
-  this.deleteDialogPlenary = false;
+  plenariesStore.deletePlenary(deleteDialogPlenary.value);
+  deleteDialogPlenary.value = false;
 };
 </script>
 
@@ -294,11 +294,11 @@ const confirmedDeletePlenary = function () {
       text="Are you sure you want to delete this forum?"
       @ok-clicked="
         confirmedDeleteForum(
-          forumsStore.forums.filter((forum) => forum.id == this.deleteDialog)
+          forumsStore.forums.filter((forum) => forum.id == deleteDialog.value)
             .id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
 
     <!-- Plenaries Delete Dialog -->
@@ -309,11 +309,11 @@ const confirmedDeletePlenary = function () {
       @ok-clicked="
         confirmedDeletePlenary(
           plenariesStore.plenaries.filter(
-            (plenary) => plenary.id == this.deleteDialogPlenary,
+            (plenary) => plenary.id == deleteDialogPlenary.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialogPlenary = false"
+      @cancel-clicked="deleteDialogPlenary.value = false"
     ></ConfirmDialog>
   </div>
 </template>

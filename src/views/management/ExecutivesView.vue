@@ -120,12 +120,12 @@ const createExecutive = function () {
 };
 
 const deleteExecutive = function (executive_id) {
-  this.deleteDialog = executive_id;
+  deleteDialog.value = executive_id;
 };
 
 const confirmedDeleteExecutive = function () {
-  executivesStore.deleteExecutive(this.deleteDialog);
-  this.deleteDialog = false;
+  executivesStore.deleteExecutive(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -298,11 +298,11 @@ const confirmedDeleteExecutive = function () {
       @ok-clicked="
         confirmedDeleteExecutive(
           executivesStore.executives.filter(
-            (executive) => executive.id == this.deleteDialog,
+            (executive) => executive.id == deleteDialog.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
 
     <v-dialog max-width="500" v-model="addNewExecutiveDialog">

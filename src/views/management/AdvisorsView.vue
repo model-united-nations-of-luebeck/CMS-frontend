@@ -95,12 +95,12 @@ const custom_filter = function (value, query, item) {
 };
 
 const deleteAdvisor = function (advisor_id) {
-  this.deleteDialog = advisor_id;
+  deleteDialog.value = advisor_id;
 };
 
 const confirmedDeleteAdvisor = function () {
-  advisorsStore.deleteAdvisor(this.deleteDialog);
-  this.deleteDialog = false;
+  advisorsStore.deleteAdvisor(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -347,11 +347,11 @@ const confirmedDeleteAdvisor = function () {
       @ok-clicked="
         confirmedDeleteAdvisor(
           advisorsStore.advisors.filter(
-            (advisor) => advisor.id == this.deleteDialog,
+            (advisor) => advisor.id == deleteDialog.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
   </div>
 </template>

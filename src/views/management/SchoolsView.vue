@@ -117,12 +117,12 @@ const createSchool = function () {
 };
 
 const deleteSchool = function (school_id) {
-  this.deleteDialog = school_id;
+  deleteDialog.value = school_id;
 };
 
 const confirmedDeleteSchool = function () {
-  schoolsStore.deleteSchool(this.deleteDialog);
-  this.deleteDialog = false;
+  schoolsStore.deleteSchool(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -340,11 +340,11 @@ const confirmedDeleteSchool = function () {
       @ok-clicked="
         confirmedDeleteSchool(
           schoolsStore.schools.filter(
-            (school) => school.id == this.deleteDialog,
+            (school) => school.id == deleteDialog.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
 
     <v-dialog max-width="500" v-model="addNewSchoolDialog">

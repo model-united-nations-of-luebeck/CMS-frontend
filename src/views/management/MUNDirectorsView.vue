@@ -122,12 +122,12 @@ const createMUNDirector = function () {
 };
 
 const deleteMUNDirector = function (mun_director_id) {
-  this.deleteDialog = mun_director_id;
+  deleteDialog.value = mun_director_id;
 };
 
 const confirmedDeleteMUNDirector = function () {
-  munDirectorsStore.deleteMUNDirector(this.deleteDialog);
-  this.deleteDialog = false;
+  munDirectorsStore.deleteMUNDirector(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -295,11 +295,11 @@ const confirmedDeleteMUNDirector = function () {
       @ok-clicked="
         confirmedDeleteMUNDirector(
           munDirectorsStore.mun_directors.filter(
-            (mun_director) => mun_director.id == this.deleteDialog,
+            (mun_director) => mun_director.id == deleteDialog.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
 
     <v-dialog max-width="500" v-model="addNewMUNDirectorDialog">
