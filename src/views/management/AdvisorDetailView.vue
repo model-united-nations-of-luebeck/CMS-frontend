@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useAdvisorsStore } from "../../stores/advisors";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
@@ -19,7 +19,21 @@ const { mobile } = useDisplay();
 const route = useRoute();
 const router = useRouter();
 const advisorsStore = useAdvisorsStore();
-advisorsStore.getAdvisor(route.params.advisor_id);
+
+const fetchAdvisor = () => {
+  if (route.params.advisor_id) {
+    advisorsStore.getAdvisor(route.params.advisor_id);
+  }
+};
+
+fetchAdvisor();
+
+watch(
+  () => route.params.advisor_id,
+  () => {
+    fetchAdvisor();
+  },
+);
 
 const updateAdvisor = (advisor_id) => {
   // update advisor

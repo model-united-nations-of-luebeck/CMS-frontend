@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { usePlenariesStore } from "../../stores/plenaries";
 import { useRoute, useRouter } from "vue-router";
 
@@ -8,11 +8,24 @@ const router = useRouter();
 const plenariesStore = usePlenariesStore();
 const valid = ref(true);
 
-if (route.params.plenary_id != "add") {
-  plenariesStore.getPlenary(route.params.plenary_id);
-} else {
-  plenariesStore.initializePlenary();
-}
+const fetchPlenary = () => {
+  if (route.params.plenary_id != "add") {
+    if (route.params.plenary_id) {
+      plenariesStore.getPlenary(route.params.plenary_id);
+    }
+  } else {
+    plenariesStore.initializePlenary();
+  }
+};
+
+fetchPlenary();
+
+watch(
+  () => route.params.plenary_id,
+  () => {
+    fetchPlenary();
+  },
+);
 
 const updatePlenary = (plenary_id) => {
   if (plenary_id == undefined) {

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useForumsStore } from "../../stores/forums";
 import { usePlenariesStore } from "../../stores/plenaries";
 import { useRoute, useRouter } from "vue-router";
@@ -21,11 +21,24 @@ const plenary_choices = [
   })),
 ];
 
-if (route.params.forum_id != "add") {
-  forumsStore.getForum(route.params.forum_id);
-} else {
-  forumsStore.initializeForum();
-}
+const fetchForum = () => {
+  if (route.params.forum_id != "add") {
+    if (route.params.forum_id) {
+      forumsStore.getForum(route.params.forum_id);
+    }
+  } else {
+    forumsStore.initializeForum();
+  }
+};
+
+fetchForum();
+
+watch(
+  () => route.params.forum_id,
+  () => {
+    fetchForum();
+  },
+);
 
 const updateForum = (forum_id) => {
   if (forum_id == undefined) {

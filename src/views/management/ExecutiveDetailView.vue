@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useExecutivesStore } from "../../stores/executives";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
@@ -18,7 +18,21 @@ const { mobile } = useDisplay();
 const route = useRoute();
 const router = useRouter();
 const executivesStore = useExecutivesStore();
-executivesStore.getExecutive(route.params.executive_id);
+
+const fetchExecutive = () => {
+  if (route.params.executive_id) {
+    executivesStore.getExecutive(route.params.executive_id);
+  }
+};
+
+fetchExecutive();
+
+watch(
+  () => route.params.executive_id,
+  () => {
+    fetchExecutive();
+  },
+);
 
 const updateExecutive = (executive_id) => {
   // update executive
