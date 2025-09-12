@@ -45,17 +45,11 @@ const headers = [
     align: "start",
     sortable: true,
     key: "school",
-    sortRaw(a, b) {
-      if (a && b && a.school && b.school) {
-        const school_a = schoolsStore.schools.find(
-          (school) => school.id === a.school,
-        );
-        const school_b = schoolsStore.schools.find(
-          (school) => school.id === b.school,
-        );
-        return school_a.name < school_b.name;
-      }
-      return 0;
+    value: (item) => {
+      const school = schoolsStore.schools.find(
+        (school) => school.id === item.school,
+      );
+      return school ? school.name : "";
     },
   },
   {
@@ -178,8 +172,8 @@ const confirmedDeleteMUNDirector = function () {
       fixed-header
       :search="search"
       :sort-by="[
-        { key: 'school', order: 'desc' },
-        { key: 'name', order: 'desc' },
+        { key: 'school', order: 'asc' },
+        { key: 'name', order: 'asc' },
       ]"
       :multi-sort="true"
       v-model:expanded="expanded"

@@ -163,7 +163,7 @@ const confirmedDeleteStaff = function () {
       :search="search"
       :sort-by="[
         { key: 'position_name', order: 'asc' },
-        { key: 'name', order: 'desc' },
+        { key: 'name', order: 'asc' },
       ]"
       :multi-sort="true"
       v-model:expanded="expanded"

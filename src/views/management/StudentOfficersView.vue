@@ -62,17 +62,9 @@ const headers = [
     align: "start",
     sortable: true,
     key: "forum",
-    sortRaw(a, b) {
-      if (a && b && a.forum && b.forum) {
-        const forum_a = forumsStore.forums.find(
-          (forum) => forum.id === a.forum,
-        );
-        const forum_b = forumsStore.forums.find(
-          (forum) => forum.id === b.forum,
-        );
-        return forum_a.abbreviation < forum_b.abbreviation;
-      }
-      return 0;
+    value: (item) => {
+      const forum = forumsStore.forums.find((forum) => forum.id === item.forum);
+      return forum ? forum.abbreviation : "";
     },
   },
   {
@@ -211,7 +203,7 @@ const confirmedDeleteStudentOfficer = function () {
       :search="search"
       :sort-by="[
         { key: 'forum', order: 'asc' },
-        { key: 'name', order: 'desc' },
+        { key: 'name', order: 'asc' },
       ]"
       :multi-sort="true"
       v-model:expanded="expanded"

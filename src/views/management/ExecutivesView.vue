@@ -44,20 +44,7 @@ const headers = [
     align: "start",
     sortable: true,
     key: "position_name",
-    sortRaw(a, b) {
-      if (a && b && a.position_name && b.position_name) {
-        const getComparablePosition = (position) =>
-          position.startsWith("Assistant")
-            ? position.replace("Assistant", "").trim()
-            : position;
-
-        return (
-          getComparablePosition(a.position_name) <
-          getComparablePosition(b.position_name)
-        );
-      }
-      return 0;
-    },
+    value: (item) => item.position_name.replace("Assistant ", ""),
   },
   {
     title: "School",
@@ -181,8 +168,8 @@ const confirmedDeleteExecutive = function () {
       fixed-header
       :search="search"
       :sort-by="[
-        { key: 'position_name', order: 'desc' },
-        { key: 'name', order: 'desc' },
+        { key: 'position_name', order: 'asc' },
+        { key: 'name', order: 'asc' },
       ]"
       :multi-sort="true"
       v-model:expanded="expanded"

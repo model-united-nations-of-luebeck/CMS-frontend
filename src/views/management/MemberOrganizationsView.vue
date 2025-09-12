@@ -103,6 +103,7 @@ const confirmedDeleteMemberOrganization = function () {
       fixed-header
       :search="search"
       item-height="56"
+      :sort-by="[{ key: 'name', order: 'asc' }]"
     >
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
