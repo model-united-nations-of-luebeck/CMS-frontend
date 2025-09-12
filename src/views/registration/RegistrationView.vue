@@ -70,7 +70,41 @@ async function login() {
 
 <template>
   <div class="registration">
-    <v-container> </v-container>
+    <v-container>
+      <v-sheet v-if="!showTokenSentDialog">
+        <v-card>
+          <v-card-title>Registration</v-card-title>
+          <v-card-text>
+            <p>
+              Thanks for being interested in participating in our conference. If
+              you or your school haven't already applied for the next
+              conference, please do so. As an MUN-Director of a school, please
+              send an email to the Conference Management at
+              <a href="mailto:conferencemanager@munol.org"
+                >conferencemanager@munol.org</a
+              >. If you want to become a Student Officer, please contact the
+              Secretaries-General at
+              <a href="mailto:secretarygeneral@munol.org"
+                >secretarygeneral@munol.org</a
+              >.
+            </p>
+            <br />
+            <p>
+              If you already successfully applied, please check your emails for
+              further instructions. You should have received a personalized URL
+              where you can enter your data to complete your registration.
+            </p>
+            <br />
+            <p>
+              In case of any questions, don't hesitate to contact us at
+              <a href="mailto:conferencemanager@munol.org"
+                >conferencemanager@munol.org</a
+              >.
+            </p>
+          </v-card-text>
+        </v-card>
+      </v-sheet>
+    </v-container>
 
     <v-dialog
       v-model="showTokenSentDialog"
