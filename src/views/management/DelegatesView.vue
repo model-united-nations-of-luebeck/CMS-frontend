@@ -196,8 +196,8 @@ const custom_filter = function (value, query, item) {
       fixed-header
       :search="search"
       :sort-by="[
-        { key: 'member_organization', order: 'desc' },
-        { key: 'forum', order: 'desc' },
+        { key: 'member_organization', order: 'asc' },
+        { key: 'forum', order: 'asc' },
       ]"
       :multi-sort="true"
       v-model:expanded="expanded"
