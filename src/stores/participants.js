@@ -18,7 +18,7 @@ export function getAge(birth_date) {
 
 export function sortParticipantsByName(a, b) {
   if (a && b && a.first_name && b.first_name) {
-    return a.first_name < b.first_name;
+    return a.first_name.localeCompare(b.first_name);
   }
   return 0;
 }

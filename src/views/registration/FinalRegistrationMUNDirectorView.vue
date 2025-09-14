@@ -147,7 +147,7 @@ defineExpose({
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
-              :disabled="!valid"
+              :disabled="!valid || !munDirectorsStore.mun_director.picture"
               @click="
                 munDirectorsStore.updateMUNDirector(
                   munDirectorsStore.mun_director.id,

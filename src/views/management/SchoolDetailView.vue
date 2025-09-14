@@ -4,13 +4,27 @@ import {
   housing_options,
   registration_status_options,
 } from "../../stores/schools";
-
+import { watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
 const schoolsStore = useSchoolsStore();
-schoolsStore.getSchool(route.params.school_id);
+
+const fetchSchool = () => {
+  if (route.params.school_id) {
+    schoolsStore.getSchool(route.params.school_id);
+  }
+};
+
+fetchSchool();
+
+watch(
+  () => route.params.school_id,
+  () => {
+    fetchSchool();
+  },
+);
 
 const updateSchool = (school_id) => {
   // update school

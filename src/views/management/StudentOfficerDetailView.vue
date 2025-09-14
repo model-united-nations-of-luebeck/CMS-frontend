@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useStudentOfficersStore } from "../../stores/student_officers";
 import { useForumsStore } from "../../stores/forums";
 import { useRoute, useRouter } from "vue-router";
@@ -20,7 +20,21 @@ const router = useRouter();
 const forumsStore = useForumsStore();
 forumsStore.getForums();
 const studentOfficersStore = useStudentOfficersStore();
-studentOfficersStore.getStudentOfficer(route.params.student_officer_id);
+
+const fetchStudentOfficer = () => {
+  if (route.params.student_officer_id) {
+    studentOfficersStore.getStudentOfficer(route.params.student_officer_id);
+  }
+};
+
+fetchStudentOfficer();
+
+watch(
+  () => route.params.student_officer_id,
+  () => {
+    fetchStudentOfficer();
+  },
+);
 
 const updateStudentOfficer = (student_officer_id) => {
   // update student officer

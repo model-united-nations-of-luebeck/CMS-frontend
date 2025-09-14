@@ -8,7 +8,7 @@ The management system is mainly split up into three sections:
 - administration: dealing with all conference related data
 - secretariat: printing and data visualization
 
-The frontend is written with JavaScript in the Vue 3 (vue 3.5.0, vue/cli 5.0.8) and uses Vuetify (3.8.7) as the design library. It was developed with node 20.7.0 and npm 10.1.0.
+The frontend is written with JavaScript in the Vue 3 (vue 3.5.0, vue/cli 5.0.8) and uses Vuetify (3.9.0) as the design library. It was developed with node 20.7.0 and npm 10.1.0.
 
 ## Development
 
@@ -18,24 +18,33 @@ Run Unit Tests with [Vitest](https://vitest.dev/) `npm run test:unit`. For forma
 
 ## Deployment
 
-TODO: Might be outdated, adjust to Vite.
+**Preparation**:
 
-**Preparation**: Make sure to adapt the `publicPath` variable in the `vue.config.js` file, depending on the `NODE_END` like this:
+Make sure to include all required assets (such as images, audio, fonts) in the assets folder. They might not be under version control due to large size, privacy or ip reasons and therefore need to be copied manually.
 
-```python
-publicPath: process.env.NODE_ENV === 'production'
-    ? '/subfolder/of/my/domain/'
-    : '/'
-```
-
-so that in production the webapp looks for the files in the first path, whereas in development is looks at `/` which is usually fine for localhost setups.
-
-Also make sure to include all required assets in the assets folder. They might not be under version control due to large size, privacy or ip reasons.
-
-Copy the example .env file `.env.development.local.example`, rename it to `env.production` and set the `VITE_BACKEND_URL` in `.env` file to the correct backend address for all API requests. Also adapt the username and password for the backend instance.
+Copy the example .env file `.env.development.local.example`, rename it to `env.production` and set the `VITE_BACKEND_URL` in `.env` file to the correct backend address for all API requests. Also adapt the backend API token.
 
 **Building**:
-Run `npm install` followed by `npm run build --production` in the project's root folder. This will install all required packages and build the app and place it in a `dist/` folder. Lastly, copy the content of this folder into your desired serving folder, which you have specified during the preparations.
+Run `npm install` followed by `npm run build --production --base=/subfolder/of/my/domain/` in the project's root folder. This will install all required packages and build the app and place it in a `dist/` folder. Specifying the base path ensures that the web app looks for files under this path and not at the root of your domain.
 
-**Connection to backend**:
+**Serving**
+
+Lastly, copy the content of the `dist` folder into your desired serving folder under `/subfolder/of/my/domain/`, which you have specified during the preparations.
+
+Depending on your server, you need to specify that routings from this app should be served by the index file. For apache servers for example, add something like this to your `.htaccess`:
+
+```bash
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /subfolder/of/my/domain/
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /subfolder/of/my/domain/index.html [L]
+</IfModule>
+```
+
+**Connection to backend and authentication**:
 As an empty frontend is boring, you might connect it to a [backend](https://github.com/model-united-nations-of-luebeck/CMS-backend). In the backend's `cms/settings.py' file you need to add the frontend URL to the`CORS_ORIGIN_WHITELIST = [...]` list, so that API requests are possible.
+
+For the Azure authentication for organizers, you need to set the redirect urls in the App Registrations and if necessary grant access for new users.

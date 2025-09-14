@@ -62,17 +62,9 @@ const headers = [
     align: "start",
     sortable: true,
     key: "forum",
-    sortRaw(a, b) {
-      if (a && b && a.forum && b.forum) {
-        const forum_a = forumsStore.forums.find(
-          (forum) => forum.id === a.forum,
-        );
-        const forum_b = forumsStore.forums.find(
-          (forum) => forum.id === b.forum,
-        );
-        return forum_a.abbreviation < forum_b.abbreviation;
-      }
-      return 0;
+    value: (item) => {
+      const forum = forumsStore.forums.find((forum) => forum.id === item.forum);
+      return forum ? forum.abbreviation : "";
     },
   },
   {
@@ -149,12 +141,12 @@ const createStudentOfficer = function () {
 };
 
 const deleteStudentOfficer = function (student_officer_id) {
-  this.deleteDialog = student_officer_id;
+  deleteDialog.value = student_officer_id;
 };
 
 const confirmedDeleteStudentOfficer = function () {
-  studentOfficersStore.deleteStudentOfficer(this.deleteDialog);
-  this.deleteDialog = false;
+  studentOfficersStore.deleteStudentOfficer(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -211,7 +203,7 @@ const confirmedDeleteStudentOfficer = function () {
       :search="search"
       :sort-by="[
         { key: 'forum', order: 'asc' },
-        { key: 'name', order: 'desc' },
+        { key: 'name', order: 'asc' },
       ]"
       :multi-sort="true"
       v-model:expanded="expanded"
@@ -349,11 +341,11 @@ const confirmedDeleteStudentOfficer = function () {
       @ok-clicked="
         confirmedDeleteStudentOfficer(
           studentOfficersStore.student_officers.filter(
-            (student_officer) => student_officer.id == this.deleteDialog,
+            (student_officer) => student_officer.id == deleteDialog.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
 
     <v-dialog max-width="500" v-model="addNewStudentOfficerDialog">

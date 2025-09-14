@@ -33,7 +33,10 @@ conferenceStore.getCurrentConference();
           <v-icon color="primary" icon="mdi-calendar-heart"></v-icon>
         </template>
 
-        <v-card-text class="text-center">
+        <v-card-text
+          class="text-center"
+          v-if="conferenceStore.conference?.start_date"
+        >
           <h1 class="text-h1" style="margin: 40px">
             {{
               Math.ceil(
@@ -75,6 +78,7 @@ conferenceStore.getCurrentConference();
                 name: 'school-registration',
               }"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <template v-slot:prepend>
                 <v-icon color="primary"> mdi-bank</v-icon>
@@ -89,6 +93,7 @@ conferenceStore.getCurrentConference();
                 params: { advisor_id: 'add' },
               }"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <template v-slot:prepend>
                 <v-icon color="primary"> mdi-application</v-icon>

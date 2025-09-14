@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useMUNDirectorsStore } from "../../stores/mun_directors";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
@@ -17,7 +17,21 @@ const { mobile } = useDisplay();
 const route = useRoute();
 const router = useRouter();
 const munDirectorsStore = useMUNDirectorsStore();
-munDirectorsStore.getMUNDirector(route.params.mun_director_id);
+
+const fetchMUNDirector = () => {
+  if (route.params.mun_director_id) {
+    munDirectorsStore.getMUNDirector(route.params.mun_director_id);
+  }
+};
+
+fetchMUNDirector();
+
+watch(
+  () => route.params.mun_director_id,
+  () => {
+    fetchMUNDirector();
+  },
+);
 
 const updateMUNDirector = (mun_director_id) => {
   // update MUN director

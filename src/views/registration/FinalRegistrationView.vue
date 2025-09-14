@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const origin = window.location.origin;
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -14,6 +14,7 @@ import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 
 const route = useRoute();
+const router = useRouter();
 
 const schoolsStore = useSchoolsStore();
 schoolsStore.getSchool(route.params.school_id);
@@ -152,13 +153,14 @@ const getUniqueMemberOrganizationsFromSchool = () => {
               <Router-Link
                 class="link"
                 target="_blank"
+                rel="noopener noreferrer"
                 :to="{
                   name: 'final-registration-mun-director',
                   params: { mun_director_id: director.id },
                 }"
                 >{{ origin
                 }}{{
-                  this.$router.resolve({
+                  router.resolve({
                     name: "final-registration-mun-director",
                     params: { mun_director_id: director.id },
                   }).href
@@ -175,7 +177,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                 prepend-icon="mdi-content-copy"
                 v-clipboard:copy="
                   `${origin}${
-                    this.$router.resolve({
+                    router.resolve({
                       name: 'final-registration-mun-director',
                       params: { mun_director_id: director.id },
                     }).href
@@ -284,13 +286,14 @@ const getUniqueMemberOrganizationsFromSchool = () => {
               <Router-Link
                 class="link"
                 target="_blank"
+                rel="noopener noreferrer"
                 :to="{
                   name: 'final-registration-delegate',
                   params: { delegate_id: delegate.id },
                 }"
                 >{{ origin
                 }}{{
-                  this.$router.resolve({
+                  router.resolve({
                     name: "final-registration-delegate",
                     params: { delegate_id: delegate.id },
                   }).href
@@ -303,7 +306,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                 prepend-icon="mdi-content-copy"
                 v-clipboard:copy="
                   `${origin}${
-                    this.$router.resolve({
+                    router.resolve({
                       name: 'final-registration-delegate',
                       params: { delegate_id: delegate.id },
                     }).href

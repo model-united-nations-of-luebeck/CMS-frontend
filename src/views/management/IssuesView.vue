@@ -23,12 +23,12 @@ const headers = [
 ];
 
 const deleteIssue = function (issue_id) {
-  this.deleteDialog = issue_id;
+  deleteDialog.value = issue_id;
 };
 
 const confirmedDeleteIssue = function () {
-  issuesStore.deleteIssue(this.deleteDialog);
-  this.deleteDialog = false;
+  issuesStore.deleteIssue(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -129,11 +129,11 @@ const confirmedDeleteIssue = function () {
       text="Are you sure you want to delete this issue?"
       @ok-clicked="
         confirmedDeleteIssue(
-          issuesStore.issues.filter((issue) => issue.id == this.deleteDialog)
+          issuesStore.issues.filter((issue) => issue.id == deleteDialog.value)
             .id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     />
   </div>
 </template>

@@ -140,7 +140,7 @@ defineExpose({
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
-              :disabled="!valid"
+              :disabled="!valid || !staffsStore.staff.picture"
               @click="staffsStore.updateStaff(staffsStore.staff.id)"
               >Submit registration form</v-btn
             >

@@ -53,17 +53,11 @@ const headers = [
     align: "start",
     sortable: true,
     key: "member_organization",
-    sortRaw(a, b) {
-      if (a && b && a.represents && b.represents) {
-        const org_a = memberOrganizationsStore.member_organizations.find(
-          (org) => org.id === a.represents,
-        );
-        const org_b = memberOrganizationsStore.member_organizations.find(
-          (org) => org.id === b.represents,
-        );
-        return org_a.placard_name < org_b.placard_name;
-      }
-      return 0;
+    value: (item) => {
+      const org = memberOrganizationsStore.member_organizations.find(
+        (org) => org.id === item.represents,
+      );
+      return org ? org.placard_name : "";
     },
   },
   {
@@ -71,17 +65,9 @@ const headers = [
     align: "start",
     sortable: true,
     key: "forum",
-    sortRaw(a, b) {
-      if (a && b && a.forum && b.forum) {
-        const forum_a = forumsStore.forums.find(
-          (forum) => forum.id === a.forum,
-        );
-        const forum_b = forumsStore.forums.find(
-          (forum) => forum.id === b.forum,
-        );
-        return forum_a.abbreviation < forum_b.abbreviation;
-      }
-      return 0;
+    value: (item) => {
+      const forum = forumsStore.forums.find((forum) => forum.id === item.forum);
+      return forum ? forum.name : "";
     },
   },
   {
@@ -89,17 +75,11 @@ const headers = [
     align: "start",
     sortable: true,
     key: "school",
-    sortRaw(a, b) {
-      if (a && b && a.school && b.school) {
-        const school_a = schoolsStore.schools.find(
-          (school) => school.id === a.school,
-        );
-        const school_b = schoolsStore.schools.find(
-          (school) => school.id === b.school,
-        );
-        return school_a.name < school_b.name;
-      }
-      return 0;
+    value: (item) => {
+      const school = schoolsStore.schools.find(
+        (school) => school.id === item.school,
+      );
+      return school ? school.name : "";
     },
   },
   {
@@ -193,14 +173,26 @@ const custom_filter = function (value, query, item) {
     </v-row>
 
     <v-data-table-virtual
-      v-if="delegatesStore.delegates"
+      v-if="
+        delegatesStore.delegates &&
+        forumsStore.forums &&
+        memberOrganizationsStore.member_organizations &&
+        schoolsStore.schools
+      "
       :headers="headers"
       :items="delegatesStore.delegates"
       item-key="id"
       items-per-page="-1"
       items-per-page-text="Delegates per page"
       hover
-      :loading="delegatesStore.loading ? 'primary' : false"
+      :loading="
+        delegatesStore.loading ||
+        forumsStore.loading ||
+        memberOrganizationsStore.loading ||
+        schoolsStore.loading
+          ? 'primary'
+          : false
+      "
       fixed-header
       :search="search"
       :sort-by="[

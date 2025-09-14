@@ -44,20 +44,7 @@ const headers = [
     align: "start",
     sortable: true,
     key: "position_name",
-    sortRaw(a, b) {
-      if (a && b && a.position_name && b.position_name) {
-        const getComparablePosition = (position) =>
-          position.startsWith("Assistant")
-            ? position.replace("Assistant", "").trim()
-            : position;
-
-        return (
-          getComparablePosition(a.position_name) <
-          getComparablePosition(b.position_name)
-        );
-      }
-      return 0;
-    },
+    value: (item) => item.position_name.replace("Assistant ", ""),
   },
   {
     title: "School",
@@ -120,12 +107,12 @@ const createExecutive = function () {
 };
 
 const deleteExecutive = function (executive_id) {
-  this.deleteDialog = executive_id;
+  deleteDialog.value = executive_id;
 };
 
 const confirmedDeleteExecutive = function () {
-  executivesStore.deleteExecutive(this.deleteDialog);
-  this.deleteDialog = false;
+  executivesStore.deleteExecutive(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -181,8 +168,8 @@ const confirmedDeleteExecutive = function () {
       fixed-header
       :search="search"
       :sort-by="[
-        { key: 'position_name', order: 'desc' },
-        { key: 'name', order: 'desc' },
+        { key: 'position_name', order: 'asc' },
+        { key: 'name', order: 'asc' },
       ]"
       :multi-sort="true"
       v-model:expanded="expanded"
@@ -298,11 +285,11 @@ const confirmedDeleteExecutive = function () {
       @ok-clicked="
         confirmedDeleteExecutive(
           executivesStore.executives.filter(
-            (executive) => executive.id == this.deleteDialog,
+            (executive) => executive.id == deleteDialog.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
 
     <v-dialog max-width="500" v-model="addNewExecutiveDialog">

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useStaffsStore } from "../../stores/staffs";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
@@ -18,7 +18,21 @@ const { mobile } = useDisplay();
 const route = useRoute();
 const router = useRouter();
 const staffsStore = useStaffsStore();
-staffsStore.getStaff(route.params.staff_id);
+
+const fetchStaff = () => {
+  if (route.params.staff_id) {
+    staffsStore.getStaff(route.params.staff_id);
+  }
+};
+
+fetchStaff();
+
+watch(
+  () => route.params.staff_id,
+  () => {
+    fetchStaff();
+  },
+);
 
 const updateStaff = (staff_id) => {
   // update staff

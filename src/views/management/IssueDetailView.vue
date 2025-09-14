@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useIssuesStore } from "../../stores/issues";
 import { useForumsStore } from "../../stores/forums";
 import { useRoute, useRouter } from "vue-router";
@@ -23,11 +23,24 @@ const forumItemProps = (forum) => {
   };
 };
 
-if (route.params.issue_id != "add") {
-  issuesStore.getIssue(route.params.issue_id);
-} else {
-  issuesStore.initializeIssue();
-}
+const fetchIssue = () => {
+  if (route.params.issue_id != "add") {
+    if (route.params.issue_id) {
+      issuesStore.getIssue(route.params.issue_id);
+    }
+  } else {
+    issuesStore.initializeIssue();
+  }
+};
+
+fetchIssue();
+
+watch(
+  () => route.params.issue_id,
+  () => {
+    fetchIssue();
+  },
+);
 
 const updateIssue = (issue_id) => {
   if (issue_id == undefined) {

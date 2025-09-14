@@ -45,17 +45,11 @@ const headers = [
     align: "start",
     sortable: true,
     key: "school",
-    sortRaw(a, b) {
-      if (a && b && a.school && b.school) {
-        const school_a = schoolsStore.schools.find(
-          (school) => school.id === a.school,
-        );
-        const school_b = schoolsStore.schools.find(
-          (school) => school.id === b.school,
-        );
-        return school_a.name < school_b.name;
-      }
-      return 0;
+    value: (item) => {
+      const school = schoolsStore.schools.find(
+        (school) => school.id === item.school,
+      );
+      return school ? school.name : "";
     },
   },
   {
@@ -122,12 +116,12 @@ const createMUNDirector = function () {
 };
 
 const deleteMUNDirector = function (mun_director_id) {
-  this.deleteDialog = mun_director_id;
+  deleteDialog.value = mun_director_id;
 };
 
 const confirmedDeleteMUNDirector = function () {
-  munDirectorsStore.deleteMUNDirector(this.deleteDialog);
-  this.deleteDialog = false;
+  munDirectorsStore.deleteMUNDirector(deleteDialog.value);
+  deleteDialog.value = false;
 };
 </script>
 
@@ -178,8 +172,8 @@ const confirmedDeleteMUNDirector = function () {
       fixed-header
       :search="search"
       :sort-by="[
-        { key: 'school', order: 'desc' },
-        { key: 'name', order: 'desc' },
+        { key: 'school', order: 'asc' },
+        { key: 'name', order: 'asc' },
       ]"
       :multi-sort="true"
       v-model:expanded="expanded"
@@ -295,11 +289,11 @@ const confirmedDeleteMUNDirector = function () {
       @ok-clicked="
         confirmedDeleteMUNDirector(
           munDirectorsStore.mun_directors.filter(
-            (mun_director) => mun_director.id == this.deleteDialog,
+            (mun_director) => mun_director.id == deleteDialog.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
 
     <v-dialog max-width="500" v-model="addNewMUNDirectorDialog">

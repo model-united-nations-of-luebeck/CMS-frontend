@@ -199,7 +199,7 @@ defineExpose({
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
-              :disabled="!valid"
+              :disabled="!valid || !delegatesStore.delegate.picture"
               @click="delegatesStore.updateDelegate(delegatesStore.delegate.id)"
               >Submit registration form</v-btn
             >

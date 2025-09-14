@@ -222,13 +222,13 @@ schoolsStore.getSchool(route.params.school_id);
           </v-timeline-item>
           <v-timeline-item dot-color="primary" icon="mdi-account-group">
             <template v-slot:opposite v-if="!mobile">
-              <span>{{
+              <span v-if="conferenceStore.conference?.start_date">{{
                 new Date(
                   conferenceStore.conference?.start_date,
                 ).toLocaleDateString("en")
               }}</span>
               -
-              <span>{{
+              <span v-if="conferenceStore.conference?.end_date">{{
                 new Date(
                   conferenceStore.conference?.end_date,
                 ).toLocaleDateString("en")
@@ -240,13 +240,13 @@ schoolsStore.getSchool(route.params.school_id);
                 {{ conferenceStore.conference?.year }}</v-card-title
               >
               <v-card-subtitle v-if="mobile">
-                <span>{{
+                <span v-if="conferenceStore.conference?.start_date">{{
                   new Date(
                     conferenceStore.conference?.start_date,
                   ).toLocaleDateString("en")
                 }}</span>
                 -
-                <span>{{
+                <span v-if="conferenceStore.conference?.end_date">{{
                   new Date(
                     conferenceStore.conference?.end_date,
                   ).toLocaleDateString("en")

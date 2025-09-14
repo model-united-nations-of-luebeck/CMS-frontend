@@ -143,7 +143,7 @@ defineExpose({
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
-              :disabled="!valid"
+              :disabled="!valid || !executivesStore.executive.picture"
               @click="
                 executivesStore.updateExecutive(executivesStore.executive.id)
               "

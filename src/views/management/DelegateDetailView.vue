@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useDelegatesStore } from "../../stores/delegates";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
@@ -21,7 +21,21 @@ const { mobile } = useDisplay();
 const route = useRoute();
 const router = useRouter();
 const delegatesStore = useDelegatesStore();
-delegatesStore.getDelegate(route.params.delegate_id);
+
+const fetchDelegate = () => {
+  if (route.params.delegate_id) {
+    delegatesStore.getDelegate(route.params.delegate_id);
+  }
+};
+
+fetchDelegate();
+
+watch(
+  () => route.params.delegate_id,
+  () => {
+    fetchDelegate();
+  },
+);
 
 const updateDelegate = (delegate_id) => {
   // update delegate

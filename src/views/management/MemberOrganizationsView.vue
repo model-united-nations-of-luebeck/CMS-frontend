@@ -31,21 +31,21 @@ const toggleActive = function (member_organization_id) {
 };
 
 const deleteMemberOrganization = function (member_organization_id) {
-  this.deleteDialog = member_organization_id;
+  deleteDialog.value = member_organization_id;
 };
 
 const confirmedDeleteMemberOrganization = function () {
   memberOrganizationsStore
-    .deleteMemberOrganization(this.deleteDialog)
+    .deleteMemberOrganization(deleteDialog.value)
     .then(() => {
-      this.deleteDialog = false;
+      deleteDialog.value = false;
       toast.success("Member Organization was deleted successfully", {
         position: toast.POSITION.BOTTOM_CENTER,
         style: "width: auto",
       });
     })
     .catch(() => {
-      this.deleteDialog = false;
+      deleteDialog.value = false;
       toast.error(
         "Deleting Member Organization failed. Please ask admin for help.",
         {
@@ -103,6 +103,7 @@ const confirmedDeleteMemberOrganization = function () {
       fixed-header
       :search="search"
       item-height="56"
+      :sort-by="[{ key: 'name', order: 'asc' }]"
     >
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
@@ -216,11 +217,11 @@ const confirmedDeleteMemberOrganization = function () {
       @ok-clicked="
         confirmedDeleteMemberOrganization(
           memberOrganizationsStore.member_organizations.filter(
-            (org) => org.id == this.deleteDialog,
+            (org) => org.id == deleteDialog.value,
           ).id,
         )
       "
-      @cancel-clicked="deleteDialog = false"
+      @cancel-clicked="deleteDialog.value = false"
     ></ConfirmDialog>
   </div>
 </template>

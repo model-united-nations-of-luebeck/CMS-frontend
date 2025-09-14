@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
 import { useRoute, useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
@@ -10,13 +10,26 @@ const router = useRouter();
 const memberOrganizationsStore = useMemberOrganizationsStore();
 const valid = ref(true);
 
-if (route.params.member_organization_id != "add") {
-  memberOrganizationsStore.getMemberOrganization(
-    route.params.member_organization_id,
-  );
-} else {
-  memberOrganizationsStore.initializeMemberOrganization();
-}
+const fetchMemberOrganization = () => {
+  if (route.params.member_organization_id != "add") {
+    if (route.params.member_organization_id) {
+      memberOrganizationsStore.getMemberOrganization(
+        route.params.member_organization_id,
+      );
+    }
+  } else {
+    memberOrganizationsStore.initializeMemberOrganization();
+  }
+};
+
+fetchMemberOrganization();
+
+watch(
+  () => route.params.member_organization_id,
+  () => {
+    fetchMemberOrganization();
+  },
+);
 
 const MEMBER_STATE = "member state";
 const OBSERVER_STATE = "observer state";
