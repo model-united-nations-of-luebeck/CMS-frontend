@@ -3,7 +3,7 @@ const conferenceStore = useConferenceStore();
 conferenceStore.getCurrentConference();
 
 export function getAge(birth_date) {
-  const start_date = new Date(conferenceStore.conference.start_date);
+  const start_date = new Date(conferenceStore.conference?.start_date);
   const birth_date_date = new Date(birth_date);
   let age = start_date.getFullYear() - birth_date_date.getFullYear();
   const month = start_date.getMonth() - birth_date_date.getMonth();
