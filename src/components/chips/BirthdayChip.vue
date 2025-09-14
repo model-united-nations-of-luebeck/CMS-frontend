@@ -30,6 +30,6 @@ function getAgeColor(birth_date) {
     variant="tonal"
     :color="getAgeColor(props.birthday)"
   >
-    {{ props.birthday ? getAge(props.birthday) : "" }}
+    {{ getAge(props.birthday) ? getAge(props.birthday) : "" }}
   </v-chip>
 </template>
