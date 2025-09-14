@@ -7,6 +7,11 @@ const props = defineProps({
 
 function getAgeColor(birth_date) {
   const age = getAge(birth_date);
+
+  if (!age) {
+    return "gray";
+  }
+
   if (age < 16) {
     return "red";
   } else if (age < 18) {
@@ -25,6 +30,6 @@ function getAgeColor(birth_date) {
     variant="tonal"
     :color="getAgeColor(props.birthday)"
   >
-    {{ getAge(props.birthday) }}
+    {{ props.birthday ? getAge(props.birthday) : "" }}
   </v-chip>
 </template>

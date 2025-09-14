@@ -33,7 +33,10 @@ conferenceStore.getCurrentConference();
           <v-icon color="primary" icon="mdi-calendar-heart"></v-icon>
         </template>
 
-        <v-card-text class="text-center">
+        <v-card-text
+          class="text-center"
+          v-if="conferenceStore.conference?.start_date"
+        >
           <h1 class="text-h1" style="margin: 40px">
             {{
               Math.ceil(
