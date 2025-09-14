@@ -164,7 +164,7 @@ const confirmedDeleteAdvisor = function () {
       :loading="advisorsStore.loading ? 'primary' : false"
       fixed-header
       :search="search"
-      :sort-by="[{ key: 'name', order: 'desc' }]"
+      :sort-by="[{ key: 'name', order: 'asc' }]"
       :multi-sort="true"
       v-model:expanded="expanded"
       hide-default-footer
