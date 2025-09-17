@@ -1,6 +1,9 @@
 <script setup>
 import { ref, inject } from "vue";
 import { toast } from "vue3-toastify";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 
@@ -71,7 +74,7 @@ async function login() {
 <template>
   <div class="registration">
     <v-container>
-      <v-sheet v-if="!showTokenSentDialog">
+      <v-sheet v-if="route.name === 'registration'">
         <v-card>
           <v-card-title>Registration</v-card-title>
           <v-card-text>
