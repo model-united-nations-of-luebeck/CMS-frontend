@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const origin = window.location.origin;
+const origin = window.location.origin + router.options.history.base;
 import { useStaffsStore } from "../../stores/staffs";
 import {
   sortParticipantsByName,
