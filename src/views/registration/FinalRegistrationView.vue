@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-const origin = window.location.origin;
+const origin = window.location.origin + router.options.history.base;
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import { useSchoolsStore } from "../../stores/schools";

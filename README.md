@@ -25,7 +25,7 @@ Make sure to include all required assets (such as images, audio, fonts) in the a
 Copy the example .env file `.env.development.local.example`, rename it to `env.production` and set the `VITE_BACKEND_URL` in `.env` file to the correct backend address for all API requests. Also adapt the backend API token.
 
 **Building**:
-Run `npm install` followed by `npm run build --production --base=/subfolder/of/my/domain/` in the project's root folder. This will install all required packages and build the app and place it in a `dist/` folder. Specifying the base path ensures that the web app looks for files under this path and not at the root of your domain.
+Specify the `base` attribute in `vite.config.js` config (e.g. `/my/subfolder`), which can then be accessed by `import.meta.env.BASE_URL`. Specifying the base path ensures that the web app looks for files under this path and not at the root of your domain.Run `npm install` followed by `npm run build --production` in the project's root folder. This will install all required packages and build the app and place it in a `dist/` folder.
 
 **Serving**
 
