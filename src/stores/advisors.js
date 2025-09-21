@@ -86,7 +86,9 @@ export const useAdvisorsStore = defineStore('advisors', () => {
 
     async function createAdvisor(){
         loading.value = true
-        advisor.value.help = advisor.value.help.filter(item => item.trim() !== '').join(', ');
+        if (Array.isArray(advisor.value.help)) {
+            advisor.value.help = advisor.value.help.filter(item => item.trim() !== '').join(', ');
+        }
         await http.post("advisors/", advisor.value).then( (res) => {
             advisors.value.push(res.data)
             loading.value = false
@@ -102,6 +104,10 @@ export const useAdvisorsStore = defineStore('advisors', () => {
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
         })
+        
+        if (typeof advisor.value.help === 'string') {
+            advisor.value.help = advisor.value.help.split(',').map(item => item.trim()).filter(item => item !== '');
+        }
     }
 
     async function deleteAdvisor(advisor_id){
