@@ -1,33 +1,33 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  phone: String
-})
+  phone: String,
+});
 
-const emit = defineEmits(['update:phone'])
+const emit = defineEmits(["update:phone"]);
 
 const updatePhone = (event) => {
-  emit('update:phone', event.target.value)
-}
-
-const rules = [
-  (v) =>
-    /^\+[1-9]\d{1,14}$/.test(v) ||
-    "This is not a valid international mobile phone number. Don't forget the country code, e.g. +49!"
-]
+  emit("update:phone", event.target.value);
+};
 </script>
 
 <template>
-  <v-text-field
+  <v-phone-input
     label="Mobile phone number"
     type="tel"
     prepend-icon="mdi-cellphone"
     :density="mobile ? 'compact' : 'default'"
     :model-value="props.phone"
-    :rules="rules"
+    countryIconMode="svg"
     @input="updatePhone"
+    guessCountry="CountryGuesser"
+    displayFormat="e164"
+    :invalidMessage="
+      ({ label, example }) =>
+        `This is not a valid mobile phone number (example: ${example}).`
+    "
   >
     <template v-slot:append>
       <v-icon
@@ -38,5 +38,5 @@ const rules = [
       >
       </v-icon>
     </template>
-  </v-text-field>
+  </v-phone-input>
 </template>

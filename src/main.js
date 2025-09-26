@@ -19,6 +19,11 @@ import VueClipboard from 'vue3-clipboard'
 import Vue3Toastify from 'vue3-toastify'
 import axios from 'axios'
 
+// phone number input field
+import 'flag-icons/css/flag-icons.min.css';
+import 'v-phone-input/dist/v-phone-input.css';
+import { createVPhoneInput } from 'v-phone-input';
+
 
 const vuetify = createVuetify({
   components: {
@@ -49,6 +54,13 @@ app.use(VueClipboard, {
 app.use(Vue3Toastify, {
   autoClose: 3000,
 })
+
+// create phone number input component
+const vPhoneInput = createVPhoneInput({
+  countryIconMode: 'svg',
+  displayFormat: 'e164',
+});
+app.use(vPhoneInput);
 
 // create global axios instance for backend requests
 const backend_instance = axios.create({
