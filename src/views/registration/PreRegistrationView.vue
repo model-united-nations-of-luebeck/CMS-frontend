@@ -75,34 +75,34 @@ const ordinal = (n) => {
           <v-row no-gutters>
             <v-col cols="12" sm="12" md="6" lg="3">
               <SchoolNameField
-                v-model:name="schoolsStore.schools.name"
+                v-model:name="schoolsStore.school.name"
               ></SchoolNameField>
             </v-col>
           </v-row>
           <v-row no-gutters>
             <v-col cols="12" sm="12" md="6" lg="3">
               <StreetField
-                v-model:street="schoolsStore.schools.street"
+                v-model:street="schoolsStore.school.street"
               ></StreetField>
             </v-col>
             <v-col cols="12" sm="4" md="4" lg="1">
               <ZipCodeField
-                v-model:zip="schoolsStore.schools.zipcode"
+                v-model:zip="schoolsStore.school.zipcode"
               ></ZipCodeField>
             </v-col>
             <v-col cols="12" sm="8" md="6" lg="3">
-              <CityField v-model:city="schoolsStore.schools.city"></CityField>
+              <CityField v-model:city="schoolsStore.school.city"></CityField>
             </v-col>
             <v-col cols="12" sm="12" md="6" lg="3">
               <CountryField
-                v-model:country="schoolsStore.schools.country"
+                v-model:country="schoolsStore.school.country"
               ></CountryField>
             </v-col>
           </v-row>
           <v-row no-gutters="">
             <v-col cols="12" sm="12" md="4" lg="3">
               <DelegateNumberField
-                v-model:requested="schoolsStore.schools.requested"
+                v-model:requested="schoolsStore.school.requested"
               ></DelegateNumberField>
             </v-col>
             <v-col cols="12" sm="12" md="8" lg="7">
@@ -120,13 +120,13 @@ const ordinal = (n) => {
           <v-row>
             <v-col cols="12" sm="12" md="12" lg="6">
               <AccommodationSelector
-                v-model:accommodation="schoolsStore.schools.housing_delegates"
+                v-model:accommodation="schoolsStore.school.housing_delegates"
                 label="Accommodation for Delegates"
               ></AccommodationSelector>
 
               <AccommodationSelector
                 v-model:accommodation="
-                  schoolsStore.schools.housing_mun_directors
+                  schoolsStore.school.housing_mun_directors
                 "
                 label="Accommodation for MUN-Directors"
               ></AccommodationSelector>
