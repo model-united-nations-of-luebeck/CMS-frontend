@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
 const origin = window.location.origin + router.options.history.base;
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -14,7 +15,6 @@ import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 
 const route = useRoute();
-const router = useRouter();
 
 const schoolsStore = useSchoolsStore();
 schoolsStore.getSchool(route.params.school_id);
