@@ -73,40 +73,40 @@ const ordinal = (n) => {
       <v-form>
         <v-container fluid>
           <v-row no-gutters>
-            <v-col cols="12" sm="12" md="3">
+            <v-col cols="12" sm="12" md="6" lg="3">
               <SchoolNameField
                 v-model:name="schoolsStore.schools.name"
               ></SchoolNameField>
             </v-col>
           </v-row>
           <v-row no-gutters>
-            <v-col cols="12" sm="12" md="3">
+            <v-col cols="12" sm="12" md="6" lg="3">
               <StreetField
                 v-model:street="schoolsStore.schools.street"
               ></StreetField>
             </v-col>
-            <v-col cols="12" sm="2" md="1">
+            <v-col cols="12" sm="4" md="4" lg="1">
               <ZipCodeField
                 v-model:zip="schoolsStore.schools.zipcode"
               ></ZipCodeField>
             </v-col>
-            <v-col cols="12" sm="10" md="3">
+            <v-col cols="12" sm="8" md="6" lg="3">
               <CityField v-model:city="schoolsStore.schools.city"></CityField>
             </v-col>
-            <v-col cols="12" sm="12" md="3">
+            <v-col cols="12" sm="12" md="6" lg="3">
               <CountryField
                 v-model:country="schoolsStore.schools.country"
               ></CountryField>
             </v-col>
           </v-row>
           <v-row no-gutters="">
-            <v-col cols="12" sm="12" md="3">
+            <v-col cols="12" sm="12" md="4" lg="3">
               <DelegateNumberField
                 v-model:requested="schoolsStore.schools.requested"
               ></DelegateNumberField>
             </v-col>
-            <v-col cols="12" sm="12" md="7">
-              <p class="text-medium-emphasis" :class="{ 'px-8': !mobile }">
+            <v-col cols="12" sm="12" md="8" lg="7">
+              <p class="text-medium-emphasis ml-4" :class="{ 'px-8': !mobile }">
                 Please note, that this is the number of students requested.
                 Although the Conference Managers do their best to fulfil all
                 requests and constraints, this is not always possible. So, it
@@ -118,101 +118,12 @@ const ordinal = (n) => {
             </v-col>
           </v-row>
           <v-row>
-            <!-- <v-col cols="6">
-              <v-slider
-                v-model="schoolsStore.schools.requested"
-                :min="1"
-                :max="20"
-                :step="1"
-                show-ticks="always"
-                tick-size="4"
-                thumb-label
-                color="primary"
-              >
-                <template #prepend>
-                  <v-btn
-                    variant="text"
-                    icon="mdi-minus"
-                    color="primary"
-                    @click="requested--"
-                  ></v-btn>
-                </template>
-                <template #append>
-                  <v-btn
-                    variant="text"
-                    icon="mdi-plus"
-                    color="primary"
-                    @click="requested++"
-                  ></v-btn>
-                </template>
-                <template #label>
-                  <v-icon start icon="mdi-account-group"></v-icon>
-                  <v-label>Number of Delegates:</v-label><b class="px-4">{{ requested }}</b>
-                </template>
-              </v-slider>
-            </v-col> -->
-          </v-row>
-          <v-row>
-            <v-col cols="12" sm="12" md="4">
-              <!-- <v-input prepend-icon="mdi-home">
-                <v-label>Accommodation for Delegates</v-label>
-                <v-btn-toggle
-                  class="px-6"
-                  divided
-                  variant="outlined"
-                  v-model="schoolsStore.schools.housing_delegates"
-                >
-                  <v-btn value="guest-family">
-                    <span class="hidden-sm-and-down">Guest family</span>
-
-                    <v-icon end> mdi-home-heart </v-icon>
-                  </v-btn>
-
-                  <v-btn value="hostel">
-                    <span class="hidden-sm-and-down">Youth Hostel</span>
-
-                    <v-icon end>mdi-bed</v-icon>
-                  </v-btn>
-
-                  <v-btn value="other">
-                    <span class="hidden-sm-and-down">Self-organized</span>
-
-                    <v-icon end> mdi-home </v-icon>
-                  </v-btn>
-                </v-btn-toggle>
-              </v-input> -->
+            <v-col cols="12" sm="12" md="12" lg="6">
               <AccommodationSelector
                 v-model:accommodation="schoolsStore.schools.housing_delegates"
                 label="Accommodation for Delegates"
               ></AccommodationSelector>
 
-              <!-- <v-input prepend-icon="mdi-home">
-                <v-label>Accommodation for MUN-Directors</v-label>
-                <v-btn-toggle
-                  class="px-6"
-                  divided
-                  variant="outlined"
-                  v-model="schoolsStore.schools.housing_mun_directors"
-                >
-                  <v-btn value="guest-family">
-                    <span class="hidden-sm-and-down">Guest family</span>
-
-                    <v-icon end> mdi-home-heart </v-icon>
-                  </v-btn>
-
-                  <v-btn value="hostel">
-                    <span class="hidden-sm-and-down">Youth Hostel</span>
-
-                    <v-icon end>mdi-bed</v-icon>
-                  </v-btn>
-
-                  <v-btn value="other">
-                    <span class="hidden-sm-and-down">Self-organized</span>
-
-                    <v-icon end> mdi-home </v-icon>
-                  </v-btn>
-                </v-btn-toggle>
-              </v-input> -->
               <AccommodationSelector
                 v-model:accommodation="
                   schoolsStore.schools.housing_mun_directors
@@ -220,7 +131,7 @@ const ordinal = (n) => {
                 label="Accommodation for MUN-Directors"
               ></AccommodationSelector>
             </v-col>
-            <v-col cols="12" sm="12" md="6">
+            <v-col cols="12" sm="12" md="12" lg="6">
               <p class="text-medium-emphasis" :class="{ 'py-8': !mobile }">
                 {{ conference_abbr }} offers the possibility to stay in host
                 families depending on who many families agree on hosting
