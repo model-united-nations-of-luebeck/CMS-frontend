@@ -237,4 +237,13 @@ const drawer = ref(null);
 #component {
   padding: 16px;
 }
+
+:deep(.v-navigation-drawer__content::-webkit-scrollbar) {
+  display: none !important; /* Safari and Chrome */
+}
+
+:deep(.v-navigation-drawer__content) {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox, Safari 18.2+, Chromium 121+ */
+}
 </style>
