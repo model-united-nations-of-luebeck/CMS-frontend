@@ -67,6 +67,9 @@ export const useAdvisorsStore = defineStore('advisors', () => {
         await http.patch(`advisors/${advisor_id}/`, advisor.value).then(() => {
             const index = advisors.value.findIndex(a => a.id === advisor_id);
             if (index !== -1) {
+                advisor.value.help = advisor.value.help && advisor.value.help?.trim() !== '' 
+                ? advisor.value.help.split(',').map(item => item.trim()).filter(item => item !== '') 
+                : [];
                 advisors.value[index] = {...advisors.value[index], ...advisor.value};
             }
             loading.value = false
