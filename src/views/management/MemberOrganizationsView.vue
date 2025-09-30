@@ -154,7 +154,7 @@ const confirmedDeleteMemberOrganization = function () {
           <td>
             <span
               v-tooltip="{
-                text: 'Only member organizations without assigned delegates can be set inactive.',
+                text: 'Only member organizations without delegates representing them can be set (in)active.',
                 location: 'start',
                 disabled: !delegatesStore.delegates.some(
                   (delegate) => delegate.represents === item.id,
@@ -186,7 +186,7 @@ const confirmedDeleteMemberOrganization = function () {
             </v-btn>
             <span
               v-tooltip="{
-                text: 'Only member organizations without assigned delegates can be deleted.',
+                text: 'Only member organizations without delegates representing them can be deleted.',
                 location: 'start',
                 disabled: !delegatesStore.delegates.some(
                   (delegate) => delegate.represents === item.id,
