@@ -9,7 +9,6 @@ import { useMUNDirectorsStore } from "../../stores/mun_directors";
 import { useDelegatesStore } from "../../stores/delegates";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
 import { useForumsStore } from "../../stores/forums";
-import MemberOrganizationChip from "../../components/chips/MemberOrganizationChip.vue";
 
 import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
@@ -264,13 +263,35 @@ const getUniqueMemberOrganizationsFromSchool = () => {
               >
             </td>
             <td>
-              <MemberOrganizationChip
-                :org="
+              <v-chip
+                v-tooltip:bottom="
                   memberOrganizationsStore.member_organizations.find(
                     (org) => org.id === delegate.represents,
-                  )
+                  )?.official_name
                 "
-              ></MemberOrganizationChip>
+              >
+                <template v-slot:prepend>
+                  <v-avatar
+                    lazy
+                    start
+                    v-if="
+                      memberOrganizationsStore.member_organizations.find(
+                        (org) => org.id === delegate.represents,
+                      )?.flag
+                    "
+                    :image="
+                      memberOrganizationsStore.member_organizations.find(
+                        (org) => org.id === delegate.represents,
+                      )?.flag
+                    "
+                  ></v-avatar>
+                </template>
+                {{
+                  memberOrganizationsStore.member_organizations.find(
+                    (org) => org.id === delegate.represents,
+                  )?.placard_name
+                }}
+              </v-chip>
             </td>
             <td>
               <v-chip>
