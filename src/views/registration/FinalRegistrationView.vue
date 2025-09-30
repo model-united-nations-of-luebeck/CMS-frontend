@@ -243,7 +243,12 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             v-for="delegate in delegatesStore.delegates
               .filter((delegate) => delegate.school == route.params.school_id)
               .sort((a, b) => {
-                return a.forum.id > b.forum.id;
+                // First, sort by represents (member organization)
+                if (a.represents !== b.represents) {
+                  return a.represents > b.represents ? 1 : -1;
+                }
+                // If represents is the same, sort by forum
+                return a.forum > b.forum ? 1 : a.forum < b.forum ? -1 : 0;
               })"
             :key="delegate.id"
           >
