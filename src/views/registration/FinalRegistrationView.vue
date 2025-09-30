@@ -225,14 +225,14 @@ const getUniqueMemberOrganizationsFromSchool = () => {
 
       <h2>Delegates</h2>
 
-      <v-table hover>
+      <v-table>
         <thead>
           <tr>
             <th class="text-center">Role</th>
-            <th class="text-left">Member Organization</th>
-            <th class="text-left">Forum</th>
-            <th class="text-left">Name</th>
-            <th class="text-left">Registration Link</th>
+            <th class="selectable text-left">Member Organization</th>
+            <th class="selectable text-left">Forum</th>
+            <th class="selectable text-left">Name</th>
+            <th class="selectable text-left">Registration Link</th>
             <th class="text-left">Status</th>
             <th class="text-left">Actions</th>
           </tr>
@@ -251,7 +251,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
               })"
             :key="delegate.id"
           >
-            <td class="text-center">
+            <td class="text-center no-select">
               <v-icon
                 v-tooltip:right-center="
                   delegate.ambassador ? 'Ambassador' : 'Delegate'
@@ -284,6 +284,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                         (org) => org.id === delegate.represents,
                       )?.flag
                     "
+                    class="no-select"
                   ></v-avatar>
                 </template>
                 {{
@@ -294,17 +295,18 @@ const getUniqueMemberOrganizationsFromSchool = () => {
               </v-chip>
             </td>
             <td>
-              <v-chip>
-                {{
+              <v-chip
+                v-tooltip:bottom="
                   forumsStore.forums.find(
                     (forum) => forum.id === delegate.forum,
                   ).name
-                }}
-                ({{
+                "
+              >
+                {{
                   forumsStore.forums.find(
                     (forum) => forum.id === delegate.forum,
                   ).abbreviation
-                }})
+                }}
               </v-chip>
             </td>
             <td>{{ delegate?.first_name }} {{ delegate?.last_name }}</td>
@@ -343,11 +345,12 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                 v-tooltip:bottom-center="
                   'Click to copy registration link into your clipboard'
                 "
+                class="no-select"
               >
                 Copy link
               </v-btn>
             </td>
-            <td>
+            <td class="no-select">
               <v-chip
                 v-if="
                   delegate.first_name &&
@@ -367,7 +370,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                 Not completed
               </v-chip>
             </td>
-            <td>
+            <td class="no-select">
               <v-btn
                 v-if="!delegate.ambassador"
                 variant="plain"
@@ -381,6 +384,13 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             </td>
           </tr></tbody
       ></v-table>
+
+      <p>
+        <i>
+          Hint: You can mark the delegates table and copy it to distribute the
+          links to your students.
+        </i>
+      </p>
     </v-sheet>
   </div>
 </template>
@@ -408,5 +418,13 @@ h2 {
 
 .delegation > h3 {
   margin: 10px 0px;
+}
+
+.no-select {
+  user-select: none;
+}
+
+.selectable {
+  user-select: all !important;
 }
 </style>
