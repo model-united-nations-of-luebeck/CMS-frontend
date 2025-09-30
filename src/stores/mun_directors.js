@@ -42,7 +42,15 @@ export const useMUNDirectorsStore = defineStore('mun-directors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating MUN-Director failed. Please ask admin for help.', { position: toast.POSITION.BOTTOM_CENTER })
+            if(error.response && error.response.status === 400 && error.response.data.email) {
+                toast.error('Updating MUN-Director failed. An MUN-Director with this email already exists.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            } else {
+                toast.error('Updating MUN-Director failed. Please ask admin for help.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            }
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called

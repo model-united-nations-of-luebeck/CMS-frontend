@@ -48,9 +48,15 @@ export const useStudentOfficersStore = defineStore('student_officers', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Student Officer failed. Please ask admin for help.', {
-                position: toast.POSITION.BOTTOM_CENTER
-              })
+            if(error.response && error.response.status === 400 && error.response.data.email) {
+                toast.error('Updating Student Officer failed. An student officer with this email already exists.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            } else {
+                toast.error('Updating Student Officer failed. Please ask admin for help.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            }
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called

@@ -75,9 +75,15 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Advisor failed. Please ask admin for help.', {
-                position: toast.POSITION.BOTTOM_CENTER
-              })
+            if(error.response.status === 400 && error.response.data.email[0] === "participant with this E-Mail already exists.") {
+                toast.error('Updating Advisor failed. An advisor with this email already exists.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            } else {
+                toast.error('Updating Advisor failed. Please ask admin for help.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            }
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
@@ -97,9 +103,15 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding Advisor failed. Please ask admin for help.', {
-                position: toast.POSITION.BOTTOM_CENTER
-              })
+            if(error.response.status === 400 && error.response.data.email[0] === "participant with this E-Mail already exists.") {
+                toast.error('Adding Advisor failed. An advisor with this email already exists.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            } else {
+                toast.error('Adding Advisor failed. Please ask admin for help.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            }
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called

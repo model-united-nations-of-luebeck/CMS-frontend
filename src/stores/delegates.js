@@ -46,9 +46,15 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Delegate failed. Please ask admin for help.', {
-                position: toast.POSITION.BOTTOM_CENTER
-              })
+            if(error.response && error.response.status === 400 && error.response.data.email) {
+                toast.error('Updating Delegate failed. An delegate with this email already exists.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            } else {
+                toast.error('Updating Delegate failed. Please ask admin for help.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            }
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
