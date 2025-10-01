@@ -46,9 +46,15 @@ export const useDelegatesStore = defineStore('delegates', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Delegate failed. Please ask admin for help.', {
-                position: toast.POSITION.BOTTOM_CENTER
-              })
+            if(error.response && error.response.status === 400 && error.response.data.email) {
+                toast.error('Updating Delegate failed. An delegate with this email already exists.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            } else {
+                toast.error('Updating Delegate failed. Please ask admin for help.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            }
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
@@ -156,32 +162,20 @@ export const useDelegatesStore = defineStore('delegates', () => {
     async function changeAmbassador(delegate_id){
         loading.value = true
 
-        // turn ambassador role off for all delegates from this delegation
-        let org_id = delegates.value.find( (delegate) => delegate.id == delegate_id).represents
-        let ambassadors_from_org = delegates.value.filter( (delegate) => delegate.represents == org_id && delegate.ambassador)
-        for (let ambassador of ambassadors_from_org) {
-            if (ambassador.id != delegate_id) {
-                await http.patch(`delegates/${ambassador.id}/`, {ambassador: false}).then( () => {
-                    let index = delegates.value.findIndex( (delegate) => delegate.id == ambassador.id)
-                    if (index !== -1) {
-                        delegates.value[index].ambassador = false
-                    }
-                }).catch((error) => {
-                    console.error(error)
-                    toast.error('Unsetting Delegate as Ambassador failed. Please ask admin for help.', {
-                        position: toast.POSITION.BOTTOM_CENTER
-                      })
-                    throw error; // rethrow the error to be caught at the point where this function is called
-                })
-            }
-        }
-        
         // turn ambassador role on for the selected delegate
         await http.patch(`delegates/${delegate_id}/`, {ambassador: true}).then( () => {
             let index = delegates.value.findIndex( (delegate) => delegate.id == delegate_id)
             if (index !== -1) {
                 delegates.value[index].ambassador = true
             }
+
+            // turn ambassador role off locally for all other delegates of the same member organization, this is also done by the backend but this way the UI updates immediately
+            delegates.value.forEach( (delegate) => {
+                if (delegate.id != delegate_id && delegate.represents == delegates.value[index].represents && delegate.ambassador) {
+                    delegate.ambassador = false
+                }
+            })
+
             loading.value = false
             toast.success('Delegate was successfully set as Ambassador', {
                 position: toast.POSITION.BOTTOM_CENTER,

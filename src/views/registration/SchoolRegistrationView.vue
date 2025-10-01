@@ -69,7 +69,7 @@ defineExpose({
 
 <template>
   <div class="registration">
-    <v-container v-if="isAuthenticated">
+    <v-container v-if="isAuthenticated" fluid>
       <template v-slot:append>
         <v-btn v-if="isAuthenticated" icon @click="logout">
           <v-icon>mdi-logout</v-icon>

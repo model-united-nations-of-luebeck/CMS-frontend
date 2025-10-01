@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
 const origin = window.location.origin + router.options.history.base;
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -8,13 +9,11 @@ import { useMUNDirectorsStore } from "../../stores/mun_directors";
 import { useDelegatesStore } from "../../stores/delegates";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
 import { useForumsStore } from "../../stores/forums";
-import MemberOrganizationChip from "../../components/chips/MemberOrganizationChip.vue";
 
 import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 
 const route = useRoute();
-const router = useRouter();
 
 const schoolsStore = useSchoolsStore();
 schoolsStore.getSchool(route.params.school_id);
@@ -146,7 +145,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             :key="director.id"
           >
             <td>
-              <v-icon start>mdi-account</v-icon>{{ director.first_name }}
+              <v-icon start>mdi-school</v-icon>{{ director.first_name }}
               {{ director.last_name }}
             </td>
             <td>
@@ -226,14 +225,20 @@ const getUniqueMemberOrganizationsFromSchool = () => {
 
       <h2>Delegates</h2>
 
-      <v-table hover>
+      Please select one delegate of each member organization to be the
+      ambassador of this delegation by clicking the star button at the end of
+      the respective row. The ambassador will be the main point of contact for
+      this delegation during the conference and might be asked to give a speech
+      at the opening ceremony.
+
+      <v-table>
         <thead>
           <tr>
             <th class="text-center">Role</th>
-            <th class="text-left">Member Organization</th>
-            <th class="text-left">Forum</th>
-            <th class="text-left">Name</th>
-            <th class="text-left">Registration Link</th>
+            <th class="selectable text-left">Member Organization</th>
+            <th class="selectable text-left">Forum</th>
+            <th class="selectable text-left">Name</th>
+            <th class="selectable text-left">Registration Link</th>
             <th class="text-left">Status</th>
             <th class="text-left">Actions</th>
           </tr>
@@ -243,11 +248,16 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             v-for="delegate in delegatesStore.delegates
               .filter((delegate) => delegate.school == route.params.school_id)
               .sort((a, b) => {
-                return a.forum.id > b.forum.id;
+                // First, sort by represents (member organization)
+                if (a.represents !== b.represents) {
+                  return a.represents > b.represents ? 1 : -1;
+                }
+                // If represents is the same, sort by forum
+                return a.forum > b.forum ? 1 : a.forum < b.forum ? -1 : 0;
               })"
             :key="delegate.id"
           >
-            <td class="text-center">
+            <td class="text-center no-select">
               <v-icon
                 v-tooltip:right-center="
                   delegate.ambassador ? 'Ambassador' : 'Delegate'
@@ -259,26 +269,50 @@ const getUniqueMemberOrganizationsFromSchool = () => {
               >
             </td>
             <td>
-              <MemberOrganizationChip
-                :org="
+              <v-chip
+                v-tooltip:bottom="
                   memberOrganizationsStore.member_organizations.find(
                     (org) => org.id === delegate.represents,
-                  )
+                  )?.official_name
                 "
-              ></MemberOrganizationChip>
+              >
+                <template v-slot:prepend>
+                  <v-avatar
+                    lazy
+                    start
+                    v-if="
+                      memberOrganizationsStore.member_organizations.find(
+                        (org) => org.id === delegate.represents,
+                      )?.flag
+                    "
+                    :image="
+                      memberOrganizationsStore.member_organizations.find(
+                        (org) => org.id === delegate.represents,
+                      )?.flag
+                    "
+                    class="no-select"
+                  ></v-avatar>
+                </template>
+                {{
+                  memberOrganizationsStore.member_organizations.find(
+                    (org) => org.id === delegate.represents,
+                  )?.placard_name
+                }}
+              </v-chip>
             </td>
             <td>
-              <v-chip>
-                {{
+              <v-chip
+                v-tooltip:bottom="
                   forumsStore.forums.find(
                     (forum) => forum.id === delegate.forum,
                   ).name
-                }}
-                ({{
+                "
+              >
+                {{
                   forumsStore.forums.find(
                     (forum) => forum.id === delegate.forum,
                   ).abbreviation
-                }})
+                }}
               </v-chip>
             </td>
             <td>{{ delegate?.first_name }} {{ delegate?.last_name }}</td>
@@ -317,11 +351,12 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                 v-tooltip:bottom-center="
                   'Click to copy registration link into your clipboard'
                 "
+                class="no-select"
               >
                 Copy link
               </v-btn>
             </td>
-            <td>
+            <td class="no-select">
               <v-chip
                 v-if="
                   delegate.first_name &&
@@ -341,10 +376,12 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                 Not completed
               </v-chip>
             </td>
-            <td>
+            <td class="no-select">
               <v-btn
                 v-if="!delegate.ambassador"
-                variant="plain"
+                variant="tonal"
+                color="primary"
+                size="small"
                 icon="mdi-star"
                 v-tooltip:start="
                   'Click to make this delegate the ambassador for this delegation'
@@ -355,6 +392,13 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             </td>
           </tr></tbody
       ></v-table>
+
+      <p>
+        <i>
+          Hint: You can mark the delegates table and copy it to distribute the
+          links to your students.
+        </i>
+      </p>
     </v-sheet>
   </div>
 </template>
@@ -382,5 +426,13 @@ h2 {
 
 .delegation > h3 {
   margin: 10px 0px;
+}
+
+.no-select {
+  user-select: none;
+}
+
+.selectable {
+  user-select: all !important;
 }
 </style>

@@ -67,6 +67,9 @@ export const useAdvisorsStore = defineStore('advisors', () => {
         await http.patch(`advisors/${advisor_id}/`, advisor.value).then(() => {
             const index = advisors.value.findIndex(a => a.id === advisor_id);
             if (index !== -1) {
+                advisor.value.help = advisor.value.help && advisor.value.help?.trim() !== '' 
+                ? advisor.value.help.split(',').map(item => item.trim()).filter(item => item !== '') 
+                : [];
                 advisors.value[index] = {...advisors.value[index], ...advisor.value};
             }
             loading.value = false
@@ -75,9 +78,15 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Updating Advisor failed. Please ask admin for help.', {
-                position: toast.POSITION.BOTTOM_CENTER
-              })
+            if(error.response.status === 400 && error.response.data.email[0] === "participant with this E-Mail already exists.") {
+                toast.error('Updating Advisor failed. An advisor with this email already exists.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            } else {
+                toast.error('Updating Advisor failed. Please ask admin for help.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            }
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
@@ -97,9 +106,15 @@ export const useAdvisorsStore = defineStore('advisors', () => {
                 style: 'width: auto'
               })
         }).catch((error) => {
-            toast.error('Adding Advisor failed. Please ask admin for help.', {
-                position: toast.POSITION.BOTTOM_CENTER
-              })
+            if(error.response.status === 400 && error.response.data.email[0] === "participant with this E-Mail already exists.") {
+                toast.error('Adding Advisor failed. An advisor with this email already exists.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            } else {
+                toast.error('Adding Advisor failed. Please ask admin for help.', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  })
+            }
             console.error(error)
             loading.value = false
             throw error; // rethrow the error to be caught at the point where this function is called
