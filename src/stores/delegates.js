@@ -168,6 +168,14 @@ export const useDelegatesStore = defineStore('delegates', () => {
             if (index !== -1) {
                 delegates.value[index].ambassador = true
             }
+
+            // turn ambassador role off locally for all other delegates of the same member organization, this is also done by the backend but this way the UI updates immediately
+            delegates.value.forEach( (delegate) => {
+                if (delegate.id != delegate_id && delegate.represents == delegates.value[index].represents && delegate.ambassador) {
+                    delegate.ambassador = false
+                }
+            })
+
             loading.value = false
             toast.success('Delegate was successfully set as Ambassador', {
                 position: toast.POSITION.BOTTOM_CENTER,
