@@ -145,7 +145,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             :key="director.id"
           >
             <td>
-              <v-icon start>mdi-account</v-icon>{{ director.first_name }}
+              <v-icon start>mdi-school</v-icon>{{ director.first_name }}
               {{ director.last_name }}
             </td>
             <td>
@@ -224,6 +224,12 @@ const getUniqueMemberOrganizationsFromSchool = () => {
       </v-table>
 
       <h2>Delegates</h2>
+
+      Please select one delegate of each member organization to be the
+      ambassador of this delegation by clicking the star button at the end of
+      the respective row. The ambassador will be the main point of contact for
+      this delegation during the conference and might be asked to give a speech
+      at the opening ceremony.
 
       <v-table>
         <thead>
@@ -373,7 +379,9 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             <td class="no-select">
               <v-btn
                 v-if="!delegate.ambassador"
-                variant="plain"
+                variant="tonal"
+                color="primary"
+                size="small"
                 icon="mdi-star"
                 v-tooltip:start="
                   'Click to make this delegate the ambassador for this delegation'
