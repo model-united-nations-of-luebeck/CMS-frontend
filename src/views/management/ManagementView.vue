@@ -150,6 +150,7 @@ const items = ref([
       {
         title: "Insights",
         icon: "mdi-lightbulb-on",
+        action: "insights",
       },
     ],
   },

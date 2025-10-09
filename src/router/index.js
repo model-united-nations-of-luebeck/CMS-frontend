@@ -149,6 +149,11 @@ const router = createRouter({
           path: "advisors",
           name: "advisors",
           component: () => import("../views/management/AdvisorsView.vue"),
+        },
+        {
+          path: "insights",
+          name: "insights",
+          component: () => import("../views/management/InsightsView.vue"),
         }
       ],
     },
