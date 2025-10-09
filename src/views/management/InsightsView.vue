@@ -4,8 +4,13 @@ import AgeChart from "./charts/AgeChart.vue";
 import GenderChart from "./charts/GenderChart.vue";
 import HousingChart from "./charts/HousingChart.vue";
 import OriginChart from "./charts/OriginChart.vue";
+import axios from "axios";
 
 const http = inject("backend_instance");
+const stats_http = axios.create({
+  ...http.defaults,
+  baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/stats/"),
+});
 
 const age_stats = ref(null);
 const gender = ref(null);
@@ -15,76 +20,26 @@ const delegates_from_countries = ref(null);
 const birthdays = ref(null);
 const stats = ref(null);
 
+const stats_api_request = async (endpoint) => {
+  try {
+    const response = await stats_http.get(endpoint);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching data from ${endpoint}:`, error);
+    return null;
+  }
+};
+
 onMounted(async () => {
-  try {
-    gender.value = (
-      await http.get("stats/gender_all", {
-        baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/"),
-      })
-    ).data;
-  } catch (error) {
-    alert(error);
-  }
-
-  try {
-    age_stats.value = (
-      await http.get("stats/age_counts_all", {
-        baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/"),
-      })
-    ).data;
-  } catch (error) {
-    alert(error);
-  }
-
-  try {
-    birthdays.value = (
-      await http.get("stats/birthdays_during_conference", {
-        baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/"),
-      })
-    ).data.birthdays;
-  } catch (error) {
-    alert(error);
-  }
-
-  try {
-    origin_data.value = (
-      await http.get("stats/origin_all", {
-        baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/"),
-      })
-    ).data;
-  } catch (error) {
-    alert(error);
-  }
-
-  try {
-    delegates_from_countries.value = (
-      await http.get("stats/delegates_from_countries", {
-        baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/"),
-      })
-    ).data.origin;
-  } catch (error) {
-    alert(error);
-  }
-
-  try {
-    housing_data.value = (
-      await http.get("stats/housing_all", {
-        baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/"),
-      })
-    ).data;
-  } catch (error) {
-    alert(error);
-  }
-
-  try {
-    stats.value = (
-      await http.get("stats/all_stats", {
-        baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/"),
-      })
-    ).data;
-  } catch (error) {
-    alert(error);
-  }
+  gender.value = await stats_api_request("gender_all");
+  age_stats.value = await stats_api_request("age_counts_all");
+  birthdays.value = await stats_api_request("birthdays_during_conference");
+  origin_data.value = await stats_api_request("origin_all");
+  delegates_from_countries.value = await stats_api_request(
+    "delegates_from_countries",
+  );
+  housing_data.value = await stats_api_request("housing_all");
+  stats.value = await stats_api_request("all_stats");
 });
 </script>
 
@@ -175,7 +130,11 @@ onMounted(async () => {
                 and might need a new wristband:
               </p>
               <ul class="pa-2 ma-2">
-                <li v-for="birthday in birthdays" :key="birthday" class="mb-1">
+                <li
+                  v-for="birthday in birthdays.birthdays"
+                  :key="birthday"
+                  class="mb-1"
+                >
                   <a href="">{{ birthday.name }}</a> on {{ birthday.date }}
                 </li>
               </ul>
@@ -204,7 +163,7 @@ onMounted(async () => {
                     <div style="height: 300px; overflow: scroll">
                       <ol>
                         <li
-                          v-for="country in delegates_from_countries"
+                          v-for="country in delegates_from_countries.origin"
                           :key="country"
                         >
                           {{ country.school__country }}: {{ country.total }}
