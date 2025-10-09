@@ -14,7 +14,7 @@ const props = defineProps({
 const chartOptions = ref({
   chart: { type: "column" },
   title: { text: null },
-  xAxis: { categories: ["Delegates", "Schools"] },
+  xAxis: { categories: ["Delegates", "MUN-Directors", "Schools"] },
   yAxis: {
     min: 0,
     visible: false,
@@ -37,23 +37,26 @@ const chartOptions = ref({
     },
   },
   series: [
-    { name: "Guest family", data: [0, 0] },
-    { name: "Hostel", data: [0, 0] },
-    { name: "Other/self-arranged", data: [0, 0] },
+    { name: "Guest family", data: [0, 0, 0] },
+    { name: "Hostel", data: [0, 0, 0] },
+    { name: "Other/self-arranged", data: [0, 0, 0] },
   ],
 });
 
 const updateSeries = (data) => {
   chartOptions.value.series[0].data = [
     data.delegates.guest_family,
+    data.mun_directors.guest_family,
     data.schools.guest_family,
   ];
   chartOptions.value.series[1].data = [
     data.delegates.hostel,
+    data.mun_directors.hostel,
     data.schools.hostel,
   ];
   chartOptions.value.series[2].data = [
     data.delegates.other,
+    data.mun_directors.other,
     data.schools.other,
   ];
 };
