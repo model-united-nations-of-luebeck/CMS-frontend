@@ -4,6 +4,7 @@ import AgeChart from "./charts/AgeChart.vue";
 import GenderChart from "./charts/GenderChart.vue";
 import HousingChart from "./charts/HousingChart.vue";
 import OriginChart from "./charts/OriginChart.vue";
+import FirstTimeDelegatesChart from "./charts/FirstTimeDelegatesChart.vue";
 import axios from "axios";
 
 const http = inject("backend_instance");
@@ -18,6 +19,7 @@ const housing_data = ref(null);
 const origin_data = ref(null);
 const delegates_from_countries = ref(null);
 const birthdays = ref(null);
+const first_time_delegates_per_forum = ref(null);
 const stats = ref(null);
 
 const stats_api_request = async (endpoint) => {
@@ -39,6 +41,9 @@ onMounted(async () => {
     "delegates_from_countries",
   );
   housing_data.value = await stats_api_request("housing_all");
+  first_time_delegates_per_forum.value = await stats_api_request(
+    "first_time_delegates_per_forum",
+  );
   stats.value = await stats_api_request("all_stats");
 });
 </script>
@@ -131,7 +136,7 @@ onMounted(async () => {
               </p>
               <ul class="pa-2 ma-2">
                 <li
-                  v-for="birthday in birthdays.birthdays"
+                  v-for="birthday in birthdays?.birthdays"
                   :key="birthday"
                   class="mb-1"
                 >
@@ -163,7 +168,7 @@ onMounted(async () => {
                     <div style="height: 300px; overflow: scroll">
                       <ol>
                         <li
-                          v-for="country in delegates_from_countries.origin"
+                          v-for="country in delegates_from_countries?.origin"
                           :key="country"
                         >
                           {{ country.school__country }}: {{ country.total }}
@@ -191,7 +196,7 @@ onMounted(async () => {
           </v-card>
         </v-col>
 
-        <v-col xs="12" sm="8" md="8" class="d-flex">
+        <v-col xs="12" sm="4" md="4" class="d-flex">
           <v-card prepend-icon="mdi-counter" title="Stats">
             <v-card-text>
               <p>
@@ -264,6 +269,24 @@ onMounted(async () => {
                   </tbody>
                 </template>
               </v-table>
+            </v-card-text>
+          </v-card>
+        </v-col>
+
+        <v-col xs="12" sm="4" md="4" class="d-flex">
+          <v-card
+            prepend-icon="mdi-account-question"
+            title="First Time Delegates"
+          >
+            <v-card-text>
+              <p>
+                The following participants are attending their first Model UN
+                conference:
+              </p>
+
+              <first-time-delegates-chart
+                :data="first_time_delegates_per_forum"
+              ></first-time-delegates-chart>
             </v-card-text>
           </v-card>
         </v-col>
