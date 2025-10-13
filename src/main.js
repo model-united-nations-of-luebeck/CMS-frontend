@@ -18,6 +18,7 @@ import { VDateInput } from 'vuetify/labs/VDateInput' //currently still in labs
 import VueClipboard from 'vue3-clipboard'
 import Vue3Toastify from 'vue3-toastify'
 import axios from 'axios'
+import HighchartsVue from 'highcharts-vue'
 
 // phone number input field
 import 'flag-icons/css/flag-icons.min.css';
@@ -54,6 +55,7 @@ app.use(VueClipboard, {
 app.use(Vue3Toastify, {
   autoClose: 3000,
 })
+app.use(HighchartsVue);
 
 // create phone number input component
 const vPhoneInput = createVPhoneInput({
