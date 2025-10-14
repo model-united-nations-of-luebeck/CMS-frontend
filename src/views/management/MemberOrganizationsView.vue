@@ -58,7 +58,7 @@ const confirmedDeleteMemberOrganization = function () {
 
 let fuse = null;
 watch(
-  memberOrganizationsStore.member_organizations,
+  () => memberOrganizationsStore.member_organizations,
   (newMemberOrganizations) => {
     fuse = new Fuse(newMemberOrganizations, {
       keys: ["name", "official_name", "placard_name", "status", "active"],
