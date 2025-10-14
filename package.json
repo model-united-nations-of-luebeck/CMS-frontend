@@ -17,6 +17,7 @@
     "@vueuse/core": "^10.6.0",
     "axios": "^1.12.0",
     "flag-icons": "^7.5.0",
+    "fuse.js": "^7.1.0",
     "highcharts-vue": "^2.0.1",
     "pinia": "^2.1.6",
     "v-phone-input": "^5.1.0",

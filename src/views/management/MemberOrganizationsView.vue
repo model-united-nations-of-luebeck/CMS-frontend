@@ -1,11 +1,12 @@
 <script setup>
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 import { useDelegatesStore } from "../../stores/delegates";
+import Fuse from "fuse.js";
 
 const memberOrganizationsStore = useMemberOrganizationsStore();
 memberOrganizationsStore.getMemberOrganizations();
@@ -54,6 +55,43 @@ const confirmedDeleteMemberOrganization = function () {
       );
     });
 };
+
+let fuse = null;
+watch(
+  memberOrganizationsStore.member_organizations,
+  (newMemberOrganizations) => {
+    fuse = new Fuse(newMemberOrganizations, {
+      keys: ["name", "official_name", "placard_name", "status", "active"],
+      threshold: 0.3,
+      useExtendedSearch: true,
+    });
+  },
+  { immediate: true },
+);
+
+const customFilter = (value, query, item) => {
+  if (!query || !fuse) return true;
+
+  if (query.toLowerCase() === "active") query = "=true";
+  else if (query.toLowerCase() === "inactive") query = "=false";
+
+  // Cache results for current query
+  if (!customFilter.cache || customFilter.cache.query !== query) {
+    const results = fuse.search(query);
+    customFilter.cache = {
+      query,
+      // Map from id (or key) → score
+      map: new Map(results.map((r) => [r.item.id ?? r.item.key, r.score ?? 0])),
+    };
+  }
+
+  const key = item?.id ?? item?.key;
+  const score = customFilter.cache.map.get(key);
+  if (score === undefined) return false;
+
+  return score;
+};
+customFilter.cache = { query: "", map: new Map() };
 </script>
 
 <template>
@@ -102,6 +140,7 @@ const confirmedDeleteMemberOrganization = function () {
       height="calc(100vh - 160px)"
       fixed-header
       :search="search"
+      :custom-filter="customFilter"
       item-height="56"
       :sort-by="[{ key: 'name', order: 'asc' }]"
     >
