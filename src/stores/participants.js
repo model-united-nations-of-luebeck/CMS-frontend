@@ -1,6 +1,9 @@
+import { defineStore } from 'pinia'
+import {inject, ref} from 'vue'
 import { useConferenceStore } from "./conference";
 const conferenceStore = useConferenceStore();
 conferenceStore.getCurrentConference();
+
 
 export function getAge(birth_date) {
   const start_date = new Date(conferenceStore.conference?.start_date);
@@ -31,3 +34,25 @@ export function sortParticipantsByAge(a, b) {
   }
   return 0;
 }
+
+export const useParticipantsStore = defineStore('participants', () => {
+    const http = inject('backend_instance');
+    const participants = ref([])
+    const participant = ref(null)
+    const loading = ref(false)
+
+    async function getParticipants() {
+        loading.value = true
+        await http.get("participants/").then( (res) => {
+            participants.value = res.data
+            loading.value = false
+        })
+    }
+
+    return {
+        participants,
+        participant,
+        loading,
+        getParticipants
+    }
+})
