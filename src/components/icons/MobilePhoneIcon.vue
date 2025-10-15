@@ -10,6 +10,7 @@ const props = defineProps({
 <template>
   <v-icon
     v-if="props.mobile"
+    color="primary"
     v-tooltip:bottom-center="
       `${props.mobile}  (Click to copy mobile phone number to your clipboard)`
     "

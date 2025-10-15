@@ -152,6 +152,11 @@ const items = ref([
         icon: "mdi-lightbulb-on",
         action: "insights",
       },
+      {
+        title: "Participant Search",
+        icon: "mdi-account-search",
+        action: "participant-search",
+      },
     ],
   },
 ]);

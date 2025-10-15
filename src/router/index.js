@@ -154,6 +154,11 @@ const router = createRouter({
           path: "insights",
           name: "insights",
           component: () => import("../views/management/InsightsView.vue"),
+        },
+        {
+          path: "participant-search",
+          name: "participant-search",
+          component: () => import("../views/management/ParticipantSearchView.vue"),
         }
       ],
     },
