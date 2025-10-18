@@ -1,5 +1,14 @@
 # Conference Management System Frontend
 
+<p align="center">
+  <img alt="Vue.js Icon" src="https://img.shields.io/badge/-Vue.js-42b883?style=flat-square&logo=vuedotjs&logoColor=white" />
+  <img alt="Vuetify Icon" src="https://img.shields.io/badge/-Vuetify-1867C0?style=flat-square&logo=vuetify&logoColor=white" />
+  <img alt="JavaScript Icon" src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" />
+  <img alt="Vitest Icon" src="https://img.shields.io/badge/-Vitest-6E9F18?style=flat-square&logo=vitest&logoColor=white" />
+  <img alt="Pinia Icon" src="https://img.shields.io/badge/-Pinia-FCD34D?style=flat-square&logo=pinia&logoColor=black" />
+  <img alt="Axios Icon" src="https://img.shields.io/badge/-Axios-5A29E4?style=flat-square&logo=axios&logoColor=white" />
+</p>
+
 This repo organizes the frontend of a Conference Management System for Model UN conferences. It aims to allow smooth registration and administration of participants, allocation of delegations and general management of a conference.
 
 The management system is mainly split up into three sections:
