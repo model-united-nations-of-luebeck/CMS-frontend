@@ -1,17 +1,17 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
   accommodation: String,
-  label: String
-})
+  label: String,
+});
 
-const emit = defineEmits(['update:accommodation'])
+const emit = defineEmits(["update:accommodation"]);
 
 const updateAccommodation = (value) => {
-  emit('update:accommodation', value)
-}
+  emit("update:accommodation", value);
+};
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const updateAccommodation = (value) => {
       :model-value="props.accommodation"
       @update:modelValue="updateAccommodation"
     >
-      <v-btn value="guest-family">
+      <v-btn value="guest family">
         <span class="hidden-sm-and-down">Guest family</span>
 
         <v-icon :end="!mobile"> mdi-home-heart </v-icon>
