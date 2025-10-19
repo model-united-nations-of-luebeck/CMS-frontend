@@ -7,10 +7,16 @@ const emit = defineEmits(["show-logout"]);
 const http = inject("backend_instance");
 import { useTheme } from "vuetify";
 const theme = useTheme();
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
-defineExpose({
-  logout,
-});
+const drawer = ref(null);
+
+const toggleDrawer = () => {
+  drawer.value = !drawer.value;
+};
+
+defineExpose({ logout, toggleDrawer });
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 const loginDialog = ref(true);
@@ -160,15 +166,13 @@ const items = ref([
     ],
   },
 ]);
-
-const drawer = ref(null);
 </script>
 
 <template>
   <div v-if="state.isAuthenticated">
     <v-navigation-drawer
-      expand-on-hover
-      :rail="true"
+      :expand-on-hover="!mobile"
+      :rail="!mobile"
       v-model="drawer"
       elevation="2"
     >
