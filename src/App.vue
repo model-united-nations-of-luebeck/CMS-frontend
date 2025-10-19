@@ -1,6 +1,8 @@
 <script setup>
 import { inject, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const route = useRoute();
 
@@ -25,12 +27,22 @@ const logout = function () {
   console.log("Logging out", routedComponent.value);
   routedComponent.value?.logout();
 };
+
+const toggleDrawer = function () {
+  routedComponent.value?.toggleDrawer();
+};
 </script>
 
 <template>
   <v-app>
     <v-app-bar density="compact" color="primary">
-      <RouterLink :to="route.matched[0]?.path || '/'">
+      <v-app-bar-nav-icon
+        v-if="mobile && route.matched[0]?.path === '/management/'"
+        icon="mdi-menu"
+        color="white"
+        @click="toggleDrawer()"
+      ></v-app-bar-nav-icon>
+      <RouterLink v-else :to="route.matched[0]?.path || '/'">
         <v-app-bar-nav-icon icon="mdi-bank" color="white"></v-app-bar-nav-icon>
       </RouterLink>
       <v-app-bar-title>{{ $route.meta.title }} </v-app-bar-title>
