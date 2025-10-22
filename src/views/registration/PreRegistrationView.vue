@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useSchoolsStore } from "../../stores/schools";
 import { useConferenceStore } from "../../stores/conference";
 import SchoolNameField from "../../components/inputs/SchoolNameField.vue";
@@ -12,6 +12,7 @@ import DelegateNumberField from "../../components/inputs/DelegateNumberField.vue
 import AccommodationSelector from "../../components/inputs/AccommodationSelector.vue";
 const { mobile } = useDisplay();
 const route = useRoute();
+const router = useRouter();
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 
@@ -154,7 +155,14 @@ const ordinal = (n) => {
               prepend-icon="mdi-send"
               :loading="schoolsStore.loading"
               :disabled="schoolsStore.loading"
-              @click="schoolsStore.updateSchool(route.params.school_id)"
+              @click="
+                schoolsStore.updateSchool(route.params.school_id).then(() => {
+                  router.push({
+                    name: 'registration-startpage',
+                    params: { school_id: route.params.school_id },
+                  });
+                })
+              "
               >Submit pre-registration data</v-btn
             >
           </v-row>

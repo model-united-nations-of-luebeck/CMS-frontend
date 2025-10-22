@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
-const origin = window.location.origin + router.options.history.base;
+const origin = window.location.origin;
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import { useSchoolsStore } from "../../stores/schools";
@@ -239,6 +239,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             <th class="selectable text-left">Forum</th>
             <th class="selectable text-left">Name</th>
             <th class="selectable text-left">Registration Link</th>
+            <th class="text-left"></th>
             <th class="text-left">Status</th>
             <th class="text-left">Actions</th>
           </tr>
@@ -333,6 +334,8 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                   }).href
                 }}</Router-Link
               >
+            </td>
+            <td>
               <v-btn
                 rounded
                 variant="tonal"
