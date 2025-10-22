@@ -239,6 +239,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
             <th class="selectable text-left">Forum</th>
             <th class="selectable text-left">Name</th>
             <th class="selectable text-left">Registration Link</th>
+            <th class="text-left"></th>
             <th class="text-left">Status</th>
             <th class="text-left">Actions</th>
           </tr>
@@ -333,6 +334,8 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                   }).href
                 }}</Router-Link
               >
+            </td>
+            <td>
               <v-btn
                 rounded
                 variant="tonal"
