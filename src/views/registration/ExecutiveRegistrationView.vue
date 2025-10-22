@@ -116,18 +116,22 @@ defineExpose({
           </v-col>
         </v-row>
         <v-row no-gutters>
-          <ConsentField
-            v-model:data_consent_time="
-              executivesStore.executive.data_consent_time
-            "
-            v-model:data_consent_ip="executivesStore.executive.data_consent_ip"
-            v-model:media_consent_time="
-              executivesStore.executive.media_consent_time
-            "
-            v-model:media_consent_ip="
-              executivesStore.executive.media_consent_ip
-            "
-          ></ConsentField>
+          <v-col cols="12" sm="12" md="6">
+            <ConsentField
+              v-model:data_consent_time="
+                executivesStore.executive.data_consent_time
+              "
+              v-model:data_consent_ip="
+                executivesStore.executive.data_consent_ip
+              "
+              v-model:media_consent_time="
+                executivesStore.executive.media_consent_time
+              "
+              v-model:media_consent_ip="
+                executivesStore.executive.media_consent_ip
+              "
+            ></ConsentField>
+          </v-col>
         </v-row>
         <v-row no-gutters class="justify-center">
           <div>
