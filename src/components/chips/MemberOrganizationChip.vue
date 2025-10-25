@@ -8,7 +8,7 @@ const props = defineProps({
   <v-chip
     v-tooltip:bottom="props?.org?.official_name"
     :to="{
-      name: 'member-organization-detail',
+      name: 'member-organization-view',
       params: { member_organization_id: props?.org?.id },
     }"
   >

@@ -33,6 +33,11 @@ const router = createRouter({
           name: "conference",
           component: () => import("../views/management/ConferenceView.vue"),
         },
+         {
+          path: "schools/:school_id/view",
+          name: "school-view",
+          component: () => import("../views/management/SchoolView.vue"),
+        },
         {
           path: "schools/:school_id",
           name: "school-detail",
@@ -42,6 +47,12 @@ const router = createRouter({
           path: "schools",
           name: "schools",
           component: () => import("../views/management/SchoolsView.vue"),
+        },
+        {
+          path: "member-organizations/:member_organization_id/view",
+          name: "member-organization-view",
+          component: () =>
+            import("../views/management/MemberOrganizationView.vue"),
         },
         {
           path: "member-organizations/:member_organization_id",
@@ -54,6 +65,11 @@ const router = createRouter({
           name: "member-organizations",
           component: () =>
             import("../views/management/MemberOrganizationsView.vue"),
+        },
+        {
+          path: "forums/:forum_id/view",
+          name: "forum-view",
+          component: () => import("../views/management/ForumView.vue"),
         },
         {
           path: "forums/:forum_id",

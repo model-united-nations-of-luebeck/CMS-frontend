@@ -157,10 +157,19 @@ customFilter.cache = { query: "", map: new Map() };
             ></v-avatar>
           </td>
           <td>
-            <span v-if="item.name.length > 30" v-tooltip:bottom="item.name"
-              >{{ item.name.slice(0, 30) }} ...</span
+            <b
+              ><router-link
+                :to="{
+                  name: 'member-organization-view',
+                  params: { member_organization_id: item.id },
+                }"
+              >
+                <span v-if="item.name.length > 30" v-tooltip:bottom="item.name"
+                  >{{ item.name.slice(0, 30) }} ...</span
+                >
+                <span v-else>{{ item.name }}</span>
+              </router-link></b
             >
-            <span v-else>{{ item.name }}</span>
           </td>
           <td>
             <span
@@ -279,5 +288,9 @@ customFilter.cache = { query: "", map: new Map() };
 }
 #search {
   width: 300px;
+}
+b > a {
+  color: inherit;
+  text-decoration: none;
 }
 </style>

@@ -9,7 +9,7 @@ const props = defineProps({
     v-if="props?.school?.id"
     variant="text"
     :to="{
-      name: 'school-detail',
+      name: 'school-view',
       params: { school_id: props?.school?.id },
     }"
     v-tooltip:bottom="`${props?.school?.city}, ${props?.school?.country}`"

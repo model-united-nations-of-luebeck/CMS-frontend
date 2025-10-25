@@ -120,7 +120,14 @@ const confirmedDeletePlenary = function () {
               >{{ item.abbreviation }}
             </v-chip>
           </td>
-          <td>{{ item.name }}</td>
+          <td>
+            <b
+              ><router-link
+                :to="{ name: 'forum-view', params: { forum_id: item.id } }"
+                >{{ item.name }}</router-link
+              ></b
+            >
+          </td>
           <td>
             <i>{{ item.subtitle }}</i>
           </td>
@@ -326,5 +333,10 @@ const confirmedDeletePlenary = function () {
 }
 #search {
   width: 300px;
+}
+
+b > a {
+  text-decoration: none;
+  color: inherit;
 }
 </style>

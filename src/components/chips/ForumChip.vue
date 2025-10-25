@@ -9,7 +9,7 @@ const props = defineProps({
     v-if="props?.forum?.id"
     v-tooltip:bottom="props?.forum?.name"
     :to="{
-      name: 'forum-detail',
+      name: 'forum-view',
       params: { forum_id: props?.forum?.id },
     }"
   >
