@@ -7,6 +7,7 @@ import { useDelegatesStore } from "../../stores/delegates";
 import { useSchoolsStore } from "../../stores/schools";
 import { useRoute } from "vue-router";
 import MemberOrganizationChip from "../../components/chips/MemberOrganizationChip.vue";
+import SchoolChip from "../../components/chips/SchoolChip.vue";
 
 const route = useRoute();
 const forumsStore = useForumsStore();
@@ -160,17 +161,11 @@ schoolsStore.getSchools();
               </td>
               <td>{{ delegate.first_name }} {{ delegate.last_name }}</td>
               <td>
-                <v-chip
-                  :to="{
-                    name: 'school-view',
-                    params: { school_id: delegate.school },
-                  }"
-                >
-                  {{
+                <SchoolChip
+                  :school="
                     schoolsStore.schools.find((s) => s.id === delegate.school)
-                      ?.name
-                  }}
-                </v-chip>
+                  "
+                />
               </td>
               <td>{{ delegate.email }}</td>
               <td>{{ delegate.mobile }}</td>
