@@ -33,6 +33,11 @@ const router = createRouter({
           name: "conference",
           component: () => import("../views/management/ConferenceView.vue"),
         },
+         {
+          path: "schools/:school_id/view",
+          name: "school-view",
+          component: () => import("../views/management/SchoolView.vue"),
+        },
         {
           path: "schools/:school_id",
           name: "school-detail",

@@ -199,8 +199,14 @@ const confirmedDeleteSchool = function () {
             ></v-btn>
           </td>
           <td>
-            <b>{{ item.name }}</b
-            ><br />
+            <b
+              ><router-link
+                :to="{ name: 'school-view', params: { school_id: item.id } }"
+              >
+                {{ item.name }}
+              </router-link></b
+            >
+            <br />
             <span v-if="item.city"> ({{ item.city }})</span>
             <span v-if="item.country"
               >, <i>{{ item.country }}</i></span
@@ -431,5 +437,10 @@ const confirmedDeleteSchool = function () {
 
 .v-table > .v-table__wrapper > table > tbody > tr > td {
   padding: 0 4px;
+}
+
+b > a {
+  text-decoration: none;
+  color: inherit;
 }
 </style>
