@@ -52,7 +52,31 @@ const toggleDrawer = function () {
           <v-icon>mdi-logout</v-icon>
           Logout
         </v-btn>
-        <v-btn v-else icon="mdi-dots-vertical"></v-btn>
+        <v-menu v-else open-on-hover>
+          <template v-slot:activator="{ props }">
+            <v-btn
+              icon="mdi-dots-vertical"
+              v-bind="props"
+              variant="text"
+            ></v-btn>
+          </template>
+
+          <v-list dense>
+            <v-list-item
+              prepend-icon="mdi-information"
+              href="https://munol.org/legal-notice/"
+              target="_blank"
+            >
+              <v-list-item-title>Imprint</v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              prepend-icon="mdi-shield-check"
+              :to="{ name: 'privacy-policy' }"
+            >
+              <v-list-item-title>Privacy Policy</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </template>
     </v-app-bar>
 
