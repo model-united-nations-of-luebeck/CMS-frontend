@@ -97,11 +97,13 @@ schoolsStore.getSchools();
           </thead>
           <tbody>
             <tr
-              v-for="delegate in delegatesStore.delegates.filter(
-                (d) =>
-                  d.represents ===
-                  memberOrganizationsStore.member_organization.id,
-              )"
+              v-for="delegate in delegatesStore.delegates
+                .filter(
+                  (d) =>
+                    d.represents ===
+                    memberOrganizationsStore.member_organization.id,
+                )
+                .sort((a, b) => a.forum.localeCompare(b.forum))"
               :key="delegate.id"
             >
               <td>

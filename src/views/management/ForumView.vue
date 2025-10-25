@@ -134,9 +134,19 @@ schoolsStore.getSchools();
           </thead>
           <tbody>
             <tr
-              v-for="delegate in delegatesStore.delegates.filter(
-                (d) => d.forum == forumsStore.forum.id,
-              )"
+              v-for="delegate in delegatesStore.delegates
+                .filter((d) => d.forum == forumsStore.forum.id)
+                .sort((a, b) => {
+                  const orgA =
+                    memberOrganizationsStore.member_organizations.find(
+                      (org) => org.id === a.represents,
+                    )?.name;
+                  const orgB =
+                    memberOrganizationsStore.member_organizations.find(
+                      (org) => org.id === b.represents,
+                    )?.name;
+                  return orgA.localeCompare(orgB);
+                })"
               :key="delegate.id"
             >
               <td>
