@@ -47,11 +47,33 @@ forumsStore.getForums();
       <template v-slot:prepend>
         <v-icon icon="mdi-bank" size="small" start></v-icon>
       </template>
+
+      <v-spacer></v-spacer>
+      <v-btn
+        prepend-icon="mdi-pencil"
+        variant="tonal"
+        :to="{
+          name: 'school-detail',
+          params: { school_id: schoolsStore.school.id },
+        }"
+      >
+        Edit School
+      </v-btn>
     </v-breadcrumbs>
 
-    <v-card>
+    <v-card
+      v-if="
+        schoolsStore.school &&
+        munDirectorsStore.mun_directors &&
+        delegatesStore.delegates &&
+        memberOrganizationsStore.member_organizations &&
+        forumsStore.forums
+      "
+    >
       <v-card-title>
-        <h2>{{ schoolsStore.school.name }}</h2>
+        <h2>
+          {{ schoolsStore?.school.name }}
+        </h2>
       </v-card-title>
       <v-card-text>
         <h3><v-icon start>mdi-school</v-icon>MUN-Directors</h3>
