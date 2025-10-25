@@ -134,6 +134,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
           <tr>
             <th class="text-left">Name</th>
             <th class="text-left">Registration Link</th>
+            <th class="text-left"></th>
             <th class="text-left">Actions</th>
           </tr>
         </thead>
@@ -165,7 +166,8 @@ const getUniqueMemberOrganizationsFromSchool = () => {
                   }).href
                 }}</Router-Link
               >
-
+            </td>
+            <td>
               <v-btn
                 v-tooltip:bottom-center="
                   'Click to copy registration link into your clipboard'
