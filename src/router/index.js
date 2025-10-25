@@ -49,6 +49,12 @@ const router = createRouter({
           component: () => import("../views/management/SchoolsView.vue"),
         },
         {
+          path: "member-organizations/:member_organization_id/view",
+          name: "member-organization-view",
+          component: () =>
+            import("../views/management/MemberOrganizationView.vue"),
+        },
+        {
           path: "member-organizations/:member_organization_id",
           name: "member-organization-detail",
           component: () =>
