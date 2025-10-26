@@ -19,6 +19,7 @@ import VueClipboard from 'vue3-clipboard'
 import Vue3Toastify from 'vue3-toastify'
 import axios from 'axios'
 import HighchartsVue from 'highcharts-vue'
+import JsonExcel from 'vue-json-excel3'
 
 // phone number input field
 import 'flag-icons/css/flag-icons.min.css';
@@ -56,6 +57,7 @@ app.use(Vue3Toastify, {
   autoClose: 3000,
 })
 app.use(HighchartsVue);
+app.component("downloadExcel", JsonExcel);
 
 // create phone number input component
 const vPhoneInput = createVPhoneInput({
