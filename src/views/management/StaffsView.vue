@@ -18,6 +18,8 @@ import MailIcon from "../../components/icons/MailIcon.vue";
 import ParticipantDisplay from "../../components/displays/ParticipantDisplay.vue";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 import LinkIcon from "../../components/icons/LinkIcon.vue";
+import DownloadJSONIcon from "../../components/icons/DownloadJSONIcon.vue";
+import DownloadExcelIcon from "../../components/icons/DownloadExcelIcon.vue";
 
 const staffsStore = useStaffsStore();
 staffsStore.getStaffs();
@@ -28,9 +30,11 @@ const newPosition = ref("");
 
 const search = ref("");
 const expanded = ref([]);
+const selected = ref([]);
 const valid = ref(true);
 
 const headers = [
+  { title: "", key: "data-table-select", sortable: false },
   { title: "", key: "data-table-expand", sortable: false },
   {
     title: "Name",
@@ -123,6 +127,21 @@ const confirmedDeleteStaff = function () {
           <template v-slot:prepend>
             <v-icon icon="mdi-account" size="small" start disabled></v-icon>
           </template>
+
+          <DownloadExcelIcon
+            :items="
+              selected.map((staff) => ({
+                ...staff,
+                mobile: `'${staff.mobile}`,
+              }))
+            "
+            name="staffs.xls"
+          ></DownloadExcelIcon>
+          <DownloadJSONIcon
+            :items="selected"
+            name="staffs.json"
+          ></DownloadJSONIcon>
+
           <v-spacer></v-spacer>
           <v-text-field
             label="Filter"
@@ -151,6 +170,7 @@ const confirmedDeleteStaff = function () {
     </v-row>
 
     <v-data-table-virtual
+      v-model="selected"
       v-if="staffsStore.staffs"
       :headers="headers"
       :items="staffsStore.staffs"
@@ -171,12 +191,44 @@ const confirmedDeleteStaff = function () {
       :custom-filter="custom_filter"
       item-height="56"
       height="calc(100vh - 160px)"
+      show-select
+      return-object
     >
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template v-slot:item="{ item, internalItem, toggleExpand, isExpanded }">
+      <template
+        v-slot:header[`data-table-select`]="{
+          allSelected,
+          selectAll,
+          someSelected,
+        }"
+      >
+        <v-checkbox-btn
+          :indeterminate="someSelected && !allSelected"
+          :model-value="allSelected"
+          color="primary"
+          @update:model-value="selectAll(!allSelected)"
+        ></v-checkbox-btn>
+      </template>
+      <template
+        v-slot:item="{
+          item,
+          internalItem,
+          toggleExpand,
+          isExpanded,
+          isSelected,
+          toggleSelect,
+        }"
+      >
         <tr>
+          <td>
+            <v-checkbox-btn
+              :model-value="isSelected(internalItem)"
+              color="primary"
+              @update:model-value="toggleSelect(internalItem)"
+            ></v-checkbox-btn>
+          </td>
           <td>
             <v-btn
               @click="toggleExpand(internalItem)"
@@ -335,5 +387,9 @@ h3 {
 
 .v-table > .v-table__wrapper > table > tbody > tr > td {
   padding: 0 4px;
+}
+
+.v-table > .v-table__wrapper > table > thead > tr > th {
+  padding: 0 4px !important;
 }
 </style>

@@ -133,7 +133,7 @@ const confirmedDeleteAdvisor = function () {
           ></DownloadExcelIcon>
           <DownloadJSONIcon
             :items="selected"
-            name="'advisors.json'"
+            name="advisors.json"
           ></DownloadJSONIcon>
           <v-spacer></v-spacer>
           <v-text-field
@@ -224,7 +224,6 @@ const confirmedDeleteAdvisor = function () {
         <tr>
           <td>
             <v-checkbox-btn
-              class="pa-08"
               :model-value="isSelected(internalItem)"
               color="primary"
               @update:model-value="toggleSelect(internalItem)"
