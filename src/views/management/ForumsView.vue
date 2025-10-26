@@ -9,6 +9,8 @@ import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 // import RoomChip from "../../components/chips/RoomChip.vue";
+import DownloadJSONIcon from "../../components/icons/DownloadJSONIcon.vue";
+import DownloadExcelIcon from "../../components/icons/DownloadExcelIcon.vue";
 
 const forumsStore = useForumsStore();
 forumsStore.getForums();
@@ -23,8 +25,10 @@ issuesStore.getIssues();
 const deleteDialog = ref(null);
 const deleteDialogPlenary = ref(null);
 const search = ref("");
+const selected = ref([]);
 
 const headers = [
+  { title: "", key: "data-table-select", sortable: false },
   { title: "Abbreviation", key: "abbreviation" },
   { title: "Name", key: "name" },
   { title: "Subtitle", key: "subtitle" },
@@ -68,6 +72,12 @@ const confirmedDeletePlenary = function () {
         <v-icon icon="mdi-forum" size="small" start disabled></v-icon>
       </template>
 
+      <DownloadExcelIcon
+        :items="selected"
+        name="forums.xls"
+      ></DownloadExcelIcon>
+      <DownloadJSONIcon :items="selected" name="forums.json"></DownloadJSONIcon>
+
       <v-spacer></v-spacer>
       <v-text-field
         label="Filter"
@@ -96,6 +106,7 @@ const confirmedDeletePlenary = function () {
     </v-breadcrumbs>
 
     <v-data-table
+      v-model="selected"
       v-if="forumsStore.forums"
       :headers="headers"
       :items="forumsStore.forums"
@@ -109,12 +120,35 @@ const confirmedDeletePlenary = function () {
       :search="search"
       :sort-by="[{ key: 'id', order: 'asc' }]"
       item-height="56"
+      show-select
+      return-object
     >
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template v-slot:item="{ item }">
+      <template
+        v-slot:header[`data-table-select`]="{
+          allSelected,
+          selectAll,
+          someSelected,
+        }"
+      >
+        <v-checkbox-btn
+          :indeterminate="someSelected && !allSelected"
+          :model-value="allSelected"
+          color="primary"
+          @update:model-value="selectAll(!allSelected)"
+        ></v-checkbox-btn>
+      </template>
+      <template v-slot:item="{ item, internalItem, isSelected, toggleSelect }">
         <tr>
+          <td>
+            <v-checkbox-btn
+              :model-value="isSelected(internalItem)"
+              color="primary"
+              @update:model-value="toggleSelect(internalItem)"
+            ></v-checkbox-btn>
+          </td>
           <td>
             <v-chip v-if="item.abbreviation" prepend-icon="mdi-forum"
               >{{ item.abbreviation }}
@@ -338,5 +372,13 @@ const confirmedDeletePlenary = function () {
 b > a {
   text-decoration: none;
   color: inherit;
+}
+
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  padding: 0 4px;
+}
+
+.v-table > .v-table__wrapper > table > thead > tr > th {
+  padding: 0 4px !important;
 }
 </style>

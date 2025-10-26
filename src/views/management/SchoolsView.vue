@@ -10,6 +10,8 @@ import {
 import { ref } from "vue";
 import { useDelegatesStore } from "../../stores/delegates";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
+import DownloadJSONIcon from "../../components/icons/DownloadJSONIcon.vue";
+import DownloadExcelIcon from "../../components/icons/DownloadExcelIcon.vue";
 
 const schoolsStore = useSchoolsStore();
 schoolsStore.getSchools();
@@ -35,8 +37,10 @@ const valid = ref(true);
 
 const search = ref("");
 const expanded = ref([]);
+const selected = ref([]);
 
 const headers = [
+  { title: "", key: "data-table-select", sortable: false },
   { title: "", key: "data-table-expand", sortable: false },
   {
     title: "Name",
@@ -134,6 +138,16 @@ const confirmedDeleteSchool = function () {
           <template v-slot:prepend>
             <v-icon icon="mdi-bank" size="small" start disabled></v-icon>
           </template>
+
+          <DownloadExcelIcon
+            :items="selected"
+            name="schools.xls"
+          ></DownloadExcelIcon>
+          <DownloadJSONIcon
+            :items="selected"
+            name="schools.json"
+          ></DownloadJSONIcon>
+
           <v-spacer></v-spacer>
           <v-text-field
             label="Filter"
@@ -162,6 +176,7 @@ const confirmedDeleteSchool = function () {
     </v-row>
 
     <v-data-table-virtual
+      v-model="selected"
       v-if="schoolsStore.schools"
       :headers="headers"
       :items="schoolsStore.schools"
@@ -181,14 +196,46 @@ const confirmedDeleteSchool = function () {
       :custom-filter="custom_filter"
       item-height="56"
       height="calc(100vh - 160px)"
+      show-select
+      return-object
     >
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template v-slot:item="{ item, internalItem, toggleExpand, isExpanded }">
+      <template
+        v-slot:header[`data-table-select`]="{
+          allSelected,
+          selectAll,
+          someSelected,
+        }"
+      >
+        <v-checkbox-btn
+          :indeterminate="someSelected && !allSelected"
+          :model-value="allSelected"
+          color="primary"
+          @update:model-value="selectAll(!allSelected)"
+        ></v-checkbox-btn>
+      </template>
+      <template
+        v-slot:item="{
+          item,
+          internalItem,
+          toggleExpand,
+          isExpanded,
+          isSelected,
+          toggleSelect,
+        }"
+      >
         <tr
           :class="{ school_canceled: item.registration_status === 'CANCELED' }"
         >
+          <td>
+            <v-checkbox-btn
+              :model-value="isSelected(internalItem)"
+              color="primary"
+              @update:model-value="toggleSelect(internalItem)"
+            ></v-checkbox-btn>
+          </td>
           <td>
             <v-btn
               @click="toggleExpand(internalItem)"
@@ -437,6 +484,10 @@ const confirmedDeleteSchool = function () {
 
 .v-table > .v-table__wrapper > table > tbody > tr > td {
   padding: 0 4px;
+}
+
+.v-table > .v-table__wrapper > table > thead > tr > th {
+  padding: 0 4px !important;
 }
 
 b > a {

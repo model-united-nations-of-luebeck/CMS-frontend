@@ -7,6 +7,8 @@ import "vue3-toastify/dist/index.css";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog.vue";
 import { useDelegatesStore } from "../../stores/delegates";
 import Fuse from "fuse.js";
+import DownloadJSONIcon from "../../components/icons/DownloadJSONIcon.vue";
+import DownloadExcelIcon from "../../components/icons/DownloadExcelIcon.vue";
 
 const memberOrganizationsStore = useMemberOrganizationsStore();
 memberOrganizationsStore.getMemberOrganizations();
@@ -16,8 +18,10 @@ const router = useRouter();
 
 const deleteDialog = ref(null);
 const search = ref("");
+const selected = ref([]);
 
 const headers = [
+  { title: "", key: "data-table-select", sortable: false },
   { title: "Flag", key: "flag", sortable: false },
   { title: "Name", key: "name" },
   { title: "Official Name", key: "official_name" },
@@ -101,6 +105,15 @@ customFilter.cache = { query: "", map: new Map() };
         <v-icon icon="mdi-flag-variant" size="small" start disabled></v-icon>
       </template>
 
+      <DownloadExcelIcon
+        :items="selected"
+        name="organizations.xls"
+      ></DownloadExcelIcon>
+      <DownloadJSONIcon
+        :items="selected"
+        name="organizations.json"
+      ></DownloadJSONIcon>
+
       <v-spacer></v-spacer>
       <v-text-field
         label="Filter"
@@ -129,6 +142,7 @@ customFilter.cache = { query: "", map: new Map() };
     </v-breadcrumbs>
 
     <v-data-table-virtual
+      v-model="selected"
       v-if="memberOrganizationsStore.member_organizations"
       :headers="headers"
       :items="memberOrganizationsStore.member_organizations"
@@ -143,12 +157,35 @@ customFilter.cache = { query: "", map: new Map() };
       :custom-filter="customFilter"
       item-height="56"
       :sort-by="[{ key: 'name', order: 'asc' }]"
+      show-select
+      return-object
     >
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template v-slot:item="{ item }">
+      <template
+        v-slot:header[`data-table-select`]="{
+          allSelected,
+          selectAll,
+          someSelected,
+        }"
+      >
+        <v-checkbox-btn
+          :indeterminate="someSelected && !allSelected"
+          :model-value="allSelected"
+          color="primary"
+          @update:model-value="selectAll(!allSelected)"
+        ></v-checkbox-btn>
+      </template>
+      <template v-slot:item="{ item, internalItem, isSelected, toggleSelect }">
         <tr>
+          <td>
+            <v-checkbox-btn
+              :model-value="isSelected(internalItem)"
+              color="primary"
+              @update:model-value="toggleSelect(internalItem)"
+            ></v-checkbox-btn>
+          </td>
           <td>
             <v-avatar
               v-if="item.flag"
@@ -292,5 +329,13 @@ customFilter.cache = { query: "", map: new Map() };
 b > a {
   color: inherit;
   text-decoration: none;
+}
+
+.v-table > .v-table__wrapper > table > tbody > tr > td {
+  padding: 0 4px;
+}
+
+.v-table > .v-table__wrapper > table > thead > tr > th {
+  padding: 0 4px !important;
 }
 </style>
