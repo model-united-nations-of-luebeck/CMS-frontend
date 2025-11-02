@@ -19,8 +19,7 @@ const updateHelp = (value) => {
 
 const rules = [
   (v) =>
-    v.length > 0 ||
-    "You want to be a conference advisor, please enter at least one support area.",
+    v.length > 0 || "You want to be a conference advisor, please enter at least one support area.",
 ];
 </script>
 

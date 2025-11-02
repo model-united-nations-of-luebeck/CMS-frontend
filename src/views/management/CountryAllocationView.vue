@@ -28,15 +28,11 @@ const getDelegateInstances = (forum_id, org_id) => {
 };
 
 const getDelegatesCountPerForum = (forum_id) => {
-  return delegatesStore.delegates.filter(
-    (delegate) => delegate.forum == forum_id,
-  ).length;
+  return delegatesStore.delegates.filter((delegate) => delegate.forum == forum_id).length;
 };
 
 const getDelegatesCountPerMemberOrganization = (org_id) => {
-  return delegatesStore.delegates.filter(
-    (delegate) => delegate.represents == org_id,
-  ).length;
+  return delegatesStore.delegates.filter((delegate) => delegate.represents == org_id).length;
 };
 
 const getSchoolsPerMemberOrganization = (org_id) => {
@@ -76,8 +72,7 @@ const createDelegatesInAllForums = (org_id) => {
   forumsStore.forums.forEach((forum) => {
     if (
       delegatesStore.delegates.find(
-        (delegate) =>
-          delegate.forum == forum.id && delegate.represents == org_id,
+        (delegate) => delegate.forum == forum.id && delegate.represents == org_id,
       ) == undefined
     ) {
       delegatesStore.createDelegate(forum.id, org_id);
@@ -99,9 +94,7 @@ const deleteDelegatesInAllForums = (org_id) => {
 
 const openAssignSchoolDialog = (org_id) => {
   // if there is at least one delegate from this organization, open the assign school dialog
-  if (
-    delegatesStore.delegates.some((delegate) => delegate.represents == org_id)
-  ) {
+  if (delegatesStore.delegates.some((delegate) => delegate.represents == org_id)) {
     candidateOrgId.value = org_id;
     assignSchoolDialog.value = true;
   } else {
@@ -144,44 +137,28 @@ const openAssignSchoolDialog = (org_id) => {
       <h3>Delegates</h3>
       Total: {{ delegatesStore.delegates.length }}<br />
       - Assigned:
-      {{ delegatesStore.delegates.filter((delegate) => delegate.school).length
-      }}<br />
+      {{ delegatesStore.delegates.filter((delegate) => delegate.school).length }}<br />
       - Unassigned:
-      {{ delegatesStore.delegates.filter((delegate) => !delegate.school).length
-      }}<br />
+      {{ delegatesStore.delegates.filter((delegate) => !delegate.school).length }}<br />
       Requested by schools:
-      {{
-        schoolsStore.schools.reduce((acc, school) => acc + school.requested, 0)
-      }}<br />
+      {{ schoolsStore.schools.reduce((acc, school) => acc + school.requested, 0) }}<br />
 
       <h3>Member Organizations</h3>
       Total: {{ memberOrganizationsStore.member_organizations.length }}<br />
       - Active:
-      {{
-        memberOrganizationsStore.member_organizations.filter(
-          (org) => org.active,
-        ).length
-      }}<br />
+      {{ memberOrganizationsStore.member_organizations.filter((org) => org.active).length }}<br />
       - Inactive:
-      {{
-        memberOrganizationsStore.member_organizations.filter(
-          (org) => !org.active,
-        ).length
-      }}<br />
+      {{ memberOrganizationsStore.member_organizations.filter((org) => !org.active).length }}<br />
       - Without delegates:
       {{
         memberOrganizationsStore.member_organizations.filter((org) =>
-          delegatesStore.delegates.every(
-            (delegate) => delegate.represents != org.id,
-          ),
+          delegatesStore.delegates.every((delegate) => delegate.represents != org.id),
         ).length
       }}<br />
       - With delegates:
       {{
         memberOrganizationsStore.member_organizations.filter((org) =>
-          delegatesStore.delegates.some(
-            (delegate) => delegate.represents == org.id,
-          ),
+          delegatesStore.delegates.some((delegate) => delegate.represents == org.id),
         ).length
       }}<br />
       - - With unassigned delegates:
@@ -207,12 +184,10 @@ const openAssignSchoolDialog = (org_id) => {
         <summary>Unassigned Member Organizations</summary>
         <ul>
           <li
-            v-for="org in memberOrganizationsStore.member_organizations.filter(
-              (org) =>
-                delegatesStore.delegates.some(
-                  (delegate) =>
-                    delegate.represents == org.id && !delegate.school,
-                ),
+            v-for="org in memberOrganizationsStore.member_organizations.filter((org) =>
+              delegatesStore.delegates.some(
+                (delegate) => delegate.represents == org.id && !delegate.school,
+              ),
             )"
             :key="org.id"
           >
@@ -226,40 +201,30 @@ const openAssignSchoolDialog = (org_id) => {
       - With delegates:
       {{
         schoolsStore.schools.filter((school) =>
-          delegatesStore.delegates.some(
-            (delegate) => delegate.school == school.id,
-          ),
+          delegatesStore.delegates.some((delegate) => delegate.school == school.id),
         ).length
       }}<br />
       - Without delegates:
       {{
         schoolsStore.schools.filter((school) =>
-          delegatesStore.delegates.every(
-            (delegate) => delegate.school != school.id,
-          ),
+          delegatesStore.delegates.every((delegate) => delegate.school != school.id),
         ).length
       }}
       <br />
 
       <h3>Averages</h3>
       Average number of delegates per forum:
-      {{
-        (delegatesStore.delegates.length / forumsStore.forums.length).toFixed(
-          1,
-        )
-      }}<br />
+      {{ (delegatesStore.delegates.length / forumsStore.forums.length).toFixed(1) }}<br />
       Average number of delegates per member organization:
       {{
         (
-          delegatesStore.delegates.length /
-          memberOrganizationsStore.member_organizations.length
+          delegatesStore.delegates.length / memberOrganizationsStore.member_organizations.length
         ).toFixed(1)
       }}<br />
       Average number of delegates per school:
       {{
         (
-          delegatesStore.delegates.filter((d) => d.school).length /
-          schoolsStore.schools.length
+          delegatesStore.delegates.filter((d) => d.school).length / schoolsStore.schools.length
         ).toFixed(1)
       }}<br />
       Average number or member organizations per school:
@@ -268,8 +233,7 @@ const openAssignSchoolDialog = (org_id) => {
           memberOrganizationsStore.member_organizations.filter((org) =>
             schoolsStore.schools.some((school) =>
               delegatesStore.delegates.some(
-                (delegate) =>
-                  delegate.school == school.id && delegate.represents == org.id,
+                (delegate) => delegate.school == school.id && delegate.represents == org.id,
               ),
             ),
           ).length / schoolsStore.schools.length
@@ -307,9 +271,7 @@ const openAssignSchoolDialog = (org_id) => {
             class="text-center"
             v-tooltip:bottom="forum.name"
           >
-            {{ forum.abbreviation }} <br />({{
-              getDelegatesCountPerForum(forum.id)
-            }})
+            {{ forum.abbreviation }} <br />({{ getDelegatesCountPerForum(forum.id) }})
           </th>
 
           <th class="text-center">Schools</th>
@@ -325,13 +287,9 @@ const openAssignSchoolDialog = (org_id) => {
           <td @click.right.prevent="openAssignSchoolDialog(org.id)">
             <span
               :style="{
-                fontWeight:
-                  getDelegatesCountPerMemberOrganization(org.id) > 0
-                    ? 'bold'
-                    : 'normal',
+                fontWeight: getDelegatesCountPerMemberOrganization(org.id) > 0 ? 'bold' : 'normal',
                 color: delegatesStore.delegates.some(
-                  (delegate) =>
-                    delegate.represents == org.id && delegate.school == null,
+                  (delegate) => delegate.represents == org.id && delegate.school == null,
                 )
                   ? 'red'
                   : 'black',
@@ -364,11 +322,7 @@ const openAssignSchoolDialog = (org_id) => {
             </v-btn>
           </td>
 
-          <td
-            v-for="forum in forumsStore.forums"
-            :key="forum.id"
-            class="text-center"
-          >
+          <td v-for="forum in forumsStore.forums" :key="forum.id" class="text-center">
             <template
               v-for="delegate in [getDelegateInstances(forum.id, org.id)]"
               :key="delegate?.id"

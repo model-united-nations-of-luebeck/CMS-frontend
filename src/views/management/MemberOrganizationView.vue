@@ -14,9 +14,7 @@ const memberOrganizationsStore = useMemberOrganizationsStore();
 const fetchMemberOrganization = () => {
   if (route.params.member_organization_id != "add") {
     if (route.params.member_organization_id) {
-      memberOrganizationsStore.getMemberOrganization(
-        route.params.member_organization_id,
-      );
+      memberOrganizationsStore.getMemberOrganization(route.params.member_organization_id);
     }
   } else {
     memberOrganizationsStore.initializeMemberOrganization();
@@ -59,8 +57,7 @@ schoolsStore.getSchools();
         :to="{
           name: 'member-organization-detail',
           params: {
-            member_organization_id:
-              memberOrganizationsStore.member_organization.id,
+            member_organization_id: memberOrganizationsStore.member_organization.id,
           },
         }"
       >
@@ -99,41 +96,25 @@ schoolsStore.getSchools();
           <tbody>
             <tr
               v-for="delegate in delegatesStore.delegates
-                .filter(
-                  (d) =>
-                    d.represents ===
-                    memberOrganizationsStore.member_organization.id,
-                )
+                .filter((d) => d.represents === memberOrganizationsStore.member_organization.id)
                 .sort((a, b) => a.forum.localeCompare(b.forum))"
               :key="delegate.id"
             >
               <td>
                 <v-icon
-                  v-tooltip:right-center="
-                    delegate.ambassador ? 'Ambassador' : 'Delegate'
-                  "
+                  v-tooltip:right-center="delegate.ambassador ? 'Ambassador' : 'Delegate'"
                   :color="delegate.ambassador ? 'primary' : 'auto'"
-                  >{{
-                    delegate.ambassador ? "mdi-account-star" : "mdi-account"
-                  }}</v-icon
+                  >{{ delegate.ambassador ? "mdi-account-star" : "mdi-account" }}</v-icon
                 >
               </td>
               <td>{{ delegate.first_name }} {{ delegate.last_name }}</td>
               <td>{{ delegate.email }}</td>
               <td>{{ delegate.mobile }}</td>
               <td>
-                <SchoolChip
-                  :school="
-                    schoolsStore.schools.find((s) => s.id === delegate.school)
-                  "
-                />
+                <SchoolChip :school="schoolsStore.schools.find((s) => s.id === delegate.school)" />
               </td>
               <td>
-                <ForumChip
-                  :forum="
-                    forumsStore.forums.find((f) => f.id === delegate.forum)
-                  "
-                />
+                <ForumChip :forum="forumsStore.forums.find((f) => f.id === delegate.forum)" />
               </td>
               <td>
                 <v-btn

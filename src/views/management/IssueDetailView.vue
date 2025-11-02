@@ -58,17 +58,10 @@ const updateIssue = (issue_id) => {
 <template>
   <div class="">
     <v-breadcrumbs
-      :items="[
-        { title: 'Issues', to: { name: 'issues' } },
-        { title: issuesStore.issue.name },
-      ]"
+      :items="[{ title: 'Issues', to: { name: 'issues' } }, { title: issuesStore.issue.name }]"
     >
       <template v-slot:prepend>
-        <v-icon
-          icon="mdi-format-list-bulleted-type"
-          size="small"
-          start
-        ></v-icon>
+        <v-icon icon="mdi-format-list-bulleted-type" size="small" start></v-icon>
       </template>
     </v-breadcrumbs>
 
@@ -111,10 +104,7 @@ const updateIssue = (issue_id) => {
             color="primary"
             prepend-icon="mdi-send"
             @click="updateIssue(issuesStore.issue.id)"
-            >{{
-              route.params.issue_id == "add" ? "add" : "update"
-            }}
-            issue</v-btn
+            >{{ route.params.issue_id == "add" ? "add" : "update" }} issue</v-btn
           >
         </v-row>
       </v-container>

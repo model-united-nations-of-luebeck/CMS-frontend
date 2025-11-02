@@ -93,9 +93,7 @@ const custom_filter = function (value, query, item) {
 
   const searchFields = [...Object.values(item.raw)];
 
-  return searchFields.some((field) =>
-    String(field).toLowerCase().includes(query.toLowerCase()),
-  );
+  return searchFields.some((field) => String(field).toLowerCase().includes(query.toLowerCase()));
 };
 
 const deleteAdvisor = function (advisor_id) {
@@ -114,12 +112,7 @@ const confirmedDeleteAdvisor = function () {
       <v-col cols="10">
         <v-breadcrumbs :items="[{ title: 'Advisors' }]">
           <template v-slot:prepend>
-            <v-icon
-              icon="mdi-account-star"
-              size="small"
-              start
-              disabled
-            ></v-icon>
+            <v-icon icon="mdi-account-star" size="small" start disabled></v-icon>
           </template>
 
           <DownloadExcelIcon
@@ -131,10 +124,7 @@ const confirmedDeleteAdvisor = function () {
             "
             name="advisors.xls"
           ></DownloadExcelIcon>
-          <DownloadJSONIcon
-            :items="selected"
-            name="advisors.json"
-          ></DownloadJSONIcon>
+          <DownloadJSONIcon :items="selected" name="advisors.json"></DownloadJSONIcon>
           <v-spacer></v-spacer>
           <v-text-field
             label="Filter"
@@ -197,13 +187,7 @@ const confirmedDeleteAdvisor = function () {
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template
-        v-slot:header[`data-table-select`]="{
-          allSelected,
-          selectAll,
-          someSelected,
-        }"
-      >
+      <template v-slot:header[`data-table-select`]="{ allSelected, selectAll, someSelected }">
         <v-checkbox-btn
           :indeterminate="someSelected && !allSelected"
           :model-value="allSelected"
@@ -212,14 +196,7 @@ const confirmedDeleteAdvisor = function () {
         ></v-checkbox-btn>
       </template>
       <template
-        v-slot:item="{
-          item,
-          internalItem,
-          toggleExpand,
-          isExpanded,
-          isSelected,
-          toggleSelect,
-        }"
+        v-slot:item="{ item, internalItem, toggleExpand, isExpanded, isSelected, toggleSelect }"
       >
         <tr>
           <td>
@@ -233,9 +210,7 @@ const confirmedDeleteAdvisor = function () {
             <v-btn
               @click="toggleExpand(internalItem)"
               variant="plain"
-              :icon="
-                isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'
-              "
+              :icon="isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             ></v-btn>
           </td>
           <td>
@@ -291,9 +266,7 @@ const confirmedDeleteAdvisor = function () {
 
           <td>
             <CarIcon :car="item.car"></CarIcon>
-            <MediaConsentIcon
-              :media_consent_time="item.media_consent_time"
-            ></MediaConsentIcon>
+            <MediaConsentIcon :media_consent_time="item.media_consent_time"></MediaConsentIcon>
 
             <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>
@@ -316,12 +289,7 @@ const confirmedDeleteAdvisor = function () {
               }"
             >
             </v-btn>
-            <v-btn
-              variant="plain"
-              icon="mdi-delete"
-              @click.stop="deleteAdvisor(item.id)"
-            >
-            </v-btn>
+            <v-btn variant="plain" icon="mdi-delete" @click.stop="deleteAdvisor(item.id)"> </v-btn>
           </td>
         </tr>
       </template>
@@ -333,19 +301,11 @@ const confirmedDeleteAdvisor = function () {
               <v-row>
                 <v-col cols="12">
                   <v-icon color="primary" start>mdi-hours-24</v-icon>
-                  <span
-                    ><b>Availability: </b>
-                    {{ item.availability || "Not provided" }}</span
-                  >
+                  <span><b>Availability: </b> {{ item.availability || "Not provided" }}</span>
                 </v-col>
                 <v-col cols="12">
-                  <v-icon color="primary" start
-                    >mdi-card-account-details-star</v-icon
-                  >
-                  <span
-                    ><b>Experience: </b
-                    >{{ item.experience || "Not provided" }}</span
-                  >
+                  <v-icon color="primary" start>mdi-card-account-details-star</v-icon>
+                  <span><b>Experience: </b>{{ item.experience || "Not provided" }}</span>
                 </v-col>
                 <v-col cols="12">
                   <v-icon color="primary" start>mdi-handshake</v-icon>
@@ -398,9 +358,7 @@ const confirmedDeleteAdvisor = function () {
       text="Are you sure you want to delete this Advisor?"
       @ok-clicked="
         confirmedDeleteAdvisor(
-          advisorsStore.advisors.filter(
-            (advisor) => advisor.id == deleteDialog.value,
-          ).id,
+          advisorsStore.advisors.filter((advisor) => advisor.id == deleteDialog.value).id,
         )
       "
       @cancel-clicked="deleteDialog.value = false"

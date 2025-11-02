@@ -82,26 +82,14 @@ const valid = ref(true);
               type="text"
             ></v-text-field>
 
-            <GenderSelector
-              v-model:gender="staffsStore.staff.gender"
-            ></GenderSelector>
+            <GenderSelector v-model:gender="staffsStore.staff.gender"></GenderSelector>
 
-            <PronounsSelector
-              v-model:pronouns="staffsStore.staff.pronouns"
-            ></PronounsSelector>
+            <PronounsSelector v-model:pronouns="staffsStore.staff.pronouns"></PronounsSelector>
 
-            <EmailAddressField
-              v-model:email="staffsStore.staff.email"
-            ></EmailAddressField>
-            <PhoneNumberField
-              v-model:phone="staffsStore.staff.mobile"
-            ></PhoneNumberField>
-            <BirthdateField
-              v-model:birthday="staffsStore.staff.birthday"
-            ></BirthdateField>
-            <ExtrasField
-              v-model:extras="staffsStore.staff.extras"
-            ></ExtrasField>
+            <EmailAddressField v-model:email="staffsStore.staff.email"></EmailAddressField>
+            <PhoneNumberField v-model:phone="staffsStore.staff.mobile"></PhoneNumberField>
+            <BirthdateField v-model:birthday="staffsStore.staff.birthday"></BirthdateField>
+            <ExtrasField v-model:extras="staffsStore.staff.extras"></ExtrasField>
           </v-col>
 
           <v-col
@@ -111,9 +99,7 @@ const valid = ref(true);
             :offset="mobile ? 0 : 8"
             :class="mobile ? '' : 'badge-photo'"
           >
-            <BadgePhotoCropper
-              v-model:image="staffsStore.staff.picture"
-            ></BadgePhotoCropper>
+            <BadgePhotoCropper v-model:image="staffsStore.staff.picture"></BadgePhotoCropper>
           </v-col>
         </v-row>
         <v-row no-gutters>

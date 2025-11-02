@@ -51,12 +51,9 @@ const confirmedDeleteMemberOrganization = function () {
     })
     .catch(() => {
       deleteDialog.value = false;
-      toast.error(
-        "Deleting Member Organization failed. Please ask admin for help.",
-        {
-          position: toast.POSITION.BOTTOM_CENTER,
-        },
-      );
+      toast.error("Deleting Member Organization failed. Please ask admin for help.", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     });
 };
 
@@ -105,14 +102,8 @@ customFilter.cache = { query: "", map: new Map() };
         <v-icon icon="mdi-flag-variant" size="small" start disabled></v-icon>
       </template>
 
-      <DownloadExcelIcon
-        :items="selected"
-        name="organizations.xls"
-      ></DownloadExcelIcon>
-      <DownloadJSONIcon
-        :items="selected"
-        name="organizations.json"
-      ></DownloadJSONIcon>
+      <DownloadExcelIcon :items="selected" name="organizations.xls"></DownloadExcelIcon>
+      <DownloadJSONIcon :items="selected" name="organizations.json"></DownloadJSONIcon>
 
       <v-spacer></v-spacer>
       <v-text-field
@@ -163,13 +154,7 @@ customFilter.cache = { query: "", map: new Map() };
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template
-        v-slot:header[`data-table-select`]="{
-          allSelected,
-          selectAll,
-          someSelected,
-        }"
-      >
+      <template v-slot:header[`data-table-select`]="{ allSelected, selectAll, someSelected }">
         <v-checkbox-btn
           :indeterminate="someSelected && !allSelected"
           :model-value="allSelected"
@@ -209,9 +194,7 @@ customFilter.cache = { query: "", map: new Map() };
             >
           </td>
           <td>
-            <span
-              v-if="item.official_name.length > 40"
-              v-tooltip:bottom="item.official_name"
+            <span v-if="item.official_name.length > 40" v-tooltip:bottom="item.official_name"
               >{{ item.official_name.slice(0, 40) }} ...</span
             >
             <span v-else>{{ item.official_name }}</span>
@@ -251,9 +234,7 @@ customFilter.cache = { query: "", map: new Map() };
                 style="display: flex"
                 color="primary"
                 :disabled="
-                  delegatesStore.delegates.some(
-                    (delegate) => delegate.represents === item.id,
-                  )
+                  delegatesStore.delegates.some((delegate) => delegate.represents === item.id)
                 "
                 @update:modelValue="toggleActive(item.id)"
               ></v-switch>
@@ -282,9 +263,7 @@ customFilter.cache = { query: "", map: new Map() };
                 variant="plain"
                 icon="mdi-delete"
                 :disabled="
-                  delegatesStore.delegates.some(
-                    (delegate) => delegate.represents === item.id,
-                  )
+                  delegatesStore.delegates.some((delegate) => delegate.represents === item.id)
                 "
                 @click.stop="deleteMemberOrganization(item.id)"
               >

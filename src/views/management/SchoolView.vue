@@ -39,10 +39,7 @@ forumsStore.getForums();
 <template>
   <div class="">
     <v-breadcrumbs
-      :items="[
-        { title: 'Schools', to: { name: 'schools' } },
-        { title: schoolsStore.school.name },
-      ]"
+      :items="[{ title: 'Schools', to: { name: 'schools' } }, { title: schoolsStore.school.name }]"
     >
       <template v-slot:prepend>
         <v-icon icon="mdi-bank" size="small" start></v-icon>
@@ -135,27 +132,21 @@ forumsStore.getForums();
               v-for="delegate in delegatesStore?.delegates
                 .filter((d) => d.school === schoolsStore.school.id)
                 .sort((a, b) => {
-                  const orgA =
-                    memberOrganizationsStore.member_organizations.find(
-                      (mo) => mo.id === a.represents,
-                    )?.name;
-                  const orgB =
-                    memberOrganizationsStore.member_organizations.find(
-                      (mo) => mo.id === b.represents,
-                    )?.name;
+                  const orgA = memberOrganizationsStore.member_organizations.find(
+                    (mo) => mo.id === a.represents,
+                  )?.name;
+                  const orgB = memberOrganizationsStore.member_organizations.find(
+                    (mo) => mo.id === b.represents,
+                  )?.name;
                   return orgA.localeCompare(orgB);
                 })"
               :key="delegate.id"
             >
               <td class="text-center no-select">
                 <v-icon
-                  v-tooltip:right-center="
-                    delegate.ambassador ? 'Ambassador' : 'Delegate'
-                  "
+                  v-tooltip:right-center="delegate.ambassador ? 'Ambassador' : 'Delegate'"
                   :color="delegate.ambassador ? 'primary' : 'auto'"
-                  >{{
-                    delegate.ambassador ? "mdi-account-star" : "mdi-account"
-                  }}</v-icon
+                  >{{ delegate.ambassador ? "mdi-account-star" : "mdi-account" }}</v-icon
                 >
               </td>
               <td>
@@ -168,11 +159,7 @@ forumsStore.getForums();
                 />
               </td>
               <td>
-                <ForumChip
-                  :forum="
-                    forumsStore.forums.find((f) => f.id === delegate.forum)
-                  "
-                />
+                <ForumChip :forum="forumsStore.forums.find((f) => f.id === delegate.forum)" />
               </td>
               <td>{{ delegate.first_name }} {{ delegate.last_name }}</td>
               <td>{{ delegate.email }}</td>

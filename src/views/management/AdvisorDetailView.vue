@@ -70,23 +70,13 @@ const valid = ref(true);
               v-model:last_name="advisorsStore.advisor.last_name"
             ></NameFields>
 
-            <GenderSelector
-              v-model:gender="advisorsStore.advisor.gender"
-            ></GenderSelector>
+            <GenderSelector v-model:gender="advisorsStore.advisor.gender"></GenderSelector>
 
-            <PronounsSelector
-              v-model:pronouns="advisorsStore.advisor.pronouns"
-            ></PronounsSelector>
+            <PronounsSelector v-model:pronouns="advisorsStore.advisor.pronouns"></PronounsSelector>
 
-            <EmailAddressField
-              v-model:email="advisorsStore.advisor.email"
-            ></EmailAddressField>
-            <PhoneNumberField
-              v-model:phone="advisorsStore.advisor.mobile"
-            ></PhoneNumberField>
-            <ExtrasField
-              v-model:extras="advisorsStore.advisor.extras"
-            ></ExtrasField>
+            <EmailAddressField v-model:email="advisorsStore.advisor.email"></EmailAddressField>
+            <PhoneNumberField v-model:phone="advisorsStore.advisor.mobile"></PhoneNumberField>
+            <ExtrasField v-model:extras="advisorsStore.advisor.extras"></ExtrasField>
 
             <v-checkbox
               v-model="advisorsStore.advisor.car"
@@ -96,8 +86,7 @@ const valid = ref(true);
             >
               <template v-slot:label>
                 <span
-                  >I have a car available and can offer transportation during
-                  the conference.</span
+                  >I have a car available and can offer transportation during the conference.</span
                 >
               </template>
             </v-checkbox>
@@ -121,9 +110,7 @@ const valid = ref(true);
               :density="mobile ? 'compact' : 'default'"
               v-model="advisorsStore.advisor.availability"
               :rules="[
-                (v) =>
-                  !!v ||
-                  'Please specify your estimated availability during the conference',
+                (v) => !!v || 'Please specify your estimated availability during the conference',
               ]"
             ></v-textarea>
             <HelpField v-model:help="advisorsStore.advisor.help"></HelpField>
@@ -136,18 +123,14 @@ const valid = ref(true);
             :offset="mobile ? 0 : 8"
             :class="mobile ? '' : 'badge-photo'"
           >
-            <BadgePhotoCropper
-              v-model:image="advisorsStore.advisor.picture"
-            ></BadgePhotoCropper>
+            <BadgePhotoCropper v-model:image="advisorsStore.advisor.picture"></BadgePhotoCropper>
           </v-col>
         </v-row>
         <v-row no-gutters>
           <ConsentField
             v-model:data_consent_time="advisorsStore.advisor.data_consent_time"
             v-model:data_consent_ip="advisorsStore.advisor.data_consent_ip"
-            v-model:media_consent_time="
-              advisorsStore.advisor.media_consent_time
-            "
+            v-model:media_consent_time="advisorsStore.advisor.media_consent_time"
             v-model:media_consent_ip="advisorsStore.advisor.media_consent_ip"
           ></ConsentField>
         </v-row>

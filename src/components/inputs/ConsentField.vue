@@ -189,18 +189,16 @@ watch(
       <v-card-title>Data Protection Consent</v-card-title>
       <v-card-text>
         <p>
-          Dear participant, based on GDPR we need to inform you about our data
-          processing procedures prior to letting you enter your data for the
-          registration purposes. Here is our
+          Dear participant, based on GDPR we need to inform you about our data processing procedures
+          prior to letting you enter your data for the registration purposes. Here is our
           <a
             :href="router.resolve({ name: 'privacy-policy' }).href"
             target="_blank"
             rel="noopener noreferrer"
             >privacy policy</a
           ><v-icon size="x-small">mdi-open-in-new</v-icon>
-          which describes the processing of data and your rights and our
-          responsibilities. Please read through them and if you agree, please
-          give your consent.
+          which describes the processing of data and your rights and our responsibilities. Please
+          read through them and if you agree, please give your consent.
         </p>
         <br />
         <v-checkbox

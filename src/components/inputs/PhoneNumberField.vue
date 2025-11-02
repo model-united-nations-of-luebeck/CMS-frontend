@@ -25,8 +25,7 @@ const updatePhone = (event) => {
     guessCountry="CountryGuesser"
     displayFormat="e164"
     :invalidMessage="
-      ({ label, example }) =>
-        `This is not a valid mobile phone number (example: ${example}).`
+      ({ label, example }) => `This is not a valid mobile phone number (example: ${example}).`
     "
   >
     <template v-slot:append>

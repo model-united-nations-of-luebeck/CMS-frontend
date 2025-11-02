@@ -9,11 +9,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <download-excel
-    :data="props.items"
-    v-if="props.items && props.items?.length"
-    :name="props.name"
-  >
+  <download-excel :data="props.items" v-if="props.items && props.items?.length" :name="props.name">
     <v-btn
       icon="mdi-microsoft-excel"
       variant="plain"

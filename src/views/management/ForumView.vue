@@ -138,14 +138,12 @@ schoolsStore.getSchools();
               v-for="delegate in delegatesStore.delegates
                 .filter((d) => d.forum == forumsStore.forum.id)
                 .sort((a, b) => {
-                  const orgA =
-                    memberOrganizationsStore.member_organizations.find(
-                      (org) => org.id === a.represents,
-                    )?.name;
-                  const orgB =
-                    memberOrganizationsStore.member_organizations.find(
-                      (org) => org.id === b.represents,
-                    )?.name;
+                  const orgA = memberOrganizationsStore.member_organizations.find(
+                    (org) => org.id === a.represents,
+                  )?.name;
+                  const orgB = memberOrganizationsStore.member_organizations.find(
+                    (org) => org.id === b.represents,
+                  )?.name;
                   return orgA.localeCompare(orgB);
                 })"
               :key="delegate.id"
@@ -161,11 +159,7 @@ schoolsStore.getSchools();
               </td>
               <td>{{ delegate.first_name }} {{ delegate.last_name }}</td>
               <td>
-                <SchoolChip
-                  :school="
-                    schoolsStore.schools.find((s) => s.id === delegate.school)
-                  "
-                />
+                <SchoolChip :school="schoolsStore.schools.find((s) => s.id === delegate.school)" />
               </td>
               <td>{{ delegate.email }}</td>
               <td>{{ delegate.mobile }}</td>

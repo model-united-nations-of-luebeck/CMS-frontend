@@ -1,21 +1,21 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  country: String
-})
+  country: String,
+});
 
-const emit = defineEmits(['update:country'])
+const emit = defineEmits(["update:country"]);
 
 const updateCountry = (event) => {
-  emit('update:country', event.target.value)
-}
+  emit("update:country", event.target.value);
+};
 
 const rules = [
   (v) => !!v || `Please enter your school's country name.`,
-  (v) => v.length <= 50 || 'The name is too long.'
-]
+  (v) => v.length <= 50 || "The name is too long.",
+];
 </script>
 
 <template>

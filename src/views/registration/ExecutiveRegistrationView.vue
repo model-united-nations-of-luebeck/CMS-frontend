@@ -51,8 +51,8 @@ defineExpose({
       <p>Dear executive team member,</p>
       <p>
         it is our pleasure to welcome you to this years
-        {{ conference_abbr }} session. Please register by providing some
-        information about yourself and a badge photo.
+        {{ conference_abbr }} session. Please register by providing some information about yourself
+        and a badge photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>
@@ -66,26 +66,16 @@ defineExpose({
               v-model:last_name="executivesStore.executive.last_name"
             ></NameFields>
 
-            <GenderSelector
-              v-model:gender="executivesStore.executive.gender"
-            ></GenderSelector>
+            <GenderSelector v-model:gender="executivesStore.executive.gender"></GenderSelector>
 
             <PronounsSelector
               v-model:pronouns="executivesStore.executive.pronouns"
             ></PronounsSelector>
 
-            <EmailAddressField
-              v-model:email="executivesStore.executive.email"
-            ></EmailAddressField>
-            <PhoneNumberField
-              v-model:phone="executivesStore.executive.mobile"
-            ></PhoneNumberField>
-            <BirthdateField
-              v-model:birthday="executivesStore.executive.birthday"
-            ></BirthdateField>
-            <ExtrasField
-              v-model:extras="executivesStore.executive.extras"
-            ></ExtrasField>
+            <EmailAddressField v-model:email="executivesStore.executive.email"></EmailAddressField>
+            <PhoneNumberField v-model:phone="executivesStore.executive.mobile"></PhoneNumberField>
+            <BirthdateField v-model:birthday="executivesStore.executive.birthday"></BirthdateField>
+            <ExtrasField v-model:extras="executivesStore.executive.extras"></ExtrasField>
 
             <v-text-field
               v-model="executivesStore.executive.position_name"
@@ -118,18 +108,10 @@ defineExpose({
         <v-row no-gutters>
           <v-col cols="12" sm="12" md="6">
             <ConsentField
-              v-model:data_consent_time="
-                executivesStore.executive.data_consent_time
-              "
-              v-model:data_consent_ip="
-                executivesStore.executive.data_consent_ip
-              "
-              v-model:media_consent_time="
-                executivesStore.executive.media_consent_time
-              "
-              v-model:media_consent_ip="
-                executivesStore.executive.media_consent_ip
-              "
+              v-model:data_consent_time="executivesStore.executive.data_consent_time"
+              v-model:data_consent_ip="executivesStore.executive.data_consent_ip"
+              v-model:media_consent_time="executivesStore.executive.media_consent_time"
+              v-model:media_consent_ip="executivesStore.executive.media_consent_ip"
             ></ConsentField>
           </v-col>
         </v-row>
@@ -148,9 +130,7 @@ defineExpose({
               color="primary"
               prepend-icon="mdi-send"
               :disabled="!valid || !executivesStore.executive.picture"
-              @click="
-                executivesStore.updateExecutive(executivesStore.executive.id)
-              "
+              @click="executivesStore.updateExecutive(executivesStore.executive.id)"
               >Submit registration form</v-btn
             >
           </div>

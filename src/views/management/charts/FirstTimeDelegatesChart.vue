@@ -27,9 +27,7 @@ const chartOptions = ref({
   tooltip: {
     headerFormat: "<b>{point.category}</b><br/>",
     pointFormatter: function () {
-      return (
-        this.series.name + ": " + ((this.y * 100) / this.total).toFixed(0) + "%"
-      );
+      return this.series.name + ": " + ((this.y * 100) / this.total).toFixed(0) + "%";
     },
   },
   yAxis: {

@@ -75,9 +75,7 @@ const valid = ref(true);
         <v-row no-gutters="">
           <v-col cols="12" sm="12" md="6">
             <NameFields
-              v-model:first_name="
-                studentOfficersStore.student_officer.first_name
-              "
+              v-model:first_name="studentOfficersStore.student_officer.first_name"
               v-model:last_name="studentOfficersStore.student_officer.last_name"
             ></NameFields>
 
@@ -94,9 +92,7 @@ const valid = ref(true);
               :items="forumsStore.forums"
               label="Forum"
               prepend-icon="mdi-forum"
-              @update:modelValue="
-                studentOfficersStore.student_officer.forum = $event
-              "
+              @update:modelValue="studentOfficersStore.student_officer.forum = $event"
             >
             </v-select>
 
@@ -124,9 +120,7 @@ const valid = ref(true);
             <BirthdateField
               v-model:birthday="studentOfficersStore.student_officer.birthday"
             ></BirthdateField>
-            <ExtrasField
-              v-model:extras="studentOfficersStore.student_officer.extras"
-            ></ExtrasField>
+            <ExtrasField v-model:extras="studentOfficersStore.student_officer.extras"></ExtrasField>
           </v-col>
 
           <v-col
@@ -143,18 +137,10 @@ const valid = ref(true);
         </v-row>
         <v-row no-gutters>
           <ConsentField
-            v-model:data_consent_time="
-              studentOfficersStore.student_officer.data_consent_time
-            "
-            v-model:data_consent_ip="
-              studentOfficersStore.student_officer.data_consent_ip
-            "
-            v-model:media_consent_time="
-              studentOfficersStore.student_officer.media_consent_time
-            "
-            v-model:media_consent_ip="
-              studentOfficersStore.student_officer.media_consent_ip
-            "
+            v-model:data_consent_time="studentOfficersStore.student_officer.data_consent_time"
+            v-model:data_consent_ip="studentOfficersStore.student_officer.data_consent_ip"
+            v-model:media_consent_time="studentOfficersStore.student_officer.media_consent_time"
+            v-model:media_consent_ip="studentOfficersStore.student_officer.media_consent_ip"
           ></ConsentField>
         </v-row>
         <v-row no-gutters class="justify-center">
@@ -172,9 +158,7 @@ const valid = ref(true);
               color="primary"
               prepend-icon="mdi-send"
               :disabled="!valid"
-              @click="
-                updateStudentOfficer(studentOfficersStore.student_officer.id)
-              "
+              @click="updateStudentOfficer(studentOfficersStore.student_officer.id)"
               >Update Student Officer</v-btn
             >
           </div>

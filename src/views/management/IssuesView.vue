@@ -36,12 +36,7 @@ const confirmedDeleteIssue = function () {
   <div class="">
     <v-breadcrumbs :items="[{ title: 'Issues' }]">
       <template v-slot:prepend>
-        <v-icon
-          icon="mdi-format-list-bulleted-type"
-          size="small"
-          start
-          disabled
-        ></v-icon>
+        <v-icon icon="mdi-format-list-bulleted-type" size="small" start disabled></v-icon>
       </template>
 
       <v-spacer></v-spacer>
@@ -96,9 +91,7 @@ const confirmedDeleteIssue = function () {
         <tr>
           <td>
             <v-chip prepend-icon="mdi-forum"
-              >{{
-                forumsStore.forums.find((forum) => forum.id == item.forum)?.name
-              }}
+              >{{ forumsStore.forums.find((forum) => forum.id == item.forum)?.name }}
             </v-chip>
           </td>
           <td>{{ item.name }}</td>
@@ -112,12 +105,7 @@ const confirmedDeleteIssue = function () {
               }"
             >
             </v-btn>
-            <v-btn
-              variant="plain"
-              icon="mdi-delete"
-              @click.stop="deleteIssue(item.id)"
-            >
-            </v-btn>
+            <v-btn variant="plain" icon="mdi-delete" @click.stop="deleteIssue(item.id)"> </v-btn>
           </td>
         </tr>
       </template>
@@ -129,8 +117,7 @@ const confirmedDeleteIssue = function () {
       text="Are you sure you want to delete this issue?"
       @ok-clicked="
         confirmedDeleteIssue(
-          issuesStore.issues.filter((issue) => issue.id == deleteDialog.value)
-            .id,
+          issuesStore.issues.filter((issue) => issue.id == deleteDialog.value).id,
         )
       "
       @cancel-clicked="deleteDialog.value = false"

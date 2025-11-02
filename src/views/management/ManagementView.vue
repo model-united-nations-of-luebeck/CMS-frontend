@@ -54,14 +54,11 @@ watch(
 
     if (isAuthenticated && state.user.idToken) {
       // get token here and set it in the axios instance
-      http.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${state.user.idToken}`;
+      http.defaults.headers.common["Authorization"] = `Bearer ${state.user.idToken}`;
     }
 
     const now = new Date();
-    const refreshIn =
-      state.user.idTokenClaims.exp * 1000 - now.getTime() - 60000; // Refresh 1 minute before expiration
+    const refreshIn = state.user.idTokenClaims.exp * 1000 - now.getTime() - 60000; // Refresh 1 minute before expiration
 
     if (refreshTimer) {
       clearTimeout(refreshTimer);
@@ -77,9 +74,7 @@ watch(
 
           state.user.idToken = response.idToken;
           state.user.idTokenClaims = response.idTokenClaims;
-          http.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${response.idToken}`;
+          http.defaults.headers.common["Authorization"] = `Bearer ${response.idToken}`;
         } catch (error) {
           logout();
         }
@@ -171,16 +166,10 @@ const items = ref([
 
 <template>
   <div v-if="state.isAuthenticated">
-    <v-navigation-drawer
-      :expand-on-hover="!mobile"
-      :rail="!mobile"
-      v-model="drawer"
-      elevation="2"
-    >
+    <v-navigation-drawer :expand-on-hover="!mobile" :rail="!mobile" v-model="drawer" elevation="2">
       <v-list density="compact" nav>
         <div v-for="item in items" :key="item.title">
-          <v-list-item disabled :title="item.title" prepend-icon="mdi-white">
-          </v-list-item>
+          <v-list-item disabled :title="item.title" prepend-icon="mdi-white"> </v-list-item>
           <v-list-item
             v-for="subItem in item.items"
             :key="subItem.title"
@@ -195,8 +184,7 @@ const items = ref([
       </v-list>
 
       <v-list density="compact" nav>
-        <v-list-item disabled title="SETTINGS" prepend-icon="mdi-white">
-        </v-list-item>
+        <v-list-item disabled title="SETTINGS" prepend-icon="mdi-white"> </v-list-item>
         <v-list-item
           v-if="state.isAuthenticated"
           :title="state.user?.username"
@@ -204,10 +192,7 @@ const items = ref([
           prepend-icon="mdi-account"
         >
         </v-list-item>
-        <v-list-item
-          prepend-icon="mdi-theme-light-dark"
-          :title="`${theme.name.value} mode`"
-        >
+        <v-list-item prepend-icon="mdi-theme-light-dark" :title="`${theme.name.value} mode`">
           <template v-slot:append>
             <v-switch @click="theme.toggle()" hide-details></v-switch>
           </template>

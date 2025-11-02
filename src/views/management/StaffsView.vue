@@ -4,10 +4,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const origin = window.location.origin + router.options.history.base;
 import { useStaffsStore } from "../../stores/staffs";
-import {
-  sortParticipantsByName,
-  sortParticipantsByAge,
-} from "../../stores/participants";
+import { sortParticipantsByName, sortParticipantsByAge } from "../../stores/participants";
 import ConsentDisplay from "../../components/displays/ConsentDisplay.vue";
 import BadgePhotoDisplay from "../../components/displays/BadgePhotoDisplay.vue";
 import MediaConsentIcon from "../../components/icons/MediaConsentIcon.vue";
@@ -95,9 +92,7 @@ const custom_filter = function (value, query, item) {
 
   const searchFields = [...Object.values(item.raw)];
 
-  return searchFields.some((field) =>
-    String(field).toLowerCase().includes(query.toLowerCase()),
-  );
+  return searchFields.some((field) => String(field).toLowerCase().includes(query.toLowerCase()));
 };
 
 const createStaff = function () {
@@ -137,10 +132,7 @@ const confirmedDeleteStaff = function () {
             "
             name="staffs.xls"
           ></DownloadExcelIcon>
-          <DownloadJSONIcon
-            :items="selected"
-            name="staffs.json"
-          ></DownloadJSONIcon>
+          <DownloadJSONIcon :items="selected" name="staffs.json"></DownloadJSONIcon>
 
           <v-spacer></v-spacer>
           <v-text-field
@@ -197,13 +189,7 @@ const confirmedDeleteStaff = function () {
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template
-        v-slot:header[`data-table-select`]="{
-          allSelected,
-          selectAll,
-          someSelected,
-        }"
-      >
+      <template v-slot:header[`data-table-select`]="{ allSelected, selectAll, someSelected }">
         <v-checkbox-btn
           :indeterminate="someSelected && !allSelected"
           :model-value="allSelected"
@@ -212,14 +198,7 @@ const confirmedDeleteStaff = function () {
         ></v-checkbox-btn>
       </template>
       <template
-        v-slot:item="{
-          item,
-          internalItem,
-          toggleExpand,
-          isExpanded,
-          isSelected,
-          toggleSelect,
-        }"
+        v-slot:item="{ item, internalItem, toggleExpand, isExpanded, isSelected, toggleSelect }"
       >
         <tr>
           <td>
@@ -233,9 +212,7 @@ const confirmedDeleteStaff = function () {
             <v-btn
               @click="toggleExpand(internalItem)"
               variant="plain"
-              :icon="
-                isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'
-              "
+              :icon="isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             ></v-btn>
           </td>
           <td>
@@ -268,9 +245,7 @@ const confirmedDeleteStaff = function () {
           </td>
 
           <td class="center">
-            <MediaConsentIcon
-              :media_consent_time="item.media_consent_time"
-            ></MediaConsentIcon>
+            <MediaConsentIcon :media_consent_time="item.media_consent_time"></MediaConsentIcon>
 
             <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>
@@ -293,12 +268,7 @@ const confirmedDeleteStaff = function () {
               }"
             >
             </v-btn>
-            <v-btn
-              variant="plain"
-              icon="mdi-delete"
-              @click.stop="deleteStaff(item.id)"
-            >
-            </v-btn>
+            <v-btn variant="plain" icon="mdi-delete" @click.stop="deleteStaff(item.id)"> </v-btn>
           </td>
         </tr>
       </template>
@@ -330,8 +300,7 @@ const confirmedDeleteStaff = function () {
       text="Are you sure you want to delete this Staff?"
       @ok-clicked="
         confirmedDeleteStaff(
-          staffsStore.staffs.filter((staff) => staff.id == deleteDialog.value)
-            .id,
+          staffsStore.staffs.filter((staff) => staff.id == deleteDialog.value).id,
         )
       "
       @cancel-clicked="deleteDialog.value = false"
@@ -359,11 +328,7 @@ const confirmedDeleteStaff = function () {
               <v-spacer></v-spacer>
 
               <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-              <v-btn
-                text="Create"
-                :disabled="!valid"
-                @click="createStaff"
-              ></v-btn>
+              <v-btn text="Create" :disabled="!valid" @click="createStaff"></v-btn>
             </v-card-actions>
           </v-card>
         </v-form>

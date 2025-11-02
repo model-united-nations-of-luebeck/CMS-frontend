@@ -33,7 +33,7 @@ const router = createRouter({
           name: "conference",
           component: () => import("../views/management/ConferenceView.vue"),
         },
-         {
+        {
           path: "schools/:school_id/view",
           name: "school-view",
           component: () => import("../views/management/SchoolView.vue"),
@@ -51,20 +51,17 @@ const router = createRouter({
         {
           path: "member-organizations/:member_organization_id/view",
           name: "member-organization-view",
-          component: () =>
-            import("../views/management/MemberOrganizationView.vue"),
+          component: () => import("../views/management/MemberOrganizationView.vue"),
         },
         {
           path: "member-organizations/:member_organization_id",
           name: "member-organization-detail",
-          component: () =>
-            import("../views/management/MemberOrganizationDetailView.vue"),
+          component: () => import("../views/management/MemberOrganizationDetailView.vue"),
         },
         {
           path: "member-organizations",
           name: "member-organizations",
-          component: () =>
-            import("../views/management/MemberOrganizationsView.vue"),
+          component: () => import("../views/management/MemberOrganizationsView.vue"),
         },
         {
           path: "forums/:forum_id/view",
@@ -99,8 +96,7 @@ const router = createRouter({
         {
           path: "country-allocation",
           name: "country-allocation",
-          component: () =>
-            import("../views/management/CountryAllocationView.vue"),
+          component: () => import("../views/management/CountryAllocationView.vue"),
         },
         {
           path: "delegates/:delegate_id",
@@ -115,8 +111,7 @@ const router = createRouter({
         {
           path: "mun-directors/:mun_director_id",
           name: "mun-director-detail",
-          component: () =>
-            import("../views/management/MUNDirectorDetailView.vue"),
+          component: () => import("../views/management/MUNDirectorDetailView.vue"),
         },
         {
           path: "mun-directors",
@@ -126,8 +121,7 @@ const router = createRouter({
         {
           path: "executives/:executive_id",
           name: "executive-detail",
-          component: () =>
-            import("../views/management/ExecutiveDetailView.vue"),
+          component: () => import("../views/management/ExecutiveDetailView.vue"),
         },
         {
           path: "executives",
@@ -137,14 +131,12 @@ const router = createRouter({
         {
           path: "student-officers/:student_officer_id",
           name: "student-officer-detail",
-          component: () =>
-            import("../views/management/StudentOfficerDetailView.vue"),
+          component: () => import("../views/management/StudentOfficerDetailView.vue"),
         },
         {
           path: "student-officers",
           name: "student-officers",
-          component: () =>
-            import("../views/management/StudentOfficersView.vue"),
+          component: () => import("../views/management/StudentOfficersView.vue"),
         },
         {
           path: "staffs/:staff_id",
@@ -175,11 +167,11 @@ const router = createRouter({
           path: "participant-search",
           name: "participant-search",
           component: () => import("../views/management/ParticipantSearchView.vue"),
-        }
+        },
       ],
     },
     {
-      path: "/school-registration/", 
+      path: "/school-registration/",
       name: "school-registration",
       meta: {
         title: `${import.meta.env.VITE_CONFERENCE_ABBREVIATION} Registration`,
@@ -189,20 +181,17 @@ const router = createRouter({
         {
           path: ":school_id/", // school_id is a parameter that should be passed to the registration view
           name: "registration-startpage",
-          component: () =>
-            import("../views/registration/RegistrationStartpageView.vue"),
+          component: () => import("../views/registration/RegistrationStartpageView.vue"),
         },
         {
           path: ":school_id/pre-registration",
           name: "pre-registration",
-          component: () =>
-            import("../views/registration/PreRegistrationView.vue"),
+          component: () => import("../views/registration/PreRegistrationView.vue"),
         },
         {
           path: ":school_id/final-registration",
           name: "final-registration",
-          component: () =>
-            import("../views/registration/FinalRegistrationView.vue"),
+          component: () => import("../views/registration/FinalRegistrationView.vue"),
         },
       ],
     },
@@ -220,8 +209,7 @@ const router = createRouter({
           meta: {
             title: "Advisor Registration",
           },
-          component: () =>
-            import("../views/registration/AdvisorRegistrationView.vue"),
+          component: () => import("../views/registration/AdvisorRegistrationView.vue"),
         },
         {
           path: "staffs/:staff_id",
@@ -229,8 +217,7 @@ const router = createRouter({
           meta: {
             title: "Staff Registration",
           },
-          component: () =>
-            import("../views/registration/StaffRegistrationView.vue"),
+          component: () => import("../views/registration/StaffRegistrationView.vue"),
         },
         {
           path: "executives/:executive_id",
@@ -238,8 +225,7 @@ const router = createRouter({
           meta: {
             title: "Executive Registration",
           },
-          component: () =>
-            import("../views/registration/ExecutiveRegistrationView.vue"),
+          component: () => import("../views/registration/ExecutiveRegistrationView.vue"),
         },
         {
           path: "student-officers/:student_officer_id",
@@ -247,8 +233,7 @@ const router = createRouter({
           meta: {
             title: "Student Officer Registration",
           },
-          component: () =>
-            import("../views/registration/StudentOfficerRegistrationView.vue"),
+          component: () => import("../views/registration/StudentOfficerRegistrationView.vue"),
         },
         {
           path: "final-registration-delegate/:delegate_id",
@@ -256,8 +241,7 @@ const router = createRouter({
           meta: {
             title: "Delegate Registration",
           },
-          component: () =>
-            import("../views/registration/FinalRegistrationDelegateView.vue"),
+          component: () => import("../views/registration/FinalRegistrationDelegateView.vue"),
         },
         {
           path: "final-registration-mun-director/:mun_director_id",
@@ -265,8 +249,7 @@ const router = createRouter({
           meta: {
             title: "MUN-Director Registration",
           },
-          component: () =>
-            import("../views/registration/FinalRegistrationMUNDirectorView.vue"),
+          component: () => import("../views/registration/FinalRegistrationMUNDirectorView.vue"),
         },
         {
           path: "privacy-policy",
@@ -274,9 +257,8 @@ const router = createRouter({
           meta: {
             title: "Privacy Policy",
           },
-          component: () =>
-            import("../views/registration/PrivacyPolicyView.vue"),
-        }
+          component: () => import("../views/registration/PrivacyPolicyView.vue"),
+        },
       ],
     },
     {
@@ -294,7 +276,8 @@ const router = createRouter({
 
 // Sets the title depending on the route (e.g Conference Registration for /registration), defaults to Conference Management System
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || `${import.meta.env.VITE_CONFERENCE_ABBREVIATION} Conference Management System`; 
+  document.title =
+    to.meta.title || `${import.meta.env.VITE_CONFERENCE_ABBREVIATION} Conference Management System`;
 
   // gives the page a bit of time to render the UI, e.g. closing the nav drawer into rail mode, before actually loading the new page
   setTimeout(() => {

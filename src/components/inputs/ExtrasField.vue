@@ -12,9 +12,7 @@ const updateExtras = (event) => {
   emit("update:extras", event.target.value);
 };
 
-const rules = [
-  (v) => !v || v.length <= 50000 || "The text is too long. Please shorten it.",
-];
+const rules = [(v) => !v || v.length <= 50000 || "The text is too long. Please shorten it."];
 </script>
 
 <template>
@@ -30,9 +28,7 @@ const rules = [
     <template v-slot:append>
       <v-icon
         icon="mdi-help-circle"
-        v-tooltip="
-          'If you have a deviating name in your passport, please enter it here.'
-        "
+        v-tooltip="'If you have a deviating name in your passport, please enter it here.'"
       >
       </v-icon>
     </template>

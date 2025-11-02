@@ -80,11 +80,7 @@ const updatePlenary = (plenary_id) => {
               v-model="plenariesStore.plenary.abbreviation"
               :loading="plenariesStore.loading"
               hint="e.g. 'GA' or 'ECOSOC'"
-              :rules="[
-                (v) =>
-                  v.length <= 10 ||
-                  'Abbreviation must be less than 10 characters',
-              ]"
+              :rules="[(v) => v.length <= 10 || 'Abbreviation must be less than 10 characters']"
             >
             </v-text-field>
           </v-col>
@@ -108,10 +104,7 @@ const updatePlenary = (plenary_id) => {
             :disabled="!valid"
             prepend-icon="mdi-send"
             @click="updatePlenary(plenariesStore.plenary.id)"
-            >{{
-              route.params.plenary_id == "add" ? "add" : "update"
-            }}
-            plenary</v-btn
+            >{{ route.params.plenary_id == "add" ? "add" : "update" }} plenary</v-btn
           >
         </v-row>
       </v-container>

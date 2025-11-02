@@ -85,18 +85,14 @@ const genderText = (gender) => {
 
       <template v-if="search">
         <v-card
-          v-for="p in [
-            participantsStore?.participants.find((p) => p.id === search),
-          ]"
+          v-for="p in [participantsStore?.participants.find((p) => p.id === search)]"
           :key="p?.id"
           class="mb-2"
           :title="`${p?.first_name} ${p?.last_name}`"
           :subtitle="transformRole(p?.role)"
         >
           <template v-slot:append>
-            <v-icon size="x-large" color="grey" start>{{
-              roleIcon(p?.role)
-            }}</v-icon>
+            <v-icon size="x-large" color="grey" start>{{ roleIcon(p?.role) }}</v-icon>
           </template>
           <v-card-text>
             <v-container>
@@ -127,11 +123,7 @@ const genderText = (gender) => {
                     </v-list-item>
                     <v-list-item :prepend-icon="'mdi-cake'" v-if="p?.birthday">
                       <strong> Birthday:</strong>
-                      {{
-                        p?.birthday
-                          ? new Date(p.birthday).toLocaleDateString()
-                          : "N/A"
-                      }}
+                      {{ p?.birthday ? new Date(p.birthday).toLocaleDateString() : "N/A" }}
                       ({{ getAge(p?.birthday) }} years old)
                     </v-list-item>
                     <v-list-item :prepend-icon="'mdi-hand-wave'">
@@ -153,10 +145,7 @@ const genderText = (gender) => {
             <v-btn
               color="primary"
               :to="{
-                name:
-                  p?.role == 'mun_director'
-                    ? 'mun-director-detail'
-                    : p?.role + '-detail',
+                name: p?.role == 'mun_director' ? 'mun-director-detail' : p?.role + '-detail',
                 params: { [p?.role + '_id']: p?.id },
               }"
               text="View More Details"

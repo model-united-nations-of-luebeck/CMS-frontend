@@ -50,9 +50,7 @@ const headers = [
     sortable: true,
     key: "school",
     value: (item) => {
-      const school = schoolsStore.schools.find(
-        (school) => school.id === item.school,
-      );
+      const school = schoolsStore.schools.find((school) => school.id === item.school);
       return school ? school.name : "";
     },
   },
@@ -92,30 +90,19 @@ const custom_filter = function (value, query, item) {
   // searches all attributes of the item (not only the columns) and related objects if they contain the query
   if (!item || !query) return false;
 
-  const school = schoolsStore.schools.find(
-    (school) => school.id === item.raw.school,
-  );
+  const school = schoolsStore.schools.find((school) => school.id === item.raw.school);
 
-  const searchFields = [
-    ...Object.values(item.raw),
-    school?.name,
-    school?.city,
-    school?.country,
-  ];
+  const searchFields = [...Object.values(item.raw), school?.name, school?.city, school?.country];
 
-  return searchFields.some((field) =>
-    String(field).toLowerCase().includes(query.toLowerCase()),
-  );
+  return searchFields.some((field) => String(field).toLowerCase().includes(query.toLowerCase()));
 };
 
 const createMUNDirector = function () {
   if (newSchoolID.value !== null) {
-    munDirectorsStore
-      .createEmptyMUNDirectorForSchool(newSchoolID.value)
-      .then(() => {
-        addNewMUNDirectorDialog.value = false;
-        newSchoolID.value = null;
-      });
+    munDirectorsStore.createEmptyMUNDirectorForSchool(newSchoolID.value).then(() => {
+      addNewMUNDirectorDialog.value = false;
+      newSchoolID.value = null;
+    });
   }
 };
 
@@ -147,10 +134,7 @@ const confirmedDeleteMUNDirector = function () {
             "
             name="mun_directors.xls"
           ></DownloadExcelIcon>
-          <DownloadJSONIcon
-            :items="selected"
-            name="mun_directors.json"
-          ></DownloadJSONIcon>
+          <DownloadJSONIcon :items="selected" name="mun_directors.json"></DownloadJSONIcon>
 
           <v-spacer></v-spacer>
           <v-text-field
@@ -207,13 +191,7 @@ const confirmedDeleteMUNDirector = function () {
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template
-        v-slot:header[`data-table-select`]="{
-          allSelected,
-          selectAll,
-          someSelected,
-        }"
-      >
+      <template v-slot:header[`data-table-select`]="{ allSelected, selectAll, someSelected }">
         <v-checkbox-btn
           :indeterminate="someSelected && !allSelected"
           :model-value="allSelected"
@@ -222,14 +200,7 @@ const confirmedDeleteMUNDirector = function () {
         ></v-checkbox-btn>
       </template>
       <template
-        v-slot:item="{
-          item,
-          internalItem,
-          toggleExpand,
-          isExpanded,
-          isSelected,
-          toggleSelect,
-        }"
+        v-slot:item="{ item, internalItem, toggleExpand, isExpanded, isSelected, toggleSelect }"
       >
         <tr>
           <td>
@@ -243,9 +214,7 @@ const confirmedDeleteMUNDirector = function () {
             <v-btn
               @click="toggleExpand(internalItem)"
               variant="plain"
-              :icon="
-                isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'
-              "
+              :icon="isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             ></v-btn>
           </td>
           <td>
@@ -260,15 +229,11 @@ const confirmedDeleteMUNDirector = function () {
 
           <td>
             <SchoolChip
-              :school="
-                schoolsStore.schools.find((school) => school.id === item.school)
-              "
+              :school="schoolsStore.schools.find((school) => school.id === item.school)"
             ></SchoolChip>
           </td>
           <td class="center">
-            <EnglishTeacherIcon
-              :english_teacher="item.english_teacher"
-            ></EnglishTeacherIcon>
+            <EnglishTeacherIcon :english_teacher="item.english_teacher"></EnglishTeacherIcon>
           </td>
           <td class="center">
             <MailIcon :email="item.email"></MailIcon>
@@ -278,9 +243,7 @@ const confirmedDeleteMUNDirector = function () {
           </td>
 
           <td class="center">
-            <MediaConsentIcon
-              :media_consent_time="item.media_consent_time"
-            ></MediaConsentIcon>
+            <MediaConsentIcon :media_consent_time="item.media_consent_time"></MediaConsentIcon>
 
             <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>
@@ -303,11 +266,7 @@ const confirmedDeleteMUNDirector = function () {
               }"
             >
             </v-btn>
-            <v-btn
-              variant="plain"
-              icon="mdi-delete"
-              @click.stop="deleteMUNDirector(item.id)"
-            >
+            <v-btn variant="plain" icon="mdi-delete" @click.stop="deleteMUNDirector(item.id)">
             </v-btn>
           </td>
         </tr>
@@ -354,8 +313,8 @@ const confirmedDeleteMUNDirector = function () {
           <v-card title="Add new MUN-Director">
             <v-card-text>
               <p>
-                Select the school this new MUN-Director belongs to. Add further
-                information once the MUN-Director is created.
+                Select the school this new MUN-Director belongs to. Add further information once the
+                MUN-Director is created.
               </p>
               <br />
               <v-select
@@ -374,11 +333,7 @@ const confirmedDeleteMUNDirector = function () {
               <v-spacer></v-spacer>
 
               <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-              <v-btn
-                text="Create"
-                :disabled="!valid"
-                @click="createMUNDirector"
-              ></v-btn>
+              <v-btn text="Create" :disabled="!valid" @click="createMUNDirector"></v-btn>
             </v-card-actions>
           </v-card>
         </v-form>

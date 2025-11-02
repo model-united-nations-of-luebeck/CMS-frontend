@@ -4,10 +4,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const origin = window.location.origin + router.options.history.base;
 import { useExecutivesStore } from "../../stores/executives";
-import {
-  sortParticipantsByName,
-  sortParticipantsByAge,
-} from "../../stores/participants";
+import { sortParticipantsByName, sortParticipantsByAge } from "../../stores/participants";
 import ConsentDisplay from "../../components/displays/ConsentDisplay.vue";
 import BadgePhotoDisplay from "../../components/displays/BadgePhotoDisplay.vue";
 import MediaConsentIcon from "../../components/icons/MediaConsentIcon.vue";
@@ -96,9 +93,7 @@ const custom_filter = function (value, query, item) {
 
   const searchFields = [...Object.values(item.raw)];
 
-  return searchFields.some((field) =>
-    String(field).toLowerCase().includes(query.toLowerCase()),
-  );
+  return searchFields.some((field) => String(field).toLowerCase().includes(query.toLowerCase()));
 };
 
 const createExecutive = function () {
@@ -126,12 +121,7 @@ const confirmedDeleteExecutive = function () {
       <v-col cols="10">
         <v-breadcrumbs :items="[{ title: 'Executives' }]">
           <template v-slot:prepend>
-            <v-icon
-              icon="mdi-account-settings"
-              size="small"
-              start
-              disabled
-            ></v-icon>
+            <v-icon icon="mdi-account-settings" size="small" start disabled></v-icon>
           </template>
 
           <DownloadExcelIcon
@@ -143,10 +133,7 @@ const confirmedDeleteExecutive = function () {
             "
             name="executives.xls"
           ></DownloadExcelIcon>
-          <DownloadJSONIcon
-            :items="selected"
-            name="executives.json"
-          ></DownloadJSONIcon>
+          <DownloadJSONIcon :items="selected" name="executives.json"></DownloadJSONIcon>
 
           <v-spacer></v-spacer>
           <v-text-field
@@ -203,13 +190,7 @@ const confirmedDeleteExecutive = function () {
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template
-        v-slot:header[`data-table-select`]="{
-          allSelected,
-          selectAll,
-          someSelected,
-        }"
-      >
+      <template v-slot:header[`data-table-select`]="{ allSelected, selectAll, someSelected }">
         <v-checkbox-btn
           :indeterminate="someSelected && !allSelected"
           :model-value="allSelected"
@@ -218,14 +199,7 @@ const confirmedDeleteExecutive = function () {
         ></v-checkbox-btn>
       </template>
       <template
-        v-slot:item="{
-          item,
-          internalItem,
-          toggleExpand,
-          isExpanded,
-          isSelected,
-          toggleSelect,
-        }"
+        v-slot:item="{ item, internalItem, toggleExpand, isExpanded, isSelected, toggleSelect }"
       >
         <tr>
           <td>
@@ -239,9 +213,7 @@ const confirmedDeleteExecutive = function () {
             <v-btn
               @click="toggleExpand(internalItem)"
               variant="plain"
-              :icon="
-                isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'
-              "
+              :icon="isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             ></v-btn>
           </td>
           <td>
@@ -274,9 +246,7 @@ const confirmedDeleteExecutive = function () {
           </td>
 
           <td class="center">
-            <MediaConsentIcon
-              :media_consent_time="item.media_consent_time"
-            ></MediaConsentIcon>
+            <MediaConsentIcon :media_consent_time="item.media_consent_time"></MediaConsentIcon>
 
             <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>
@@ -299,11 +269,7 @@ const confirmedDeleteExecutive = function () {
               }"
             >
             </v-btn>
-            <v-btn
-              variant="plain"
-              icon="mdi-delete"
-              @click.stop="deleteExecutive(item.id)"
-            >
+            <v-btn variant="plain" icon="mdi-delete" @click.stop="deleteExecutive(item.id)">
             </v-btn>
           </td>
         </tr>
@@ -336,9 +302,7 @@ const confirmedDeleteExecutive = function () {
       text="Are you sure you want to delete this Executive?"
       @ok-clicked="
         confirmedDeleteExecutive(
-          executivesStore.executives.filter(
-            (executive) => executive.id == deleteDialog.value,
-          ).id,
+          executivesStore.executives.filter((executive) => executive.id == deleteDialog.value).id,
         )
       "
       @cancel-clicked="deleteDialog.value = false"
@@ -366,11 +330,7 @@ const confirmedDeleteExecutive = function () {
               <v-spacer></v-spacer>
 
               <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-              <v-btn
-                text="Create"
-                :disabled="!valid"
-                @click="createExecutive"
-              ></v-btn>
+              <v-btn text="Create" :disabled="!valid" @click="createExecutive"></v-btn>
             </v-card-actions>
           </v-card>
         </v-form>
