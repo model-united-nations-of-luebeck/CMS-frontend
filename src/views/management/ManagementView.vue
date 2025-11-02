@@ -212,6 +212,13 @@ const items = ref([
           </template>
         </v-list-item>
         <v-list-item
+          prepend-icon="mdi-bug"
+          title="Report Bugs"
+          href="https://github.com/model-united-nations-of-luebeck/CMS-frontend/issues/new/choose"
+          target="_blank"
+        >
+        </v-list-item>
+        <v-list-item
           :title="conference_abbr"
           prepend-icon="mdi-copyright"
         ></v-list-item>
