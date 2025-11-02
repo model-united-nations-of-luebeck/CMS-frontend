@@ -19,6 +19,7 @@ const toggleDrawer = () => {
 defineExpose({ logout, toggleDrawer });
 
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
+const gitHash = import.meta.env.VITE_GIT_HASH;
 const loginDialog = ref(true);
 let refreshTimer;
 
@@ -220,6 +221,13 @@ const items = ref([
         </v-list-item>
         <v-list-item
           :title="conference_abbr"
+          :subtitle="gitHash ? `#${gitHash}` : 'unknown version'"
+          :href="
+            gitHash
+              ? `https://github.com/model-united-nations-of-luebeck/CMS-frontend/commit/${gitHash}`
+              : null
+          "
+          target="_blank"
           prepend-icon="mdi-copyright"
         ></v-list-item>
       </v-list>
