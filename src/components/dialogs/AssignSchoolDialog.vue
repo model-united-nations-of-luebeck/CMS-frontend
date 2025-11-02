@@ -77,16 +77,12 @@ const localModel = computed({
                 prepend-icon="mdi-cancel"
                 :disabled="
                   delegatesStore.delegates
-                    .filter(
-                      (delegate) => delegate.represents === props.organization,
-                    )
+                    .filter((delegate) => delegate.represents === props.organization)
                     .every((delegate) => delegate.school == null)
                 "
                 @click="
                   delegatesStore.delegates
-                    .filter(
-                      (delegate) => delegate.represents === props.organization,
-                    )
+                    .filter((delegate) => delegate.represents === props.organization)
                     .forEach((delegate) => {
                       delegatesStore.assignSchool(delegate.id, null);
                     })
@@ -99,17 +95,14 @@ const localModel = computed({
               <span
                 v-if="
                   delegatesStore.delegates
-                    .filter(
-                      (delegate) => delegate.represents === props.organization,
-                    )
+                    .filter((delegate) => delegate.represents === props.organization)
                     .map((delegate) => delegate.school)
-                    .filter((school, i, arr) => arr.indexOf(school) === i)
-                    .length > 1
+                    .filter((school, i, arr) => arr.indexOf(school) === i).length > 1
                 "
                 class="text-warning"
               >
-                Delegates are assigned to different schools or unassigned.
-                Please conduct individual assignments.
+                Delegates are assigned to different schools or unassigned. Please conduct individual
+                assignments.
               </span>
               <v-select
                 v-else
@@ -119,9 +112,7 @@ const localModel = computed({
                 item-title="name"
                 item-value="id"
                 :model-value="
-                  delegatesStore.delegates.find(
-                    (d) => d.represents === props.organization,
-                  )?.school
+                  delegatesStore.delegates.find((d) => d.represents === props.organization)?.school
                 "
                 :items="schoolsStore.schools"
                 label="Assigned school"
@@ -130,10 +121,7 @@ const localModel = computed({
                 @update:model-value="
                   (val) =>
                     delegatesStore.delegates
-                      .filter(
-                        (delegate) =>
-                          delegate.represents === props.organization,
-                      )
+                      .filter((delegate) => delegate.represents === props.organization)
                       .forEach((delegate) => {
                         delegatesStore.assignSchool(delegate.id, val);
                       })
@@ -191,8 +179,8 @@ const localModel = computed({
                   <v-col cols="2">
                     <v-icon start>mdi-forum</v-icon>
                     <b>{{
-                      forumsStore.forums.find((f) => f.id === delegate.forum)
-                        ?.abbreviation || "No forum assigned"
+                      forumsStore.forums.find((f) => f.id === delegate.forum)?.abbreviation ||
+                      "No forum assigned"
                     }}</b>
                   </v-col>
                   <v-col cols="3">
@@ -218,9 +206,7 @@ const localModel = computed({
                       item-value="id"
                       label="School"
                       density="compact"
-                      @update:model-value="
-                        (val) => delegatesStore.assignSchool(delegate.id, val)
-                      "
+                      @update:model-value="(val) => delegatesStore.assignSchool(delegate.id, val)"
                     >
                       <template v-slot:item="{ props, item }">
                         <v-list-item v-bind="props">
@@ -238,12 +224,9 @@ const localModel = computed({
                             >
                               {{
                                 item.raw.requested
-                                  ? `Requested: ${
-                                      item.raw.requested
-                                    } / Assigned: ${
+                                  ? `Requested: ${item.raw.requested} / Assigned: ${
                                       delegatesStore.delegates.filter(
-                                        (delegate) =>
-                                          delegate.school == item.id,
+                                        (delegate) => delegate.school == item.id,
                                       ).length
                                     }`
                                   : ""

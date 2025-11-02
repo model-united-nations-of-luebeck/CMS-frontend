@@ -82,17 +82,12 @@ defineExpose({
           }}</b>
           in the
           <b>{{
-            forumsStore.forums?.find(
-              (forum) => forum.id === delegatesStore.delegate.forum,
-            ).name
+            forumsStore.forums?.find((forum) => forum.id === delegatesStore.delegate.forum).name
           }}</b
-          >. To organize the conference and prepare everything, we would like
-          you to fill in this form and upload a photo for your badge. Please
-          don't hesitate contacting the Conference Managers in case you have any
-          questions
-          <a href="mailto:conferencemanager@munol.org"
-            >conferencemanager@munol.org</a
-          >.
+          >. To organize the conference and prepare everything, we would like you to fill in this
+          form and upload a photo for your badge. Please don't hesitate contacting the Conference
+          Managers in case you have any questions
+          <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.
         </p>
         <p>Your Conference Managers</p>
       </v-alert>
@@ -133,32 +128,22 @@ defineExpose({
               v-model:last_name="delegatesStore.delegate.last_name"
             ></NameFields>
 
-            <GenderSelector
-              v-model:gender="delegatesStore.delegate.gender"
-            ></GenderSelector>
+            <GenderSelector v-model:gender="delegatesStore.delegate.gender"></GenderSelector>
 
             <PronounsSelector
               v-model:pronouns="delegatesStore.delegate.pronouns"
             ></PronounsSelector>
 
-            <EmailAddressField
-              v-model:email="delegatesStore.delegate.email"
-            ></EmailAddressField>
-            <PhoneNumberField
-              v-model:phone="delegatesStore.delegate.mobile"
-            ></PhoneNumberField>
-            <BirthdateField
-              v-model:birthday="delegatesStore.delegate.birthday"
-            ></BirthdateField>
+            <EmailAddressField v-model:email="delegatesStore.delegate.email"></EmailAddressField>
+            <PhoneNumberField v-model:phone="delegatesStore.delegate.mobile"></PhoneNumberField>
+            <BirthdateField v-model:birthday="delegatesStore.delegate.birthday"></BirthdateField>
             <CheckboxField
               v-model:value="delegatesStore.delegate.first_timer"
               :label="`Will ${conference_abbr} be your first MUN conference?`"
               hint="There is a first MUN conference for everyone. Knowing this in advance, the team can prepare a smooth first conference for first timers."
               prepend-icon="mdi-account-question"
             ></CheckboxField>
-            <ExtrasField
-              v-model:extras="delegatesStore.delegate.extras"
-            ></ExtrasField>
+            <ExtrasField v-model:extras="delegatesStore.delegate.extras"></ExtrasField>
           </v-col>
 
           <v-col
@@ -168,24 +153,16 @@ defineExpose({
             :offset="mobile ? 0 : 8"
             :class="mobile ? '' : 'badge-photo'"
           >
-            <BadgePhotoCropper
-              v-model:image="delegatesStore.delegate.picture"
-            ></BadgePhotoCropper>
+            <BadgePhotoCropper v-model:image="delegatesStore.delegate.picture"></BadgePhotoCropper>
           </v-col>
         </v-row>
         <v-row no-gutters>
           <v-col cols="12" sm="12" md="6">
             <ConsentField
-              v-model:data_consent_time="
-                delegatesStore.delegate.data_consent_time
-              "
+              v-model:data_consent_time="delegatesStore.delegate.data_consent_time"
               v-model:data_consent_ip="delegatesStore.delegate.data_consent_ip"
-              v-model:media_consent_time="
-                delegatesStore.delegate.media_consent_time
-              "
-              v-model:media_consent_ip="
-                delegatesStore.delegate.media_consent_ip
-              "
+              v-model:media_consent_time="delegatesStore.delegate.media_consent_time"
+              v-model:media_consent_ip="delegatesStore.delegate.media_consent_ip"
             ></ConsentField>
           </v-col>
         </v-row>

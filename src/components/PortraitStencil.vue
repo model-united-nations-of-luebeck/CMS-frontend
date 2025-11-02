@@ -2,33 +2,33 @@
 export default {
   props: {
     image: {
-      type: Object
+      type: Object,
     },
     coordinates: {
-      type: Object
+      type: Object,
     },
     transitions: {
-      type: Object
+      type: Object,
     },
     stencilCoordinates: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   computed: {
     style() {
-      const { height, width, left, top } = this.stencilCoordinates
+      const { height, width, left, top } = this.stencilCoordinates;
       const style = {
         width: `${width}px`,
         height: `${height}px`,
-        transform: `translate(${left}px, ${top}px)`
-      }
+        transform: `translate(${left}px, ${top}px)`,
+      };
       if (this.transitions && this.transitions.enabled) {
-        style.transition = `${this.transitions.time}ms ${this.transitions.timingFunction}`
+        style.transition = `${this.transitions.time}ms ${this.transitions.timingFunction}`;
       }
-      return style
-    }
-  }
-}
+      return style;
+    },
+  },
+};
 </script>
 
 <template>
@@ -38,7 +38,7 @@ export default {
 <style>
 .rectangle-stencil {
   cursor: move;
-  background-image: url('../assets/images/mask.png');
+  background-image: url("../assets/images/mask.png");
   background-size: cover;
   background-repeat: no-repeat;
 }

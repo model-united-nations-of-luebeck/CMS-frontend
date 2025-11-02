@@ -5,10 +5,7 @@ const router = useRouter();
 const origin = window.location.origin + router.options.history.base;
 import { useStudentOfficersStore } from "../../stores/student_officers";
 import { useForumsStore } from "../../stores/forums";
-import {
-  sortParticipantsByName,
-  sortParticipantsByAge,
-} from "../../stores/participants";
+import { sortParticipantsByName, sortParticipantsByAge } from "../../stores/participants";
 import ConsentDisplay from "../../components/displays/ConsentDisplay.vue";
 import BadgePhotoDisplay from "../../components/displays/BadgePhotoDisplay.vue";
 import MediaConsentIcon from "../../components/icons/MediaConsentIcon.vue";
@@ -118,23 +115,13 @@ const custom_filter = function (value, query, item) {
     forum?.subtitle,
   ];
 
-  return searchFields.some((field) =>
-    String(field).toLowerCase().includes(query.toLowerCase()),
-  );
+  return searchFields.some((field) => String(field).toLowerCase().includes(query.toLowerCase()));
 };
 
 const createStudentOfficer = function () {
-  if (
-    newPositionName.value !== "" &&
-    newSchoolName.value !== "" &&
-    newForumID.value !== null
-  ) {
+  if (newPositionName.value !== "" && newSchoolName.value !== "" && newForumID.value !== null) {
     studentOfficersStore
-      .createStudentOfficer(
-        newPositionName.value,
-        newSchoolName.value,
-        newForumID.value,
-      )
+      .createStudentOfficer(newPositionName.value, newSchoolName.value, newForumID.value)
       .then(() => {
         addNewStudentOfficerDialog.value = false;
         newPositionName.value = "";
@@ -160,12 +147,7 @@ const confirmedDeleteStudentOfficer = function () {
       <v-col cols="9">
         <v-breadcrumbs :items="[{ title: 'Student Officers' }]">
           <template v-slot:prepend>
-            <v-icon
-              icon="mdi-account-settings"
-              size="small"
-              start
-              disabled
-            ></v-icon>
+            <v-icon icon="mdi-account-settings" size="small" start disabled></v-icon>
           </template>
 
           <DownloadExcelIcon
@@ -177,10 +159,7 @@ const confirmedDeleteStudentOfficer = function () {
             "
             name="student_officers.xls"
           ></DownloadExcelIcon>
-          <DownloadJSONIcon
-            :items="selected"
-            name="student_officers.json"
-          ></DownloadJSONIcon>
+          <DownloadJSONIcon :items="selected" name="student_officers.json"></DownloadJSONIcon>
 
           <v-spacer></v-spacer>
           <v-text-field
@@ -237,13 +216,7 @@ const confirmedDeleteStudentOfficer = function () {
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template
-        v-slot:header[`data-table-select`]="{
-          allSelected,
-          selectAll,
-          someSelected,
-        }"
-      >
+      <template v-slot:header[`data-table-select`]="{ allSelected, selectAll, someSelected }">
         <v-checkbox-btn
           :indeterminate="someSelected && !allSelected"
           :model-value="allSelected"
@@ -252,14 +225,7 @@ const confirmedDeleteStudentOfficer = function () {
         ></v-checkbox-btn>
       </template>
       <template
-        v-slot:item="{
-          item,
-          internalItem,
-          toggleExpand,
-          isExpanded,
-          isSelected,
-          toggleSelect,
-        }"
+        v-slot:item="{ item, internalItem, toggleExpand, isExpanded, isSelected, toggleSelect }"
       >
         <tr>
           <td>
@@ -273,9 +239,7 @@ const confirmedDeleteStudentOfficer = function () {
             <v-btn
               @click="toggleExpand(internalItem)"
               variant="plain"
-              :icon="
-                isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'
-              "
+              :icon="isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             ></v-btn>
           </td>
           <td>
@@ -289,10 +253,7 @@ const confirmedDeleteStudentOfficer = function () {
           </td>
 
           <td>
-            <v-chip
-              v-if="item.position_name.length > 30"
-              v-tooltip:bottom="item.position_name"
-            >
+            <v-chip v-if="item.position_name.length > 30" v-tooltip:bottom="item.position_name">
               {{ item.position_name.slice(0, 30) }} ...
             </v-chip>
             <v-chip v-else>
@@ -312,9 +273,7 @@ const confirmedDeleteStudentOfficer = function () {
 
           <td>
             <ForumChip
-              :forum="
-                forumsStore.forums.find((forum) => forum.id === item.forum)
-              "
+              :forum="forumsStore.forums.find((forum) => forum.id === item.forum)"
             ></ForumChip>
           </td>
 
@@ -330,9 +289,7 @@ const confirmedDeleteStudentOfficer = function () {
           </td>
 
           <td class="center">
-            <MediaConsentIcon
-              :media_consent_time="item.media_consent_time"
-            ></MediaConsentIcon>
+            <MediaConsentIcon :media_consent_time="item.media_consent_time"></MediaConsentIcon>
 
             <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>
@@ -355,11 +312,7 @@ const confirmedDeleteStudentOfficer = function () {
               }"
             >
             </v-btn>
-            <v-btn
-              variant="plain"
-              icon="mdi-delete"
-              @click.stop="deleteStudentOfficer(item.id)"
-            >
+            <v-btn variant="plain" icon="mdi-delete" @click.stop="deleteStudentOfficer(item.id)">
             </v-btn>
           </td>
         </tr>
@@ -444,11 +397,7 @@ const confirmedDeleteStudentOfficer = function () {
               <v-spacer></v-spacer>
 
               <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-              <v-btn
-                text="Create"
-                :disabled="!valid"
-                @click="createStudentOfficer"
-              ></v-btn>
+              <v-btn text="Create" :disabled="!valid" @click="createStudentOfficer"></v-btn>
             </v-card-actions>
           </v-card>
         </v-form>

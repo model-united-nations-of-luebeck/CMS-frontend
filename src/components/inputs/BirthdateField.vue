@@ -26,9 +26,7 @@ const disableInvalidDates = (date) => {
   return true;
 };
 
-const rules = [
-  (v) => !!v || "Please enter your date of birth in the format YYYY-MM-DD.",
-];
+const rules = [(v) => !!v || "Please enter your date of birth in the format YYYY-MM-DD."];
 </script>
 
 <template>

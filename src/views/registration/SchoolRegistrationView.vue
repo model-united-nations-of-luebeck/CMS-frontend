@@ -22,8 +22,7 @@ const login = async function () {
 
   try {
     const { data } = await http.post(
-      import.meta.env.VITE_BACKEND_URL.split("/").slice(0, -2).join("/") +
-        "/api-token-auth/",
+      import.meta.env.VITE_BACKEND_URL.split("/").slice(0, -2).join("/") + "/api-token-auth/",
       {
         username: username.value,
         password: password.value,
@@ -83,11 +82,7 @@ defineExpose({
     </v-container>
 
     <v-container v-if="!isAuthenticated">
-      <v-form
-        class="mx-auto"
-        style="max-width: 400px; margin-top: 100px"
-        @submit.prevent="login"
-      >
+      <v-form class="mx-auto" style="max-width: 400px; margin-top: 100px" @submit.prevent="login">
         <img
           src="@/assets/images/munollogo.png"
           :alt="`${conference_abbr} Logo`"
@@ -117,18 +112,11 @@ defineExpose({
         <v-alert v-if="error" type="error">
           Username or password didn't match. Please try again.
         </v-alert>
-        <v-btn color="primary" block class="mt-4" type="submit" @click="login">
-          Login
-        </v-btn>
+        <v-btn color="primary" block class="mt-4" type="submit" @click="login"> Login </v-btn>
 
         <a
           href="mailto:conferencemanager@munol.org?subject=Forgot Password"
-          style="
-            color: gray;
-            text-decoration: none;
-            margin-top: 20px;
-            display: inline-block;
-          "
+          style="color: gray; text-decoration: none; margin-top: 20px; display: inline-block"
         >
           Forgot your password?
         </a>
@@ -145,9 +133,8 @@ defineExpose({
           text-align: center;
         "
       >
-        If you would like to participate in {{ conference_abbr }} but don't have
-        an account for the next annual session yet, please contact the
-        Conference Managers:
+        If you would like to participate in {{ conference_abbr }} but don't have an account for the
+        next annual session yet, please contact the Conference Managers:
         <a href="mailto:conference@munol.org">conferencemanager@munol.org</a>
       </v-alert>
     </v-container>

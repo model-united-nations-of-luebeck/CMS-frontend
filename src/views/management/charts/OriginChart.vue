@@ -58,11 +58,7 @@ const chartOptions = ref({
 });
 
 function updateSeries(data) {
-  chartOptions.value.series[0].data = [
-    data.delegate.tms,
-    data.mundirector.tms,
-    data.school.tms,
-  ];
+  chartOptions.value.series[0].data = [data.delegate.tms, data.mundirector.tms, data.school.tms];
   chartOptions.value.series[1].data = [
     data.delegate.luebeck,
     data.mundirector.luebeck,

@@ -24,13 +24,11 @@ const emit = defineEmits(["show-login-dialog"]);
 
 async function loadData() {
   if (route.params.student_officer_id) {
-    studentOfficersStore
-      .getStudentOfficer(route.params.student_officer_id)
-      .catch((err) => {
-        if (err?.response?.status === 403) {
-          emit("show-login-dialog", err?.response);
-        }
-      });
+    studentOfficersStore.getStudentOfficer(route.params.student_officer_id).catch((err) => {
+      if (err?.response?.status === 403) {
+        emit("show-login-dialog", err?.response);
+      }
+    });
   } else {
     toast.error("Student Officer not found. Please ask admin for help.", {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -53,8 +51,8 @@ defineExpose({
       <p>Dear student officer,</p>
       <p>
         it is our pleasure to welcome you to this years
-        {{ conference_abbr }} session. Please register by providing some
-        information about yourself and a badge photo.
+        {{ conference_abbr }} session. Please register by providing some information about yourself
+        and a badge photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>
@@ -64,9 +62,7 @@ defineExpose({
         <v-row no-gutters="">
           <v-col cols="12" sm="12" md="6">
             <NameFields
-              v-model:first_name="
-                studentOfficersStore.student_officer.first_name
-              "
+              v-model:first_name="studentOfficersStore.student_officer.first_name"
               v-model:last_name="studentOfficersStore.student_officer.last_name"
             ></NameFields>
 
@@ -87,9 +83,7 @@ defineExpose({
             <BirthdateField
               v-model:birthday="studentOfficersStore.student_officer.birthday"
             ></BirthdateField>
-            <ExtrasField
-              v-model:extras="studentOfficersStore.student_officer.extras"
-            ></ExtrasField>
+            <ExtrasField v-model:extras="studentOfficersStore.student_officer.extras"></ExtrasField>
 
             <v-text-field
               v-model="studentOfficersStore.student_officer.position_name"
@@ -122,18 +116,10 @@ defineExpose({
         <v-row no-gutters>
           <v-col cols="12" sm="12" md="6">
             <ConsentField
-              v-model:data_consent_time="
-                studentOfficersStore.student_officer.data_consent_time
-              "
-              v-model:data_consent_ip="
-                studentOfficersStore.student_officer.data_consent_ip
-              "
-              v-model:media_consent_time="
-                studentOfficersStore.student_officer.media_consent_time
-              "
-              v-model:media_consent_ip="
-                studentOfficersStore.student_officer.media_consent_ip
-              "
+              v-model:data_consent_time="studentOfficersStore.student_officer.data_consent_time"
+              v-model:data_consent_ip="studentOfficersStore.student_officer.data_consent_ip"
+              v-model:media_consent_time="studentOfficersStore.student_officer.media_consent_time"
+              v-model:media_consent_ip="studentOfficersStore.student_officer.media_consent_ip"
             ></ConsentField>
           </v-col>
         </v-row>
@@ -151,13 +137,9 @@ defineExpose({
               id="submit-btn"
               color="primary"
               prepend-icon="mdi-send"
-              :disabled="
-                !valid || !studentOfficersStore.student_officer.picture
-              "
+              :disabled="!valid || !studentOfficersStore.student_officer.picture"
               @click="
-                studentOfficersStore.updateStudentOfficer(
-                  studentOfficersStore.student_officer.id,
-                )
+                studentOfficersStore.updateStudentOfficer(studentOfficersStore.student_officer.id)
               "
               >Submit registration form</v-btn
             >

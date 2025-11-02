@@ -7,10 +7,7 @@ import { useDelegatesStore } from "../../stores/delegates";
 import { useSchoolsStore } from "../../stores/schools";
 import { useForumsStore } from "../../stores/forums";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
-import {
-  sortParticipantsByName,
-  sortParticipantsByAge,
-} from "../../stores/participants";
+import { sortParticipantsByName, sortParticipantsByAge } from "../../stores/participants";
 import ConsentDisplay from "../../components/displays/ConsentDisplay.vue";
 import BadgePhotoDisplay from "../../components/displays/BadgePhotoDisplay.vue";
 import FirstTimerIcon from "../../components/icons/FirstTimerIcon.vue";
@@ -80,9 +77,7 @@ const headers = [
     sortable: true,
     key: "school",
     value: (item) => {
-      const school = schoolsStore.schools.find(
-        (school) => school.id === item.school,
-      );
+      const school = schoolsStore.schools.find((school) => school.id === item.school);
       return school ? school.name : "";
     },
   },
@@ -124,9 +119,7 @@ const custom_filter = function (value, query, item) {
   // searches all attributes of the item (not only the columns) and related objects if they contain the query
   if (!item || !query) return false;
 
-  const school = schoolsStore.schools.find(
-    (school) => school.id === item.raw.school,
-  );
+  const school = schoolsStore.schools.find((school) => school.id === item.raw.school);
   const memberOrganization = memberOrganizationsStore.member_organizations.find(
     (org) => org.id === item.raw.represents,
   );
@@ -144,9 +137,7 @@ const custom_filter = function (value, query, item) {
     forum?.subtitle,
   ];
 
-  return searchFields.some((field) =>
-    String(field).toLowerCase().includes(query.toLowerCase()),
-  );
+  return searchFields.some((field) => String(field).toLowerCase().includes(query.toLowerCase()));
 };
 </script>
 
@@ -168,10 +159,7 @@ const custom_filter = function (value, query, item) {
             "
             name="delegates.xls"
           ></DownloadExcelIcon>
-          <DownloadJSONIcon
-            :items="selected"
-            name="delegates.json"
-          ></DownloadJSONIcon>
+          <DownloadJSONIcon :items="selected" name="delegates.json"></DownloadJSONIcon>
 
           <v-spacer></v-spacer>
           <v-text-field
@@ -231,13 +219,7 @@ const custom_filter = function (value, query, item) {
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template
-        v-slot:header[`data-table-select`]="{
-          allSelected,
-          selectAll,
-          someSelected,
-        }"
-      >
+      <template v-slot:header[`data-table-select`]="{ allSelected, selectAll, someSelected }">
         <v-checkbox-btn
           :indeterminate="someSelected && !allSelected"
           :model-value="allSelected"
@@ -246,14 +228,7 @@ const custom_filter = function (value, query, item) {
         ></v-checkbox-btn>
       </template>
       <template
-        v-slot:item="{
-          item,
-          internalItem,
-          toggleExpand,
-          isExpanded,
-          isSelected,
-          toggleSelect,
-        }"
+        v-slot:item="{ item, internalItem, toggleExpand, isExpanded, isSelected, toggleSelect }"
       >
         <tr>
           <td>
@@ -267,9 +242,7 @@ const custom_filter = function (value, query, item) {
             <v-btn
               @click="toggleExpand(internalItem)"
               variant="plain"
-              :icon="
-                isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'
-              "
+              :icon="isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             ></v-btn>
           </td>
           <td>
@@ -294,17 +267,13 @@ const custom_filter = function (value, query, item) {
 
           <td>
             <ForumChip
-              :forum="
-                forumsStore.forums.find((forum) => forum.id === item.forum)
-              "
+              :forum="forumsStore.forums.find((forum) => forum.id === item.forum)"
             ></ForumChip>
           </td>
 
           <td>
             <SchoolChip
-              :school="
-                schoolsStore.schools.find((school) => school.id === item.school)
-              "
+              :school="schoolsStore.schools.find((school) => school.id === item.school)"
             ></SchoolChip>
           </td>
 
@@ -323,9 +292,7 @@ const custom_filter = function (value, query, item) {
             <AmbassadorIcon :ambassador="item.ambassador"></AmbassadorIcon>
 
             <FirstTimerIcon :first_timer="item.first_timer"></FirstTimerIcon>
-            <MediaConsentIcon
-              :media_consent_time="item.media_consent_time"
-            ></MediaConsentIcon>
+            <MediaConsentIcon :media_consent_time="item.media_consent_time"></MediaConsentIcon>
 
             <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>

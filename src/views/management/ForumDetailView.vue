@@ -159,10 +159,7 @@ const updateForum = (forum_id) => {
             prepend-icon="mdi-send"
             :disabled="!valid"
             @click="updateForum(forumsStore.forum.id)"
-            >{{
-              route.params.forum_id == "add" ? "add" : "update"
-            }}
-            forum</v-btn
+            >{{ route.params.forum_id == "add" ? "add" : "update" }} forum</v-btn
           >
         </v-row>
       </v-container>

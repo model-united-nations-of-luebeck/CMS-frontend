@@ -59,9 +59,7 @@ const updateConferenceSettings = function () {
               <v-date-input
                 :model-value="new Date(conferenceStore.conference.start_date)"
                 @update:model-value="
-                  (val) =>
-                    (conferenceStore.conference.start_date =
-                      val.toLocaleDateString('en-CA')) // ISO format YYYY-MM-DD
+                  (val) => (conferenceStore.conference.start_date = val.toLocaleDateString('en-CA')) // ISO format YYYY-MM-DD
                 "
                 :rules="conferenceStore.validationRules.startDateRules"
                 prepend-inner-icon="mdi-calendar-today"
@@ -77,9 +75,7 @@ const updateConferenceSettings = function () {
               <v-date-input
                 :model-value="new Date(conferenceStore.conference.end_date)"
                 @update:model-value="
-                  (val) =>
-                    (conferenceStore.conference.end_date =
-                      val.toLocaleDateString('en-CA')) // ISO format YYYY-MM-DD
+                  (val) => (conferenceStore.conference.end_date = val.toLocaleDateString('en-CA')) // ISO format YYYY-MM-DD
                 "
                 label="End date"
                 prepend-inner-icon="mdi-calendar"
@@ -97,12 +93,9 @@ const updateConferenceSettings = function () {
           <v-row>
             <v-col sm="4">
               <v-date-input
-                :model-value="
-                  new Date(conferenceStore.conference.pre_registration_deadline)
-                "
+                :model-value="new Date(conferenceStore.conference.pre_registration_deadline)"
                 @update:model-value="
-                  (val) =>
-                    (conferenceStore.conference.pre_registration_deadline = val) // ISO format YYYY-MM-DD
+                  (val) => (conferenceStore.conference.pre_registration_deadline = val) // ISO format YYYY-MM-DD
                 "
                 prepend-inner-icon="mdi-calendar-clock"
                 prepend-icon=""
@@ -113,15 +106,9 @@ const updateConferenceSettings = function () {
             </v-col>
             <v-col sm="4">
               <v-date-input
-                :model-value="
-                  new Date(
-                    conferenceStore.conference.final_registration_deadline,
-                  )
-                "
+                :model-value="new Date(conferenceStore.conference.final_registration_deadline)"
                 @update:model-value="
-                  (val) =>
-                    (conferenceStore.conference.final_registration_deadline =
-                      val) // ISO format YYYY-MM-DD
+                  (val) => (conferenceStore.conference.final_registration_deadline = val) // ISO format YYYY-MM-DD
                 "
                 prepend-inner-icon="mdi-calendar-clock"
                 prepend-icon=""
@@ -132,12 +119,9 @@ const updateConferenceSettings = function () {
             </v-col>
             <v-col sm="4">
               <v-date-input
-                :model-value="
-                  new Date(conferenceStore.conference.position_paper_deadline)
-                "
+                :model-value="new Date(conferenceStore.conference.position_paper_deadline)"
                 @update:model-value="
-                  (val) =>
-                    (conferenceStore.conference.position_paper_deadline = val) // ISO format YYYY-MM-DD
+                  (val) => (conferenceStore.conference.position_paper_deadline = val) // ISO format YYYY-MM-DD
                 "
                 prepend-inner-icon="mdi-calendar-clock"
                 prepend-icon=""

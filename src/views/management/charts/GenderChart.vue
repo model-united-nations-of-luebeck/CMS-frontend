@@ -20,9 +20,7 @@ const chartOptions = ref({
   title: { text: props.title || "All Participants" },
   tooltip: {
     formatter: function () {
-      return `${this.point.name}: ${this.y} (${Math.round(
-        (100 * this.y) / this.total,
-      )}%)`;
+      return `${this.point.name}: ${this.y} (${Math.round((100 * this.y) / this.total)}%)`;
     },
   },
   plotOptions: {
@@ -32,9 +30,7 @@ const chartOptions = ref({
       dataLabels: {
         enabled: true,
         formatter: function () {
-          return `${this.point.name}: ${this.y} (${Math.round(
-            (100 * this.y) / this.total,
-          )}%)`;
+          return `${this.point.name}: ${this.y} (${Math.round((100 * this.y) / this.total)}%)`;
         },
       },
       showInLegend: true,

@@ -96,19 +96,13 @@ const custom_filter = function (value, query, item) {
 };
 
 const confirmedDelegatesFromSchool = function (school_id) {
-  return delegatesStore.delegates.filter(
-    (delegate) => delegate.school === school_id,
-  ).length;
+  return delegatesStore.delegates.filter((delegate) => delegate.school === school_id).length;
 };
 
 const createSchool = function () {
   if (newSchoolName.value !== "") {
     schoolsStore
-      .createSchool(
-        newSchoolName.value,
-        newSchoolUserName.value,
-        newSchoolPassword.value,
-      )
+      .createSchool(newSchoolName.value, newSchoolUserName.value, newSchoolPassword.value)
       .then(() => {
         addNewSchoolDialog.value = false;
         newSchoolName.value = "";
@@ -139,14 +133,8 @@ const confirmedDeleteSchool = function () {
             <v-icon icon="mdi-bank" size="small" start disabled></v-icon>
           </template>
 
-          <DownloadExcelIcon
-            :items="selected"
-            name="schools.xls"
-          ></DownloadExcelIcon>
-          <DownloadJSONIcon
-            :items="selected"
-            name="schools.json"
-          ></DownloadJSONIcon>
+          <DownloadExcelIcon :items="selected" name="schools.xls"></DownloadExcelIcon>
+          <DownloadJSONIcon :items="selected" name="schools.json"></DownloadJSONIcon>
 
           <v-spacer></v-spacer>
           <v-text-field
@@ -202,13 +190,7 @@ const confirmedDeleteSchool = function () {
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template
-        v-slot:header[`data-table-select`]="{
-          allSelected,
-          selectAll,
-          someSelected,
-        }"
-      >
+      <template v-slot:header[`data-table-select`]="{ allSelected, selectAll, someSelected }">
         <v-checkbox-btn
           :indeterminate="someSelected && !allSelected"
           :model-value="allSelected"
@@ -217,18 +199,9 @@ const confirmedDeleteSchool = function () {
         ></v-checkbox-btn>
       </template>
       <template
-        v-slot:item="{
-          item,
-          internalItem,
-          toggleExpand,
-          isExpanded,
-          isSelected,
-          toggleSelect,
-        }"
+        v-slot:item="{ item, internalItem, toggleExpand, isExpanded, isSelected, toggleSelect }"
       >
-        <tr
-          :class="{ school_canceled: item.registration_status === 'CANCELED' }"
-        >
+        <tr :class="{ school_canceled: item.registration_status === 'CANCELED' }">
           <td>
             <v-checkbox-btn
               :model-value="isSelected(internalItem)"
@@ -240,16 +213,12 @@ const confirmedDeleteSchool = function () {
             <v-btn
               @click="toggleExpand(internalItem)"
               variant="plain"
-              :icon="
-                isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'
-              "
+              :icon="isExpanded(internalItem) ? 'mdi-chevron-up' : 'mdi-chevron-down'"
             ></v-btn>
           </td>
           <td>
             <b
-              ><router-link
-                :to="{ name: 'school-view', params: { school_id: item.id } }"
-              >
+              ><router-link :to="{ name: 'school-view', params: { school_id: item.id } }">
                 {{ item.name }}
               </router-link></b
             >
@@ -267,9 +236,7 @@ const confirmedDeleteSchool = function () {
             >
             </v-icon>
 
-            <span v-if="item.requested">{{
-              String(item.requested).padStart(4, "&nbsp;")
-            }}</span>
+            <span v-if="item.requested">{{ String(item.requested).padStart(4, "&nbsp;") }}</span>
           </td>
           <td class="center">
             <v-icon
@@ -279,12 +246,7 @@ const confirmedDeleteSchool = function () {
             >
             </v-icon>
 
-            {{
-              String(confirmedDelegatesFromSchool(item.id)).padStart(
-                4,
-                "&nbsp;",
-              )
-            }}
+            {{ String(confirmedDelegatesFromSchool(item.id)).padStart(4, "&nbsp;") }}
           </td>
           <td class="center">
             <v-icon
@@ -309,18 +271,14 @@ const confirmedDeleteSchool = function () {
             }}</v-chip>
           </td>
           <td>
-            <v-chip
-              :prepend-icon="getHousingIcon(item.housing_mun_directors)"
-              >{{ getHousingText(item.housing_mun_directors) }}</v-chip
-            >
+            <v-chip :prepend-icon="getHousingIcon(item.housing_mun_directors)">{{
+              getHousingText(item.housing_mun_directors)
+            }}</v-chip>
           </td>
           <td>
-            <v-chip
-              :color="getRegistrationStatusColor(item.registration_status)"
-              >{{
-                getRegistrationStatusTitle(item.registration_status)
-              }}</v-chip
-            >
+            <v-chip :color="getRegistrationStatusColor(item.registration_status)">{{
+              getRegistrationStatusTitle(item.registration_status)
+            }}</v-chip>
           </td>
           <td>
             <v-btn
@@ -337,19 +295,13 @@ const confirmedDeleteSchool = function () {
               v-tooltip="{
                 text: 'Only school without assigned delegates can be deleted.',
                 location: 'start',
-                disabled: !delegatesStore.delegates.some(
-                  (delegate) => delegate.school === item.id,
-                ),
+                disabled: !delegatesStore.delegates.some((delegate) => delegate.school === item.id),
               }"
             >
               <v-btn
                 variant="plain"
                 icon="mdi-delete"
-                :disabled="
-                  delegatesStore.delegates.some(
-                    (delegate) => delegate.school === item.id,
-                  )
-                "
+                :disabled="delegatesStore.delegates.some((delegate) => delegate.school === item.id)"
                 @click.stop="deleteSchool(item.id)"
               >
               </v-btn>
@@ -392,9 +344,7 @@ const confirmedDeleteSchool = function () {
       text="Are you sure you want to delete this school?"
       @ok-clicked="
         confirmedDeleteSchool(
-          schoolsStore.schools.filter(
-            (school) => school.id == deleteDialog.value,
-          ).id,
+          schoolsStore.schools.filter((school) => school.id == deleteDialog.value).id,
         )
       "
       @cancel-clicked="deleteDialog.value = false"
@@ -412,8 +362,7 @@ const confirmedDeleteSchool = function () {
                 prepend-inner-icon="mdi-bank"
                 :rules="[
                   (v) => !!v || 'School name is required',
-                  (v) =>
-                    v.length <= 50 || 'Name must be less than 50 characters',
+                  (v) => v.length <= 50 || 'Name must be less than 50 characters',
                 ]"
                 :hint="`Full name of the school, e.g. 'Thomas-Mann-Schule'`"
                 required
@@ -424,9 +373,7 @@ const confirmedDeleteSchool = function () {
                 label="Username"
                 :rules="[
                   (v) => !!v || 'Username is required',
-                  (v) =>
-                    v.length <= 150 ||
-                    'Username must be less than 150 characters',
+                  (v) => v.length <= 150 || 'Username must be less than 150 characters',
                   (v) =>
                     /^[a-zA-Z0-9@.+_-]+$/.test(v) ||
                     'Username can only contain letters, digits, and @/./+/-/_',
@@ -441,10 +388,8 @@ const confirmedDeleteSchool = function () {
                 required
                 :rules="[
                   (v) => !!v || 'Password is required',
-                  (v) =>
-                    v.length >= 8 || 'Password must be at least 8 characters',
-                  (v) =>
-                    !/^\d+$/.test(v) || 'Password must not be entirely numeric',
+                  (v) => v.length >= 8 || 'Password must be at least 8 characters',
+                  (v) => !/^\d+$/.test(v) || 'Password must not be entirely numeric',
                 ]"
                 :hint="`Please save a copy of the password, as it will not be shown again.`"
                 prepend-inner-icon="mdi-lock"
@@ -460,11 +405,7 @@ const confirmedDeleteSchool = function () {
               <v-spacer></v-spacer>
 
               <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
-              <v-btn
-                text="Create"
-                :disabled="!valid"
-                @click="createSchool"
-              ></v-btn>
+              <v-btn text="Create" :disabled="!valid" @click="createSchool"></v-btn>
             </v-card-actions>
           </v-card>
         </v-form>

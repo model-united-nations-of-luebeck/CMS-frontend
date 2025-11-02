@@ -1,19 +1,19 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
   value: Boolean,
   label: String,
   hint: String,
-  icon: String
-})
+  icon: String,
+});
 
-const emit = defineEmits(['update:value'])
+const emit = defineEmits(["update:value"]);
 
 const updateValue = (value) => {
-  emit('update:value', value)
-}
+  emit("update:value", value);
+};
 </script>
 
 <template>

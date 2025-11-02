@@ -53,8 +53,8 @@ defineExpose({
       <p>Dear staff member,</p>
       <p>
         it is our pleasure to welcome you to this years
-        {{ conference_abbr }} session. Please register by providing some
-        information about yourself and a badge photo.
+        {{ conference_abbr }} session. Please register by providing some information about yourself
+        and a badge photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>
@@ -68,27 +68,15 @@ defineExpose({
               v-model:last_name="staffsStore.staff.last_name"
             ></NameFields>
 
-            <GenderSelector
-              v-model:gender="staffsStore.staff.gender"
-            ></GenderSelector>
+            <GenderSelector v-model:gender="staffsStore.staff.gender"></GenderSelector>
 
-            <PronounsSelector
-              v-model:pronouns="staffsStore.staff.pronouns"
-            ></PronounsSelector>
+            <PronounsSelector v-model:pronouns="staffsStore.staff.pronouns"></PronounsSelector>
 
-            <EmailAddressField
-              v-model:email="staffsStore.staff.email"
-            ></EmailAddressField>
-            <PhoneNumberField
-              v-model:phone="staffsStore.staff.mobile"
-            ></PhoneNumberField>
-            <BirthdateField
-              v-model:birthday="staffsStore.staff.birthday"
-            ></BirthdateField>
+            <EmailAddressField v-model:email="staffsStore.staff.email"></EmailAddressField>
+            <PhoneNumberField v-model:phone="staffsStore.staff.mobile"></PhoneNumberField>
+            <BirthdateField v-model:birthday="staffsStore.staff.birthday"></BirthdateField>
 
-            <ExtrasField
-              v-model:extras="staffsStore.staff.extras"
-            ></ExtrasField>
+            <ExtrasField v-model:extras="staffsStore.staff.extras"></ExtrasField>
 
             <v-text-field
               v-model="staffsStore.staff.position_name"
@@ -113,9 +101,7 @@ defineExpose({
             :offset="mobile ? 0 : 8"
             :class="mobile ? '' : 'badge-photo'"
           >
-            <BadgePhotoCropper
-              v-model:image="staffsStore.staff.picture"
-            ></BadgePhotoCropper>
+            <BadgePhotoCropper v-model:image="staffsStore.staff.picture"></BadgePhotoCropper>
           </v-col>
         </v-row>
         <v-row no-gutters>

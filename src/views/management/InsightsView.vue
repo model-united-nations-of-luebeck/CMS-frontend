@@ -37,13 +37,9 @@ onMounted(async () => {
   age_stats.value = await stats_api_request("age_counts_all");
   birthdays.value = await stats_api_request("birthdays_during_conference");
   origin_data.value = await stats_api_request("origin_all");
-  delegates_from_countries.value = await stats_api_request(
-    "delegates_from_countries",
-  );
+  delegates_from_countries.value = await stats_api_request("delegates_from_countries");
   housing_data.value = await stats_api_request("housing_all");
-  first_time_delegates_per_forum.value = await stats_api_request(
-    "first_time_delegates_per_forum",
-  );
+  first_time_delegates_per_forum.value = await stats_api_request("first_time_delegates_per_forum");
   stats.value = await stats_api_request("all_stats");
 });
 </script>
@@ -55,18 +51,9 @@ onMounted(async () => {
         <v-col xs="12" sm="8" md="8">
           <v-card prepend-icon="mdi-gender-male-female" title="Gender">
             <v-card-text>
-              <p>
-                See how the gender distribution in the different participant
-                groups is.
-              </p>
+              <p>See how the gender distribution in the different participant groups is.</p>
 
-              <v-carousel
-                cycle
-                interval="20000"
-                show-arrows="hover"
-                hide-delimiters
-                :height="400"
-              >
+              <v-carousel cycle interval="20000" show-arrows="hover" hide-delimiters :height="400">
                 <v-carousel-item>
                   <gender-chart
                     :male="gender?.participant.male"
@@ -115,10 +102,7 @@ onMounted(async () => {
         <v-col xs="12" sm="4" md="4">
           <v-card prepend-icon="mdi-calendar-clock" title="Age">
             <v-card-text>
-              <p>
-                See how the age distribution in the different participant groups
-                is.
-              </p>
+              <p>See how the age distribution in the different participant groups is.</p>
 
               <age-chart :age_stats="age_stats"></age-chart>
             </v-card-text>
@@ -131,15 +115,11 @@ onMounted(async () => {
           <v-card prepend-icon="mdi-cake" title="Birthdays">
             <v-card-text>
               <p>
-                The following participants have birthday during the conference
-                and might need a new wristband:
+                The following participants have birthday during the conference and might need a new
+                wristband:
               </p>
               <ul class="pa-2 ma-2">
-                <li
-                  v-for="birthday in birthdays?.birthdays"
-                  :key="birthday"
-                  class="mb-1"
-                >
+                <li v-for="birthday in birthdays?.birthdays" :key="birthday" class="mb-1">
                   <a href="">{{ birthday.name }}</a> on {{ birthday.date }}
                 </li>
               </ul>
@@ -148,11 +128,7 @@ onMounted(async () => {
         </v-col>
 
         <v-col xs="12" sm="8" md="8" class="d-flex">
-          <v-card
-            width="100%"
-            prepend-icon="mdi-home-export-outline"
-            title="Origin"
-          >
+          <v-card width="100%" prepend-icon="mdi-home-export-outline" title="Origin">
             <v-card-text>
               <p>See where the participants come from</p>
               <v-row no-gutters>
@@ -167,10 +143,7 @@ onMounted(async () => {
                     <h3>Participating delegates from:</h3>
                     <div style="height: 300px; overflow: scroll">
                       <ol>
-                        <li
-                          v-for="country in delegates_from_countries?.origin"
-                          :key="country"
-                        >
+                        <li v-for="country in delegates_from_countries?.origin" :key="country">
                           {{ country.school__country }}: {{ country.total }}
                         </li>
                       </ol>
@@ -187,9 +160,8 @@ onMounted(async () => {
             <v-card-text>
               <p>
                 Please note, that Student Officer housing is
-                <b>not</b> displayed here. Also the school's housing numbers
-                only consider whether delegates from a school are in the
-                housing.
+                <b>not</b> displayed here. Also the school's housing numbers only consider whether
+                delegates from a school are in the housing.
               </p>
 
               <housing-chart :data="housing_data"></housing-chart>
@@ -201,8 +173,8 @@ onMounted(async () => {
           <v-card prepend-icon="mdi-counter" title="Stats">
             <v-card-text>
               <p>
-                Some general statistics of this conference for getting an
-                overview and reporting true facts
+                Some general statistics of this conference for getting an overview and reporting
+                true facts
               </p>
 
               <v-table density="compact">
@@ -275,15 +247,9 @@ onMounted(async () => {
         </v-col>
 
         <v-col xs="12" sm="4" md="4" class="d-flex">
-          <v-card
-            prepend-icon="mdi-account-question"
-            title="First Time Delegates"
-          >
+          <v-card prepend-icon="mdi-account-question" title="First Time Delegates">
             <v-card-text>
-              <p>
-                The following participants are attending their first Model UN
-                conference:
-              </p>
+              <p>The following participants are attending their first Model UN conference:</p>
 
               <first-time-delegates-chart
                 :data="first_time_delegates_per_forum"

@@ -41,8 +41,7 @@ const validationRules = {
   ],
   countryRules: [
     (v) => !!v || "Country of origin is required",
-    (v) =>
-      v.length <= 50 || "Country of origin must be less than 50 characters",
+    (v) => v.length <= 50 || "Country of origin must be less than 50 characters",
   ],
 };
 </script>
@@ -50,10 +49,7 @@ const validationRules = {
 <template>
   <div class="">
     <v-breadcrumbs
-      :items="[
-        { title: 'Schools', to: { name: 'schools' } },
-        { title: schoolsStore.school.name },
-      ]"
+      :items="[{ title: 'Schools', to: { name: 'schools' } }, { title: schoolsStore.school.name }]"
     >
       <template v-slot:prepend>
         <v-icon icon="mdi-bank" size="small" start></v-icon>

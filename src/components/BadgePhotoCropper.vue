@@ -205,24 +205,14 @@ export default {
           <div id="rotation">
             <h3>Rotate</h3>
             <v-btn @mousedown="rotate(-2)" icon="mdi-rotate-left"></v-btn>
-            <v-btn
-              @mousedown="rotate(-90)"
-              icon="mdi-rotate-left-variant"
-            ></v-btn>
+            <v-btn @mousedown="rotate(-90)" icon="mdi-rotate-left-variant"></v-btn>
             <v-btn @mousedown="rotate(2)" icon="mdi-rotate-right"></v-btn>
           </div>
           <div id="move">
             <h3>Move</h3>
-            <v-btn @mousedown="move(100, 0)" icon="mdi-arrow-left-thin">
-            </v-btn>
-            <v-btn
-              @mousedown="move(-100, 0)"
-              icon="mdi-arrow-right-thin"
-            ></v-btn>
-            <v-btn
-              @mousedown="move(0, -100)"
-              icon="mdi-arrow-down-thin"
-            ></v-btn>
+            <v-btn @mousedown="move(100, 0)" icon="mdi-arrow-left-thin"> </v-btn>
+            <v-btn @mousedown="move(-100, 0)" icon="mdi-arrow-right-thin"></v-btn>
+            <v-btn @mousedown="move(0, -100)" icon="mdi-arrow-down-thin"></v-btn>
             <v-btn @mousedown="move(0, 100)" icon="mdi-arrow-up-thin"></v-btn>
           </div>
         </div>

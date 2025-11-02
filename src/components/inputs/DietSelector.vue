@@ -1,16 +1,16 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  diet: String
-})
+  diet: String,
+});
 
-const emit = defineEmits(['update:diet'])
+const emit = defineEmits(["update:diet"]);
 
 const updateDiet = (value) => {
-  emit('update:diet', value)
-}
+  emit("update:diet", value);
+};
 </script>
 
 <template>

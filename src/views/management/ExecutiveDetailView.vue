@@ -82,26 +82,16 @@ const valid = ref(true);
               type="text"
             ></v-text-field>
 
-            <GenderSelector
-              v-model:gender="executivesStore.executive.gender"
-            ></GenderSelector>
+            <GenderSelector v-model:gender="executivesStore.executive.gender"></GenderSelector>
 
             <PronounsSelector
               v-model:pronouns="executivesStore.executive.pronouns"
             ></PronounsSelector>
 
-            <EmailAddressField
-              v-model:email="executivesStore.executive.email"
-            ></EmailAddressField>
-            <PhoneNumberField
-              v-model:phone="executivesStore.executive.mobile"
-            ></PhoneNumberField>
-            <BirthdateField
-              v-model:birthday="executivesStore.executive.birthday"
-            ></BirthdateField>
-            <ExtrasField
-              v-model:extras="executivesStore.executive.extras"
-            ></ExtrasField>
+            <EmailAddressField v-model:email="executivesStore.executive.email"></EmailAddressField>
+            <PhoneNumberField v-model:phone="executivesStore.executive.mobile"></PhoneNumberField>
+            <BirthdateField v-model:birthday="executivesStore.executive.birthday"></BirthdateField>
+            <ExtrasField v-model:extras="executivesStore.executive.extras"></ExtrasField>
           </v-col>
 
           <v-col
@@ -118,16 +108,10 @@ const valid = ref(true);
         </v-row>
         <v-row no-gutters>
           <ConsentField
-            v-model:data_consent_time="
-              executivesStore.executive.data_consent_time
-            "
+            v-model:data_consent_time="executivesStore.executive.data_consent_time"
             v-model:data_consent_ip="executivesStore.executive.data_consent_ip"
-            v-model:media_consent_time="
-              executivesStore.executive.media_consent_time
-            "
-            v-model:media_consent_ip="
-              executivesStore.executive.media_consent_ip
-            "
+            v-model:media_consent_time="executivesStore.executive.media_consent_time"
+            v-model:media_consent_ip="executivesStore.executive.media_consent_ip"
           ></ConsentField>
         </v-row>
         <v-row no-gutters class="justify-center">

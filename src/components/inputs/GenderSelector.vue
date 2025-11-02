@@ -1,22 +1,22 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  gender: String
-})
+  gender: String,
+});
 
-const emit = defineEmits(['update:gender'])
+const emit = defineEmits(["update:gender"]);
 
 const updateGender = (value) => {
-  emit('update:gender', value)
-}
+  emit("update:gender", value);
+};
 
 const genderTranslations = {
-  f: 'Female',
-  m: 'Male',
-  o: 'Diverse'
-}
+  f: "Female",
+  m: "Male",
+  o: "Diverse",
+};
 </script>
 
 <template>

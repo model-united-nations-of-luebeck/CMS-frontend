@@ -31,11 +31,7 @@ const ordinal = (n) => {
 
 <template>
   <div class="pre-registration">
-    <v-sheet
-      id="sheet"
-      :elevation="mobile ? 0 : 2"
-      :rounded="mobile ? false : 'lg'"
-    >
+    <v-sheet id="sheet" :elevation="mobile ? 0 : 2" :rounded="mobile ? false : 'lg'">
       <v-btn
         variant="plain"
         prepend-icon="mdi-arrow-left"
@@ -52,52 +48,41 @@ const ordinal = (n) => {
         Dear MUN-Director, <br />
         we are very delighted that you are interested in taking part in the
         {{ ordinal(conferenceStore.conference.annual_session) }}
-        {{ conference_abbr }} session in {{ conferenceStore.conference.year }}.
-        In order to register you and your school's delegation, please fill in
-        this form by
+        {{ conference_abbr }} session in {{ conferenceStore.conference.year }}. In order to register
+        you and your school's delegation, please fill in this form by
         {{
-          new Date(
-            conferenceStore.conference.pre_registration_deadline,
-          ).toLocaleDateString("en-GB", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })
-        }}. Please don't hesitate contacting the Conference Managers in case you
-        have any questions
-        <a href="mailto:conferencemanager@munol.org"
-          >conferencemanager@munol.org</a
-        >.
+          new Date(conferenceStore.conference.pre_registration_deadline).toLocaleDateString(
+            "en-GB",
+            {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            },
+          )
+        }}. Please don't hesitate contacting the Conference Managers in case you have any questions
+        <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.
       </p>
 
       <v-form>
         <v-container fluid>
           <v-row no-gutters>
             <v-col cols="12" sm="12" md="6" lg="3">
-              <SchoolNameField
-                v-model:name="schoolsStore.school.name"
-              ></SchoolNameField>
+              <SchoolNameField v-model:name="schoolsStore.school.name"></SchoolNameField>
             </v-col>
           </v-row>
           <v-row no-gutters>
             <v-col cols="12" sm="12" md="6" lg="3">
-              <StreetField
-                v-model:street="schoolsStore.school.street"
-              ></StreetField>
+              <StreetField v-model:street="schoolsStore.school.street"></StreetField>
             </v-col>
             <v-col cols="12" sm="4" md="4" lg="1">
-              <ZipCodeField
-                v-model:zip="schoolsStore.school.zipcode"
-              ></ZipCodeField>
+              <ZipCodeField v-model:zip="schoolsStore.school.zipcode"></ZipCodeField>
             </v-col>
             <v-col cols="12" sm="8" md="6" lg="3">
               <CityField v-model:city="schoolsStore.school.city"></CityField>
             </v-col>
             <v-col cols="12" sm="12" md="6" lg="3">
-              <CountryField
-                v-model:country="schoolsStore.school.country"
-              ></CountryField>
+              <CountryField v-model:country="schoolsStore.school.country"></CountryField>
             </v-col>
           </v-row>
           <v-row no-gutters="">
@@ -108,13 +93,11 @@ const ordinal = (n) => {
             </v-col>
             <v-col cols="12" sm="12" md="8" lg="7">
               <p class="text-medium-emphasis ml-4" :class="{ 'px-8': !mobile }">
-                Please note, that this is the number of students requested.
-                Although the Conference Managers do their best to fulfil all
-                requests and constraints, this is not always possible. So, it
-                might happen that only a smaller number of students will be
-                confirmed by the Conference Managers. Sometimes however, places
-                become free again and MUN-Directors might be granted to bring
-                more students.
+                Please note, that this is the number of students requested. Although the Conference
+                Managers do their best to fulfil all requests and constraints, this is not always
+                possible. So, it might happen that only a smaller number of students will be
+                confirmed by the Conference Managers. Sometimes however, places become free again
+                and MUN-Directors might be granted to bring more students.
               </p>
             </v-col>
           </v-row>
@@ -126,25 +109,20 @@ const ordinal = (n) => {
               ></AccommodationSelector>
 
               <AccommodationSelector
-                v-model:accommodation="
-                  schoolsStore.school.housing_mun_directors
-                "
+                v-model:accommodation="schoolsStore.school.housing_mun_directors"
                 label="Accommodation for MUN-Directors"
               ></AccommodationSelector>
             </v-col>
             <v-col cols="12" sm="12" md="12" lg="6">
               <p class="text-medium-emphasis" :class="{ 'py-8': !mobile }">
-                {{ conference_abbr }} offers the possibility to stay in host
-                families depending on who many families agree on hosting
-                delegates. Most of the host families have children in the same
-                age attending a school in Lübeck. In order to have a memorable
-                time together, both, the host family and the guest have to be
-                open-minded and stick to some self-evident rules. We assume that
-                guest students follow the parents instructions, e.g. regarding
-                staying out in the evening. If you have further questions
-                regarding the housing please don't hesitate asking the
-                Conference Managers or the Student Supervisors, who coordinate
-                the accommodation.
+                {{ conference_abbr }} offers the possibility to stay in host families depending on
+                who many families agree on hosting delegates. Most of the host families have
+                children in the same age attending a school in Lübeck. In order to have a memorable
+                time together, both, the host family and the guest have to be open-minded and stick
+                to some self-evident rules. We assume that guest students follow the parents
+                instructions, e.g. regarding staying out in the evening. If you have further
+                questions regarding the housing please don't hesitate asking the Conference Managers
+                or the Student Supervisors, who coordinate the accommodation.
               </p>
             </v-col>
           </v-row>

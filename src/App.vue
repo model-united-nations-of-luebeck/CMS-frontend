@@ -12,9 +12,7 @@ const routedComponent = ref(null);
 const login = async function () {
   // get global axios instance for backend requests and save token in there
   const http = inject("backend_instance");
-  http.defaults.headers.common["Authorization"] = `Token ${
-    import.meta.env.VITE_BACKEND_TOKEN
-  }`;
+  http.defaults.headers.common["Authorization"] = `Token ${import.meta.env.VITE_BACKEND_TOKEN}`;
 };
 
 onMounted(() => {
@@ -54,11 +52,7 @@ const toggleDrawer = function () {
         </v-btn>
         <v-menu v-else open-on-hover>
           <template v-slot:activator="{ props }">
-            <v-btn
-              icon="mdi-dots-vertical"
-              v-bind="props"
-              variant="text"
-            ></v-btn>
+            <v-btn icon="mdi-dots-vertical" v-bind="props" variant="text"></v-btn>
           </template>
 
           <v-list dense>
@@ -69,10 +63,7 @@ const toggleDrawer = function () {
             >
               <v-list-item-title>Imprint</v-list-item-title>
             </v-list-item>
-            <v-list-item
-              prepend-icon="mdi-shield-check"
-              :to="{ name: 'privacy-policy' }"
-            >
+            <v-list-item prepend-icon="mdi-shield-check" :to="{ name: 'privacy-policy' }">
               <v-list-item-title>Privacy Policy</v-list-item-title>
             </v-list-item>
             <v-list-item
@@ -89,11 +80,7 @@ const toggleDrawer = function () {
 
     <v-main>
       <RouterView v-slot="{ Component }">
-        <component
-          :is="Component"
-          @show-logout="(v) => (showLogout = v)"
-          ref="routedComponent"
-        />
+        <component :is="Component" @show-logout="(v) => (showLogout = v)" ref="routedComponent" />
       </RouterView>
     </v-main>
   </v-app>

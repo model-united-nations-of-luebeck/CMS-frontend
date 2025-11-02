@@ -2,9 +2,9 @@
 const props = defineProps({
   model: Number,
   title: String,
-  text: String
-})
-const emits = defineEmits(['ok-clicked', 'cancel-clicked'])
+  text: String,
+});
+const emits = defineEmits(["ok-clicked", "cancel-clicked"]);
 </script>
 
 <template>

@@ -1,22 +1,22 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  name: String
-})
+  name: String,
+});
 
-const emit = defineEmits(['update:name'])
+const emit = defineEmits(["update:name"]);
 
 const updateName = (event) => {
-  emit('update:name', event.target.value)
-}
+  emit("update:name", event.target.value);
+};
 
 const rules = [
   (v) => !!v || `Please enter your school's name.`,
-  (v) => v.length <= 50 || 'The name is too long. Please shorten it.',
-  (v) => /^[^0-9]*$/.test(v) || 'Please enter a valid name without numbers.' //no numbers, but any special characters
-]
+  (v) => v.length <= 50 || "The name is too long. Please shorten it.",
+  (v) => /^[^0-9]*$/.test(v) || "Please enter a valid name without numbers.", //no numbers, but any special characters
+];
 </script>
 
 <template>

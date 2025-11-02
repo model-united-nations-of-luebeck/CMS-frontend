@@ -25,11 +25,7 @@ function getAgeColor(birth_date) {
 </script>
 
 <template>
-  <v-chip
-    v-if="props.birthday"
-    variant="tonal"
-    :color="getAgeColor(props.birthday)"
-  >
+  <v-chip v-if="props.birthday" variant="tonal" :color="getAgeColor(props.birthday)">
     {{ getAge(props.birthday) ? getAge(props.birthday) : "" }}
   </v-chip>
 </template>

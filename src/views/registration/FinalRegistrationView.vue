@@ -67,9 +67,7 @@ const getUniqueMemberOrganizationsFromSchool = () => {
 
   // Find the member organizations that match the represents values.
   const memberOrganizations = uniqueRepresentsList.map((represents) => {
-    return memberOrganizationsStore.member_organizations.find(
-      (org) => org.id === represents,
-    );
+    return memberOrganizationsStore.member_organizations.find((org) => org.id === represents);
   });
 
   return memberOrganizations;
@@ -92,8 +90,7 @@ const getExportData = () => {
         represents: memberOrganizationsStore.member_organizations.find(
           (org) => org.id === delegate.represents,
         ).name,
-        forum: forumsStore.forums.find((forum) => forum.id === delegate.forum)
-          .name,
+        forum: forumsStore.forums.find((forum) => forum.id === delegate.forum).name,
         link: `${origin}${
           router.resolve({
             name: "final-registration-delegate",
@@ -107,11 +104,7 @@ const getExportData = () => {
 
 <template>
   <div class="final-registration">
-    <v-sheet
-      id="sheet"
-      :elevation="mobile ? 0 : 2"
-      :rounded="mobile ? false : 'lg'"
-    >
+    <v-sheet id="sheet" :elevation="mobile ? 0 : 2" :rounded="mobile ? false : 'lg'">
       <v-btn
         variant="plain"
         prepend-icon="mdi-arrow-left"
@@ -129,12 +122,10 @@ const getExportData = () => {
 
         Country Allocations have been done. We can confirm that you can bring
         <b>{{
-          delegatesStore.delegates.filter(
-            (delegate) => delegate.school == route.params.school_id,
-          ).length
+          delegatesStore.delegates.filter((delegate) => delegate.school == route.params.school_id)
+            .length
         }}</b>
-        students. Your school is representing the following member
-        organisations:
+        students. Your school is representing the following member organisations:
         <b>{{
           getUniqueMemberOrganizationsFromSchool()
             .map((org) => org.official_name)
@@ -144,16 +135,12 @@ const getExportData = () => {
               " and$1",
             ) /* Gets a set of all unique member organizations which are represented by the delegates of a school. The official names of these member organizations are listed separated by commas, but the last comma is replaced with 'and' */
         }}</b
-        >. In the final registration we ask you, your fellow MUN-Directors as
-        well as your students to fill in forms. This data is required to
-        organize the conference. For each participant you have an unique
-        registration link. Forward this to the delegate/colleague, so that they
-        can provide their information. Once they've done it, their information
-        shows up here. Please don't hesitate contacting the Conference Managers
-        in case you have any questions
-        <a href="mailto:conferencemanager@munol.org"
-          >conferencemanager@munol.org</a
-        >.
+        >. In the final registration we ask you, your fellow MUN-Directors as well as your students
+        to fill in forms. This data is required to organize the conference. For each participant you
+        have an unique registration link. Forward this to the delegate/colleague, so that they can
+        provide their information. Once they've done it, their information shows up here. Please
+        don't hesitate contacting the Conference Managers in case you have any questions
+        <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.
       </p>
 
       <h2>MUN-Directors</h2>
@@ -198,9 +185,7 @@ const getExportData = () => {
             </td>
             <td>
               <v-btn
-                v-tooltip:bottom-center="
-                  'Click to copy registration link into your clipboard'
-                "
+                v-tooltip:bottom-center="'Click to copy registration link into your clipboard'"
                 rounded
                 variant="tonal"
                 density="comfortable"
@@ -256,10 +241,9 @@ const getExportData = () => {
 
       <h2>Delegates</h2>
 
-      Please select one delegate of each member organization to be the
-      ambassador of this delegation by clicking the star button at the end of
-      the respective row. The ambassador will be the main point of contact for
-      this delegation during the conference and might be asked to give a speech
+      Please select one delegate of each member organization to be the ambassador of this delegation
+      by clicking the star button at the end of the respective row. The ambassador will be the main
+      point of contact for this delegation during the conference and might be asked to give a speech
       at the opening ceremony.
 
       <v-table>
@@ -291,13 +275,9 @@ const getExportData = () => {
           >
             <td class="text-center no-select">
               <v-icon
-                v-tooltip:right-center="
-                  delegate.ambassador ? 'Ambassador' : 'Delegate'
-                "
+                v-tooltip:right-center="delegate.ambassador ? 'Ambassador' : 'Delegate'"
                 :color="delegate.ambassador ? 'primary' : 'auto'"
-                >{{
-                  delegate.ambassador ? "mdi-account-star" : "mdi-account"
-                }}</v-icon
+                >{{ delegate.ambassador ? "mdi-account-star" : "mdi-account" }}</v-icon
               >
             </td>
             <td>
@@ -335,16 +315,10 @@ const getExportData = () => {
             <td>
               <v-chip
                 v-tooltip:bottom="
-                  forumsStore.forums.find(
-                    (forum) => forum.id === delegate.forum,
-                  ).name
+                  forumsStore.forums.find((forum) => forum.id === delegate.forum).name
                 "
               >
-                {{
-                  forumsStore.forums.find(
-                    (forum) => forum.id === delegate.forum,
-                  ).abbreviation
-                }}
+                {{ forumsStore.forums.find((forum) => forum.id === delegate.forum).abbreviation }}
               </v-chip>
             </td>
             <td>{{ delegate?.first_name }} {{ delegate?.last_name }}</td>
@@ -382,9 +356,7 @@ const getExportData = () => {
                 "
                 v-clipboard:success="onCopy"
                 v-clipboard:error="onError"
-                v-tooltip:bottom-center="
-                  'Click to copy registration link into your clipboard'
-                "
+                v-tooltip:bottom-center="'Click to copy registration link into your clipboard'"
                 class="no-select"
               >
                 Copy link
@@ -417,9 +389,7 @@ const getExportData = () => {
                 color="primary"
                 size="small"
                 icon="mdi-star"
-                v-tooltip:start="
-                  'Click to make this delegate the ambassador for this delegation'
-                "
+                v-tooltip:start="'Click to make this delegate the ambassador for this delegation'"
                 @click="changeAmbassador(delegate.id)"
               >
               </v-btn>
@@ -429,8 +399,8 @@ const getExportData = () => {
 
       <p>
         <i>
-          Hint: You can mark the delegates table and copy it to distribute the
-          links to your students. Or you can
+          Hint: You can mark the delegates table and copy it to distribute the links to your
+          students. Or you can
           <download-excel
             class="download"
             :data="getExportData()"

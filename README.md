@@ -16,6 +16,15 @@ Run `npm run dev` after `npm install` to serve the frontend locally in developme
 
 Run Unit Tests with [Vitest](https://vitest.dev/) `npm run test:unit`. For formatting run `npm run format` and for linting `npm run lint`.
 
+To enable pre-commit hooks, download and install them with
+
+```bash
+pip install pre-commit
+pre-commit install
+```
+
+To run the hooks on all files run: `pre-commit run --all-files`
+
 ## Deployment
 
 **Preparation**:

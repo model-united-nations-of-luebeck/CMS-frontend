@@ -29,9 +29,7 @@ watch(
       // if no pronouns are set, set default to "don't specify"
       internalSelectedPronouns.value = defaultPronouns.value[0].value;
     } else {
-      if (
-        defaultPronouns.value.findIndex((item) => item.value === pronouns) == -1
-      ) {
+      if (defaultPronouns.value.findIndex((item) => item.value === pronouns) == -1) {
         // if pronouns are not in the default list, set to custom
         internalSelectedPronouns.value = defaultPronouns.value[4].value;
       } else {
@@ -44,11 +42,9 @@ watch(
 const rules = ref([
   // must have a / in between
   (v) =>
-    v.split("/").length === 2 ||
-    "Please enter your subject and possessive pronouns separated by /",
+    v.split("/").length === 2 || "Please enter your subject and possessive pronouns separated by /",
   (v) =>
-    v.length <= 50 ||
-    "Please select shorter pronouns, which are 50 characters or less together.",
+    v.length <= 50 || "Please select shorter pronouns, which are 50 characters or less together.",
 ]);
 </script>
 

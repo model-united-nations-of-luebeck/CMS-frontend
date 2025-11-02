@@ -29,13 +29,11 @@ const emit = defineEmits(["show-login-dialog"]);
 
 async function loadData() {
   if (route.params.mun_director_id) {
-    munDirectorsStore
-      .getMUNDirector(route.params.mun_director_id)
-      .catch((err) => {
-        if (err?.response?.status === 403) {
-          emit("show-login-dialog", err?.response);
-        }
-      });
+    munDirectorsStore.getMUNDirector(route.params.mun_director_id).catch((err) => {
+      if (err?.response?.status === 403) {
+        emit("show-login-dialog", err?.response);
+      }
+    });
   } else {
     toast.error("MUN-Director not found. Please ask admin for help.", {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -60,13 +58,10 @@ defineExpose({
           Dear MUN-Director, <br />
 
           we are excited that you are participating in {{ conference_abbr }}
-          {{ conferenceStore.conference.year }}. To organize the conference and
-          prepare everything, we would like you to fill in this form and upload
-          a photo for your badge. Please don't hesitate contacting the
-          Conference Managers in case you have any questions
-          <a href="mailto:conferencemanager@munol.org"
-            >conferencemanager@munol.org</a
-          >.
+          {{ conferenceStore.conference.year }}. To organize the conference and prepare everything,
+          we would like you to fill in this form and upload a photo for your badge. Please don't
+          hesitate contacting the Conference Managers in case you have any questions
+          <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.
         </p>
         <p>Your Conference Managers</p>
       </v-alert>
@@ -81,9 +76,7 @@ defineExpose({
               v-model:last_name="munDirectorsStore.mun_director.last_name"
             ></NameFields>
 
-            <GenderSelector
-              v-model:gender="munDirectorsStore.mun_director.gender"
-            ></GenderSelector>
+            <GenderSelector v-model:gender="munDirectorsStore.mun_director.gender"></GenderSelector>
 
             <PronounsSelector
               v-model:pronouns="munDirectorsStore.mun_director.pronouns"
@@ -100,9 +93,7 @@ defineExpose({
               label="Are you an English teacher and able to help checking the grammar of written resolutions?"
               prepend-icon="mdi-human-male-board"
             ></CheckboxField>
-            <ExtrasField
-              v-model:extras="munDirectorsStore.mun_director.extras"
-            ></ExtrasField>
+            <ExtrasField v-model:extras="munDirectorsStore.mun_director.extras"></ExtrasField>
           </v-col>
 
           <v-col
@@ -120,18 +111,10 @@ defineExpose({
         <v-row no-gutters>
           <v-col cols="12" sm="12" md="6">
             <ConsentField
-              v-model:data_consent_time="
-                munDirectorsStore.mun_director.data_consent_time
-              "
-              v-model:data_consent_ip="
-                munDirectorsStore.mun_director.data_consent_ip
-              "
-              v-model:media_consent_time="
-                munDirectorsStore.mun_director.media_consent_time
-              "
-              v-model:media_consent_ip="
-                munDirectorsStore.mun_director.media_consent_ip
-              "
+              v-model:data_consent_time="munDirectorsStore.mun_director.data_consent_time"
+              v-model:data_consent_ip="munDirectorsStore.mun_director.data_consent_ip"
+              v-model:media_consent_time="munDirectorsStore.mun_director.media_consent_time"
+              v-model:media_consent_ip="munDirectorsStore.mun_director.media_consent_ip"
             ></ConsentField>
           </v-col>
         </v-row>
@@ -150,11 +133,7 @@ defineExpose({
               color="primary"
               prepend-icon="mdi-send"
               :disabled="!valid || !munDirectorsStore.mun_director.picture"
-              @click="
-                munDirectorsStore.updateMUNDirector(
-                  munDirectorsStore.mun_director.id,
-                )
-              "
+              @click="munDirectorsStore.updateMUNDirector(munDirectorsStore.mun_director.id)"
               >Submit registration form</v-btn
             >
           </div>

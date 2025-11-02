@@ -22,9 +22,7 @@ conferenceStore.getCurrentConference();
       width="300"
     />
     <h1 id="motto" class="text-center">
-      {{
-        conferenceStore.conference?.theme || "AD URBEM TERRARUM CONSOCIANDUM"
-      }}
+      {{ conferenceStore.conference?.theme || "AD URBEM TERRARUM CONSOCIANDUM" }}
     </h1>
 
     <div class="columns">
@@ -33,15 +31,11 @@ conferenceStore.getCurrentConference();
           <v-icon color="primary" icon="mdi-calendar-heart"></v-icon>
         </template>
 
-        <v-card-text
-          class="text-center"
-          v-if="conferenceStore.conference?.start_date"
-        >
+        <v-card-text class="text-center" v-if="conferenceStore.conference?.start_date">
           <h1 class="text-h1" style="margin: 40px">
             {{
               Math.ceil(
-                (new Date(conferenceStore.conference?.start_date) -
-                  new Date()) /
+                (new Date(conferenceStore.conference?.start_date) - new Date()) /
                   (1000 * 60 * 60 * 24),
               )
             }}
@@ -241,34 +235,10 @@ conferenceStore.getCurrentConference();
     #b51700 50%,
     #891100 100%
   );
-  background-image: -moz-linear-gradient(
-    top,
-    #ee432e 0%,
-    #c63929 50%,
-    #b51700 50%,
-    #891100 100%
-  );
-  background-image: -ms-linear-gradient(
-    top,
-    #ee432e 0%,
-    #c63929 50%,
-    #b51700 50%,
-    #891100 100%
-  );
-  background-image: -o-linear-gradient(
-    top,
-    #ee432e 0%,
-    #c63929 50%,
-    #b51700 50%,
-    #891100 100%
-  );
-  background-image: linear-gradient(
-    top,
-    #ee432e 0%,
-    #c63929 50%,
-    #b51700 50%,
-    #891100 100%
-  );
+  background-image: -moz-linear-gradient(top, #ee432e 0%, #c63929 50%, #b51700 50%, #891100 100%);
+  background-image: -ms-linear-gradient(top, #ee432e 0%, #c63929 50%, #b51700 50%, #891100 100%);
+  background-image: -o-linear-gradient(top, #ee432e 0%, #c63929 50%, #b51700 50%, #891100 100%);
+  background-image: linear-gradient(top, #ee432e 0%, #c63929 50%, #b51700 50%, #891100 100%);
   border: 3px solid #fff;
   -webkit-box-shadow:
     inset 0 0 0 1px rgba(255, 115, 100, 0.4),

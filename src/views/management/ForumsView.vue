@@ -72,10 +72,7 @@ const confirmedDeletePlenary = function () {
         <v-icon icon="mdi-forum" size="small" start disabled></v-icon>
       </template>
 
-      <DownloadExcelIcon
-        :items="selected"
-        name="forums.xls"
-      ></DownloadExcelIcon>
+      <DownloadExcelIcon :items="selected" name="forums.xls"></DownloadExcelIcon>
       <DownloadJSONIcon :items="selected" name="forums.json"></DownloadJSONIcon>
 
       <v-spacer></v-spacer>
@@ -126,13 +123,7 @@ const confirmedDeletePlenary = function () {
       <template v-slot:loading>
         <v-skeleton-loader type="table-row@20"></v-skeleton-loader>
       </template>
-      <template
-        v-slot:header[`data-table-select`]="{
-          allSelected,
-          selectAll,
-          someSelected,
-        }"
-      >
+      <template v-slot:header[`data-table-select`]="{ allSelected, selectAll, someSelected }">
         <v-checkbox-btn
           :indeterminate="someSelected && !allSelected"
           :model-value="allSelected"
@@ -156,10 +147,9 @@ const confirmedDeletePlenary = function () {
           </td>
           <td>
             <b
-              ><router-link
-                :to="{ name: 'forum-view', params: { forum_id: item.id } }"
-                >{{ item.name }}</router-link
-              ></b
+              ><router-link :to="{ name: 'forum-view', params: { forum_id: item.id } }">{{
+                item.name
+              }}</router-link></b
             >
           </td>
           <td>
@@ -167,17 +157,13 @@ const confirmedDeletePlenary = function () {
           </td>
           <td>
             <v-chip v-if="item.plenary" prepend-icon="mdi-account-group">{{
-              plenariesStore.plenaries.find(
-                (plenary) => plenary.id == item.plenary,
-              )?.abbreviation
+              plenariesStore.plenaries.find((plenary) => plenary.id == item.plenary)?.abbreviation
             }}</v-chip>
           </td>
           <td>
             <v-icon
               v-if="item.email"
-              v-tooltip:bottom-center="
-                `${item.email}  (Click to copy e-mail to your clipboard)`
-              "
+              v-tooltip:bottom-center="`${item.email}  (Click to copy e-mail to your clipboard)`"
               v-clipboard:copy="item.email"
               v-clipboard:success="
                 () => {
@@ -215,9 +201,7 @@ const confirmedDeletePlenary = function () {
                 text: 'Only forums without assigned delegates and issues can be deleted.',
                 location: 'start',
                 disabled: !(
-                  delegatesStore.delegates.some(
-                    (delegate) => delegate.forum === item.id,
-                  ) ||
+                  delegatesStore.delegates.some((delegate) => delegate.forum === item.id) ||
                   issuesStore.issues.some((issue) => issue.forum === item.id)
                 ),
               }"
@@ -226,9 +210,7 @@ const confirmedDeletePlenary = function () {
                 variant="plain"
                 icon="mdi-delete"
                 :disabled="
-                  delegatesStore.delegates.some(
-                    (delegate) => delegate.forum === item.id,
-                  ) ||
+                  delegatesStore.delegates.some((delegate) => delegate.forum === item.id) ||
                   issuesStore.issues.some((issue) => issue.forum === item.id)
                 "
                 @click.stop="deleteForum(item.id)"
@@ -286,8 +268,7 @@ const confirmedDeletePlenary = function () {
             {{
               delegatesStore.delegates.filter((delegate) =>
                 forumsStore.forums.some(
-                  (forum) =>
-                    forum.plenary === item.id && forum.id === delegate.forum,
+                  (forum) => forum.plenary === item.id && forum.id === delegate.forum,
                 ),
               ).length
             }}
@@ -308,17 +289,13 @@ const confirmedDeletePlenary = function () {
               v-tooltip="{
                 text: 'Only plenary sessions without assigned forums can be deleted.',
                 location: 'start',
-                disabled: !forumsStore.forums.some(
-                  (forum) => forum.plenary === item.id,
-                ),
+                disabled: !forumsStore.forums.some((forum) => forum.plenary === item.id),
               }"
             >
               <v-btn
                 variant="plain"
                 icon="mdi-delete"
-                :disabled="
-                  forumsStore.forums.some((forum) => forum.plenary === item.id)
-                "
+                :disabled="forumsStore.forums.some((forum) => forum.plenary === item.id)"
                 @click.stop="deletePlenary(item.id)"
               >
               </v-btn>
@@ -335,8 +312,7 @@ const confirmedDeletePlenary = function () {
       text="Are you sure you want to delete this forum?"
       @ok-clicked="
         confirmedDeleteForum(
-          forumsStore.forums.filter((forum) => forum.id == deleteDialog.value)
-            .id,
+          forumsStore.forums.filter((forum) => forum.id == deleteDialog.value).id,
         )
       "
       @cancel-clicked="deleteDialog.value = false"
@@ -349,9 +325,7 @@ const confirmedDeletePlenary = function () {
       text="Are you sure you want to delete this plenary?"
       @ok-clicked="
         confirmedDeletePlenary(
-          plenariesStore.plenaries.filter(
-            (plenary) => plenary.id == deleteDialogPlenary.value,
-          ).id,
+          plenariesStore.plenaries.filter((plenary) => plenary.id == deleteDialogPlenary.value).id,
         )
       "
       @cancel-clicked="deleteDialogPlenary.value = false"

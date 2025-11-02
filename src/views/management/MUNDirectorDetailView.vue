@@ -68,9 +68,7 @@ const valid = ref(true);
               v-model:last_name="munDirectorsStore.mun_director.last_name"
             ></NameFields>
 
-            <GenderSelector
-              v-model:gender="munDirectorsStore.mun_director.gender"
-            ></GenderSelector>
+            <GenderSelector v-model:gender="munDirectorsStore.mun_director.gender"></GenderSelector>
 
             <PronounsSelector
               v-model:pronouns="munDirectorsStore.mun_director.pronouns"
@@ -88,9 +86,7 @@ const valid = ref(true);
               label="Are you an English teacher and able to help checking the grammar of written resolutions?"
               prepend-icon="mdi-human-male-board"
             ></CheckboxField>
-            <ExtrasField
-              v-model:extras="munDirectorsStore.mun_director.extras"
-            ></ExtrasField>
+            <ExtrasField v-model:extras="munDirectorsStore.mun_director.extras"></ExtrasField>
           </v-col>
 
           <v-col
@@ -107,18 +103,10 @@ const valid = ref(true);
         </v-row>
         <v-row no-gutters>
           <ConsentField
-            v-model:data_consent_time="
-              munDirectorsStore.mun_director.data_consent_time
-            "
-            v-model:data_consent_ip="
-              munDirectorsStore.mun_director.data_consent_ip
-            "
-            v-model:media_consent_time="
-              munDirectorsStore.mun_director.media_consent_time
-            "
-            v-model:media_consent_ip="
-              munDirectorsStore.mun_director.media_consent_ip
-            "
+            v-model:data_consent_time="munDirectorsStore.mun_director.data_consent_time"
+            v-model:data_consent_ip="munDirectorsStore.mun_director.data_consent_ip"
+            v-model:media_consent_time="munDirectorsStore.mun_director.media_consent_time"
+            v-model:media_consent_ip="munDirectorsStore.mun_director.media_consent_ip"
           ></ConsentField>
         </v-row>
         <v-row no-gutters class="justify-center">

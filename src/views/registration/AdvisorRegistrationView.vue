@@ -47,9 +47,8 @@ defineExpose({
       <p>Dear Conference Advisor,</p>
       <p>
         it is our pleasure to welcome you to this years
-        {{ conference_abbr }} session. Please register by providing some
-        information about yourself, the support that you can offer and a badge
-        photo.
+        {{ conference_abbr }} session. Please register by providing some information about yourself,
+        the support that you can offer and a badge photo.
       </p>
       <p>Your Conference Managers</p>
     </v-alert>
@@ -63,23 +62,13 @@ defineExpose({
               v-model:last_name="advisorsStore.advisor.last_name"
             ></NameFields>
 
-            <GenderSelector
-              v-model:gender="advisorsStore.advisor.gender"
-            ></GenderSelector>
+            <GenderSelector v-model:gender="advisorsStore.advisor.gender"></GenderSelector>
 
-            <PronounsSelector
-              v-model:pronouns="advisorsStore.advisor.pronouns"
-            ></PronounsSelector>
+            <PronounsSelector v-model:pronouns="advisorsStore.advisor.pronouns"></PronounsSelector>
 
-            <EmailAddressField
-              v-model:email="advisorsStore.advisor.email"
-            ></EmailAddressField>
-            <PhoneNumberField
-              v-model:phone="advisorsStore.advisor.mobile"
-            ></PhoneNumberField>
-            <ExtrasField
-              v-model:extras="advisorsStore.advisor.extras"
-            ></ExtrasField>
+            <EmailAddressField v-model:email="advisorsStore.advisor.email"></EmailAddressField>
+            <PhoneNumberField v-model:phone="advisorsStore.advisor.mobile"></PhoneNumberField>
+            <ExtrasField v-model:extras="advisorsStore.advisor.extras"></ExtrasField>
 
             <v-checkbox
               v-model="advisorsStore.advisor.car"
@@ -89,8 +78,7 @@ defineExpose({
             >
               <template v-slot:label>
                 <span
-                  >I have a car available and can offer transportation during
-                  the conference.</span
+                  >I have a car available and can offer transportation during the conference.</span
                 >
               </template>
             </v-checkbox>
@@ -114,9 +102,7 @@ defineExpose({
               :density="mobile ? 'compact' : 'default'"
               v-model="advisorsStore.advisor.availability"
               :rules="[
-                (v) =>
-                  !!v ||
-                  'Please specify your estimated availability during the conference',
+                (v) => !!v || 'Please specify your estimated availability during the conference',
               ]"
             ></v-textarea>
             <HelpField v-model:help="advisorsStore.advisor.help"></HelpField>
@@ -129,21 +115,15 @@ defineExpose({
             :offset="mobile ? 0 : 8"
             :class="mobile ? '' : 'badge-photo'"
           >
-            <BadgePhotoCropper
-              v-model:image="advisorsStore.advisor.picture"
-            ></BadgePhotoCropper>
+            <BadgePhotoCropper v-model:image="advisorsStore.advisor.picture"></BadgePhotoCropper>
           </v-col>
         </v-row>
         <v-row no-gutters>
           <v-col cols="12" sm="12" md="6">
             <ConsentField
-              v-model:data_consent_time="
-                advisorsStore.advisor.data_consent_time
-              "
+              v-model:data_consent_time="advisorsStore.advisor.data_consent_time"
               v-model:data_consent_ip="advisorsStore.advisor.data_consent_ip"
-              v-model:media_consent_time="
-                advisorsStore.advisor.media_consent_time
-              "
+              v-model:media_consent_time="advisorsStore.advisor.media_consent_time"
               v-model:media_consent_ip="advisorsStore.advisor.media_consent_ip"
             ></ConsentField>
           </v-col>

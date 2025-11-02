@@ -13,9 +13,7 @@ const valid = ref(true);
 const fetchMemberOrganization = () => {
   if (route.params.member_organization_id != "add") {
     if (route.params.member_organization_id) {
-      memberOrganizationsStore.getMemberOrganization(
-        route.params.member_organization_id,
-      );
+      memberOrganizationsStore.getMemberOrganization(route.params.member_organization_id);
     }
   } else {
     memberOrganizationsStore.initializeMemberOrganization();
@@ -60,12 +58,9 @@ const updateMemberOrganization = (member_organization_id) => {
         router.push({ name: "member-organizations" });
       })
       .catch(() => {
-        toast.error(
-          "Adding Member Organization failed. Please ask admin for help.",
-          {
-            position: toast.POSITION.BOTTOM_CENTER,
-          },
-        );
+        toast.error("Adding Member Organization failed. Please ask admin for help.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       });
   } else {
     // update existing member organization
@@ -79,12 +74,9 @@ const updateMemberOrganization = (member_organization_id) => {
         router.push({ name: "member-organizations" });
       })
       .catch(() => {
-        toast.error(
-          "Updating Member Organization failed. Please ask admin for help.",
-          {
-            position: toast.POSITION.BOTTOM_CENTER,
-          },
-        );
+        toast.error("Updating Member Organization failed. Please ask admin for help.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       });
   }
 };
@@ -127,9 +119,7 @@ const updateMemberOrganization = (member_organization_id) => {
             <v-text-field
               label="Official Name"
               prepend-icon="mdi-bank"
-              v-model="
-                memberOrganizationsStore.member_organization.official_name
-              "
+              v-model="memberOrganizationsStore.member_organization.official_name"
               :loading="memberOrganizationsStore.loading"
               hint="Official name as stated on resolutions of the UN, e.g. 'Russian Federation' instead of Russia. No abbreviations allowed here."
               :rules="[
@@ -146,9 +136,7 @@ const updateMemberOrganization = (member_organization_id) => {
             <v-text-field
               label="Placard Name"
               prepend-icon="mdi-tag"
-              v-model="
-                memberOrganizationsStore.member_organization.placard_name
-              "
+              v-model="memberOrganizationsStore.member_organization.placard_name"
               :loading="memberOrganizationsStore.loading"
               hint="The best readable compromise between no abbreviation but also not the full official name"
               :rules="[
@@ -202,9 +190,7 @@ const updateMemberOrganization = (member_organization_id) => {
             <v-switch
               v-model="memberOrganizationsStore.member_organization.active"
               :label="`Active: ${
-                memberOrganizationsStore.member_organization.active
-                  ? 'Yes'
-                  : 'No'
+                memberOrganizationsStore.member_organization.active ? 'Yes' : 'No'
               }`"
               inset
               color="primary"
@@ -219,15 +205,9 @@ const updateMemberOrganization = (member_organization_id) => {
             color="primary"
             prepend-icon="mdi-send"
             :disabled="!valid"
-            @click="
-              updateMemberOrganization(
-                memberOrganizationsStore.member_organization.id,
-              )
-            "
-            >{{
-              route.params.member_organization_id == "add" ? "add" : "update"
-            }}
-            member organization</v-btn
+            @click="updateMemberOrganization(memberOrganizationsStore.member_organization.id)"
+            >{{ route.params.member_organization_id == "add" ? "add" : "update" }} member
+            organization</v-btn
           >
         </v-row>
       </v-container>

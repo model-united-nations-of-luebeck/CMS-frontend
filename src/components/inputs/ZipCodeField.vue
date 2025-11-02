@@ -1,21 +1,21 @@
 <script setup>
-import { useDisplay } from 'vuetify'
-const { mobile } = useDisplay()
+import { useDisplay } from "vuetify";
+const { mobile } = useDisplay();
 
 const props = defineProps({
-  zip_code: String
-})
+  zip_code: String,
+});
 
-const emit = defineEmits(['update:zip_code'])
+const emit = defineEmits(["update:zip_code"]);
 
 const updateZipCode = (event) => {
-  emit('update:zip_code', event.target.value)
-}
+  emit("update:zip_code", event.target.value);
+};
 
 const rules = [
   (v) => !!v || `Please enter your school's ZIP code.`,
-  (v) => v.length <= 10 || 'The code is too long. '
-]
+  (v) => v.length <= 10 || "The code is too long. ",
+];
 </script>
 
 <template>
