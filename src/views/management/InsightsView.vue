@@ -186,9 +186,10 @@ onMounted(async () => {
           <v-card prepend-icon="mdi-home-heart" title="Housing">
             <v-card-text>
               <p>
-                Please note, the housing numbers do <b>not</b> include
-                MUN-Directors, Student Officers and other participants from
-                abroad how are in the housing, only Delegates.
+                Please note, that Student Officer housing is
+                <b>not</b> displayed here. Also the school's housing numbers
+                only consider whether delegates from a school are in the
+                housing.
               </p>
 
               <housing-chart :data="housing_data"></housing-chart>
