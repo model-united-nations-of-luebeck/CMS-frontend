@@ -12,6 +12,7 @@ const language = ref("en");
     <v-sheet id="sheet" :elevation="mobile ? 0 : 2" :rounded="mobile ? false : 'lg'">
       <div id="policy-content">
         <v-btn-toggle
+          id="language-toggle"
           v-model="language"
           color="primary"
           variant="outlined"
@@ -677,6 +678,12 @@ const language = ref("en");
 .privacy-policy-view {
   padding: 20px;
   background-color: #f5f5f5;
+
+  /* on mobile screens no margin */
+  @media (max-width: 600px) {
+    margin: 20px;
+    padding: 0px;
+  }
 }
 
 #sheet {
@@ -694,7 +701,8 @@ const language = ref("en");
 
   /* on mobile screens no margin */
   @media (max-width: 600px) {
-    margin: 0px 0px;
+    margin: 0px;
+    padding: 0px;
   }
 }
 
@@ -728,5 +736,14 @@ tr > th {
 .flag {
   width: 24px;
   margin-right: 10px;
+}
+
+#language-toggle {
+  /* center on mobile screens */
+  @media (max-width: 600px) {
+    float: none !important;
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>
