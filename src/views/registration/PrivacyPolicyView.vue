@@ -40,8 +40,8 @@ const language = ref("en");
 
           <p>
             Der MUNOL e.V. betreibt dieses Conference Management System unter
-            <a href="https://www.lebinphy.uber.space/cms/" target="_blank" rel="noopener noreferrer"
-              >www.lebinphy.uber.space/cms/</a
+            <a href="https://www.cms.munol.org" target="_blank" rel="noopener noreferrer"
+              >www.cms.munol.org</a
             >
             unter Beachtung der einschlägigen Datenschutzbestimmungen.
           </p>
