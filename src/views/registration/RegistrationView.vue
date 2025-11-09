@@ -131,8 +131,6 @@ async function login() {
               variant="solo"
               @finish="login"
             ></v-otp-input>
-
-            <!-- <button type="submit" style="display: none"></button> -->
           </v-form>
 
           <br />
