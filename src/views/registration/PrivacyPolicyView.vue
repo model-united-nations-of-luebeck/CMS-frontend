@@ -81,8 +81,8 @@ const language = ref("en");
 
           <h2>Rechtsgrundlagen</h2>
           <p>
-            Wir verfolgen als gemeinnütziger Verein der politischen Bildung junger Menschen das Ziel
-            der Unterstützung der Ideale und Ziele der Charta der Vereinten Nationen. Diesen
+            Wir verfolgen als gemeinnütziger Verein für politische Bildung junger Menschen das Ziel,
+            die Ideale und Ziele der Charta der Vereinten Nationen zu unterstützen. Diesen
             Satzungszweck verwirklichen wir insbesondere durch die Ausrichtung und Veranstaltung der
             internationalen Schülerkonferenz Model United Nations of Lübeck (MUNOL). Die
             Übermittlung und Verarbeitung der Daten verfolgt dieses berechtigte Interesse (Art. 6
