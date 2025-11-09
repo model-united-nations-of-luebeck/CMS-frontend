@@ -6,7 +6,7 @@ const { mobile } = useDisplay();
 
 const language = ref("en");
 </script>
-<!-- TODO: Add logic to switch between English and German translations of the privacy policy. -->
+
 <template>
   <div class="privacy-policy-view">
     <v-sheet id="sheet" :elevation="mobile ? 0 : 2" :rounded="mobile ? false : 'lg'">
@@ -674,10 +674,6 @@ const language = ref("en");
 </template>
 
 <style>
-.v-main {
-  --v-layout-top: 0 !important;
-}
-
 .privacy-policy-view {
   padding: 20px;
   background-color: #f5f5f5;
