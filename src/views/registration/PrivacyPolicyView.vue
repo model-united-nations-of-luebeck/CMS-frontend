@@ -363,8 +363,8 @@ const language = ref("en");
 
           <p>
             MUNOL e.V. operates this Conference Management System at
-            <a href="https://www.lebinphy.uber.space/cms/" target="_blank" rel="noopener noreferrer"
-              >www.lebinphy.uber.space/cms/</a
+            <a href="https://www.cms.munol.org" target="_blank" rel="noopener noreferrer"
+              >www.cms.munol.org</a
             >
             in compliance with applicable data protection regulations.
           </p>
