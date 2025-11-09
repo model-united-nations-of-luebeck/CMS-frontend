@@ -6,12 +6,13 @@ const { mobile } = useDisplay();
 
 const language = ref("en");
 </script>
-<!-- TODO: Add logic to switch between English and German translations of the privacy policy. -->
+
 <template>
   <div class="privacy-policy-view">
     <v-sheet id="sheet" :elevation="mobile ? 0 : 2" :rounded="mobile ? false : 'lg'">
       <div id="policy-content">
         <v-btn-toggle
+          id="language-toggle"
           v-model="language"
           color="primary"
           variant="outlined"
@@ -39,8 +40,8 @@ const language = ref("en");
 
           <p>
             Der MUNOL e.V. betreibt dieses Conference Management System unter
-            <a href="https://www.lebinphy.uber.space/cms/" target="_blank" rel="noopener noreferrer"
-              >www.lebinphy.uber.space/cms/</a
+            <a href="https://www.cms.munol.org" target="_blank" rel="noopener noreferrer"
+              >www.cms.munol.org</a
             >
             unter Beachtung der einschlägigen Datenschutzbestimmungen.
           </p>
@@ -81,8 +82,8 @@ const language = ref("en");
 
           <h2>Rechtsgrundlagen</h2>
           <p>
-            Wir verfolgen als gemeinnütziger Verein der politischen Bildung junger Menschen das Ziel
-            der Unterstützung der Ideale und Ziele der Charta der Vereinten Nationen. Diesen
+            Wir verfolgen als gemeinnütziger Verein für politische Bildung junger Menschen das Ziel,
+            die Ideale und Ziele der Charta der Vereinten Nationen zu unterstützen. Diesen
             Satzungszweck verwirklichen wir insbesondere durch die Ausrichtung und Veranstaltung der
             internationalen Schülerkonferenz Model United Nations of Lübeck (MUNOL). Die
             Übermittlung und Verarbeitung der Daten verfolgt dieses berechtigte Interesse (Art. 6
@@ -363,8 +364,8 @@ const language = ref("en");
 
           <p>
             MUNOL e.V. operates this Conference Management System at
-            <a href="https://www.lebinphy.uber.space/cms/" target="_blank" rel="noopener noreferrer"
-              >www.lebinphy.uber.space/cms/</a
+            <a href="https://www.cms.munol.org" target="_blank" rel="noopener noreferrer"
+              >www.cms.munol.org</a
             >
             in compliance with applicable data protection regulations.
           </p>
@@ -674,13 +675,15 @@ const language = ref("en");
 </template>
 
 <style>
-.v-main {
-  --v-layout-top: 0 !important;
-}
-
 .privacy-policy-view {
   padding: 20px;
   background-color: #f5f5f5;
+
+  /* on mobile screens no margin */
+  @media (max-width: 600px) {
+    margin: 20px;
+    padding: 0px;
+  }
 }
 
 #sheet {
@@ -698,7 +701,8 @@ const language = ref("en");
 
   /* on mobile screens no margin */
   @media (max-width: 600px) {
-    margin: 0px 0px;
+    margin: 0px;
+    padding: 0px;
   }
 }
 
@@ -732,5 +736,14 @@ tr > th {
 .flag {
   width: 24px;
   margin-right: 10px;
+}
+
+#language-toggle {
+  /* center on mobile screens */
+  @media (max-width: 600px) {
+    float: none !important;
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>

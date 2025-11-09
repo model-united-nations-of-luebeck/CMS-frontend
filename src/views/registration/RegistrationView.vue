@@ -67,8 +67,8 @@ async function login() {
 
 <template>
   <div class="registration">
-    <v-container>
-      <v-sheet v-if="route.name === 'registration'">
+    <v-container v-if="route.name === 'registration'">
+      <v-sheet>
         <v-card>
           <v-card-title>Registration</v-card-title>
           <v-card-text>
@@ -131,8 +131,6 @@ async function login() {
               variant="solo"
               @finish="login"
             ></v-otp-input>
-
-            <!-- <button type="submit" style="display: none"></button> -->
           </v-form>
 
           <br />
@@ -148,18 +146,6 @@ async function login() {
             <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>
           </p>
         </v-card-text>
-        <!-- <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            variant="flat"
-            :loading="loading"
-            :disabled="callback_token?.length < 6 || loading"
-            @click="login"
-          >
-            Login
-          </v-btn>
-        </v-card-actions> -->
       </v-card>
     </v-dialog>
 

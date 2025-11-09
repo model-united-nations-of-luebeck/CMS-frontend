@@ -210,14 +210,6 @@ customFilter.cache = { query: "", map: new Map() };
               <v-icon start> mdi-shield-star-outline </v-icon>
               {{ item.status }}
             </v-chip>
-
-            <!-- possible values, maybe color coding
-        (MEMBER_STATE, 'member state'),
-        (OBSERVER_STATE, 'observer state'),
-        (FORMER_MEMBER, 'former member state'),
-        (NON_GOVERNMENTAL_ORGANIZATION, 'non-governmental organization'),
-        (INTER_GOVERNMENTAL_ORGANIZATION, 'inter-governmental organization'),
-        (UN_SUB_BODY, 'UN sub-body'), -->
           </td>
           <td>
             <span
