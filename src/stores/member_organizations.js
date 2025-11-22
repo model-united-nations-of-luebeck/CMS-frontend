@@ -56,10 +56,10 @@ export const useMemberOrganizationsStore = defineStore("member_organizations", (
         active: member_organizations.value.find((org) => org.id == member_organization_id)?.active,
       })
       .then(() => {
-        let index = member_organizations.value.findIndex((org) => org.id == member_organization_id);
-        if (index !== -1) {
-          member_organizations.value[index].active = !member_organizations.value[index].active;
-        }
+        // let index = member_organizations.value.findIndex((org) => org.id == member_organization_id);
+        // if (index !== -1) {
+        //   member_organizations.value[index].active = !member_organizations.value[index].active;
+        // }
         loading.value = false;
       })
       .catch((error) => {
