@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useMemberOrganizationsStore } from "../../stores/member_organizations";
+import { useDelegatesStore } from "../../stores/delegates";
 import { useRoute, useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -8,6 +9,8 @@ import "vue3-toastify/dist/index.css";
 const route = useRoute();
 const router = useRouter();
 const memberOrganizationsStore = useMemberOrganizationsStore();
+const delegatesStore = useDelegatesStore();
+delegatesStore.getDelegates();
 const valid = ref(true);
 
 const fetchMemberOrganization = () => {
@@ -187,16 +190,33 @@ const updateMemberOrganization = (member_organization_id) => {
             </v-avatar>
           </v-col>
           <v-col cols="3">
-            <v-switch
-              v-model="memberOrganizationsStore.member_organization.active"
-              :label="`Active: ${
-                memberOrganizationsStore.member_organization.active ? 'Yes' : 'No'
-              }`"
-              inset
-              color="primary"
-              prepend-icon="mdi-blank"
-              :loading="memberOrganizationsStore.loading ? 'primary' : false"
-            ></v-switch>
+            <span
+              v-tooltip="{
+                text: 'Only member organizations without delegates representing them can be set (in)active.',
+                location: 'start',
+                disabled: !delegatesStore.delegates.some(
+                  (delegate) =>
+                    delegate.represents === memberOrganizationsStore.member_organization.id,
+                ),
+              }"
+            >
+              <v-switch
+                v-model="memberOrganizationsStore.member_organization.active"
+                :label="`Active: ${
+                  memberOrganizationsStore.member_organization.active ? 'Yes' : 'No'
+                }`"
+                inset
+                color="primary"
+                prepend-icon="mdi-blank"
+                :disabled="
+                  delegatesStore.delegates.some(
+                    (delegate) =>
+                      delegate.represents === memberOrganizationsStore.member_organization.id,
+                  )
+                "
+                :loading="memberOrganizationsStore.loading ? 'primary' : false"
+              ></v-switch>
+            </span>
           </v-col>
         </v-row>
         <v-row class="justify-center">
