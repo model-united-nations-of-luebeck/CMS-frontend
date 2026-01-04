@@ -122,7 +122,8 @@ const ordinal = (n) => {
                 to some self-evident rules. We assume that guest students follow the parents
                 instructions, e.g. regarding staying out in the evening. If you have further
                 questions regarding the housing please don't hesitate asking the Conference Managers
-                or the Student Supervisors, who coordinate the accommodation.
+                or the <a href="mailto:studentsupervisor@munol.org">Student Supervisors</a>, who
+                coordinate the accommodation.
               </p>
             </v-col>
           </v-row>
