@@ -21,8 +21,9 @@ schoolsStore.getSchool(route.params.school_id);
       <p>
         Dear MUN-Director, <br />
         thank you for your efforts to enable your students to participate in
-        {{ conference_abbr }} {{ conferenceStore.conference?.year }}. <br />On this platform you can
-        enter the required information for your delegation.<br />
+        <b>{{ conference_abbr }} {{ conferenceStore.conference?.year }}</b
+        >. <br />On this platform you can enter all required information for your
+        <b>delegation</b>.<br />
         If you have any questions or need assistance, please don't hesitate to write us an email to
         <a href="mailto:conferencemanager@munol.org">conferencemanager@munol.org</a>.<br />
         Your Conference Managers
@@ -33,13 +34,9 @@ schoolsStore.getSchool(route.params.school_id);
         <div class="reg-intro">
           <h2 class="py-4">Registration Procedure</h2>
           <p>
-            The process of applying for and getting enrolled into the
-            {{ conference_abbr }}
-            conference is called registration. In general, registration is divided into
-            pre-registration and final registration. The entire registration process will be done
-            online on this online registration platform. At any time, the Conference Managers are
-            happy to guide you through the registration process, let you know what steps to take
-            next and answer any questions.
+            The registration for the {{ conference_abbr }} conference consists of
+            <b>pre-registration</b> and <b>final registration</b>, both done entirely <b>online</b>.
+            The Conference Managers will guide you, explain next steps and answer questions anytime.
           </p>
         </div>
         <v-timeline
@@ -75,23 +72,23 @@ schoolsStore.getSchool(route.params.school_id);
                 >
               </v-card-subtitle>
               <v-card-text>
-                The aim of pre-registration is to figure out how many schools want to attend the
-                conference with how many delegates. During pre-registration MUN-Directors basically
-                just show interest to take part in the next {{ conference_abbr }} session by
-                submitting their school’s name, contact details and most importantly a number of
-                students they would like to take to Lübeck. Please note, that this is the number of
-                students requested. Although the Conference Managers do their best to fulfil all
-                requests and constraints, this is not always possible. So, it might happen that only
-                a smaller number of students will be confirmed by the Conference Managers. Sometimes
-                however, places become free again and MUN-Directors might be granted to bring more
-                students. The deadline for pre-registration is usually before Christmas in December.
-                Make sure to transfer the pre-registration fee in time so that the Conference
-                Managers can take your delegation into consideration. In the past, there we several
-                schools quitting registration at a late point and messed up all preparation that’s
-                why the fee was introduced. The pre-registration fee will be charged against the
-                conference fee, so this is no extra cost for your delegates. Of course, we will only
-                charge the number of students the Conference Managers confirm, although the fee for
-                the number of requested students has to be paid first.
+                <p>
+                  Pre-registration determines <b>how many schools</b> wish to attend and with
+                  <b>how many delegates</b>. MUN-Directors submit the <b>school name</b>,
+                  <b>contact details</b>, and the <b>requested number of students</b> they would
+                  like to take to Lübeck.
+                </p>
+                <br />
+
+                <p>
+                  Please note: The requested number may not always be confirmed; sometimes fewer or
+                  later even more students can be accepted. Ensure timely transfer of the
+                  <b>pre-registration fee</b> so your delegation is considered. This fee was
+                  introduced to prevent late cancellations and is
+                  <b>credited towards the conference fee</b> (no extra cost). You initially pay for
+                  the <b>requested</b> number, but will ultimately only be charged for the
+                  <b>confirmed</b> number of students.
+                </p>
               </v-card-text>
               <v-card-actions class="justify-center">
                 <v-btn
@@ -117,13 +114,9 @@ schoolsStore.getSchool(route.params.school_id);
                 <span class="">Between the years</span>
               </v-card-subtitle>
               <v-card-text>
-                Within the next couple of weeks, the Conference Managers in close cooperation with
-                the Secretaries-General do the country allocation. Basically, they decide which
-                delegations (states, non-governmental organisations, inter-governmental
-                organisations, ...) will be represented in which forums and which delegation will be
-                represented by which school. Like this, they will determine the number of students
-                they confirm to each MUN-Director to bring to the conference and will inform them
-                via email about it.
+                Conference Managers and the Secretaries-General assign <b>delegations</b> (states,
+                NGOs, IGOs, …) to forums and decide <b>which school represents which delegation</b>.
+                You will be informed by email about the <b>confirmed number of students</b>.
               </v-card-text>
             </v-card>
           </v-timeline-item>
@@ -153,18 +146,28 @@ schoolsStore.getSchool(route.params.school_id);
                 >
               </v-card-subtitle>
               <v-card-text>
-                In the final registration step, MUN-Directors as well as the participating students
-                provide some personal information required for organizing the conference. As the
-                information is personal and protected by data privacy regulations, each
-                participating person has to give their consent for the data processing and storage
-                first, before the data can be entered. Besides personal information like names,
-                titles, email addresses, birth dates, diet also some conference-related information
-                has to be set, e.g. who is the ambassador of the delegation or whether the
-                MUN-Director is an English teacher. Participants are also asked to upload a photo in
-                the style of a passport photo which will be used to create their badges. Once all
-                the information is provided the Conference Managers will review everything. They
-                will let you know if anything needs to be done or if you’ve just completed the
-                registration successfully.
+                <p>
+                  In this step, MUN-Directors and students submit all required <b>personal data</b>.
+                  Each participant must give <b>data-processing consent</b> before entering
+                  information.
+                </p>
+                <br />
+
+                <p>You will provide:</p>
+                <ul style="list-style-type: disc; margin-left: 20px">
+                  <li><b>Personal details</b> (name, email, birth date, diet)</li>
+                  <li>
+                    <b>Conference-related details</b> (who is ambassador of the delegation, whether
+                    an MUN-Director is an English teacher)
+                  </li>
+                  <li>A <b>passport-style photo</b> for the badge</li>
+                </ul>
+                <br />
+
+                <p>
+                  Conference Managers will verify your data and inform you if anything is missing or
+                  if your registration is complete.
+                </p>
               </v-card-text>
               <v-card-actions class="justify-center">
                 <span
@@ -220,9 +223,11 @@ schoolsStore.getSchool(route.params.school_id);
                 }}</span>
               </v-card-subtitle>
               <v-card-text>
-                The conference takes place in Lübeck. You will be welcomed by the organizing team
-                during the Opening Ceremonies. Enjoy the week, meet new people, discuss global
-                issues, make friends, solve international problems and have an unforgettable week.
+                The conference takes place in <b>Lübeck</b>. You will be welcomed by the organizing
+                team during the on-site registration where you can pick up your badges and
+                conference materials. During the Opening Ceremonies you will meet all other
+                participants for the first time. Enjoy the week, meet new people, discuss global
+                issues, make friends, and have an <b>unforgettable experience.</b>
               </v-card-text>
             </v-card>
           </v-timeline-item>
