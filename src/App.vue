@@ -74,8 +74,7 @@ const toggleDrawer = function () {
             </v-list-item>
             <v-list-item
               prepend-icon="mdi-bug"
-              href="https://github.com/model-united-nations-of-luebeck/CMS-frontend/issues/new/choose"
-              target="_blank"
+              href="mailto:cms@munol.org?subject=Bug Report CMS&body=Please describe the issue you encountered:"
             >
               <v-list-item-title>Report a Bug</v-list-item-title>
             </v-list-item>

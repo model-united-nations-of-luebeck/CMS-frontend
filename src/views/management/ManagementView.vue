@@ -200,8 +200,7 @@ const items = ref([
         <v-list-item
           prepend-icon="mdi-bug"
           title="Report Bugs"
-          href="https://github.com/model-united-nations-of-luebeck/CMS-frontend/issues/new/choose"
-          target="_blank"
+          href="mailto:cms@munol.org?subject=Bug Report CMS&body=Please describe the issue you encountered:"
         >
         </v-list-item>
         <v-list-item
