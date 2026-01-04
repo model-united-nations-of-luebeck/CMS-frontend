@@ -117,7 +117,7 @@ const confirmedDeleteStaff = function () {
 <template>
   <div class="">
     <v-row>
-      <v-col cols="10">
+      <v-col cols="9" sm="6" md="9">
         <v-breadcrumbs :items="[{ title: 'Staffs' }]">
           <template v-slot:prepend>
             <v-icon icon="mdi-account" size="small" start disabled></v-icon>
@@ -149,7 +149,7 @@ const confirmedDeleteStaff = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="2" style="display: flex">
+      <v-col cols="3" sm="6" md="3" style="display: flex">
         <v-fab
           color="primary"
           rounded

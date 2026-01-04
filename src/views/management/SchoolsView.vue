@@ -127,7 +127,7 @@ const confirmedDeleteSchool = function () {
 <template>
   <div class="">
     <v-row>
-      <v-col cols="10">
+      <v-col cols="9" xs="6" sm="6" md="9" lg="9">
         <v-breadcrumbs :items="[{ title: 'Schools' }]">
           <template v-slot:prepend>
             <v-icon icon="mdi-bank" size="small" start disabled></v-icon>
@@ -151,7 +151,7 @@ const confirmedDeleteSchool = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="2" style="display: flex">
+      <v-col cols="3" sm="6" md="3" style="display: flex; justify-self: end">
         <v-fab
           color="primary"
           rounded
