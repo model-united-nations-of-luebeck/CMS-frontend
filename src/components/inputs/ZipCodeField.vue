@@ -3,13 +3,13 @@ import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 
 const props = defineProps({
-  zip_code: String,
+  zipcode: String,
 });
 
-const emit = defineEmits(["update:zip_code"]);
+const emit = defineEmits(["update:zipcode"]);
 
 const updateZipCode = (event) => {
-  emit("update:zip_code", event.target.value);
+  emit("update:zipcode", event.target.value);
 };
 
 const rules = [
@@ -24,7 +24,7 @@ const rules = [
     hint="ZIP Code"
     prepend-icon="mdi-white"
     color="primary"
-    :model-value="props.zip_code"
+    :model-value="props.zipcode"
     :rules="rules"
     :density="mobile ? 'compact' : 'default'"
     @input="updateZipCode"

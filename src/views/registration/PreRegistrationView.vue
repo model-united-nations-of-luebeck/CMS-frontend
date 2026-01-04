@@ -76,7 +76,7 @@ const ordinal = (n) => {
               <StreetField v-model:street="schoolsStore.school.street"></StreetField>
             </v-col>
             <v-col cols="12" sm="4" md="4" lg="1">
-              <ZipCodeField v-model:zip="schoolsStore.school.zipcode"></ZipCodeField>
+              <ZipCodeField v-model:zipcode="schoolsStore.school.zipcode"></ZipCodeField>
             </v-col>
             <v-col cols="12" sm="8" md="6" lg="3">
               <CityField v-model:city="schoolsStore.school.city"></CityField>
