@@ -8,8 +8,9 @@ const props = defineProps({
 
 const emit = defineEmits(["update:phone"]);
 
-const updatePhone = (event) => {
-  emit("update:phone", event.target.value);
+const updatePhone = (value) => {
+  console.log("Tom", value);
+  emit("update:phone", value);
 };
 </script>
 
@@ -21,7 +22,7 @@ const updatePhone = (event) => {
     :density="mobile ? 'compact' : 'default'"
     :model-value="props.phone"
     countryIconMode="svg"
-    @input="updatePhone"
+    @update:model-value="updatePhone"
     guessCountry="CountryGuesser"
     displayFormat="e164"
     :invalidMessage="
