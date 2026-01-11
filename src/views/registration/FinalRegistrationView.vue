@@ -258,13 +258,13 @@ const getExportData = () => {
       <v-table>
         <thead>
           <tr>
-            <th class="text-center">Role</th>
             <th class="selectable text-left">Member Organization</th>
             <th class="selectable text-left">Forum</th>
             <th class="selectable text-left">Name</th>
             <th class="selectable text-left">Registration Link</th>
             <th class="text-left"></th>
             <th class="text-left">Status</th>
+            <th class="text-center">Role</th>
             <th class="text-left">Actions</th>
           </tr>
         </thead>
@@ -282,16 +282,6 @@ const getExportData = () => {
               })"
             :key="delegate.id"
           >
-            <td class="text-center no-select">
-              <v-icon
-                v-tooltip:right-center="{
-                  text: delegate.ambassador ? 'Ambassador' : 'Delegate',
-                  openOnClick: true,
-                }"
-                :color="delegate.ambassador ? 'primary' : 'auto'"
-                >{{ delegate.ambassador ? "mdi-account-star" : "mdi-account" }}</v-icon
-              >
-            </td>
             <td>
               <v-chip
                 v-tooltip:bottom="{
@@ -398,6 +388,16 @@ const getExportData = () => {
                 <v-icon start>mdi-close-circle</v-icon>
                 Not completed
               </v-chip>
+            </td>
+            <td class="text-center no-select">
+              <v-icon
+                v-tooltip:right-center="{
+                  text: delegate.ambassador ? 'Ambassador' : 'Delegate',
+                  openOnClick: true,
+                }"
+                :color="delegate.ambassador ? 'primary' : 'auto'"
+                >{{ delegate.ambassador ? "mdi-account-star" : "mdi-account" }}</v-icon
+              >
             </td>
             <td class="no-select">
               <v-btn
