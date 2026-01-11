@@ -14,7 +14,7 @@ const props = defineProps({
       icon="mdi-microsoft-excel"
       variant="plain"
       color="primary"
-      v-tooltip:top="`download items as Excel file (xls)`"
+      v-tooltip:top="{ text: 'download items as Excel file (xls)', openOnClick: true }"
     ></v-btn
   ></download-excel>
 </template>

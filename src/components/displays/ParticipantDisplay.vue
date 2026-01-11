@@ -8,8 +8,12 @@ const props = defineProps({
 </script>
 
 <template>
-  <b v-if="props.pronouns" v-tooltip:bottom="`${props.gender} (${props.pronouns})`"
+  <b
+    v-if="props.pronouns"
+    v-tooltip:bottom="{ text: `${props.gender} (${props.pronouns})`, openOnClick: true }"
     >{{ props.first_name }} {{ props.last_name }}</b
   >
-  <b v-else v-tooltip:bottom="`${props.gender}`">{{ props.first_name }} {{ props.last_name }}</b>
+  <b v-else v-tooltip:bottom="{ text: `${props.gender}`, openOnClick: true }"
+    >{{ props.first_name }} {{ props.last_name }}</b
+  >
 </template>

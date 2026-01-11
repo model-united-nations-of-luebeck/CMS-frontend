@@ -9,6 +9,6 @@ const props = defineProps({
     :class="{ hidden: !props.ambassador }"
     color="#00ff00"
     icon="mdi-shield-star-outline"
-    v-tooltip:bottom="'Ambassador of delegation'"
+    v-tooltip:bottom="{ text: 'Ambassador of delegation', openOnClick: true }"
   ></v-icon>
 </template>

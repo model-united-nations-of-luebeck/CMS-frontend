@@ -185,7 +185,10 @@ const getExportData = () => {
             </td>
             <td>
               <v-btn
-                v-tooltip:bottom-center="'Click to copy registration link into your clipboard'"
+                v-tooltip:bottom-center="{
+                  text: 'Click to copy registration link into your clipboard',
+                  openOnClick: true,
+                }"
                 rounded
                 variant="tonal"
                 density="comfortable"
@@ -206,7 +209,10 @@ const getExportData = () => {
             </td>
             <td>
               <v-btn
-                v-tooltip:bottom-center="'Click to remove this MUN-Director'"
+                v-tooltip:bottom-center="{
+                  text: 'Click to remove this MUN-Director',
+                  openOnClick: true,
+                }"
                 density="comfortable"
                 rounded
                 variant="outlined"
@@ -226,7 +232,10 @@ const getExportData = () => {
             <td></td>
             <td>
               <v-btn
-                v-tooltip:bottom-center="'Click to add another MUN-Director'"
+                v-tooltip:bottom-center="{
+                  text: 'Click to add another MUN-Director',
+                  openOnClick: true,
+                }"
                 rounded
                 density="comfortable"
                 color="green"
@@ -275,18 +284,22 @@ const getExportData = () => {
           >
             <td class="text-center no-select">
               <v-icon
-                v-tooltip:right-center="delegate.ambassador ? 'Ambassador' : 'Delegate'"
+                v-tooltip:right-center="{
+                  text: delegate.ambassador ? 'Ambassador' : 'Delegate',
+                  openOnClick: true,
+                }"
                 :color="delegate.ambassador ? 'primary' : 'auto'"
                 >{{ delegate.ambassador ? "mdi-account-star" : "mdi-account" }}</v-icon
               >
             </td>
             <td>
               <v-chip
-                v-tooltip:bottom="
-                  memberOrganizationsStore.member_organizations.find(
+                v-tooltip:bottom="{
+                  text: memberOrganizationsStore.member_organizations.find(
                     (org) => org.id === delegate.represents,
-                  )?.official_name
-                "
+                  )?.official_name,
+                  openOnClick: true,
+                }"
               >
                 <template v-slot:prepend>
                   <v-avatar
@@ -314,9 +327,10 @@ const getExportData = () => {
             </td>
             <td>
               <v-chip
-                v-tooltip:bottom="
-                  forumsStore.forums.find((forum) => forum.id === delegate.forum).name
-                "
+                v-tooltip:bottom="{
+                  text: forumsStore.forums.find((forum) => forum.id === delegate.forum).name,
+                  openOnClick: true,
+                }"
               >
                 {{ forumsStore.forums.find((forum) => forum.id === delegate.forum).abbreviation }}
               </v-chip>
@@ -356,7 +370,10 @@ const getExportData = () => {
                 "
                 v-clipboard:success="onCopy"
                 v-clipboard:error="onError"
-                v-tooltip:bottom-center="'Click to copy registration link into your clipboard'"
+                v-tooltip:bottom-center="{
+                  text: 'Click to copy registration link into your clipboard',
+                  openOnClick: true,
+                }"
                 class="no-select"
               >
                 Copy link
@@ -389,7 +406,10 @@ const getExportData = () => {
                 color="primary"
                 size="small"
                 icon="mdi-star"
-                v-tooltip:start="'Click to make this delegate the ambassador for this delegation'"
+                v-tooltip:start="{
+                  text: 'Click to make this delegate the ambassador for this delegation',
+                  openOnClick: true,
+                }"
                 @click="changeAmbassador(delegate.id)"
               >
               </v-btn>

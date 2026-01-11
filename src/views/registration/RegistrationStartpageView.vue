@@ -178,6 +178,7 @@ schoolsStore.getSchool(route.params.school_id);
                       'WAITING_FOR_FINAL_REGISTRATION',
                       'FINAL_REGISTRATION_DONE',
                     ].includes(schoolsStore.school?.registration_status),
+                    openOnClick: true,
                   }"
                 >
                   <v-btn

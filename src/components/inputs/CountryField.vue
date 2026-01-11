@@ -32,9 +32,10 @@ const rules = [
     <template v-slot:append>
       <v-icon
         icon="mdi-help-circle"
-        v-tooltip="
-          'We will normally use emails to contact you, however, having an address is the backup option.'
-        "
+        v-tooltip="{
+          text: 'We will normally use emails to contact you, however, having an address is the backup option.',
+          openOnClick: true,
+        }"
       >
       </v-icon>
     </template>

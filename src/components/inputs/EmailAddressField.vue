@@ -33,9 +33,10 @@ const rules = [
     <template v-slot:append>
       <v-icon
         icon="mdi-help-circle"
-        v-tooltip="
-          'We will only use your e-mail address to send you important information related to the conference, such as research reports, handbooks and your certificate.'
-        "
+        v-tooltip="{
+          text: 'We will only use your e-mail address to send you important information related to the conference, such as research reports, handbooks and your certificate.',
+          openOnClick: true,
+        }"
       >
       </v-icon>
     </template>

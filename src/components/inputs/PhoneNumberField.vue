@@ -32,9 +32,10 @@ const updatePhone = (value) => {
     <template v-slot:append>
       <v-icon
         icon="mdi-help-circle"
-        v-tooltip="
-          'We will only use your mobile phone number in urgent cases if contacting you via mail is not possible. This will most likely only be during the conference.'
-        "
+        v-tooltip="{
+          text: 'We will only use your mobile phone number in urgent cases if contacting you via mail is not possible. This will most likely only be during the conference.',
+          openOnClick: true,
+        }"
       >
       </v-icon>
     </template>

@@ -28,7 +28,10 @@ const rules = [(v) => !v || v.length <= 50000 || "The text is too long. Please s
     <template v-slot:append>
       <v-icon
         icon="mdi-help-circle"
-        v-tooltip="'If you have a deviating name in your passport, please enter it here.'"
+        v-tooltip="{
+          text: 'If you have a deviating name in your passport, please enter it here.',
+          openOnClick: true,
+        }"
       >
       </v-icon>
     </template>

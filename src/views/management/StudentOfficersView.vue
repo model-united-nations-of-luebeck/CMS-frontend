@@ -253,7 +253,10 @@ const confirmedDeleteStudentOfficer = function () {
           </td>
 
           <td>
-            <v-chip v-if="item.position_name.length > 30" v-tooltip:bottom="item.position_name">
+            <v-chip
+              v-if="item.position_name.length > 30"
+              v-tooltip:bottom="{ text: item.position_name, openOnClick: true }"
+            >
               {{ item.position_name.slice(0, 30) }} ...
             </v-chip>
             <v-chip v-else>
@@ -264,7 +267,7 @@ const confirmedDeleteStudentOfficer = function () {
           <td>
             <v-chip
               v-if="item.school_name.length > 40"
-              v-tooltip:bottom="item.school_name"
+              v-tooltip:bottom="{ text: item.school_name, openOnClick: true }"
               variant="text"
               >{{ item.school_name.slice(0, 40) }} ...</v-chip
             >

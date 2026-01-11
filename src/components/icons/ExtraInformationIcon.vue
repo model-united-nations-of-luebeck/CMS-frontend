@@ -9,6 +9,6 @@ const props = defineProps({
     :class="{ hidden: !props.extras }"
     color="primary"
     icon="mdi-information-variant"
-    v-tooltip:bottom="`${props.extras}`"
+    v-tooltip:bottom="{ text: `${props.extras}`, openOnClick: true }"
   ></v-icon>
 </template>

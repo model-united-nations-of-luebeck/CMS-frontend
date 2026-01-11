@@ -55,9 +55,10 @@ const valid = ref(true);
         variant="outlined"
         prepend-icon="mdi-restart"
         color="error"
-        v-tooltip:bottom="
-          `Clears all data from this delegate and reset to default values, except for the id, represented organization, forum, role, assigned school and ambassador fields. Warning: This action cannot be undone.`
-        "
+        v-tooltip:bottom="{
+          text: `Clears all data from this delegate and reset to default values, except for the id, represented organization, forum, role, assigned school and ambassador fields. Warning: This action cannot be undone.`,
+          openOnClick: true,
+        }"
         @click="
           delegatesStore.resetDelegate(delegatesStore.delegate.id).then(() => {
             router.push({ name: 'delegates' });

@@ -130,7 +130,10 @@ export default {
           id="upload-btn"
           prepend-icon="mdi-camera"
           color="primary"
-          v-tooltip:top="'Click to capture or upload an existing photo'"
+          v-tooltip:top="{
+            text: 'Click to capture or upload an existing photo',
+            openOnClick: true,
+          }"
           @click="$refs.file.click()"
         >
           <input
@@ -174,7 +177,10 @@ export default {
               icon="mdi-rotate-left"
               variant="elevated"
               color="primary"
-              v-tooltip:bottom="'Rotate photo slightly counterclockwise'"
+              v-tooltip:bottom="{
+                text: 'Rotate photo slightly counterclockwise',
+                openOnClick: true,
+              }"
             ></v-btn>
 
             <v-btn
@@ -182,14 +188,14 @@ export default {
               icon="mdi-rotate-left-variant"
               variant="elevated"
               color="primary"
-              v-tooltip:bottom="'Rotate photo 90 degrees'"
+              v-tooltip:bottom="{ text: 'Rotate photo 90 degrees', openOnClick: true }"
             ></v-btn>
             <v-btn
               @mousedown="rotate(2)"
               icon="mdi-rotate-right"
               variant="elevated"
               color="primary"
-              v-tooltip:bottom="'Rotate photo slightly clockwise'"
+              v-tooltip:bottom="{ text: 'Rotate photo slightly clockwise', openOnClick: true }"
             ></v-btn>
           </div>
         </div>

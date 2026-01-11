@@ -9,6 +9,6 @@ const props = defineProps({
     :class="{ hidden: !props.english_teacher }"
     color="success"
     icon="mdi-school"
-    v-tooltip:bottom="'English teacher'"
+    v-tooltip:bottom="{ text: 'English teacher', openOnClick: true }"
   ></v-icon>
 </template>
