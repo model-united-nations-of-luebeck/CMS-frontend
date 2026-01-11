@@ -269,7 +269,7 @@ const openAssignSchoolDialog = (org_id) => {
             v-for="forum in forumsStore.forums"
             :key="forum.id"
             class="text-center"
-            v-tooltip:bottom="forum.name"
+            v-tooltip:bottom="{ text: forum.name, openOnClick: true }"
           >
             {{ forum.abbreviation }} <br />({{ getDelegatesCountPerForum(forum.id) }})
           </th>

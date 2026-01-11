@@ -8,8 +8,9 @@ const props = defineProps({
 
 const emit = defineEmits(["update:phone"]);
 
-const updatePhone = (event) => {
-  emit("update:phone", event.target.value);
+const updatePhone = (value) => {
+  console.log("Tom", value);
+  emit("update:phone", value);
 };
 </script>
 
@@ -21,7 +22,7 @@ const updatePhone = (event) => {
     :density="mobile ? 'compact' : 'default'"
     :model-value="props.phone"
     countryIconMode="svg"
-    @input="updatePhone"
+    @update:model-value="updatePhone"
     guessCountry="CountryGuesser"
     displayFormat="e164"
     :invalidMessage="
@@ -31,9 +32,10 @@ const updatePhone = (event) => {
     <template v-slot:append>
       <v-icon
         icon="mdi-help-circle"
-        v-tooltip="
-          'We will only use your mobile phone number in urgent cases if contacting you via mail is not possible. This will most likely only be during the conference.'
-        "
+        v-tooltip="{
+          text: 'We will only use your mobile phone number in urgent cases if contacting you via mail is not possible. This will most likely only be during the conference.',
+          openOnClick: true,
+        }"
       >
       </v-icon>
     </template>

@@ -62,9 +62,10 @@ const rules = ref([
     <template v-slot:append>
       <v-icon
         icon="mdi-help-circle"
-        v-tooltip="
-          'By specifying your pronouns we can make sure to address you in the way you would like to. Also, we try to use include this information on the badges so that all participant can use your pronouns.'
-        "
+        v-tooltip="{
+          text: 'By specifying your pronouns we can make sure to address you in the way you would like to. Also, we try to use include this information on the badges so that all participant can use your pronouns.',
+          openOnClick: true,
+        }"
       >
       </v-icon>
     </template>

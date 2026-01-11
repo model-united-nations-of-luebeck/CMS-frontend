@@ -46,9 +46,10 @@ const rules = [(v) => !!v || "Please enter your date of birth in the format YYYY
       <template v-slot:append>
         <v-icon
           icon="mdi-help-circle"
-          v-tooltip="
-            'We will only use your date of birth to check your age with respect to German law.'
-          "
+          v-tooltip="{
+            text: 'We will only use your date of birth to check your age with respect to German law.',
+            openOnClick: true,
+          }"
         >
         </v-icon>
       </template>

@@ -12,7 +12,10 @@ const props = defineProps({
       name: 'school-view',
       params: { school_id: props?.school?.id },
     }"
-    v-tooltip:bottom="`${props?.school?.city}, ${props?.school?.country}`"
+    v-tooltip:bottom="{
+      text: `${props?.school?.city}, ${props?.school?.country}`,
+      openOnClick: true,
+    }"
   >
     {{ props?.school?.name }}
   </v-chip>

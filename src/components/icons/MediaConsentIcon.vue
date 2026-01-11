@@ -9,12 +9,12 @@ const props = defineProps({
     v-if="props.media_consent_time"
     icon="mdi-camera"
     color="success"
-    v-tooltip:bottom="'Media consent given'"
+    v-tooltip:bottom="{ text: 'Media consent given', openOnClick: true }"
   ></v-icon>
   <v-icon
     v-else
     icon="mdi-camera-off"
     color="error"
-    v-tooltip:bottom="'Media consent not given'"
+    v-tooltip:bottom="{ text: 'Media consent not given', openOnClick: true }"
   ></v-icon>
 </template>

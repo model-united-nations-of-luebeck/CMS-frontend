@@ -12,7 +12,10 @@ const props = defineProps({
     variant="plain"
     icon="mdi-link-variant"
     v-if="props.link"
-    v-tooltip:bottom-center="`(Click to copy registration link to your clipboard)`"
+    v-tooltip:bottom-center="{
+      text: `(Click to copy registration link to your clipboard)`,
+      openOnClick: true,
+    }"
     v-clipboard:copy="props.link"
     v-clipboard:success="
       () => {

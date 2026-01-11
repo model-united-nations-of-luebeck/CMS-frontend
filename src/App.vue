@@ -41,7 +41,13 @@ const toggleDrawer = function () {
         @click="toggleDrawer()"
       ></v-app-bar-nav-icon>
       <RouterLink v-else :to="route.matched[0]?.path || '/'">
-        <v-app-bar-nav-icon icon="mdi-bank" color="white"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon
+          v-if="route.matched[0]?.path === '/school-registration/'"
+          icon="mdi-bank"
+          color="white"
+          @click="logout()"
+        ></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon v-else icon="mdi-bank" color="white"></v-app-bar-nav-icon>
       </RouterLink>
       <v-app-bar-title>{{ $route.meta.title }} </v-app-bar-title>
 
@@ -68,8 +74,7 @@ const toggleDrawer = function () {
             </v-list-item>
             <v-list-item
               prepend-icon="mdi-bug"
-              href="https://github.com/model-united-nations-of-luebeck/CMS-frontend/issues/new/choose"
-              target="_blank"
+              href="mailto:cms@munol.org?subject=Bug Report CMS&body=Please describe the issue you encountered:"
             >
               <v-list-item-title>Report a Bug</v-list-item-title>
             </v-list-item>

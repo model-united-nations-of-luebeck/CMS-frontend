@@ -33,9 +33,10 @@ const rules = [
     <template v-slot:append>
       <v-icon
         icon="mdi-help-circle"
-        v-tooltip="
-          'Please make sure that the school name is written correctly. It will appear on the badges and certificates.'
-        "
+        v-tooltip="{
+          text: 'Please make sure that the school name is written correctly. It will appear on the badges and certificates.',
+          openOnClick: true,
+        }"
       >
       </v-icon>
     </template>

@@ -127,7 +127,7 @@ const confirmedDeleteSchool = function () {
 <template>
   <div class="">
     <v-row>
-      <v-col cols="10">
+      <v-col cols="9" xs="6" sm="6" md="9" lg="9">
         <v-breadcrumbs :items="[{ title: 'Schools' }]">
           <template v-slot:prepend>
             <v-icon icon="mdi-bank" size="small" start disabled></v-icon>
@@ -151,7 +151,7 @@ const confirmedDeleteSchool = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="2" style="display: flex">
+      <v-col cols="3" sm="6" md="3" style="display: flex; justify-self: end">
         <v-fab
           color="primary"
           rounded
@@ -232,7 +232,10 @@ const confirmedDeleteSchool = function () {
           <td class="center">
             <v-icon
               icon="mdi-account-outline"
-              v-tooltip:start="'Number of delegate positions requested'"
+              v-tooltip:start="{
+                text: 'Number of delegate positions requested',
+                openOnClick: true,
+              }"
             >
             </v-icon>
 
@@ -242,7 +245,10 @@ const confirmedDeleteSchool = function () {
             <v-icon
               color="success"
               icon="mdi-account"
-              v-tooltip:start="'Number of delegate positions confirmed'"
+              v-tooltip:start="{
+                text: 'Number of delegate positions confirmed',
+                openOnClick: true,
+              }"
             >
             </v-icon>
 
@@ -253,7 +259,7 @@ const confirmedDeleteSchool = function () {
               v-if="!item.fee_paid"
               color="warning"
               icon="mdi-currency-eur"
-              v-tooltip="'Pre-Registration fee not paid yet'"
+              v-tooltip="{ text: 'Pre-Registration fee not paid yet', openOnClick: true }"
             >
             </v-icon>
 
@@ -261,7 +267,7 @@ const confirmedDeleteSchool = function () {
               v-if="item.fee_paid"
               color="success"
               icon="mdi-check"
-              v-tooltip="'Pre-Registration fee already paid'"
+              v-tooltip="{ text: 'Pre-Registration fee already paid', openOnClick: true }"
             >
             </v-icon>
           </td>
@@ -296,6 +302,7 @@ const confirmedDeleteSchool = function () {
                 text: 'Only school without assigned delegates can be deleted.',
                 location: 'start',
                 disabled: !delegatesStore.delegates.some((delegate) => delegate.school === item.id),
+                openOnClick: true,
               }"
             >
               <v-btn

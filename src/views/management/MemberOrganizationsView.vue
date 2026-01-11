@@ -186,7 +186,9 @@ customFilter.cache = { query: "", map: new Map() };
                   params: { member_organization_id: item.id },
                 }"
               >
-                <span v-if="item.name.length > 30" v-tooltip:bottom="item.name"
+                <span
+                  v-if="item.name.length > 30"
+                  v-tooltip:bottom="{ text: item.name, openOnClick: true }"
                   >{{ item.name.slice(0, 30) }} ...</span
                 >
                 <span v-else>{{ item.name }}</span>
@@ -194,7 +196,9 @@ customFilter.cache = { query: "", map: new Map() };
             >
           </td>
           <td>
-            <span v-if="item.official_name.length > 40" v-tooltip:bottom="item.official_name"
+            <span
+              v-if="item.official_name.length > 40"
+              v-tooltip:bottom="{ text: item.official_name, openOnClick: true }"
               >{{ item.official_name.slice(0, 40) }} ...</span
             >
             <span v-else>{{ item.official_name }}</span>
@@ -219,6 +223,7 @@ customFilter.cache = { query: "", map: new Map() };
                 disabled: !delegatesStore.delegates.some(
                   (delegate) => delegate.represents === item.id,
                 ),
+                openOnClick: true,
               }"
             >
               <v-switch
@@ -249,6 +254,7 @@ customFilter.cache = { query: "", map: new Map() };
                 disabled: !delegatesStore.delegates.some(
                   (delegate) => delegate.represents === item.id,
                 ),
+                openOnClick: true,
               }"
             >
               <v-btn

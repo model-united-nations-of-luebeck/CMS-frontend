@@ -22,6 +22,6 @@ const downloadJSON = function () {
     :href="downloadJSON()"
     variant="plain"
     color="primary"
-    v-tooltip:top="`download selected items as JSON`"
+    v-tooltip:top="{ text: 'download selected items as JSON', openOnClick: true }"
   ></v-btn>
 </template>

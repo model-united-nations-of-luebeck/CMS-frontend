@@ -198,6 +198,7 @@ const updateMemberOrganization = (member_organization_id) => {
                   (delegate) =>
                     delegate.represents === memberOrganizationsStore.member_organization.id,
                 ),
+                openOnClick: true,
               }"
             >
               <v-switch

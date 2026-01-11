@@ -163,7 +163,10 @@ const confirmedDeletePlenary = function () {
           <td>
             <v-icon
               v-if="item.email"
-              v-tooltip:bottom-center="`${item.email}  (Click to copy e-mail to your clipboard)`"
+              v-tooltip:bottom-center="{
+                text: `${item.email}  (Click to copy e-mail to your clipboard)`,
+                openOnClick: true,
+              }"
               v-clipboard:copy="item.email"
               v-clipboard:success="
                 () => {
@@ -204,6 +207,7 @@ const confirmedDeletePlenary = function () {
                   delegatesStore.delegates.some((delegate) => delegate.forum === item.id) ||
                   issuesStore.issues.some((issue) => issue.forum === item.id)
                 ),
+                openOnClick: true,
               }"
             >
               <v-btn
@@ -290,6 +294,7 @@ const confirmedDeletePlenary = function () {
                 text: 'Only plenary sessions without assigned forums can be deleted.',
                 location: 'start',
                 disabled: !forumsStore.forums.some((forum) => forum.plenary === item.id),
+                openOnClick: true,
               }"
             >
               <v-btn

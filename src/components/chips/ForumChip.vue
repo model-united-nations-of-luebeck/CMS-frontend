@@ -7,7 +7,7 @@ const props = defineProps({
 <template>
   <v-chip
     v-if="props?.forum?.id"
-    v-tooltip:bottom="props?.forum?.name"
+    v-tooltip:bottom="{ text: props?.forum?.name, openOnClick: true }"
     :to="{
       name: 'forum-view',
       params: { forum_id: props?.forum?.id },

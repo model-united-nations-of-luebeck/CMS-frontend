@@ -1,4 +1,5 @@
 <script setup>
+import { toast } from "vue3-toastify";
 import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 
@@ -9,12 +10,18 @@ const props = defineProps({
 const emit = defineEmits(["update:requested"]);
 
 const updateRequested = (value) => {
+  if (value == 49) {
+    toast.warning("Maximum number of delegates per school is 49.", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      style: "width: auto",
+    });
+  }
   emit("update:requested", value);
 };
 
 const rules = [
   (v) => !!v || "Number of Delegates is required",
-  (v) => v >= 0 || "Number of Delegates must be greater than 0",
+  (v) => v > 0 || "Number of Delegates must be greater than 0",
   (v) => v <= 49 || "Number of Delegates must be less than 50",
   (v) => v % 1 === 0 || "Number of Delegates must be an integer",
 ];

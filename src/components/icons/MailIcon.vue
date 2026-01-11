@@ -10,7 +10,10 @@ const props = defineProps({
 <template>
   <v-icon
     v-if="props.email"
-    v-tooltip:bottom-center="`${props.email}  (Click to copy e-mail to your clipboard)`"
+    v-tooltip:bottom-center="{
+      text: `${props.email}  (Click to copy e-mail to your clipboard)`,
+      openOnClick: true,
+    }"
     v-clipboard:copy="props.email"
     v-clipboard:success="
       () => {
