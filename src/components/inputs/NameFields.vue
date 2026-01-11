@@ -48,9 +48,10 @@ const rules = [
     <template v-slot:append>
       <v-icon
         icon="mdi-help-circle"
-        v-tooltip="
-          'These names will appear on your badge and certificate. Enter any middle names as additional given names or leave them out.'
-        "
+        v-tooltip="{
+          text: 'These names will appear on your badge and certificate. Enter any middle names as additional given names or leave them out.',
+          openOnClick: true,
+        }"
       >
       </v-icon>
     </template>

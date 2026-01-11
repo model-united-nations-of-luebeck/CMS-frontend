@@ -109,7 +109,7 @@ const confirmedDeleteAdvisor = function () {
 <template>
   <div class="">
     <v-row>
-      <v-col cols="10">
+      <v-col cols="9" sm="6" md="9">
         <v-breadcrumbs :items="[{ title: 'Advisors' }]">
           <template v-slot:prepend>
             <v-icon icon="mdi-account-star" size="small" start disabled></v-icon>
@@ -140,7 +140,7 @@ const confirmedDeleteAdvisor = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="2" style="display: flex">
+      <v-col cols="3" sm="6" md="3" style="display: flex">
         <router-link
           :to="{
             name: 'advisor-registration',

@@ -144,7 +144,10 @@ forumsStore.getForums();
             >
               <td class="text-center no-select">
                 <v-icon
-                  v-tooltip:right-center="delegate.ambassador ? 'Ambassador' : 'Delegate'"
+                  v-tooltip:right-center="{
+                    text: delegate.ambassador ? 'Ambassador' : 'Delegate',
+                    openOnClick: true,
+                  }"
                   :color="delegate.ambassador ? 'primary' : 'auto'"
                   >{{ delegate.ambassador ? "mdi-account-star" : "mdi-account" }}</v-icon
                 >

@@ -119,7 +119,7 @@ const confirmedDeleteMUNDirector = function () {
 <template>
   <div class="">
     <v-row>
-      <v-col cols="9">
+      <v-col cols="9" sm="6" md="9">
         <v-breadcrumbs :items="[{ title: 'MUN-Directors' }]">
           <template v-slot:prepend>
             <v-icon icon="mdi-school" size="small" start disabled></v-icon>
@@ -151,7 +151,7 @@ const confirmedDeleteMUNDirector = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="3" style="display: flex">
+      <v-col cols="3" sm="6" md="3" style="display: flex">
         <v-fab
           color="primary"
           rounded

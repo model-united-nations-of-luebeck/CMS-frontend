@@ -144,7 +144,7 @@ const confirmedDeleteStudentOfficer = function () {
 <template>
   <div class="">
     <v-row>
-      <v-col cols="9">
+      <v-col cols="9" sm="6" md="9">
         <v-breadcrumbs :items="[{ title: 'Student Officers' }]">
           <template v-slot:prepend>
             <v-icon icon="mdi-account-settings" size="small" start disabled></v-icon>
@@ -176,7 +176,7 @@ const confirmedDeleteStudentOfficer = function () {
           <v-spacer></v-spacer>
         </v-breadcrumbs>
       </v-col>
-      <v-col cols="3" style="display: flex">
+      <v-col cols="3" sm="6" md="3" style="display: flex">
         <v-fab
           color="primary"
           rounded
@@ -253,7 +253,10 @@ const confirmedDeleteStudentOfficer = function () {
           </td>
 
           <td>
-            <v-chip v-if="item.position_name.length > 30" v-tooltip:bottom="item.position_name">
+            <v-chip
+              v-if="item.position_name.length > 30"
+              v-tooltip:bottom="{ text: item.position_name, openOnClick: true }"
+            >
               {{ item.position_name.slice(0, 30) }} ...
             </v-chip>
             <v-chip v-else>
@@ -264,7 +267,7 @@ const confirmedDeleteStudentOfficer = function () {
           <td>
             <v-chip
               v-if="item.school_name.length > 40"
-              v-tooltip:bottom="item.school_name"
+              v-tooltip:bottom="{ text: item.school_name, openOnClick: true }"
               variant="text"
               >{{ item.school_name.slice(0, 40) }} ...</v-chip
             >

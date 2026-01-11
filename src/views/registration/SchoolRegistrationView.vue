@@ -82,14 +82,13 @@ defineExpose({
     </v-container>
 
     <v-container v-if="!isAuthenticated">
-      <v-form class="mx-auto" style="max-width: 400px; margin-top: 100px" @submit.prevent="login">
+      <v-form class="mx-auto" id="login-form" @submit.prevent="login">
         <img
           src="@/assets/images/munollogo.png"
           :alt="`${conference_abbr} Logo`"
           id="logo"
           width="200"
           class="mx-auto mb-4 d-block"
-          style="display: block; margin: 50px auto !important"
         />
         <v-text-field
           v-model="username"
@@ -122,17 +121,7 @@ defineExpose({
         </a>
       </v-form>
 
-      <v-alert
-        icon="mdi-information"
-        style="
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-
-          text-align: center;
-        "
-      >
+      <v-alert icon="mdi-information" id="info-box">
         If you would like to participate in {{ conference_abbr }} but don't have an account for the
         next annual session yet, please contact the Conference Managers:
         <a href="mailto:conference@munol.org">conferencemanager@munol.org</a>
@@ -141,4 +130,28 @@ defineExpose({
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#login-form {
+  max-width: 300px;
+  margin-top: 50px;
+  padding: 0px 20px;
+}
+
+#logo {
+  display: block;
+  margin: 20px auto !important;
+}
+
+#info-box {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+
+  @media (max-width: 1000px) {
+    width: 100%;
+    position: fixed;
+  }
+}
+</style>

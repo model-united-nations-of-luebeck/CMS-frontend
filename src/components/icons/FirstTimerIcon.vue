@@ -9,6 +9,6 @@ const props = defineProps({
     :class="{ hidden: !props.first_timer }"
     color="primary"
     icon="mdi-account-question"
-    v-tooltip:bottom="'First timer'"
+    v-tooltip:bottom="{ text: 'First timer', openOnClick: true }"
   ></v-icon>
 </template>

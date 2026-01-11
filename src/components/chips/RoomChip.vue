@@ -7,7 +7,7 @@ const props = defineProps({
 <template>
   <v-chip
     v-if="props?.room?.id"
-    v-tooltip:bottom="props?.room?.floor + 'floor'"
+    v-tooltip:bottom="{ text: props?.room?.floor + ' floor', openOnClick: true }"
     :to="{
       name: 'room-detail',
       params: { room_id: props?.room?.id },

@@ -6,7 +6,7 @@ const props = defineProps({
 
 <template>
   <v-chip
-    v-tooltip:bottom="props?.org?.official_name"
+    v-tooltip:bottom="{ text: props?.org?.official_name, openOnClick: true }"
     :to="{
       name: 'member-organization-view',
       params: { member_organization_id: props?.org?.id },
