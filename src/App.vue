@@ -33,7 +33,7 @@ const toggleDrawer = function () {
 
 <template>
   <v-app>
-    <v-app-bar density="compact" color="primary">
+    <v-app-bar density="compact" color="primary" class="no-print">
       <v-app-bar-nav-icon
         v-if="mobile && route.matched[0]?.path === '/management/'"
         icon="mdi-menu"
@@ -90,3 +90,11 @@ const toggleDrawer = function () {
     </v-main>
   </v-app>
 </template>
+
+<style scoped>
+.no-print {
+  @media print {
+    display: none;
+  }
+}
+</style>
