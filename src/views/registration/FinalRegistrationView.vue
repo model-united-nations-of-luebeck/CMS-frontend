@@ -72,34 +72,6 @@ const getUniqueMemberOrganizationsFromSchool = () => {
 
   return memberOrganizations;
 };
-
-const getExportData = () => {
-  return delegatesStore.delegates
-    .filter((delegate) => delegate.school == route.params.school_id)
-    .sort((a, b) => {
-      // First, sort by represents (member organization)
-      if (a.represents !== b.represents) {
-        return a.represents > b.represents ? 1 : -1;
-      }
-      // If represents is the same, sort by forum
-      return a.forum > b.forum ? 1 : a.forum < b.forum ? -1 : 0;
-    })
-    .map((delegate) => {
-      return {
-        ...delegate,
-        represents: memberOrganizationsStore.member_organizations.find(
-          (org) => org.id === delegate.represents,
-        ).name,
-        forum: forumsStore.forums.find((forum) => forum.id === delegate.forum).name,
-        link: `${origin}${
-          router.resolve({
-            name: "final-registration-delegate",
-            params: { delegate_id: delegate.id },
-          }).href
-        }`,
-      };
-    });
-};
 </script>
 
 <template>
@@ -420,21 +392,7 @@ const getExportData = () => {
       <p>
         <i>
           Hint: You can mark the delegates table and copy it to distribute the links to your
-          students. Or you can
-          <download-excel
-            class="download"
-            :data="getExportData()"
-            :fields="{
-              'Member Organization': 'represents',
-              Forum: 'forum',
-              'First name': 'first_name',
-              'Last name': 'last_name',
-              'Registration Link': 'link',
-            }"
-            name="MUNOL_Delegation.xls"
-            :header="`Registration Links for Delegates of ${schoolsStore.school.name}`"
-            >export the table as a spreadsheet </download-excel
-          ><v-icon start>mdi-microsoft-excel</v-icon>
+          students.
         </i>
       </p>
     </v-sheet>
