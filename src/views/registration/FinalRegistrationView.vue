@@ -475,5 +475,9 @@ h2 {
   h2 {
     font-size: 16pt;
   }
+
+  .v-table {
+    display: table;
+  }
 }
 </style>
