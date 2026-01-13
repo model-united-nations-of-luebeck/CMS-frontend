@@ -123,7 +123,7 @@ defineExpose({
         </a>
       </v-form>
     </v-container>
-    <v-footer class="mt-10 pa-0" padless>
+    <v-footer class="mt-10 pa-0" padless v-if="!isAuthenticated">
       <v-alert icon="mdi-information" id="info-box">
         If you would like to participate in {{ conference_abbr }} but don't have an account for the
         next annual session yet, please contact the Conference Managers:
