@@ -1,6 +1,8 @@
 <script setup>
 import { ref, inject, computed } from "vue";
 import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 
 const emit = defineEmits(["show-logout"]);
@@ -8,7 +10,6 @@ const emit = defineEmits(["show-logout"]);
 const username = ref("");
 const password = ref("");
 const token = ref("");
-const error = ref("");
 const http = inject("backend_instance");
 const router = useRouter();
 
@@ -30,7 +31,6 @@ const login = async function () {
     );
     token.value = data.token;
     http.defaults.headers.common["Authorization"] = `Token ${token.value}`;
-    error.value = null;
     username.value = null; // Reset username after successful login
     password.value = null; // Reset password after successful login
 
@@ -42,7 +42,10 @@ const login = async function () {
       params: { school_id: data.school_id },
     });
   } catch (err) {
-    error.value = err.response ? err.response.data : "Login failed";
+    toast.error("Login failed: Username or password didn't match. Please try again.", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+
     token.value = null;
     username.value = null; // Reset username after unsuccessful login
     password.value = null; // Reset password after unsuccessful login
@@ -108,10 +111,9 @@ defineExpose({
           prepend-inner-icon="mdi-key"
           class="mb-4"
         ></v-text-field>
-        <v-alert v-if="error" type="error">
-          Username or password didn't match. Please try again.
-        </v-alert>
-        <v-btn color="primary" block class="mt-4" type="submit" @click="login"> Login </v-btn>
+        <v-btn color="primary" block class="mt-4" type="submit" @click.prevent="login">
+          Login
+        </v-btn>
 
         <a
           href="mailto:conferencemanager@munol.org?subject=Forgot Password"
