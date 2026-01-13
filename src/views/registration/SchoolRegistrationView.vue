@@ -122,13 +122,14 @@ defineExpose({
           Forgot your password?
         </a>
       </v-form>
-
+    </v-container>
+    <v-footer class="mt-10 pa-0" padless>
       <v-alert icon="mdi-information" id="info-box">
         If you would like to participate in {{ conference_abbr }} but don't have an account for the
         next annual session yet, please contact the Conference Managers:
         <a href="mailto:conference@munol.org">conferencemanager@munol.org</a>
       </v-alert>
-    </v-container>
+    </v-footer>
   </div>
 </template>
 
@@ -152,8 +153,8 @@ defineExpose({
   text-align: center;
 
   @media (max-width: 1000px) {
+    position: relative;
     width: 100%;
-    position: fixed;
   }
 }
 </style>
