@@ -72,40 +72,13 @@ const getUniqueMemberOrganizationsFromSchool = () => {
 
   return memberOrganizations;
 };
-
-const getExportData = () => {
-  return delegatesStore.delegates
-    .filter((delegate) => delegate.school == route.params.school_id)
-    .sort((a, b) => {
-      // First, sort by represents (member organization)
-      if (a.represents !== b.represents) {
-        return a.represents > b.represents ? 1 : -1;
-      }
-      // If represents is the same, sort by forum
-      return a.forum > b.forum ? 1 : a.forum < b.forum ? -1 : 0;
-    })
-    .map((delegate) => {
-      return {
-        ...delegate,
-        represents: memberOrganizationsStore.member_organizations.find(
-          (org) => org.id === delegate.represents,
-        ).name,
-        forum: forumsStore.forums.find((forum) => forum.id === delegate.forum).name,
-        link: `${origin}${
-          router.resolve({
-            name: "final-registration-delegate",
-            params: { delegate_id: delegate.id },
-          }).href
-        }`,
-      };
-    });
-};
 </script>
 
 <template>
   <div class="final-registration">
     <v-sheet id="sheet" :elevation="mobile ? 0 : 2" :rounded="mobile ? false : 'lg'">
       <v-btn
+        class="no-print"
         variant="plain"
         prepend-icon="mdi-arrow-left"
         :to="{
@@ -117,7 +90,7 @@ const getExportData = () => {
 
       <h1 class="py-6">Final Registration</h1>
 
-      <p>
+      <p class="no-print">
         Dear MUN-Director, <br />
 
         Country Allocations have been done. We can confirm that you can bring
@@ -150,8 +123,8 @@ const getExportData = () => {
           <tr>
             <th class="text-left">Name</th>
             <th class="text-left">Registration Link</th>
-            <th class="text-left"></th>
-            <th class="text-left">Actions</th>
+            <th class="text-left no-print"></th>
+            <th class="text-left no-print">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -203,6 +176,7 @@ const getExportData = () => {
                 "
                 v-clipboard:success="onCopy"
                 v-clipboard:error="onError"
+                class="no-print"
               >
                 Copy link
               </v-btn>
@@ -219,6 +193,7 @@ const getExportData = () => {
                 prepend-icon="mdi-account-minus"
                 color="red"
                 @click="deleteMUNDirector(director.id)"
+                class="no-print"
               >
                 Remove this MUN-Director
               </v-btn>
@@ -226,7 +201,7 @@ const getExportData = () => {
           </tr>
         </tbody>
 
-        <tfoot>
+        <tfoot class="no-print">
           <tr>
             <td></td>
             <td></td>
@@ -250,10 +225,12 @@ const getExportData = () => {
 
       <h2>Delegates</h2>
 
-      Please select one delegate of each member organization to be the ambassador of this delegation
-      by clicking the star button at the end of the respective row. The ambassador will be the main
-      point of contact for this delegation during the conference and might be asked to give a speech
-      at the opening ceremony.
+      <p class="mb-4">
+        Please select one delegate of each member organization to be the ambassador of this
+        delegation by clicking the star button at the end of the respective row. The ambassador will
+        be the main point of contact for this delegation during the conference and might be asked to
+        give a speech at the opening ceremony.
+      </p>
 
       <v-table>
         <thead>
@@ -262,10 +239,10 @@ const getExportData = () => {
             <th class="selectable text-left">Forum</th>
             <th class="selectable text-left">Name</th>
             <th class="selectable text-left">Registration Link</th>
-            <th class="text-left"></th>
-            <th class="text-left">Status</th>
-            <th class="text-center">Role</th>
-            <th class="text-left">Actions</th>
+            <th class="text-left no-print"></th>
+            <th class="text-left no-print">Status</th>
+            <th class="text-center no-print">Role</th>
+            <th class="text-left no-print">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -364,12 +341,12 @@ const getExportData = () => {
                   text: 'Click to copy registration link into your clipboard',
                   openOnClick: true,
                 }"
-                class="no-select"
+                class="no-select no-print"
               >
                 Copy link
               </v-btn>
             </td>
-            <td class="no-select">
+            <td class="no-select no-print">
               <v-chip
                 v-if="
                   delegate.first_name &&
@@ -389,7 +366,7 @@ const getExportData = () => {
                 Not completed
               </v-chip>
             </td>
-            <td class="text-center no-select">
+            <td class="text-center no-select no-print">
               <v-icon
                 v-tooltip:right-center="{
                   text: delegate.ambassador ? 'Ambassador' : 'Delegate',
@@ -399,7 +376,7 @@ const getExportData = () => {
                 >{{ delegate.ambassador ? "mdi-account-star" : "mdi-account" }}</v-icon
               >
             </td>
-            <td class="no-select">
+            <td class="no-select no-print">
               <v-btn
                 v-if="!delegate.ambassador"
                 variant="tonal"
@@ -417,24 +394,11 @@ const getExportData = () => {
           </tr></tbody
       ></v-table>
 
-      <p>
+      <p class="no-print">
         <i>
           Hint: You can mark the delegates table and copy it to distribute the links to your
-          students. Or you can
-          <download-excel
-            class="download"
-            :data="getExportData()"
-            :fields="{
-              'Member Organization': 'represents',
-              Forum: 'forum',
-              'First name': 'first_name',
-              'Last name': 'last_name',
-              'Registration Link': 'link',
-            }"
-            name="MUNOL_Delegation.xls"
-            :header="`Registration Links for Delegates of ${schoolsStore.school.name}`"
-            >export the table as a spreadsheet </download-excel
-          ><v-icon start>mdi-microsoft-excel</v-icon>
+          students. Or you can simply print this page to have a physical copy of all registration
+          links.
         </i>
       </p>
     </v-sheet>
@@ -479,5 +443,41 @@ h2 {
   text-decoration: underline;
   color: blue;
   cursor: pointer;
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+
+  p {
+    font-size: 10pt;
+  }
+
+  #sheet {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .final-registration {
+    margin-top: -48px;
+  }
+
+  .elevation-2 {
+    box-shadow: none !important;
+  }
+
+  h1 {
+    padding: 0px !important;
+    font-size: 20pt;
+  }
+
+  h2 {
+    font-size: 16pt;
+  }
+
+  .v-table {
+    display: table;
+  }
 }
 </style>
