@@ -125,6 +125,8 @@ const valid = ref(true);
             v-model:data_consent_ip="delegatesStore.delegate.data_consent_ip"
             v-model:media_consent_time="delegatesStore.delegate.media_consent_time"
             v-model:media_consent_ip="delegatesStore.delegate.media_consent_ip"
+            v-model:organizers_notice_time="delegatesStore.delegate.organizers_notice_time"
+            v-model:organizers_notice_ip="delegatesStore.delegate.organizers_notice_ip"
           ></ConsentField>
         </v-row>
         <v-row no-gutters class="justify-center">

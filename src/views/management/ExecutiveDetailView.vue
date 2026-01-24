@@ -112,6 +112,8 @@ const valid = ref(true);
             v-model:data_consent_ip="executivesStore.executive.data_consent_ip"
             v-model:media_consent_time="executivesStore.executive.media_consent_time"
             v-model:media_consent_ip="executivesStore.executive.media_consent_ip"
+            v-model:organizers_notice_time="executivesStore.executive.organizers_notice_time"
+            v-model:organizers_notice_ip="executivesStore.executive.organizers_notice_ip"
           ></ConsentField>
         </v-row>
         <v-row no-gutters class="justify-center">

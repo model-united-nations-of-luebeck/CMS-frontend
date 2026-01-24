@@ -12,6 +12,7 @@ import ConsentDisplay from "../../components/displays/ConsentDisplay.vue";
 import BadgePhotoDisplay from "../../components/displays/BadgePhotoDisplay.vue";
 import FirstTimerIcon from "../../components/icons/FirstTimerIcon.vue";
 import MediaConsentIcon from "../../components/icons/MediaConsentIcon.vue";
+import OrganizersNoticeIcon from "../../components/icons/OrganizersNoticeIcon.vue";
 import ExtraInformationIcon from "../../components/icons/ExtraInformationIcon.vue";
 import AmbassadorIcon from "../../components/icons/AmbassadorIcon.vue";
 import BirthdayChip from "../../components/chips/BirthdayChip.vue";
@@ -293,7 +294,9 @@ const custom_filter = function (value, query, item) {
 
             <FirstTimerIcon :first_timer="item.first_timer"></FirstTimerIcon>
             <MediaConsentIcon :media_consent_time="item.media_consent_time"></MediaConsentIcon>
-
+            <OrganizersNoticeIcon
+              :organizers_notice_time="item.organizers_notice_time"
+            ></OrganizersNoticeIcon>
             <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>
 
@@ -332,6 +335,8 @@ const custom_filter = function (value, query, item) {
                   :data_consent_ip="item.data_consent_ip"
                   :media_consent_time="item.media_consent_time"
                   :media_consent_ip="item.media_consent_ip"
+                  :organizers_notice_time="item.organizers_notice_time"
+                  :organizers_notice_ip="item.organizers_notice_ip"
                 ></ConsentDisplay>
               </div>
             </div>

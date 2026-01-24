@@ -8,6 +8,7 @@ import { sortParticipantsByName, sortParticipantsByAge } from "../../stores/part
 import ConsentDisplay from "../../components/displays/ConsentDisplay.vue";
 import BadgePhotoDisplay from "../../components/displays/BadgePhotoDisplay.vue";
 import MediaConsentIcon from "../../components/icons/MediaConsentIcon.vue";
+import OrganizersNoticeIcon from "../../components/icons/OrganizersNoticeIcon.vue";
 import ExtraInformationIcon from "../../components/icons/ExtraInformationIcon.vue";
 import BirthdayChip from "../../components/chips/BirthdayChip.vue";
 import MobilePhoneIcon from "../../components/icons/MobilePhoneIcon.vue";
@@ -246,7 +247,9 @@ const confirmedDeleteStaff = function () {
 
           <td class="center">
             <MediaConsentIcon :media_consent_time="item.media_consent_time"></MediaConsentIcon>
-
+            <OrganizersNoticeIcon
+              :organizers_notice_time="item.organizers_notice_time"
+            ></OrganizersNoticeIcon>
             <ExtraInformationIcon :extras="item.extras"></ExtraInformationIcon>
           </td>
 
@@ -286,6 +289,8 @@ const confirmedDeleteStaff = function () {
                   :data_consent_ip="item.data_consent_ip"
                   :media_consent_time="item.media_consent_time"
                   :media_consent_ip="item.media_consent_ip"
+                  :organizers_notice_time="item.organizers_notice_time"
+                  :organizers_notice_ip="item.organizers_notice_ip"
                 ></ConsentDisplay>
               </div>
             </div>

@@ -125,6 +125,8 @@ defineExpose({
               v-model:data_consent_ip="advisorsStore.advisor.data_consent_ip"
               v-model:media_consent_time="advisorsStore.advisor.media_consent_time"
               v-model:media_consent_ip="advisorsStore.advisor.media_consent_ip"
+              v-model:organizers_notice_time="advisorsStore.advisor.organizers_notice_time"
+              v-model:organizers_notice_ip="advisorsStore.advisor.organizers_notice_ip"
             ></ConsentField>
           </v-col>
         </v-row>

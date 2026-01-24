@@ -108,6 +108,8 @@ export const useDelegatesStore = defineStore("delegates", () => {
       data_consent_ip: null,
       media_consent_time: null,
       media_consent_ip: null,
+      organizers_notice_time: null,
+      organizers_notice_ip: null,
       first_timer: true,
     };
 

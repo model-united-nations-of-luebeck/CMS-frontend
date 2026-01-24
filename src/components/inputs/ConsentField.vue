@@ -11,12 +11,15 @@ const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 
 const data_consent_statement = `I hereby consent to the collection, processing and use of my personal data as it is described in the privacy policy.`;
 const media_consent_statement = `I hereby consent to the timely unlimited publication and display of images and sound recordings of myself as it is described in the privacy policy.`;
+const organizers_notice_statement = `I hereby confirm that I have understood that the organizer of the evening events is the MUNOL e.V. and not the Thomas-Mann-Schule.`;
 
 const props = defineProps({
   data_consent_time: String,
   data_consent_ip: String,
   media_consent_time: String,
   media_consent_ip: String,
+  organizers_notice_time: String,
+  organizers_notice_ip: String,
 });
 
 const emit = defineEmits([
@@ -24,6 +27,8 @@ const emit = defineEmits([
   "update:data_consent_ip",
   "update:media_consent_time",
   "update:media_consent_ip",
+  "update:organizers_notice_time",
+  "update:organizers_notice_ip",
 ]);
 
 const updateDataProtectionConsent = (value) => {
@@ -66,6 +71,28 @@ const updateMediaConsent = (value) => {
     //consent removed
     emit("update:media_consent_time", null);
     emit("update:media_consent_ip", null);
+  }
+};
+
+const updateOrganizersNotice = (value) => {
+  if (value) {
+    //consent given
+    fetch("https://api.ipify.org?format=json")
+      .then((response) => response.json())
+      .then((data) => {
+        emit("update:organizers_notice_time", new Date().toISOString());
+        emit("update:organizers_notice_ip", data.ip);
+      })
+      .catch((error) => {
+        console.error("Error fetching IP address:", error);
+        alert(error);
+        emit("update:organizers_notice_time", new Date().toISOString());
+        emit("update:organizers_notice_ip", null);
+      });
+  } else {
+    //consent removed
+    emit("update:organizers_notice_time", null);
+    emit("update:organizers_notice_ip", null);
   }
 };
 
@@ -135,6 +162,34 @@ watch(
       :label="`${data_consent_statement} (Consent not given)`"
       :density="mobile ? 'compact' : 'default'"
       prepend-icon="mdi-shield-check"
+      color="primary"
+    ></v-checkbox>
+    <v-checkbox
+      v-if="props.organizers_notice_time"
+      :model-value="props.organizers_notice_time != null"
+      @update:modelValue="updateOrganizersNotice"
+      :label="`${organizers_notice_statement} (Confirmation given on ${new Date(
+        props.organizers_notice_time,
+      ).toLocaleDateString('en-GB', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: 'h12',
+      })})`"
+      :density="mobile ? 'compact' : 'default'"
+      prepend-icon="mdi-gavel"
+      color="primary"
+    ></v-checkbox>
+    <v-checkbox
+      v-else
+      :model-value="props.organizers_notice_time != null"
+      @update:modelValue="updateOrganizersNotice"
+      :label="`${organizers_notice_statement} (Confirmation not given)`"
+      :density="mobile ? 'compact' : 'default'"
+      prepend-icon="mdi-gavel"
       color="primary"
     ></v-checkbox>
     <v-checkbox
@@ -227,6 +282,34 @@ watch(
           :label="`${data_consent_statement} (Consent not given)`"
           :density="mobile ? 'compact' : 'default'"
           prepend-icon="mdi-shield-check"
+          color="primary"
+        ></v-checkbox>
+        <v-checkbox
+          v-if="props.organizers_notice_time"
+          :model-value="props.organizers_notice_time != null"
+          @update:modelValue="updateOrganizersNotice"
+          :label="`${organizers_notice_statement} (Confirmation given on ${new Date(
+            props.organizers_notice_time,
+          ).toLocaleDateString('en-GB', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: 'h12',
+          })})`"
+          :density="mobile ? 'compact' : 'default'"
+          prepend-icon="mdi-gavel"
+          color="primary"
+        ></v-checkbox>
+        <v-checkbox
+          v-else
+          :model-value="props.organizers_notice_time != null"
+          @update:modelValue="updateOrganizersNotice"
+          :label="`${organizers_notice_statement} (Confirmation not given)`"
+          :density="mobile ? 'compact' : 'default'"
+          prepend-icon="mdi-gavel"
           color="primary"
         ></v-checkbox>
         <v-checkbox

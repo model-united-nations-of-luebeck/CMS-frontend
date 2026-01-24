@@ -141,6 +141,10 @@ const valid = ref(true);
             v-model:data_consent_ip="studentOfficersStore.student_officer.data_consent_ip"
             v-model:media_consent_time="studentOfficersStore.student_officer.media_consent_time"
             v-model:media_consent_ip="studentOfficersStore.student_officer.media_consent_ip"
+            v-model:organizers_notice_time="
+              studentOfficersStore.student_officer.organizers_notice_time
+            "
+            v-model:organizers_notice_ip="studentOfficersStore.student_officer.organizers_notice_ip"
           ></ConsentField>
         </v-row>
         <v-row no-gutters class="justify-center">

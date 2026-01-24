@@ -23,8 +23,6 @@ export const useAdvisorsStore = defineStore("advisors", () => {
       car: false,
       experience: "",
       help: [],
-      consent_data: true,
-      consent_media: true,
     };
   }
 
