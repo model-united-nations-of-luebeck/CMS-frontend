@@ -135,7 +135,7 @@ const localModel = computed({
                           color:
                             item.raw.requested <=
                             delegatesStore.delegates.filter(
-                              (delegate) => delegate.school == item.id,
+                              (delegate) => delegate.school == item.raw.id,
                             ).length
                               ? 'green'
                               : 'red',
@@ -145,7 +145,7 @@ const localModel = computed({
                           item.raw.requested
                             ? `Requested: ${item.raw.requested} / Assigned: ${
                                 delegatesStore.delegates.filter(
-                                  (delegate) => delegate.school == item.id,
+                                  (delegate) => delegate.school == item.raw.id,
                                 ).length
                               }`
                             : ""
