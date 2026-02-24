@@ -11,7 +11,7 @@ const conference_abbr = import.meta.env.VITE_CONFERENCE_ABBREVIATION;
 
 const data_consent_statement = `I hereby consent to the collection, processing and use of my personal data as it is described in the privacy policy.`;
 const media_consent_statement = `I hereby consent to the timely unlimited publication and display of images and sound recordings of myself as it is described in the privacy policy.`;
-const organizers_notice_statement = `I hereby confirm that I have understood that the organizer of the evening events is the MUNOL e.V. and not the Thomas-Mann-Schule.`;
+const organizers_notice_statement = `In addition to the conference registration, I hereby also register for the free evening events and confirm that I have understood that these are organized by MUNOL e.V. and not the Thomas-Mann-Schule.`;
 
 const props = defineProps({
   data_consent_time: String,
