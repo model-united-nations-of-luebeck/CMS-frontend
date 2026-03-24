@@ -148,6 +148,7 @@ const items = ref([
       {
         title: "Printing",
         icon: "mdi-printer",
+        action: "printing",
       },
       {
         title: "Insights",
