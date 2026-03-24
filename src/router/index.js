@@ -159,6 +159,16 @@ const router = createRouter({
           component: () => import("../views/management/AdvisorsView.vue"),
         },
         {
+          path: "printing",
+          name: "printing",
+          component: () => import("../views/management/PrintingView.vue"),
+        },
+        {
+          path: "badges",
+          name: "badges",
+          component: () => import("../views/management/BadgesView.vue"),
+        },
+        {
           path: "insights",
           name: "insights",
           component: () => import("../views/management/InsightsView.vue"),
