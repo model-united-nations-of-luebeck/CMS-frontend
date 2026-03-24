@@ -2,7 +2,7 @@
 import { Cropper } from "vue-advanced-cropper";
 import PortraitStencil from ".//PortraitStencil.vue";
 import "vue-advanced-cropper/dist/style.css";
-import { useMagicKeys, whenever } from "@vueuse/core";
+// import { useMagicKeys, whenever } from "@vueuse/core";
 import { ref } from "vue";
 
 export default {
@@ -78,44 +78,44 @@ export default {
     },
   },
   setup() {
-    const keys = useMagicKeys();
+    // const keys = useMagicKeys();
     const cropper = ref(null); // obtain reference to cropper
-    whenever([keys.shift_a, keys.arrowleft], () => {
-      cropper.value.move(100, 0);
-      this.cropImage();
-    });
-    whenever([keys.shift_d, keys.arrowright], () => {
-      cropper.value.move(-100, 0);
-      this.cropImage();
-    });
-    whenever([keys.shift_w, keys.arrowup], () => {
-      cropper.value.move(0, 100);
-      this.cropImage();
-    });
-    whenever([keys.shift_s, keys.arrowdown], () => {
-      cropper.value.move(0, -100);
-      this.cropImage();
-    });
-    whenever(keys.shift_q, () => {
-      cropper.value.rotate(-2);
-      this.cropImage();
-    });
-    whenever(keys.shift_e, () => {
-      cropper.value.rotate(2);
-      this.cropImage();
-    });
-    whenever(keys.shift_control, () => {
-      cropper.value.rotate(-90);
-      this.cropImage();
-    });
-    whenever(keys.shift_y, () => {
-      cropper.value.zoom(1.1);
-      this.cropImage();
-    });
-    whenever(keys.shift_x, () => {
-      cropper.value.zoom(0.9);
-      this.cropImage();
-    });
+    // whenever([keys.shift_a, keys.arrowleft], () => {
+    //   cropper.value.move(100, 0);
+    //   this.cropImage();
+    // });
+    // whenever([keys.shift_d, keys.arrowright], () => {
+    //   cropper.value.move(-100, 0);
+    //   this.cropImage();
+    // });
+    // whenever([keys.shift_w, keys.arrowup], () => {
+    //   cropper.value.move(0, 100);
+    //   this.cropImage();
+    // });
+    // whenever([keys.shift_s, keys.arrowdown], () => {
+    //   cropper.value.move(0, -100);
+    //   this.cropImage();
+    // });
+    // whenever(keys.shift_q, () => {
+    //   cropper.value.rotate(-2);
+    //   this.cropImage();
+    // });
+    // whenever(keys.shift_e, () => {
+    //   cropper.value.rotate(2);
+    //   this.cropImage();
+    // });
+    // whenever(keys.shift_control, () => {
+    //   cropper.value.rotate(-90);
+    //   this.cropImage();
+    // });
+    // whenever(keys.shift_y, () => {
+    //   cropper.value.zoom(1.1);
+    //   this.cropImage();
+    // });
+    // whenever(keys.shift_x, () => {
+    //   cropper.value.zoom(0.9);
+    //   this.cropImage();
+    // });
 
     return { cropper };
   },
