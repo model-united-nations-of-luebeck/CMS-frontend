@@ -17,6 +17,8 @@ const school_or_affiliation_name = ref("");
 const position = ref("");
 const color = ref(null);
 const picture = ref(null);
+const media_consent = ref(false);
+const page_size = ref("A4");
 
 const swatches = [
   ["#FF0000"],
@@ -67,8 +69,8 @@ async function printCustomBadge() {
   form.append("affiliation", school_or_affiliation_name.value);
   form.append("position", position.value);
   form.append("color", color.value);
-  console.log("TOm");
-  console.log(typeof picture.value);
+  form.append("media_consent", media_consent.value);
+  form.append("page_size", page_size.value);
   form.append("photo", picture.value);
 
   const response = await pdfs_http.post("custom_badge", form, {
@@ -101,8 +103,8 @@ async function printCustomBadge() {
         <v-col cols="12" md="6">
           <v-card title="Badges from data" class="h-100">
             <v-card-text>
-              Generate Badges per role. DIN A7 sized badges (legacy) or DIN A4 sheets with 8 badges
-              each (default).
+              Generate Badges per role. DIN A4 sized sheets with 8 badges each (default) or each
+              badge on an single page of size 85 mm * 55 mm (legacy).
 
               <v-list lines="two">
                 <v-list-item
@@ -112,21 +114,21 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}delegate_badges&page_size=A7`"
+                      :href="`${backend_url}delegate_badges?page_size=A7`"
                       target="_blank"
-                      variant="outlined"
+                      variant="tonal"
                       color="primary"
                       title="Print Delegate Badges"
                       prepend-icon="mdi-printer"
                       class="mr-10"
                     >
-                      DIN A7
+                      single
                     </v-btn>
 
                     <v-btn
                       :href="`${backend_url}delegate_badges`"
                       target="_blank"
-                      variant="tonal"
+                      variant="flat"
                       color="primary"
                       title="Print Delegate Badges"
                       prepend-icon="mdi-printer"
@@ -142,21 +144,21 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}mun_director_badges&page_size=A7`"
+                      :href="`${backend_url}mun_director_badges?page_size=A7`"
                       target="_blank"
-                      variant="outlined"
+                      variant="tonal"
                       color="primary"
                       title="Print MUN Directors Badges"
                       prepend-icon="mdi-printer"
                       class="mr-10"
                     >
-                      DIN A7
+                      single
                     </v-btn>
 
                     <v-btn
                       :href="`${backend_url}mun_director_badges`"
                       target="_blank"
-                      variant="tonal"
+                      variant="flat"
                       color="primary"
                       title="Print MUN-Directors Badges"
                       prepend-icon="mdi-printer"
@@ -172,21 +174,21 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}executive_badges`"
+                      :href="`${backend_url}executive_badges?page_size=A7`"
                       target="_blank"
-                      variant="outlined"
+                      variant="tonal"
                       color="primary"
                       title="Print Executive Badges"
                       prepend-icon="mdi-printer"
                       class="mr-10"
                     >
-                      DIN A7
+                      single
                     </v-btn>
 
                     <v-btn
                       :href="`${backend_url}executive_badges`"
                       target="_blank"
-                      variant="tonal"
+                      variant="flat"
                       color="primary"
                       title="Print Executive Badges"
                       prepend-icon="mdi-printer"
@@ -202,21 +204,21 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}student_officer_badges&page_size=A7`"
+                      :href="`${backend_url}student_officer_badges?page_size=A7`"
                       target="_blank"
-                      variant="outlined"
+                      variant="tonal"
                       color="primary"
                       title="Print Student Officer Badges"
                       prepend-icon="mdi-printer"
                       class="mr-10"
                     >
-                      DIN A7
+                      single
                     </v-btn>
 
                     <v-btn
                       :href="`${backend_url}student_officer_badges`"
                       target="_blank"
-                      variant="tonal"
+                      variant="flat"
                       color="primary"
                       title="Print Student Officer Badges"
                       prepend-icon="mdi-printer"
@@ -228,21 +230,21 @@ async function printCustomBadge() {
                 <v-list-item title="Staff" prepend-icon="mdi-account" subtitle="Sorted by position">
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}staff_badges&page_size=A7`"
+                      :href="`${backend_url}staff_badges?page_size=A7`"
                       target="_blank"
-                      variant="outlined"
+                      variant="tonal"
                       color="primary"
                       title="Print Staff Badges"
                       prepend-icon="mdi-printer"
                       class="mr-10"
                     >
-                      DIN A7
+                      single
                     </v-btn>
 
                     <v-btn
                       :href="`${backend_url}staff_badges`"
                       target="_blank"
-                      variant="tonal"
+                      variant="flat"
                       color="primary"
                       title="Print Staff Badges"
                       prepend-icon="mdi-printer"
@@ -258,21 +260,21 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}advisor_badges&page_size=A7`"
+                      :href="`${backend_url}advisor_badges?page_size=A7`"
                       target="_blank"
-                      variant="outlined"
+                      variant="tonal"
                       color="primary"
                       title="Print Advisor Badges"
                       prepend-icon="mdi-printer"
                       class="mr-10"
                     >
-                      DIN A7
+                      single
                     </v-btn>
 
                     <v-btn
                       :href="`${backend_url}advisor_badges`"
                       target="_blank"
-                      variant="tonal"
+                      variant="flat"
                       color="primary"
                       title="Print Advisor Badges"
                       prepend-icon="mdi-printer"
@@ -286,7 +288,7 @@ async function printCustomBadge() {
           </v-card>
         </v-col>
         <v-col cols="12" md="6">
-          <v-card title="Custom Badges" class="h-100" style="overflow: scroll">
+          <v-card title="Custom Badges" class="h-100" style="overflow-y: scroll">
             <v-card-text>
               On special occasions, custom badges can be generated, for example for guests, sponsors
               etc. But don't simply generate a custom badge for participants, as this data won't be
@@ -295,8 +297,9 @@ async function printCustomBadge() {
               <v-form v-model="valid" validate-on="blur" @submit.prevent="printCustomBadge">
                 <v-container fluid>
                   <v-row no-gutters="">
-                    <v-col cols="12" sm="12" md="6">
+                    <v-col cols="12" sm="12" md="4">
                       <v-text-field
+                        class="mt-14"
                         label="Name"
                         hint="Given and family name"
                         prepend-icon="mdi-account"
@@ -333,6 +336,7 @@ async function printCustomBadge() {
                         hint="Pick a color for the badge"
                         v-model="color"
                         @click="show_color_picker = true"
+                        @focus="show_color_picker = true"
                       >
                         <template v-slot:prepend>
                           <v-icon
@@ -345,10 +349,9 @@ async function printCustomBadge() {
                         </template>
                       </v-text-field>
 
-                      <v-input prepend-icon="mdi-blank">
+                      <v-input prepend-icon="mdi-blank" v-if="show_color_picker">
                         <v-color-picker
                           ref="color-picker"
-                          v-if="show_color_picker"
                           v-model="color"
                           mode="hex"
                           :modes="['hex', 'rgb']"
@@ -358,6 +361,36 @@ async function printCustomBadge() {
                           :swatches="swatches"
                         >
                         </v-color-picker>
+                      </v-input>
+
+                      <v-checkbox
+                        label="Media Consent given"
+                        v-model="media_consent"
+                        prepend-icon="mdi-camera"
+                        color="primary"
+                      ></v-checkbox>
+
+                      <v-input
+                        prepend-icon="mdi-book-open-page-variant"
+                        hint="Select a page size"
+                        label="Page size"
+                      >
+                        <v-btn-toggle
+                          v-model="page_size"
+                          color="primary"
+                          variant="outlined"
+                          divided
+                        >
+                          <v-btn value="single">
+                            <v-icon start>mdi-badge-account-horizontal</v-icon>
+                            single
+                          </v-btn>
+
+                          <v-btn value="A4">
+                            <v-icon start>mdi-view-grid-outline</v-icon>
+                            DIN A4
+                          </v-btn>
+                        </v-btn-toggle>
                       </v-input>
                     </v-col>
 

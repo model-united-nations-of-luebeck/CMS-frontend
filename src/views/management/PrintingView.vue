@@ -99,7 +99,7 @@
 </template>
 
 <style>
-.v-container {
+#container > .v-container {
   max-width: fit-content !important;
   margin: 0px 200px;
 }
