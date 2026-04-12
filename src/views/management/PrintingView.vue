@@ -82,7 +82,7 @@
             title="Signs"
             variant="outlined"
             link
-            to="insights"
+            to="signs"
           >
             <v-card-text>Signs to guide attendees through the venue</v-card-text>
             <v-img
