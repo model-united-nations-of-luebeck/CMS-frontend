@@ -29,7 +29,7 @@
             title="Placards"
             variant="outlined"
             link
-            to="insights"
+            to="placards"
           >
             <v-card-text>Member Organization name signs for delegates</v-card-text>
             <v-img

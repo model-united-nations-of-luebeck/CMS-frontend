@@ -169,6 +169,11 @@ const router = createRouter({
           component: () => import("../views/management/BadgesView.vue"),
         },
         {
+          path: "placards",
+          name: "placards",
+          component: () => import("../views/management/PlacardsView.vue"),
+        },
+        {
           path: "insights",
           name: "insights",
           component: () => import("../views/management/InsightsView.vue"),
