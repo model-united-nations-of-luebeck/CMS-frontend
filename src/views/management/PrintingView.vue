@@ -62,15 +62,15 @@
           <v-card
             class="h-100"
             prepend-icon="mdi-table-check"
-            title="Roll Call Lists"
+            title="Lists"
             variant="outlined"
             link
-            to="insights"
+            to="lists"
           >
-            <v-card-text>Tables of delegates per forum to check attendance</v-card-text>
+            <v-card-text>Useful lists of participants for administrative purposes</v-card-text>
             <v-img
               src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-              alt="Roll call lists"
+              alt="Useful lists"
               height="200px"
               cover
             ></v-img>

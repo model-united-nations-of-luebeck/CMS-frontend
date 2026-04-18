@@ -174,6 +174,11 @@ const router = createRouter({
           component: () => import("../views/management/PlacardsView.vue"),
         },
         {
+          path: "lists",
+          name: "lists",
+          component: () => import("../views/management/ListsView.vue"),
+        },
+        {
           path: "signs",
           name: "signs",
           component: () => import("../views/management/SignsView.vue"),
