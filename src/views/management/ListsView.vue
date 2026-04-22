@@ -137,6 +137,25 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 </v-list-item>
 
                 <v-list-item
+                  title="Registration List (Staffs, Executives, Student Officers, Advisors)"
+                  prepend-icon="mdi-account-group"
+                  subtitle="Grouped by role, then sorted by first name"
+                >
+                  <template v-slot:append>
+                    <v-btn
+                      :href="`${backend_url}registration_list_team`"
+                      target="_blank"
+                      color="primary"
+                      title="Print Registration List"
+                      prepend-icon="mdi-printer"
+                      class="mr-10"
+                    >
+                      Print
+                    </v-btn>
+                  </template>
+                </v-list-item>
+
+                <v-list-item
                   title="Executives"
                   prepend-icon="mdi-account-settings"
                   subtitle="Sorted by position"
