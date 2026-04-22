@@ -363,12 +363,12 @@ async function printCustomBadge() {
                         </v-color-picker>
                       </v-input>
 
-                      <v-checkbox
+                      <!-- <v-checkbox
                         label="Media Consent given"
                         v-model="media_consent"
                         prepend-icon="mdi-camera"
                         color="primary"
-                      ></v-checkbox>
+                      ></v-checkbox> -->
 
                       <v-input
                         prepend-icon="mdi-book-open-page-variant"
