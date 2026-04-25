@@ -47,7 +47,7 @@
             title="Certificates"
             variant="outlined"
             link
-            to="insights"
+            to="certificates"
           >
             <v-card-text>Documents certifying participation in the conference</v-card-text>
             <v-img
