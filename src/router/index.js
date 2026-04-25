@@ -189,6 +189,11 @@ const router = createRouter({
           component: () => import("../views/management/SignsView.vue"),
         },
         {
+          path: "email-lists",
+          name: "email-lists",
+          component: () => import("../views/management/EmailListsView.vue"),
+        },
+        {
           path: "insights",
           name: "insights",
           component: () => import("../views/management/InsightsView.vue"),
