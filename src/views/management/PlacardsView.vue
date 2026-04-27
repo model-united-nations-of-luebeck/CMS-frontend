@@ -38,8 +38,6 @@ const rules = {
   position: [(v) => v.length <= 50 || "The position is too long. Please shorten it."],
 };
 
-let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/");
-
 async function printCustomPlacard() {
   const form = new FormData();
   form.append("name", name.value);
@@ -57,15 +55,34 @@ async function printCustomPlacard() {
   window.open(url, "_blank");
 }
 
-async function printForumPlacards() {
-  const params = new URLSearchParams({
-    forum_ids: selectedForums.value.join(","),
-    voting_rights: voting_rights.value,
-    page_size: page_size.value,
-    forum_divider: forum_divider.value,
+async function printPlacard(url, page_size = null) {
+  const form = new FormData();
+  if (page_size) {
+    form.append("page_size", page_size);
+  }
+
+  const response = await pdfs_http.post(url, form, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    responseType: "blob",
   });
 
-  const response = await pdfs_http.get(`delegate_placards_forum?${params}`, {
+  const url_placard = URL.createObjectURL(new Blob([response.data], { type: "application/pdf" }));
+  window.open(url_placard, "_blank");
+}
+
+async function printForumPlacards() {
+  const form = new FormData();
+  form.append("forum_ids", selectedForums.value.join(","));
+  form.append("voting_rights", voting_rights.value);
+  form.append("page_size", page_size.value);
+  form.append("forum_divider", forum_divider.value);
+
+  const response = await pdfs_http.post(`delegate_placards_forum`, form, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
     responseType: "blob",
   });
 
@@ -74,13 +91,15 @@ async function printForumPlacards() {
 }
 
 async function printPlenaryPlacards() {
-  const params = new URLSearchParams({
-    plenary_ids: selectedPlenaries.value.join(","),
-    voting_rights: voting_rights.value,
-    page_size: page_size.value,
-  });
+  const form = new FormData();
+  form.append("plenary_ids", selectedPlenaries.value.join(","));
+  form.append("voting_rights", voting_rights.value);
+  form.append("page_size", page_size.value);
 
-  const response = await pdfs_http.get(`delegate_placards_plenary?${params}`, {
+  const response = await pdfs_http.post(`delegate_placards_plenary`, form, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
     responseType: "blob",
   });
 
@@ -376,7 +395,7 @@ async function printPlenaryPlacards() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}student_officer_placards`"
+                      @click="printPlacard('student_officer_placards')"
                       target="_blank"
                       variant="tonal"
                       color="primary"
@@ -388,7 +407,7 @@ async function printPlenaryPlacards() {
                     </v-btn>
 
                     <v-btn
-                      :href="`${backend_url}student_officer_placards?page_size=A3`"
+                      @click="printPlacard('student_officer_placards', 'A3')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -407,7 +426,7 @@ async function printPlenaryPlacards() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}executive_placards`"
+                      @click="printPlacard('executive_placards')"
                       target="_blank"
                       variant="tonal"
                       color="primary"
@@ -419,7 +438,7 @@ async function printPlenaryPlacards() {
                     </v-btn>
 
                     <v-btn
-                      :href="`${backend_url}executive_placards?page_size=A3`"
+                      @click="printPlacard('executive_placards', 'A3')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -448,7 +467,7 @@ async function printPlenaryPlacards() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}delegate_placards_ceremony`"
+                      @click="printPlacard('delegate_placards_ceremony')"
                       target="_blank"
                       variant="tonal"
                       color="primary"
@@ -460,7 +479,7 @@ async function printPlenaryPlacards() {
                     </v-btn>
 
                     <v-btn
-                      :href="`${backend_url}delegate_placards_ceremony?page_size=A3`"
+                      @click="printPlacard('delegate_placards_ceremony', 'A3')"
                       target="_blank"
                       variant="flat"
                       color="primary"

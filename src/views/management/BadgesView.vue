@@ -60,8 +60,6 @@ const rules = {
   ],
 };
 
-let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/");
-
 async function printCustomBadge() {
   const form = new FormData();
   form.append("first_name", name.value.split(" ")[0] || "");
@@ -82,6 +80,21 @@ async function printCustomBadge() {
 
   const url = URL.createObjectURL(new Blob([response.data], { type: "application/pdf" }));
   window.open(url, "_blank");
+}
+
+async function printBadges(url, page_size) {
+  const form = new FormData();
+  if (page_size) form.append("page_size", page_size);
+
+  const response = await pdfs_http.post(url, form, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    responseType: "blob",
+  });
+
+  const url_badges = URL.createObjectURL(new Blob([response.data], { type: "application/pdf" }));
+  window.open(url_badges, "_blank");
 }
 </script>
 
@@ -114,7 +127,7 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}delegate_badges?page_size=A7`"
+                      @click="printBadges('delegate_badges', 'A7')"
                       target="_blank"
                       variant="tonal"
                       color="primary"
@@ -126,7 +139,7 @@ async function printCustomBadge() {
                     </v-btn>
 
                     <v-btn
-                      :href="`${backend_url}delegate_badges`"
+                      @click="printBadges('delegate_badges')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -144,7 +157,7 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}mun_director_badges?page_size=A7`"
+                      @click="printBadges('mun_director_badges', 'A7')"
                       target="_blank"
                       variant="tonal"
                       color="primary"
@@ -156,7 +169,7 @@ async function printCustomBadge() {
                     </v-btn>
 
                     <v-btn
-                      :href="`${backend_url}mun_director_badges`"
+                      @click="printBadges('mun_director_badges')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -174,7 +187,7 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}executive_badges?page_size=A7`"
+                      @click="printBadges('executive_badges', 'A7')"
                       target="_blank"
                       variant="tonal"
                       color="primary"
@@ -186,7 +199,7 @@ async function printCustomBadge() {
                     </v-btn>
 
                     <v-btn
-                      :href="`${backend_url}executive_badges`"
+                      @click="printBadges('executive_badges')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -204,7 +217,7 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}student_officer_badges?page_size=A7`"
+                      @click="printBadges('student_officer_badges', 'A7')"
                       target="_blank"
                       variant="tonal"
                       color="primary"
@@ -216,7 +229,7 @@ async function printCustomBadge() {
                     </v-btn>
 
                     <v-btn
-                      :href="`${backend_url}student_officer_badges`"
+                      @click="printBadges('student_officer_badges')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -230,7 +243,7 @@ async function printCustomBadge() {
                 <v-list-item title="Staff" prepend-icon="mdi-account" subtitle="Sorted by position">
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}staff_badges?page_size=A7`"
+                      @click="printBadges('staff_badges', 'A7')"
                       target="_blank"
                       variant="tonal"
                       color="primary"
@@ -242,7 +255,7 @@ async function printCustomBadge() {
                     </v-btn>
 
                     <v-btn
-                      :href="`${backend_url}staff_badges`"
+                      @click="printBadges('staff_badges')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -260,7 +273,7 @@ async function printCustomBadge() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}advisor_badges?page_size=A7`"
+                      @click="printBadges('advisor_badges', 'A7')"
                       target="_blank"
                       variant="tonal"
                       color="primary"
@@ -272,7 +285,7 @@ async function printCustomBadge() {
                     </v-btn>
 
                     <v-btn
-                      :href="`${backend_url}advisor_badges`"
+                      @click="printBadges('advisor_badges')"
                       target="_blank"
                       variant="flat"
                       color="primary"
