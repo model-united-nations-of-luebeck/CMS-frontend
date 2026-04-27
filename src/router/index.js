@@ -159,6 +159,41 @@ const router = createRouter({
           component: () => import("../views/management/AdvisorsView.vue"),
         },
         {
+          path: "printing",
+          name: "printing",
+          component: () => import("../views/management/PrintingView.vue"),
+        },
+        {
+          path: "badges",
+          name: "badges",
+          component: () => import("../views/management/BadgesView.vue"),
+        },
+        {
+          path: "placards",
+          name: "placards",
+          component: () => import("../views/management/PlacardsView.vue"),
+        },
+        {
+          path: "certificates",
+          name: "certificates",
+          component: () => import("../views/management/CertificatesView.vue"),
+        },
+        {
+          path: "lists",
+          name: "lists",
+          component: () => import("../views/management/ListsView.vue"),
+        },
+        {
+          path: "signs",
+          name: "signs",
+          component: () => import("../views/management/SignsView.vue"),
+        },
+        {
+          path: "email-lists",
+          name: "email-lists",
+          component: () => import("../views/management/EmailListsView.vue"),
+        },
+        {
           path: "insights",
           name: "insights",
           component: () => import("../views/management/InsightsView.vue"),

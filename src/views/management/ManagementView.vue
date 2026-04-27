@@ -148,6 +148,12 @@ const items = ref([
       {
         title: "Printing",
         icon: "mdi-printer",
+        action: "printing",
+      },
+      {
+        title: "Email Lists",
+        icon: "mdi-email-multiple-outline",
+        action: "email-lists",
       },
       {
         title: "Insights",
