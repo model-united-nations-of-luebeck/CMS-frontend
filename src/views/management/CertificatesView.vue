@@ -28,8 +28,6 @@ const rules = {
   ],
 };
 
-let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/");
-
 async function printCertificates(certificates_url) {
   const form = new FormData();
   form.append("names", names.value);
@@ -85,7 +83,7 @@ function handleUndo() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      @click="printCertificates(`${backend_url}delegate_certificates`)"
+                      @click="printCertificates('delegate_certificates')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -104,7 +102,7 @@ function handleUndo() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      @click="printCertificates(`${backend_url}student_officer_certificates`)"
+                      @click="printCertificates('student_officer_certificates')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -124,7 +122,7 @@ function handleUndo() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      @click="printCertificates(`${backend_url}mun_director_certificates`)"
+                      @click="printCertificates('mun_director_certificates')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -142,7 +140,7 @@ function handleUndo() {
                 >
                   <template v-slot:append>
                     <v-btn
-                      @click="printCertificates(`${backend_url}executive_certificates`)"
+                      @click="printCertificates('executive_certificates')"
                       target="_blank"
                       variant="flat"
                       color="primary"
@@ -157,7 +155,7 @@ function handleUndo() {
                 <v-list-item title="Staff" prepend-icon="mdi-account" subtitle="Sorted by position">
                   <template v-slot:append>
                     <v-btn
-                      @click="printCertificates(`${backend_url}staff_certificates`)"
+                      @click="printCertificates('staff_certificates')"
                       variant="flat"
                       color="primary"
                       title="Print Staff Certificates"

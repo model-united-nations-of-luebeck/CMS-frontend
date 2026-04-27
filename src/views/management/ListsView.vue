@@ -1,12 +1,25 @@
 <script setup>
-// import { inject } from "vue";
-// const http = inject("backend_instance");
-// import axios from "axios";
-// const pdfs_http = axios.create({
-//   ...http.defaults,
-//   baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/pdfs/"),
-// });
-let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/");
+import { inject } from "vue";
+const http = inject("backend_instance");
+import axios from "axios";
+const pdfs_http = axios.create({
+  ...http.defaults,
+  baseURL: http.defaults.baseURL.replace(/\/?api\/?$/, "/pdfs/"),
+});
+
+async function printList(url) {
+  const form = new FormData();
+
+  const response = await pdfs_http.post(url, form, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    responseType: "blob",
+  });
+
+  const url_list = URL.createObjectURL(new Blob([response.data], { type: "application/pdf" }));
+  window.open(url_list, "_blank");
+}
 </script>
 
 <template>
@@ -35,7 +48,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}schools_list`"
+                      @click="printList('schools_list')"
                       target="_blank"
                       color="primary"
                       title="Print Schools List"
@@ -54,7 +67,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}issues_list`"
+                      @click="printList('issues_list')"
                       target="_blank"
                       color="primary"
                       title="Print Issues List"
@@ -73,7 +86,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}roll_call_list_forums`"
+                      @click="printList('roll_call_list_forums')"
                       target="_blank"
                       color="primary"
                       title="Print Forum Roll Call List"
@@ -92,7 +105,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}roll_call_list_plenaries`"
+                      @click="printList('roll_call_list_plenaries')"
                       target="_blank"
                       color="primary"
                       title="Print Plenary Roll Call List"
@@ -124,7 +137,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}registration_list`"
+                      @click="printList('registration_list')"
                       target="_blank"
                       color="primary"
                       title="Print Registration List"
@@ -143,7 +156,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}registration_list_team`"
+                      @click="printList('registration_list_team')"
                       target="_blank"
                       color="primary"
                       title="Print Registration List"
@@ -162,7 +175,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}executives_list`"
+                      @click="printList('executives_list')"
                       target="_blank"
                       color="primary"
                       title="Print Executives List"
@@ -181,7 +194,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}student_officers_list`"
+                      @click="printList('student_officers_list')"
                       target="_blank"
                       color="primary"
                       title="Print Student Officers List"
@@ -200,7 +213,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}mun_directors_list`"
+                      @click="printList('mun_directors_list')"
                       target="_blank"
                       color="primary"
                       title="Print MUN-Directors List"
@@ -219,7 +232,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}staffs_list`"
+                      @click="printList('staffs_list')"
                       target="_blank"
                       color="primary"
                       title="Print Staffs List"
@@ -238,7 +251,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}advisors_list`"
+                      @click="printList('advisors_list')"
                       target="_blank"
                       color="primary"
                       title="Print Advisors List"
@@ -257,7 +270,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}participants_list`"
+                      @click="printList('participants_list')"
                       target="_blank"
                       color="primary"
                       title="Print Participants List"
@@ -276,7 +289,7 @@ let backend_url = import.meta.env.VITE_BACKEND_URL.replace(/\/?api\/?$/, "/pdfs/
                 >
                   <template v-slot:append>
                     <v-btn
-                      :href="`${backend_url}allergy_list`"
+                      @click="printList('allergy_list')"
                       target="_blank"
                       color="primary"
                       title="Print Allergies List"

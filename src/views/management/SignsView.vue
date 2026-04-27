@@ -18,12 +18,14 @@ const rules = {
 };
 
 async function printSign() {
-  const params = new URLSearchParams({
-    label: label.value,
-    pagesize: page_size.value,
-  });
+  const form = new FormData();
+  form.append("label", label.value);
+  form.append("page_size", page_size.value);
 
-  const response = await pdfs_http.get(`sign?${params}`, {
+  const response = await pdfs_http.post(`sign`, form, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
     responseType: "blob",
   });
 
