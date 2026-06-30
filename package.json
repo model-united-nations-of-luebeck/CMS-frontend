@@ -16,7 +16,7 @@
     "@mdi/font": "^7.2.96",
     "@selemondev/vue3-signature-pad": "^1.9.0",
     "@vueuse/core": "^10.6.0",
-    "axios": "^1.15.0",
+    "axios": "^1.16.0",
     "flag-icons": "^7.5.0",
     "fuse.js": "^7.1.0",
     "highcharts-vue": "^2.0.1",
