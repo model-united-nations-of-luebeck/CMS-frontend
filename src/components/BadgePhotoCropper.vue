@@ -58,12 +58,37 @@ export default {
       }
     },
     cropImage() {
-      const result = this.$refs.cropper.getResult();
-      // const newTab = window.open()
-      // newTab.document.body.innerHTML = `<img src="${result.canvas.toDataURL('image/jpeg')}"></img>`
-      if (result.canvas) {
-        this.$emit("update:image", result.canvas.toDataURL("image/jpeg"));
+      const result = this.$refs.cropper?.getResult();
+
+      if (!result?.canvas) {
+        return;
       }
+
+      const source = result.canvas;
+
+      // Maximum output dimensions for a badge portrait.
+      const MAX_WIDTH = 700;
+      const MAX_HEIGHT = 900;
+      const JPEG_QUALITY = 0.82;
+
+      // Scale down only; do not enlarge smaller images unnecessarily.
+      const scale = Math.min(1, MAX_WIDTH / source.width, MAX_HEIGHT / source.height);
+
+      let output = source;
+
+      if (scale < 1) {
+        output = document.createElement("canvas");
+        output.width = Math.round(source.width * scale);
+        output.height = Math.round(source.height * scale);
+
+        const ctx = output.getContext("2d");
+        ctx.drawImage(source, 0, 0, output.width, output.height);
+      }
+
+      // Resize and compress in one operation.
+      const compressedImage = output.toDataURL("image/jpeg", JPEG_QUALITY);
+
+      this.$emit("update:image", compressedImage);
     },
   },
   computed: {
